@@ -14,6 +14,13 @@ public interface Stock {
   String name();
 
   /**
+   * Returns the name of the company with which the
+   * particular stock is associated.
+   * @return Company name
+   */
+  String company();
+
+  /**
    * Returns the price of this stock at the given date.
    * @param date The date at which price of the stock needs to be evaluated.
    * @return The stock price.

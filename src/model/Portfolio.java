@@ -26,5 +26,11 @@ public interface Portfolio {
    */
   double value(Date date);
 
+  /**
+   * Saves the Portfolio to the database/file so that it can
+   * be retrieved later.
+   */
+  void save();
+
 
 }
