@@ -1,6 +1,6 @@
 package model.portfolio;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Represents a collection of Stock trades.
@@ -14,17 +14,11 @@ public interface Portfolio {
   String name();
 
   /**
-   * Returns the Portfolio Composition.
-   * @return portfolio details.
-   */
-  String composition();
-
-  /**
    * Returns the value of a Portfolio on a given date.
    * @param date the date on which the value needs to be determined.
    * @return the value.
    */
-  double value(Date date);
+  double value(LocalDate date);
 
   /**
    * Saves the Portfolio to the database/file so that it can

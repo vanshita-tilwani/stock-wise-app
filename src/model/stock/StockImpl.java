@@ -10,11 +10,9 @@ import model.stockpriceprovider.StockPriceProvider;
 public class StockImpl implements Stock {
 
   private final String name;
-  private final String company;
   private final StockPriceProvider stockPriceProvider;
-  public StockImpl(String name, String company, StockPriceProvider stockPriceProvider) {
+  public StockImpl(String name, StockPriceProvider stockPriceProvider) {
     this.name = name;
-    this.company = company;
     this.stockPriceProvider = stockPriceProvider;
   }
 
@@ -23,13 +21,14 @@ public class StockImpl implements Stock {
     return this.name;
   }
 
-  @Override
-  public String company() {
-    return this.company;
-  }
 
   @Override
   public double price(LocalDate date) {
     return stockPriceProvider.price(this, date);
+  }
+
+  @Override
+  public String toString() {
+    return this.name;
   }
 }

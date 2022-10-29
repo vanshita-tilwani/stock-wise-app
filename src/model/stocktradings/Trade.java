@@ -1,6 +1,12 @@
 package model.stocktradings;
 
-public interface Trade {
+import java.time.LocalDate;
 
-  void create();
+public interface Trade<T> {
+
+  void buy(T trade);
+
+  double value(LocalDate date, String trade);
+
+  T get(String trade);
 }

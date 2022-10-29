@@ -1,9 +1,14 @@
 package view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public interface View {
 
-  void create();
+  String input();
 
-  void display();
+  Map<String, Double> read();
+
+  void display(String message);
 
 }
