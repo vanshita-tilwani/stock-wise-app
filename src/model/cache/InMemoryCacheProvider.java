@@ -2,10 +2,10 @@ package model.cache;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ICacheProviderImpl<K,V> implements ICacheProvider<K,V> {
+public class InMemoryCacheProvider<K,V> implements CacheProvider<K,V> {
   private Map<K, V> map;
 
-  public ICacheProviderImpl() {
+  public InMemoryCacheProvider() {
     map = new HashMap<>();
   }
   @Override

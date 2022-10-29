@@ -1,6 +1,6 @@
 package model.cache;
 
-public interface ICacheProvider<K, V> {
+public interface CacheProvider<K, V> {
 
   V get(K key);
 

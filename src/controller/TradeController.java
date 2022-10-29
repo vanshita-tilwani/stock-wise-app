@@ -2,8 +2,9 @@ package controller;
 
 import java.util.Date;
 
-public interface IController {
+public interface TradeController {
 
+  void execute();
   void create();
 
   void composition();

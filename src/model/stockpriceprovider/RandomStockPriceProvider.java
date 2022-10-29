@@ -1,24 +1,23 @@
 package model.stockpriceprovider;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import model.cache.ICacheProvider;
-import model.cache.ICacheProviderImpl;
-import model.stock.IStock;
+import model.cache.CacheProvider;
+import model.cache.InMemoryCacheProvider;
+import model.stock.Stock;
 
-public class RandomStockPriceProvider implements IStockPriceProvider{
+public class RandomStockPriceProvider implements StockPriceProvider {
 
-  private ICacheProvider<IStock, Map<LocalDate, Double>> stockData;
+  private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
 
   public RandomStockPriceProvider() {
-    stockData = new ICacheProviderImpl<>();
+    stockData = new InMemoryCacheProvider<>();
   }
   @Override
-  public double price(IStock stock, LocalDate date) {
+  public double price(Stock stock, LocalDate date) {
     double price = new Random().nextDouble();
     if(stockData.contains(stock)) {
       if(stockData.get(stock).containsKey(date)) {

@@ -4,40 +4,37 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.cache.ICacheProvider;
-import model.cache.ICacheProviderImpl;
+import model.cache.CacheProvider;
+import model.cache.InMemoryCacheProvider;
 import model.jsonparser.JSONParser;
-import model.stock.IStock;
+import model.stock.Stock;
 
-public class APIStockPriceProvider implements IStockPriceProvider {
-  private ICacheProvider<IStock, Map<LocalDate, Double>> stockData;
+public class APIStockPriceProvider implements StockPriceProvider {
+  private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
   private static final String API_KEY = "W0M1JOKC82EZEQA8";
   private static final String URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
           + "&outputsize=full&symbol=";
 
   public APIStockPriceProvider() {
-    stockData = new ICacheProviderImpl<>();
+    stockData = new InMemoryCacheProvider<>();
   }
 
   @Override
-  public double price(IStock stock, LocalDate date) {
+  public double price(Stock stock, LocalDate date) {
     if (!stockData.contains(stock)) {
       this.get(stock);
     }
     return stockData.get(stock).get(date);
   }
 
-  private void get(IStock stock) {
+  private void get(Stock stock) {
     try {
       URL url = new URL(URL + stock.name() + "&apikey=" + API_KEY + "&datatype=json");
       InputStream stream = url.openStream();

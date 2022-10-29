@@ -1,37 +1,30 @@
 package model.stock;
 
 import java.time.LocalDate;
-import java.util.Date;
-
-import model.stockpriceprovider.IStockPriceProvider;
-import model.stockpriceprovider.RandomStockPriceProvider;
 
 /**
- * Represents a Regular Stock.
+ * This interface represent a Stock of any Company.
  */
-public class Stock implements IStock {
+public interface Stock {
 
-  private final String name;
-  private final String company;
-  private final IStockPriceProvider stockPriceProvider;
-  public Stock(String name, String company, IStockPriceProvider stockPriceProvider) {
-    this.name = name;
-    this.company = company;
-    this.stockPriceProvider = stockPriceProvider;
-  }
+  /**
+   * Returns the unique ticker symbol for a Stock.
+   * @return the unique abbreviation for a stock
+   */
+  String name();
 
-  @Override
-  public String name() {
-    return this.name;
-  }
+  /**
+   * Returns the name of the company with which the
+   * particular stock is associated.
+   * @return Company name
+   */
+  String company();
 
-  @Override
-  public String company() {
-    return this.company;
-  }
+  /**
+   * Returns the price of this stock at the given date.
+   * @param date The date at which price of the stock needs to be evaluated.
+   * @return The stock price.
+   */
+  double price(LocalDate date);
 
-  @Override
-  public double price(LocalDate date) {
-    return stockPriceProvider.price(this, date);
-  }
 }
