@@ -1,11 +1,11 @@
-package model;
+package model.stock;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * This interface represent a Stock of any Company.
  */
-public interface Stock {
+public interface IStock {
 
   /**
    * Returns the unique ticker symbol for a Stock.
@@ -25,6 +25,6 @@ public interface Stock {
    * @param date The date at which price of the stock needs to be evaluated.
    * @return The stock price.
    */
-  double price(Date date);
+  double price(LocalDate date);
 
 }

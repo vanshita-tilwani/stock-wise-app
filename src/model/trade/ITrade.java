@@ -1,11 +1,13 @@
-package model;
+package model.trade;
 
 import java.util.Date;
+
+import model.stock.Stock;
 
 /**
  * Represents a stock trade made by any User.
  */
-public interface Trade {
+public interface ITrade {
 
   /**
    * Returns the stock which was traded(purchased/sold) by a user.

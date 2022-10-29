@@ -1,11 +1,11 @@
-package model;
+package model.portfolio;
 
 import java.util.Date;
 
 /**
  * Represents a collection of Stock trades.
  */
-public interface Portfolio {
+public interface IPortfolio {
 
   /**
    * Returns the name of the Portfolio.
