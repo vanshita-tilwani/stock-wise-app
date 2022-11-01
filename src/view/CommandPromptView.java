@@ -14,13 +14,13 @@ public class CommandPromptView implements View {
   }
   @Override
   public Map<String, Double> read() {
-    this.display("Enter the number of stock trade you wish to carry out\n");
+    this.display("Enter the number of stock trade you wish to carry out:\n");
     int stocks = Integer.parseInt(this.scanner.nextLine());
     Map<String, Double> stockData = new HashMap<>();
     for(int i = 0; i < stocks; i ++) {
-      this.display("Enter the stock symbol you wish to buy\n");
+      this.display("Enter the stock symbol you wish to buy:\n");
       String stock = scanner.nextLine();
-      this.display("Enter the number of shares you wish to buy\n");
+      this.display("Enter the number of shares you wish to buy:\n");
       double value = Double.parseDouble(scanner.nextLine());
       if(stockData.containsKey(stock)) {
         stockData.put(stock, stockData.get(stock) + value);
