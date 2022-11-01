@@ -14,7 +14,7 @@ public class CommandPromptView implements View {
   }
   @Override
   public Map<String, Double> read() {
-    this.display("Enter the number of stock trade you wish to carry out\n");
+    this.display("Enter the Number of stock trade you wish to carry out\n");
     int stocks = Integer.parseInt(this.scanner.nextLine());
     Map<String, Double> stockData = new HashMap<>();
     for(int i = 0; i < stocks; i ++) {

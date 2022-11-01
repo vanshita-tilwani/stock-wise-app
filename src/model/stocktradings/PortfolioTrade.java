@@ -1,9 +1,7 @@
 package model.stocktradings;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import model.portfolio.Portfolio;
@@ -28,6 +26,6 @@ public class PortfolioTrade implements Trade<Portfolio> {
 
   @Override
   public Portfolio get(String portfolio) {
-    return portfolios.get(portfolio);
+    return portfolios.get(portfolios);
   }
 }
