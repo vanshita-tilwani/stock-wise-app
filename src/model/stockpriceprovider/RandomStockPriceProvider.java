@@ -4,15 +4,22 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
 import model.stock.Stock;
 
+/**
+ * Generates a Price randomly for a stock at any given date.
+ */
 public class RandomStockPriceProvider implements StockPriceProvider {
 
+  // cache to store the data for the stock
   private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
 
+  /**
+   * creates an instance of random stock provider which initializes the cache of the
+   * stock data.
+   */
   public RandomStockPriceProvider() {
     stockData = new InMemoryCacheProvider<>();
   }

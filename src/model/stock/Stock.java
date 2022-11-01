@@ -20,4 +20,5 @@ public interface Stock {
    */
   double price(LocalDate date);
 
+
 }

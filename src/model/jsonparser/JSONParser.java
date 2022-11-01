@@ -3,8 +3,15 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Parses a specific type of JSON object.
+ */
 public class JSONParser {
-
+  /**
+   * Static method to parse string to JSON.
+   * @param jsonText string that needs to be parsed.
+   * @return parsed JSON.
+   */
   public static Map<LocalDate, Double> parse(String jsonText) {
 
     HashMap<LocalDate, Double> map = new HashMap<>();

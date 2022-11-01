@@ -22,7 +22,12 @@ public class CommandPromptView implements View {
       String stock = scanner.nextLine();
       this.display("Enter the number of shares you wish to buy\n");
       double value = Double.parseDouble(scanner.nextLine());
-      stockData.put(stock, value);
+      if(stockData.containsKey(stock)) {
+        stockData.put(stock, stockData.get(stock) + value);
+      }
+      else {
+        stockData.put(stock, value);
+      }
     }
     return stockData;
   }
