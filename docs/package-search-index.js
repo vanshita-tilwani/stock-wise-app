@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"controller"},{"l":"datarepo"},{"l":"model.cache"},{"l":"model.jsonparser"},{"l":"model.portfolio"},{"l":"model.stock"},{"l":"model.stockpriceprovider"},{"l":"model.stocktradings"},{"l":"model.trade"},{"l":"view"}]
