@@ -1,16 +1,19 @@
 package view;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class CommandPromptView implements View {
-
+public class TextualView implements View {
   private final Scanner scanner;
+  private final PrintStream out;
 
-  public CommandPromptView() {
-    this.scanner = new Scanner(System.in).useLocale(Locale.US);
+  public TextualView(InputStream input, OutputStream out) {
+    this.scanner = new Scanner(input);
+    this.out = new PrintStream(out);
   }
   @Override
   public Map<String, Double> read() {
@@ -38,6 +41,6 @@ public class CommandPromptView implements View {
   }
   @Override
   public void display(String message) {
-    System.out.print(message);
+    this.out.print(message);
   }
 }

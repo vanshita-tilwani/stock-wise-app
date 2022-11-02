@@ -113,6 +113,7 @@ public class PortfolioTradeController implements TradeController {
         shares.add(new StockTradeImpl(stock, stockData.get(stock)));
       }
       model.buy(new PortfolioImpl(name, shares));
+      view.display("Portfolio created successfully.\n");
     }
     catch(IllegalArgumentException exception) {
       view.display(exception.getMessage());
