@@ -17,7 +17,7 @@ import model.jsonparser.JSONParser;
 import model.stock.Stock;
 
 public class APIStockPriceProvider implements StockPriceProvider {
-  private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
+  private CacheProvider<String, Map<LocalDate, Double>> stockData;
   private static final String API_KEY = "B3JNGZS5X8SWJPHX";
   private static final String URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
           + "&outputsize=full&symbol=";
@@ -27,21 +27,34 @@ public class APIStockPriceProvider implements StockPriceProvider {
   }
 
   @Override
-  public double price(Stock stock, LocalDate date) {
-    if (!stockData.contains(stock)) {
-      this.get(stock);
+  public double price(String stock, LocalDate date) throws IllegalArgumentException{
+    if(!stockData.get(stock).containsKey(date)) {
+      throw new IllegalArgumentException("The data for the "+date+ " does not exist since it" +
+              " was a holiday. Please try a different date.\n");
     }
     return stockData.get(stock).get(date);
   }
 
-  private void get(Stock stock) {
+  @Override
+  public boolean isValid(String stock) {
     try {
-      URL url = new URL(URL + stock.name() + "&apikey=" + API_KEY);
+      this.prepareStockData(stock);
+      return true;
+    }
+    catch (Exception e) {
+      return false;
+    }
+  }
+
+
+  private void prepareStockData(String stock) {
+    try {
+      URL url = new URL(URL + stock + "&apikey=" + API_KEY);
       InputStream stream = url.openStream();
       String response = this.read(new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8"))));
       Map<LocalDate, Double> json = JSONParser.parse(response);
       stockData.put(stock, json);
-    } catch (IOException e) {
+    } catch (Exception e) {
       throw new RuntimeException("the alphavantage API has either changed or "
               + "no longer works");
     }

@@ -27,4 +27,10 @@ public interface CacheProvider<K, V> {
    * @return true/false.
    */
   boolean contains(K key);
+
+  /**
+   * Returns the size of the cache.
+   * @return size
+   */
+  int size();
 }

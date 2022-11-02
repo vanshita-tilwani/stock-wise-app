@@ -21,7 +21,10 @@ public class StockImpl implements Stock {
    * @param name stock symbol.
    * @param stockPriceProvider price provider.
    */
-  public StockImpl(String name, StockPriceProvider stockPriceProvider) {
+  public StockImpl(String name, StockPriceProvider stockPriceProvider) throws IllegalArgumentException{
+    if(!stockPriceProvider.isValid(name)) {
+      throw new IllegalArgumentException(name +" is an Invalid Stock\n");
+    }
     this.name = name;
     this.stockPriceProvider = stockPriceProvider;
   }
@@ -34,7 +37,7 @@ public class StockImpl implements Stock {
 
   @Override
   public double price(LocalDate date) {
-    return stockPriceProvider.price(this, date);
+    return stockPriceProvider.price(this.name, date);
   }
 
   @Override

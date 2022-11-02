@@ -14,7 +14,7 @@ import model.stock.Stock;
 public class MockStockPriceProvider implements StockPriceProvider {
 
   // cache to store the data for the stock
-  private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
+  private CacheProvider<String, Map<LocalDate, Double>> stockData;
 
   /**
    * creates an instance of random stock provider which initializes the cache of the
@@ -24,7 +24,7 @@ public class MockStockPriceProvider implements StockPriceProvider {
     stockData = new InMemoryCacheProvider<>();
   }
   @Override
-  public double price(Stock stock, LocalDate date) {
+  public double price(String stock, LocalDate date) {
     double price = new Random().nextDouble();
     if(stockData.contains(stock)) {
       if(stockData.get(stock).containsKey(date)) {
@@ -40,5 +40,10 @@ public class MockStockPriceProvider implements StockPriceProvider {
       stockData.put(stock, obj);
     }
     return price;
+  }
+
+  @Override
+  public boolean isValid(String stock) {
+    return true;
   }
 }

@@ -1,10 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -22,22 +24,15 @@ public class PortfolioTradeControllerTest {
 
   @Test
   public void test1() throws IOException {
-    FileInputStream inputStream = null;
-    try {
-      inputStream = new FileInputStream("input");
-    }
-    catch(FileNotFoundException e) {
-      Assert.fail();
-    }
-    OutputStream out = null;
-
-    out = new ByteArrayOutputStream();
-    View view = new TextualView(inputStream,out);
+    String input = "2\n";
+    InputStream in = new ByteArrayInputStream(input.getBytes());
+    OutputStream out = new ByteArrayOutputStream();
+    View view = new TextualView(in,out);
     DataRepository<Portfolio> repository = new FileRepository<>("res/portfolio.txt");
     TradeOperation model = new PortfolioTradeOperation(repository);
     TradeController controller = new PortfolioTradeController(view, model);
     controller.execute();
     String actual = out.toString();
-    System.out.println(out);
+    System.out.println(actual);
   }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.security.spec.ECField;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import model.portfolio.PortfolioImpl;
 import model.stock.Stock;
+import model.stockpriceprovider.StockProviderType;
 import model.stocktradings.TradeOperation;
 import model.trade.Trade;
 import model.trade.StockTradeImpl;
@@ -47,6 +49,26 @@ public class PortfolioTradeController implements TradeController {
       }
       // execute the menu option chosen.
       commands.get(menuOption).run();
+    }
+  }
+
+  private StockProviderType getPriceProvider() {
+    view.display("Do you wish to choose the Price Provider (y/n)?\n");
+    String input = view.input();
+    if(input.equals("Y") || input.equals("y")) {
+      view.display("Choose a Provider from below : \n");
+      view.display("1. Mock Provider\n");
+      view.display("2. API Provider\n");
+      try {
+        int option = Integer.parseInt(view.input());
+        return StockProviderType.from(option);
+      }
+      catch(Exception e) {
+        return StockProviderType.API;
+      }
+    }
+    else {
+      return StockProviderType.API;
     }
   }
 
@@ -110,10 +132,24 @@ public class PortfolioTradeController implements TradeController {
       Set<String> stocks = stockData.keySet();
       List<Trade<Stock>> shares = new ArrayList<>();
       for (String stock : stocks) {
-        shares.add(new StockTradeImpl(stock, stockData.get(stock)));
+        Trade<Stock> share;
+        try{
+          share = new StockTradeImpl(stock, stockData.get(stock));
+          shares.add(share);
+        }
+        catch(Exception e) {
+          view.display(e.getMessage());
+        }
       }
-      model.buy(new PortfolioImpl(name, shares));
-      view.display("Portfolio created successfully.\n");
+
+      if(shares.size() > 0) {
+        model.buy(new PortfolioImpl(name, shares));
+        view.display("Portfolio created successfully.\n");
+      }
+      else {
+        view.display("Portfolio could not be created since all the shares in the " +
+                "portfolio are Invalid.\n");
+      }
     }
     catch(IllegalArgumentException exception) {
       view.display(exception.getMessage());
@@ -156,7 +192,7 @@ public class PortfolioTradeController implements TradeController {
     try {
       view.display("Enter the name of the portfolio you wish to evaluate\n");
       String portfolio = view.input();
-      view.display("Enter the date at which you wish to get the evaluation\n");
+      view.display("Enter the date at which you wish to get the evaluation(in YYYY-MM-DD format)\n");
       LocalDate date = LocalDate.parse(view.input());
       view.display(model.value(date, portfolio) + " ");
     }

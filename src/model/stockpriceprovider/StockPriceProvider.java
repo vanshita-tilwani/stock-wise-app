@@ -14,5 +14,8 @@ public interface StockPriceProvider {
    * @param date the date at which the price needs to be evaluated.
    * @return the price of stock.
    */
-  double price(Stock stock, LocalDate date);
+  double price(String stock, LocalDate date) throws IllegalArgumentException;
+
+  boolean isValid(String stock);
+
 }
