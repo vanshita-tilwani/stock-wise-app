@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
-import model.stock.Stock;
 
 /**
  * Generates a Price randomly for a stock at any given date.
@@ -23,18 +23,17 @@ public class MockStockPriceProvider implements StockPriceProvider {
   public MockStockPriceProvider() {
     stockData = new InMemoryCacheProvider<>();
   }
+
   @Override
   public double price(String stock, LocalDate date) {
     double price = new Random().nextDouble();
-    if(stockData.contains(stock)) {
-      if(stockData.get(stock).containsKey(date)) {
+    if (stockData.contains(stock)) {
+      if (stockData.get(stock).containsKey(date)) {
         price = stockData.get(stock).get(date);
-      }
-      else {
+      } else {
         stockData.get(stock).put(date, price);
       }
-    }
-    else {
+    } else {
       Map<LocalDate, Double> obj = new HashMap<>();
       obj.put(date, price);
       stockData.put(stock, obj);

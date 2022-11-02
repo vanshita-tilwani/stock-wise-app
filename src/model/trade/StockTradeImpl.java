@@ -1,6 +1,7 @@
 package model.trade;
 
 import java.time.LocalDate;
+
 import model.stock.Stock;
 import model.stock.StockImpl;
 import model.stockpriceprovider.APIStockPriceProvider;
@@ -19,7 +20,8 @@ public class StockTradeImpl implements Trade<Stock> {
 
   /**
    * Creates a Stock Trade with default stock provider as API provider.
-   * @param stock the stock object
+   *
+   * @param stock    the stock object
    * @param quantity the number of stocks.
    */
   public StockTradeImpl(String stock, double quantity) {
@@ -29,8 +31,9 @@ public class StockTradeImpl implements Trade<Stock> {
 
   /**
    * Creates a stock trade with the provided Provider type.
-   * @param stock the stock object.
-   * @param quantity the number of stocks
+   *
+   * @param stock         the stock object.
+   * @param quantity      the number of stocks
    * @param stockProvider the type of price provider that needs to be used to evaluate price.
    */
   public StockTradeImpl(String stock, double quantity, StockProviderType stockProvider) {

@@ -5,7 +5,6 @@ import controller.PortfolioTradeController;
 import datarepo.DataRepository;
 import datarepo.FileRepository;
 import model.portfolio.Portfolio;
-import model.stockpriceprovider.StockProviderType;
 import model.stocktradings.TradeOperation;
 import model.stocktradings.PortfolioTradeOperation;
 import view.TextualView;

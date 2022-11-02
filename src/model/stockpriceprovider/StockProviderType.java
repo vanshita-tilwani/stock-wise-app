@@ -13,23 +13,25 @@ public enum StockProviderType {
     value = newValue;
   }
 
-  public int getValue() { return value; }
+  public int getValue() {
+    return value;
+  }
 
   // Mapping difficulty to difficulty id
   private static final Map<Integer, StockProviderType> _map = new HashMap<Integer, StockProviderType>();
-  static
-  {
+
+  static {
     for (StockProviderType difficulty : StockProviderType.values())
       _map.put(difficulty.value, difficulty);
   }
 
   /**
    * Get difficulty from value
+   *
    * @param value Value
    * @return Difficulty
    */
-  public static StockProviderType from(int value)
-  {
+  public static StockProviderType from(int value) {
     return _map.get(value);
   }
 }

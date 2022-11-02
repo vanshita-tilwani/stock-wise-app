@@ -18,12 +18,13 @@ public class StockImpl implements Stock {
   /**
    * A new stock with the stock symbol as name and the provider used to determine
    * the price of the stock.
-   * @param name stock symbol.
+   *
+   * @param name               stock symbol.
    * @param stockPriceProvider price provider.
    */
-  public StockImpl(String name, StockPriceProvider stockPriceProvider) throws IllegalArgumentException{
-    if(!stockPriceProvider.isValid(name)) {
-      throw new IllegalArgumentException(name +" is an Invalid Stock\n");
+  public StockImpl(String name, StockPriceProvider stockPriceProvider) throws IllegalArgumentException {
+    if (!stockPriceProvider.isValid(name)) {
+      throw new IllegalArgumentException(name + " is an Invalid Stock\n");
     }
     this.name = name;
     this.stockPriceProvider = stockPriceProvider;

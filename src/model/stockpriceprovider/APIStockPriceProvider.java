@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
 import model.jsonparser.JSONParser;
-import model.stock.Stock;
 
 public class APIStockPriceProvider implements StockPriceProvider {
   private CacheProvider<String, Map<LocalDate, Double>> stockData;
@@ -27,9 +26,9 @@ public class APIStockPriceProvider implements StockPriceProvider {
   }
 
   @Override
-  public double price(String stock, LocalDate date) throws IllegalArgumentException{
-    if(!stockData.get(stock).containsKey(date)) {
-      throw new IllegalArgumentException("The data for the "+date+ " does not exist since it" +
+  public double price(String stock, LocalDate date) throws IllegalArgumentException {
+    if (!stockData.get(stock).containsKey(date)) {
+      throw new IllegalArgumentException("The data for the " + date + " does not exist since it" +
               " was a holiday. Please try a different date.\n");
     }
     return stockData.get(stock).get(date);
@@ -38,13 +37,12 @@ public class APIStockPriceProvider implements StockPriceProvider {
   @Override
   public boolean isValid(String stock) {
     try {
-      if(this.stockData.contains(stock)) {
+      if (this.stockData.contains(stock)) {
         return true;
       }
       this.prepareStockData(stock);
       return true;
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return false;
     }
   }
@@ -67,7 +65,7 @@ public class APIStockPriceProvider implements StockPriceProvider {
   private static String read(BufferedReader in) throws IOException {
     StringBuilder output = new StringBuilder();
     String cp = "";
-    while(cp != null) {
+    while (cp != null) {
       output.append(cp);
       cp = in.readLine();
     }

@@ -1,8 +1,7 @@
 package model.stockpriceprovider;
 
 public class StockProviderFactory {
-  public static StockPriceProvider getStockProvider(StockProviderType type)
-  {
+  public static StockPriceProvider getStockProvider(StockProviderType type) {
     if (type == null)
       return null;
     switch (type) {
@@ -11,7 +10,7 @@ public class StockProviderFactory {
       case SCRIPT:
         return new MockStockPriceProvider();
       default:
-        throw new IllegalArgumentException("Unknown type "+type);
+        throw new IllegalArgumentException("Unknown type " + type);
     }
   }
 }

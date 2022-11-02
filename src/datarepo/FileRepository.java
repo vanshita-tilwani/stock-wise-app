@@ -8,6 +8,7 @@ import java.nio.file.StandardOpenOption;
 
 /**
  * Implements the data repository keeping File System as data source.
+ *
  * @param <T> the type of object that needs to be saved in file system.
  */
 public class FileRepository<T> implements DataRepository<T> {
@@ -17,6 +18,7 @@ public class FileRepository<T> implements DataRepository<T> {
 
   /**
    * Creates an instance of File repo with path as the path to the data source.
+   *
    * @param path The path to the data source.
    * @throws IOException if the path is invalid or any other errors while clearing the file.
    */
@@ -24,7 +26,7 @@ public class FileRepository<T> implements DataRepository<T> {
     this.path = path;
     // clears the data source every time a instance is created.
     File file = new File(path);
-    if(!file.exists()) {
+    if (!file.exists()) {
       file.createNewFile();
     }
     Files.newInputStream(Path.of(path), StandardOpenOption.CREATE_NEW);

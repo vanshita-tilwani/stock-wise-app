@@ -1,5 +1,4 @@
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -17,6 +16,7 @@ public class TextualViewTest {
   private InputStream in;
   private OutputStream out;
   private View view;
+
   @Test
   public void testDisplay() {
     this.input = "Test Check";

@@ -1,4 +1,5 @@
 package model.jsonparser;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 public class JSONParser {
   /**
    * Static method to parse string to JSON.
+   *
    * @param jsonText string that needs to be parsed.
    * @return parsed JSON.
    */
@@ -22,7 +24,7 @@ public class JSONParser {
               String.valueOf(":"), 2);
 
       if (objectValue.length == 2) {
-        String key = objectValue[0].substring(objectValue[0].indexOf('"')+1, objectValue[0].lastIndexOf('"'));
+        String key = objectValue[0].substring(objectValue[0].indexOf('"') + 1, objectValue[0].lastIndexOf('"'));
         // TODO : do later
         Double value = 30.12;
         map.put(LocalDate.parse(key), value);

@@ -24,7 +24,8 @@ public class PortfolioImpl implements Portfolio {
   /**
    * Creates a Portfolio with the portfolio name and collection of
    * shares.
-   * @param name portfolio name
+   *
+   * @param name   portfolio name
    * @param shares collection of shares.
    */
   public PortfolioImpl(String name, List<Trade<Stock>> shares) {
@@ -52,18 +53,18 @@ public class PortfolioImpl implements Portfolio {
   @Override
   public double value(LocalDate date) {
     double value = 0;
-    for(Trade trade : shares) {
+    for (Trade trade : shares) {
       double total = trade.value(date);
       value = value + total;
     }
-    return  value;
+    return value;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("Portfolio Name : ").append(this.name).append("\n");
-    for(Trade share : shares) {
+    for (Trade share : shares) {
       sb.append(share.toString());
     }
     return sb.toString();

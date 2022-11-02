@@ -12,5 +12,4 @@ public interface TradeController {
   void execute();
 
 
-
 }

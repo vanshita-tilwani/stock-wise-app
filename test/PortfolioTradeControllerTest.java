@@ -1,9 +1,11 @@
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import controller.PortfolioTradeController;
 import controller.TradeController;
 import datarepo.DataRepository;
@@ -31,7 +33,7 @@ public class PortfolioTradeControllerTest {
   }
 
   @Test
-  public void doesControllerDisplayMenu(){
+  public void doesControllerDisplayMenu() {
 
     try {
       this.input = "";
@@ -39,8 +41,7 @@ public class PortfolioTradeControllerTest {
       String actual = out.toString();
       StringBuilder expected = this.getMenuOptions(false);
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -53,8 +54,7 @@ public class PortfolioTradeControllerTest {
       String actual = out.toString();
       StringBuilder expected = this.getMenuOptions(false);
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -69,8 +69,7 @@ public class PortfolioTradeControllerTest {
       expected.append("The application does not contain any portfolio.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -86,8 +85,7 @@ public class PortfolioTradeControllerTest {
       expected.append("The portfolio with name provided does not exist.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -104,11 +102,11 @@ public class PortfolioTradeControllerTest {
       expected.append("Please enter the Date in YYYY-MM-DD format and try again.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
+
   @Test
   public void createPortfolio_InvalidStockNumbers() {
     try {
@@ -121,8 +119,7 @@ public class PortfolioTradeControllerTest {
       expected.append("Please make sure you input valid number of stocks/quantity of stocks.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -141,8 +138,7 @@ public class PortfolioTradeControllerTest {
       expected.append("Please make sure you input valid number of stocks/quantity of stocks.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -157,7 +153,7 @@ public class PortfolioTradeControllerTest {
       StringBuilder expected = this.getMenuOptions(true);
       expected.append("Enter the name of the portfolio you wish to create\n");
       expected.append("Enter the number of stock trade you wish to carry out\n");
-      for(int i = 0; i < 4; i ++) {
+      for (int i = 0; i < 4; i++) {
         expected.append("Enter the stock symbol you wish to buy\n");
         expected.append("Enter the number of shares you wish to buy\n");
       }
@@ -166,8 +162,7 @@ public class PortfolioTradeControllerTest {
       expected.append("Portfolio Names : \ntest1\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -181,7 +176,7 @@ public class PortfolioTradeControllerTest {
       StringBuilder expected = this.getMenuOptions(true);
       expected.append("Enter the name of the portfolio you wish to create\n");
       expected.append("Enter the number of stock trade you wish to carry out\n");
-      for(int i = 0; i < 4; i ++) {
+      for (int i = 0; i < 4; i++) {
         expected.append("Enter the stock symbol you wish to buy\n");
         expected.append("Enter the number of shares you wish to buy\n");
       }
@@ -194,8 +189,7 @@ public class PortfolioTradeControllerTest {
       expected.append("The application does not contain any portfolio.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -204,11 +198,12 @@ public class PortfolioTradeControllerTest {
     return new TextualView(in, out);
   }
 
-  private TradeOperation getModel() throws Exception{
+  private TradeOperation getModel() throws Exception {
     DataRepository<Portfolio> repository = new FileRepository<>("res/portfolio.txt");
     TradeOperation model = new PortfolioTradeOperation(repository);
     return model;
   }
+
   private StringBuilder getMenuOptions(boolean isValid) {
     StringBuilder menu = new StringBuilder();
     menu.append("Main Menu :\n");
@@ -220,7 +215,7 @@ public class PortfolioTradeControllerTest {
     menu.append("6. Load the portfolio\n");
     menu.append("Enter the menu option you wish to choose.\nPlease any other key to exit the " +
             "application.\n");
-    if(!isValid) {
+    if (!isValid) {
       menu.append("You have decided to exit the application. See you next time\n");
     }
     return menu;

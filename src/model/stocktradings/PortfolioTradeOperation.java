@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import datarepo.*;
 import model.portfolio.Portfolio;
 import model.portfolio.PortfolioImpl;
@@ -25,7 +26,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   @Override
   public void buy(Portfolio portfolio) throws IllegalArgumentException {
-    if(this.portfolios.containsKey(portfolio.name())) {
+    if (this.portfolios.containsKey(portfolio.name())) {
       throw new IllegalArgumentException("The portfolio with same name exists." +
               "It cannot be changed after creation.\n");
     }
@@ -34,8 +35,12 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   @Override
   public double value(LocalDate date, String portfolio) throws IllegalArgumentException {
+    LocalDate now = LocalDate.now();
     if (!this.portfolios.containsKey(portfolio)) {
       throw new IllegalArgumentException("The portfolio with name provided does not exist.\n");
+    }
+    if (date.isAfter(now)) {
+      throw new IllegalArgumentException("The entered date is in future.\n");
     }
     Portfolio trade = this.portfolios.get(portfolio);
     return trade.value(date);
@@ -43,7 +48,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   @Override
   public Portfolio get(String trade) throws IllegalArgumentException {
-    if(!this.portfolios.containsKey(trade)) {
+    if (!this.portfolios.containsKey(trade)) {
       throw new IllegalArgumentException("The portfolio with name provided does not exist.\n");
     }
     return this.portfolios.get(trade);
@@ -56,7 +61,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
 
   @Override
-  public boolean save(String portfolio) throws IllegalArgumentException{
+  public boolean save(String portfolio) throws IllegalArgumentException {
     try {
       if (!this.portfolios.containsKey(portfolio)) {
         throw new IllegalArgumentException("The portfolio with name : " + portfolio +
