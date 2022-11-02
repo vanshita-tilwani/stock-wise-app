@@ -9,7 +9,7 @@ Model includes:
     TradeOperation: It includes operations such as buying trade, getting the trade evaluation
     on a specific date and saving the data.
     
-    StockDataProvider: Contains the price of stocks.
+    StockDataProvider: Contains a list of stocks and their prices.
     
     Trade: Represents a Trade of stocks i.e. has properties with stock and the number of stocks 
     contributing in the trade.
