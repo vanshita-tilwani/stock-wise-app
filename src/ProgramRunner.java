@@ -13,7 +13,6 @@ import view.View;
 public class ProgramRunner {
   public static void main(String[] args) throws IOException {
 
-    //LocalDate date = LocalDate.parse("2022-10-23");
     View view = new TextualView(System.in, System.out);
     // TODO : make sure the path is not absolute and also it should work on both windows and mac.
     // TODO : let the user know that this is the path where you expect the file to be
