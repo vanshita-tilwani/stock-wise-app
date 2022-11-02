@@ -105,7 +105,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
         String line = lines[i];
         String[] lineParsed = line.replace("Stock Symbol : ", "").
                 replace("Quantity : ", "").split(",");
-        Trade<Stock> share = new StockTradeImpl(lineParsed[0], Double.parseDouble(lineParsed[1]));
+        Trade<Stock> share = new StockTradeImpl(lineParsed[0].trim(), Double.parseDouble(lineParsed[1]));
         shares.add(share);
       }
       portfolioList.add(new PortfolioImpl(portfolioName, shares));

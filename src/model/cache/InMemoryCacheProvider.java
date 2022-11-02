@@ -39,9 +39,4 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
   public boolean contains(K key) {
     return map.containsKey(key);
   }
-
-  @Override
-  public int size() {
-    return map.size();
-  }
 }

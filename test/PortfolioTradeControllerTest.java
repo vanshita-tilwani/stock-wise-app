@@ -161,27 +161,190 @@ public class PortfolioTradeControllerTest {
       this.input = "1\ntest1\n4\nGOO\n1\nNO\n4\nAPL\n6\nMST\n10\n2";
       this.setup();
       String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(true);
-      expected.append("Enter the name of the portfolio you wish to create\n");
-      expected.append("Enter the number of stock trade you wish to carry out\n");
-      for (int i = 0; i < 4; i++) {
-        expected.append("Enter the stock symbol you wish to buy\n");
-        expected.append("Enter the number of shares you wish to buy\n");
-      }
-      expected.append("NO is an Invalid Stock\n");
-      expected.append("GOO is an Invalid Stock\n");
-      expected.append("APL is an Invalid Stock\n");
-      expected.append("MST is an Invalid Stock\n");
-      expected.append("Portfolio could not be created since all the shares in the portfolio are Invalid.\n");
-      expected.append(this.getMenuOptions(true));
-      expected.append("The application does not contain any portfolio.\n");
-      expected.append(this.getMenuOptions(false));
       Assert.assertTrue(actual.contains("Portfolio could not be created since all the shares in the portfolio are Invalid.\n"));
     } catch (Exception e) {
       Assert.fail();
     }
   }
 
+  @Test
+  public void MultiplePortfolios() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n1\ntest2\n2\ngoogl\n1\ntsla\n1" +
+              "\n2\n3\ntest1\n3\ntest2";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("Portfolio Names : \ntest2\ntest1"));
+      Assert.assertTrue(actual.contains("Portfolio Name : test2\n" +
+              "Stock Symbol : tsla,Quantity : 1.0\n" +
+              "Stock Symbol : googl,Quantity : 1.0"));
+      Assert.assertTrue(actual.contains("Portfolio Name : test1\n" +
+              "Stock Symbol : aapl,Quantity : 4.0\n" +
+              "Stock Symbol : googl,Quantity : 1.0"));
+
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void MultiplePortfolios_WithFractionalQuantity() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1.5\naapl\n0.4\n1\ntest2\n2\ngoogl\n10.1\ntsla\n1.23" +
+              "\n2\n3\ntest1\n3\ntest2";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("Portfolio Names : \ntest2\ntest1"));
+      Assert.assertTrue(actual.contains("Portfolio Name : test2\n" +
+              "Stock Symbol : tsla,Quantity : 1.23\n" +
+              "Stock Symbol : googl,Quantity : 10.1"));
+      Assert.assertTrue(actual.contains("Portfolio Name : test1\n" +
+              "Stock Symbol : aapl,Quantity : 0.4\n" +
+              "Stock Symbol : googl,Quantity : 1.5"));
+
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void PortflioWithSameName() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n1\ntest1\n2\ngoogl\n1\ntsla\n1" +
+              "\n2\n3\ntest1\n3\ntest2";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The portfolio with same name exists." +
+              "It cannot be changed after creation.\n"));
+
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ValueForPortfolioWhichDoesNotExist() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n4\ntest2\n2015-10-23";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The portfolio with name provided does not exist.\n"));
+
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void IfDateisLaterThanToday() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n4\ntest1\n2025-10-23";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The entered date is in future.\n"));
+
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void getPortfolioValue() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n4\ntest1\n2015-10-23";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The value of portfolio is 965.0"));
+
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void getPortFolioValue_Fraction() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1.5\naapl\n0.4\n1\ntest2\n2\ngoogl\n10.1\ntsla\n1.23" +
+              "\n4\ntest1\n2021-10-10\n4\ntest2\n2016-10-10";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The value of portfolio is 1105.9"));
+      Assert.assertTrue(actual.contains("The value of portfolio is 7364.509999999999"));
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void getPortfolioValue_MultipleDates() {
+    try{
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n4\ntest1\n2015-10-23\n4\ntest1\n2016-10-21";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The value of portfolio is 965.0"));
+
+      System.out.println(actual);
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void savePortfolioToFileSuccessfully() {
+    try {
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n1\ntest2\n2\ngoogl\n1\ntsla\n1" +
+              "\n2\n3\ntest1\n3\ntest2\n5\ntest1";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The portfolio saved to file successfully!"));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+
+  }
+
+  @Test
+  public void savePortfolioToFileFail() {
+    try {
+      this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n1\ntest2\n2\ngoogl\n1\ntsla\n1" +
+              "\n2\n3\ntest1\n3\ntest2\n5\ntest10";
+      this.setup();
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The save could not be completed. " +
+              "Please make sure the portfolio nameis entered correctly and the data source(file) exist."));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void loadPortfolioToApplication() {
+    try {
+      this.input = "6\n2";
+      this.setup();
+      Assert.assertTrue(this.out.toString().contains("The load of portfolio is successfully completed!"));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+
+  }
   private View getView(InputStream in, OutputStream out) {
     return new TextualView(in, out);
   }

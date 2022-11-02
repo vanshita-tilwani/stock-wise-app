@@ -1,10 +1,5 @@
-Portfolio Name : test1
-Stock Symbol : GOOG ,Quantity : 10.0
-Portfolio Name : test2
-Stock Symbol : NOW ,Quantity : 10.0
 Portfolio Name : test3
 Stock Symbol : GOOG ,Quantity : 10.0
-Stock Symbol : NOW ,Quantity : 10.0
+Stock Symbol : AAPL ,Quantity : 10.0
 Portfolio Name : test4
 Stock Symbol : AAPL ,Quantity : 100.0
-Portfolio Name : test5

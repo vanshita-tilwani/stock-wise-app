@@ -126,7 +126,7 @@ public class PortfolioTradeController implements TradeController {
     } catch (NumberFormatException exception) {
       view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
     } catch (IllegalArgumentException exception) {
-      view.display("You have entered an Invalid Input. Please try again.\n");
+      view.display(exception.getMessage());
     }
 
   }
@@ -181,7 +181,7 @@ public class PortfolioTradeController implements TradeController {
       String portfolio = view.input();
       view.display("Enter the date at which you wish to get the evaluation(in YYYY-MM-DD format)\n");
       LocalDate date = LocalDate.parse(view.input());
-      view.display(model.value(date, portfolio) + " ");
+      view.display("The value of portfolio is " +model.value(date, portfolio) + "\n");
     } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
     } catch (DateTimeParseException e) {
@@ -198,7 +198,7 @@ public class PortfolioTradeController implements TradeController {
     String portfolio = view.input();
     Boolean result = model.save(portfolio);
     if (result) {
-      view.display("The portfolio saved successfully!\n");
+      view.display("The portfolio saved to file successfully!\n");
     } else {
       view.display("The save could not be completed. Please make sure the portfolio name" +
               "is entered correctly and the data source(file) exist.\n");
