@@ -2,6 +2,7 @@ package controller;
 
 import java.security.spec.ECField;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -127,32 +128,34 @@ public class PortfolioTradeController implements TradeController {
   private void createPortfolio() {
     try {
       view.display("Enter the name of the portfolio you wish to create\n");
-      String name = view.input();
-      Map<String, Double> stockData = view.read();
-      Set<String> stocks = stockData.keySet();
-      List<Trade<Stock>> shares = new ArrayList<>();
-      for (String stock : stocks) {
-        Trade<Stock> share;
-        try{
-          share = new StockTradeImpl(stock, stockData.get(stock));
-          shares.add(share);
+      String name = view.input().trim();
+      if (name.isEmpty() || name == null) {
+        view.display("You have entered an Invalid Name. Please try again\n");
+      } else {
+        Map<String, Double> stockData = view.read();
+        Set<String> stocks = stockData.keySet();
+        List<Trade<Stock>> shares = new ArrayList<>();
+        for (String stock : stocks) {
+          Trade<Stock> share;
+          try {
+            share = new StockTradeImpl(stock, stockData.get(stock));
+            shares.add(share);
+          } catch (Exception e) {
+            view.display(e.getMessage());
+          }
         }
-        catch(Exception e) {
-          view.display(e.getMessage());
-        }
-      }
 
-      if(shares.size() > 0) {
-        model.buy(new PortfolioImpl(name, shares));
-        view.display("Portfolio created successfully.\n");
-      }
-      else {
-        view.display("Portfolio could not be created since all the shares in the " +
-                "portfolio are Invalid.\n");
+        if (shares.size() > 0) {
+          model.buy(new PortfolioImpl(name, shares));
+          view.display("Portfolio created successfully.\n");
+        } else {
+          view.display("Portfolio could not be created since all the shares in the " +
+                  "portfolio are Invalid.\n");
+        }
       }
     }
     catch(IllegalArgumentException exception) {
-      view.display(exception.getMessage());
+      view.display("You have entered an Invalid Input. Please try again.\n");
     }
 
   }
@@ -198,6 +201,9 @@ public class PortfolioTradeController implements TradeController {
     }
     catch(IllegalArgumentException e) {
       view.display(e.getMessage());
+    }
+    catch (DateTimeParseException e) {
+      view.display("Please enter the Date in YYYY-MM-DD format and try again.\n");
     }
 
   }
