@@ -2,7 +2,7 @@ package model.stock;
 
 import java.time.LocalDate;
 
-import model.stockpriceprovider.StockPriceProvider;
+import model.stockpriceprovider.StockDataProvider;
 
 
 /**
@@ -14,7 +14,7 @@ public class StockImpl implements Stock {
   private final String name;
 
   // price provider to determine stock price on any date.
-  private final StockPriceProvider stockPriceProvider;
+  private final StockDataProvider stockPriceProvider;
 
   /**
    * A new stock with the stock symbol as name and the provider used to determine
@@ -23,7 +23,7 @@ public class StockImpl implements Stock {
    * @param name               stock symbol.
    * @param stockPriceProvider price provider.
    */
-  public StockImpl(String name, StockPriceProvider stockPriceProvider) throws IllegalArgumentException {
+  public StockImpl(String name, StockDataProvider stockPriceProvider) throws IllegalArgumentException {
     if (!stockPriceProvider.isValid(name)) {
       throw new IllegalArgumentException(name + " is an Invalid Stock\n");
     }

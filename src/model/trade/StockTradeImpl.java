@@ -4,8 +4,7 @@ import java.time.LocalDate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
-import model.stockpriceprovider.MockStockPriceProvider;
-import model.stockpriceprovider.StockPriceProvider;
+import model.stockpriceprovider.MockStockDataProvider;
 
 /**
  * Represents a Trade of stocks i.e. has properties with stock and
@@ -23,7 +22,7 @@ public class StockTradeImpl implements Trade<Stock> {
    * @param quantity the number of stocks.
    */
   public StockTradeImpl(String stock, double quantity) {
-    this.stock = new StockImpl(stock, new MockStockPriceProvider());
+    this.stock = new StockImpl(stock, new MockStockDataProvider());
     this.quantity = quantity;
   }
 
