@@ -9,7 +9,7 @@ public class StockProviderFactory {
       case API:
         return new APIStockPriceProvider();
       case SCRIPT:
-        return new RandomStockPriceProvider();
+        return new MockStockPriceProvider();
       default:
         throw new IllegalArgumentException("Unknown type "+type);
     }

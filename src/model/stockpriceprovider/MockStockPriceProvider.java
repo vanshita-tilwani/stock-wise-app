@@ -11,7 +11,7 @@ import model.stock.Stock;
 /**
  * Generates a Price randomly for a stock at any given date.
  */
-public class RandomStockPriceProvider implements StockPriceProvider {
+public class MockStockPriceProvider implements StockPriceProvider {
 
   // cache to store the data for the stock
   private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
@@ -20,7 +20,7 @@ public class RandomStockPriceProvider implements StockPriceProvider {
    * creates an instance of random stock provider which initializes the cache of the
    * stock data.
    */
-  public RandomStockPriceProvider() {
+  public MockStockPriceProvider() {
     stockData = new InMemoryCacheProvider<>();
   }
   @Override
