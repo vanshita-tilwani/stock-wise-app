@@ -181,7 +181,7 @@ public class PortfolioTradeController implements TradeController {
       String portfolio = view.input();
       view.display("Enter the date at which you wish to get the evaluation(in YYYY-MM-DD format)\n");
       LocalDate date = LocalDate.parse(view.input());
-      view.display("The value of portfolio is " +model.value(date, portfolio) + "\n");
+      view.display("The value of portfolio is " + model.value(date, portfolio) + "\n");
     } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
     } catch (DateTimeParseException e) {

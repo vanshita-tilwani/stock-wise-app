@@ -11,14 +11,14 @@ public class StockImplTest {
 
   @Test
   public void validStockSymbol() {
-    Stock stock = new StockImpl("TSLA",new MockStockDataProvider());
+    Stock stock = new StockImpl("TSLA", new MockStockDataProvider());
     Assert.assertEquals("TSLA", stock.name());
     Assert.assertEquals("TSLA", stock.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void InvalidStockSymbol() {
-    new StockImpl("TSL",new MockStockDataProvider());
+    new StockImpl("TSL", new MockStockDataProvider());
   }
 
   @Test
