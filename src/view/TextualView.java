@@ -16,7 +16,7 @@ public class TextualView implements View {
     this.out = new PrintStream(out);
   }
   @Override
-  public Map<String, Double> read() {
+  public Map<String, Double> read() throws NumberFormatException{
     this.display("Enter the number of stock trade you wish to carry out\n");
     int stocks = Integer.parseInt(this.scanner.nextLine());
     Map<String, Double> stockData = new HashMap<>();

@@ -145,6 +145,9 @@ public class PortfolioTradeController implements TradeController {
         }
       }
     }
+    catch (NumberFormatException exception) {
+      view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
+    }
     catch(IllegalArgumentException exception) {
       view.display("You have entered an Invalid Input. Please try again.\n");
     }

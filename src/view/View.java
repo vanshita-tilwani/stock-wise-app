@@ -7,7 +7,7 @@ public interface View {
 
   String input();
 
-  Map<String, Double> read();
+  Map<String, Double> read() throws NumberFormatException;
 
   void display(String message);
 

@@ -109,9 +109,47 @@ public class PortfolioTradeControllerTest {
       Assert.fail();
     }
   }
+  @Test
+  public void createPortfolio_InvalidStockNumbers() {
+    try {
+      this.input = "1\ntest1\nfdh";
+      this.setup();
+      String actual = out.toString();
+      StringBuilder expected = this.getMenuOptions(true);
+      expected.append("Enter the name of the portfolio you wish to create\n");
+      expected.append("Enter the number of stock trade you wish to carry out\n");
+      expected.append("Please make sure you input valid number of stocks/quantity of stocks.\n");
+      expected.append(this.getMenuOptions(false));
+      Assert.assertEquals(expected.toString(), actual);
+    }
+    catch (Exception e){
+      Assert.fail();
+    }
+  }
 
   @Test
-  public void createPortfolio_ValidStocks() {
+  public void createPortfolio_InvalidStockQuantity() {
+    try {
+      this.input = "1\ntest1\n1\nGOOG\nhfd";
+      this.setup();
+      String actual = out.toString();
+      StringBuilder expected = this.getMenuOptions(true);
+      expected.append("Enter the name of the portfolio you wish to create\n");
+      expected.append("Enter the number of stock trade you wish to carry out\n");
+      expected.append("Enter the stock symbol you wish to buy\n");
+      expected.append("Enter the number of shares you wish to buy\n");
+      expected.append("Please make sure you input valid number of stocks/quantity of stocks.\n");
+      expected.append(this.getMenuOptions(false));
+      Assert.assertEquals(expected.toString(), actual);
+    }
+    catch (Exception e){
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createPortfolio_ValidStocks() throws InterruptedException {
+    Thread.sleep(5000);
     try {
       this.input = "1\ntest1\n4\nGOOG\n1\nNOW\n4\nAAPL\n6\nMSFT\n10\n2";
       this.setup();
