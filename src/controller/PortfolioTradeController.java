@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import model.portfolio.Portfolio;
 import model.portfolio.PortfolioImpl;
 import model.stock.Stock;
 import model.stockpriceprovider.StockProviderType;
@@ -133,18 +135,7 @@ public class PortfolioTradeController implements TradeController {
         view.display("You have entered an Invalid Name. Please try again\n");
       } else {
         Map<String, Double> stockData = view.read();
-        Set<String> stocks = stockData.keySet();
-        List<Trade<Stock>> shares = new ArrayList<>();
-        for (String stock : stocks) {
-          Trade<Stock> share;
-          try {
-            share = new StockTradeImpl(stock, stockData.get(stock));
-            shares.add(share);
-          } catch (Exception e) {
-            view.display(e.getMessage());
-          }
-        }
-
+        List<Trade<Stock>> shares = this.parseInputAndGetPortfolio(stockData);
         if (shares.size() > 0) {
           model.buy(new PortfolioImpl(name, shares));
           view.display("Portfolio created successfully.\n");
@@ -160,6 +151,20 @@ public class PortfolioTradeController implements TradeController {
 
   }
 
+  private List<Trade<Stock>> parseInputAndGetPortfolio(Map<String, Double> stockData) {
+    Set<String> stocks = stockData.keySet();
+    List<Trade<Stock>> shares = new ArrayList<>();
+    for (String stock : stocks) {
+      Trade<Stock> share;
+      try {
+        share = new StockTradeImpl(stock, stockData.get(stock));
+        shares.add(share);
+      } catch (Exception e) {
+        view.display(e.getMessage());
+      }
+    }
+    return shares;
+  }
   private void getAllPortfolios() {
     Set<String> portfolios = this.model.getAllTrades();
     if(portfolios.size() > 0) {

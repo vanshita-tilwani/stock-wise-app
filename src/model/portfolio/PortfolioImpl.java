@@ -1,8 +1,13 @@
 package model.portfolio;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import model.stock.Stock;
+import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
 /**
@@ -26,6 +31,18 @@ public class PortfolioImpl implements Portfolio {
     this.name = name;
     this.shares = shares;
   }
+
+  public PortfolioImpl(String name, Map<String, Double> stockData) {
+    this.name = name;
+    Set<String> stocks = stockData.keySet();
+    List<Trade<Stock>> shares = new ArrayList<>();
+    for (String stock : stocks) {
+      Trade<Stock> share = new StockTradeImpl(stock, stockData.get(stock));
+      shares.add(share);
+    }
+    this.shares = shares;
+  }
+
 
   @Override
   public String name() {

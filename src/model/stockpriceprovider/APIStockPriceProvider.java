@@ -38,6 +38,9 @@ public class APIStockPriceProvider implements StockPriceProvider {
   @Override
   public boolean isValid(String stock) {
     try {
+      if(this.stockData.contains(stock)) {
+        return true;
+      }
       this.prepareStockData(stock);
       return true;
     }
@@ -51,7 +54,8 @@ public class APIStockPriceProvider implements StockPriceProvider {
     try {
       URL url = new URL(URL + stock + "&apikey=" + API_KEY);
       InputStream stream = url.openStream();
-      String response = this.read(new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8"))));
+      String response = this.read(new BufferedReader
+              (new InputStreamReader(stream, Charset.forName("UTF-8"))));
       Map<LocalDate, Double> json = JSONParser.parse(response);
       stockData.put(stock, json);
     } catch (Exception e) {

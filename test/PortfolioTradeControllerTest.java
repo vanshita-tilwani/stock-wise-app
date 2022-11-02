@@ -1,16 +1,9 @@
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-
 import controller.PortfolioTradeController;
 import controller.TradeController;
 import datarepo.DataRepository;
@@ -27,6 +20,7 @@ public class PortfolioTradeControllerTest {
   private OutputStream out;
   private String input;
   private TradeController controller;
+
   private void setup() throws Exception {
     this.in = new ByteArrayInputStream(input.getBytes());
     this.out = new ByteArrayOutputStream();
@@ -37,7 +31,8 @@ public class PortfolioTradeControllerTest {
   }
 
   @Test
-  public void doesControllerDisplayMenu() {
+  public void doesControllerDisplayMenu(){
+
     try {
       this.input = "";
       this.setup();
@@ -116,97 +111,49 @@ public class PortfolioTradeControllerTest {
   }
 
   @Test
+  public void createPortfolio_ValidStocks() {
+    try {
+      this.input = "1\ntest1\n4\nGOOG\n1\nNOW\n4\nAAPL\n6\nMSFT\n10\n2";
+      this.setup();
+      String actual = out.toString();
+      StringBuilder expected = this.getMenuOptions(true);
+      expected.append("Enter the name of the portfolio you wish to create\n");
+      expected.append("Enter the number of stock trade you wish to carry out\n");
+      for(int i = 0; i < 4; i ++) {
+        expected.append("Enter the stock symbol you wish to buy\n");
+        expected.append("Enter the number of shares you wish to buy\n");
+      }
+      expected.append("Portfolio created successfully.\n");
+      expected.append(this.getMenuOptions(true));
+      expected.append("Portfolio Names : \ntest1\n");
+      expected.append(this.getMenuOptions(false));
+      Assert.assertEquals(expected.toString(), actual);
+    }
+    catch (Exception e){
+      Assert.fail();
+    }
+  }
+
+  @Test
   public void createPortfolio_InvalidStocks() {
     try {
-      this.input = "1\ntest1\newrd";
+      this.input = "1\ntest1\n4\nGOO\n1\nNO\n4\nAPL\n6\nMST\n10\n2";
       this.setup();
       String actual = out.toString();
       StringBuilder expected = this.getMenuOptions(true);
       expected.append("Enter the name of the portfolio you wish to create\n");
       expected.append("Enter the number of stock trade you wish to carry out\n");
-      expected.append("You have entered an Invalid Input. Please try again.\n");
-      expected.append(this.getMenuOptions(false));
-      Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
-      Assert.fail();
-    }
-  }
-
-  @Test
-  public void createPortfolio_ValidSingleStockSingleQuantity() {
-    try {
-      this.input = "1\ntest1\n1\nGOOG\n1";
-      this.setup();
-      String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(true);
-      expected.append("Enter the name of the portfolio you wish to create\n");
-      expected.append("Enter the number of stock trade you wish to carry out\n");
-      expected.append("Enter the stock symbol you wish to buy\n");
-      expected.append("Enter the number of shares you wish to buy\n");
-      expected.append("Portfolio created successfully.\n");
-      expected.append(this.getMenuOptions(false));
-      Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
-      Assert.fail();
-    }
-  }
-
-  @Test
-  public void createPortfolio_InValidSingleStockSingleQuantity() {
-    try {
-      this.input = "1\ntest1\n1\nGOO\n1";
-      this.setup();
-      String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(true);
-      expected.append("Enter the name of the portfolio you wish to create\n");
-      expected.append("Enter the number of stock trade you wish to carry out\n");
-      expected.append("Enter the stock symbol you wish to buy\n");
-      expected.append("Enter the number of shares you wish to buy\n");
+      for(int i = 0; i < 4; i ++) {
+        expected.append("Enter the stock symbol you wish to buy\n");
+        expected.append("Enter the number of shares you wish to buy\n");
+      }
+      expected.append("NO is an Invalid Stock\n");
       expected.append("GOO is an Invalid Stock\n");
+      expected.append("APL is an Invalid Stock\n");
+      expected.append("MST is an Invalid Stock\n");
       expected.append("Portfolio could not be created since all the shares in the portfolio are Invalid.\n");
-      expected.append(this.getMenuOptions(false));
-      Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
-      Assert.fail();
-    }
-  }
-
-  @Test
-  public void createPortfolio_ValidSingleStockMultipleQuantity() {
-    try {
-      this.input = "1\ntest1\n1\nGOOG\n10";
-      this.setup();
-      String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(true);
-      expected.append("Enter the name of the portfolio you wish to create\n");
-      expected.append("Enter the number of stock trade you wish to carry out\n");
-      expected.append("Enter the stock symbol you wish to buy\n");
-      expected.append("Enter the number of shares you wish to buy\n");
-      expected.append("Portfolio created successfully.\n");
-      expected.append(this.getMenuOptions(false));
-      Assert.assertEquals(expected.toString(), actual);
-    }
-    catch (Exception e){
-      Assert.fail();
-    }
-  }
-
-  @Test
-  public void createPortfolio_InValidSingleStockMultipleQuantity() {
-    try {
-      this.input = "1\ntest1\n1\nGOO\n10";
-      this.setup();
-      String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(true);
-      expected.append("Enter the name of the portfolio you wish to create\n");
-      expected.append("Enter the number of stock trade you wish to carry out\n");
-      expected.append("Enter the stock symbol you wish to buy\n");
-      expected.append("Enter the number of shares you wish to buy\n");
-      expected.append("GOO is an Invalid Stock\n");
-      expected.append("Portfolio could not be created since all the shares in the portfolio are Invalid.\n");
+      expected.append(this.getMenuOptions(true));
+      expected.append("The application does not contain any portfolio.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
     }
@@ -240,4 +187,6 @@ public class PortfolioTradeControllerTest {
     }
     return menu;
   }
+
+
 }
