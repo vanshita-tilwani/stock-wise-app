@@ -51,6 +51,6 @@ public class StockTradeImpl implements Trade<Stock> {
 
   @Override
   public String toString() {
-    return "Stock Symbol : " + this.stock.toString() + " , Quantity : " + this.quantity + "\n";
+    return "Stock Symbol : " + this.stock.toString() + ",Quantity : " + this.quantity + "\n";
   }
 }

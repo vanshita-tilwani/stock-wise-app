@@ -18,7 +18,7 @@ import model.stock.Stock;
 
 public class APIStockPriceProvider implements StockPriceProvider {
   private CacheProvider<Stock, Map<LocalDate, Double>> stockData;
-  private static final String API_KEY = "W0M1JOKC82EZEQA8";
+  private static final String API_KEY = "B3JNGZS5X8SWJPHX";
   private static final String URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
           + "&outputsize=full&symbol=";
 
@@ -36,7 +36,7 @@ public class APIStockPriceProvider implements StockPriceProvider {
 
   private void get(Stock stock) {
     try {
-      URL url = new URL(URL + stock.name() + "&apikey=" + API_KEY + "&datatype=json");
+      URL url = new URL(URL + stock.name() + "&apikey=" + API_KEY);
       InputStream stream = url.openStream();
       String response = this.read(new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8"))));
       Map<LocalDate, Double> json = JSONParser.parse(response);

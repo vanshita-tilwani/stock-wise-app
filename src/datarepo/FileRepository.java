@@ -1,5 +1,6 @@
 package datarepo;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,11 @@ public class FileRepository<T> implements DataRepository<T> {
   public FileRepository(String path) throws IOException {
     this.path = path;
     // clears the data source every time a instance is created.
-    Files.newInputStream(Path.of(path), StandardOpenOption.TRUNCATE_EXISTING);
+    File file = new File(path);
+    if(!file.exists()) {
+      file.createNewFile();
+    }
+    Files.newInputStream(Path.of(path), StandardOpenOption.CREATE_NEW);
   }
 
   @Override
