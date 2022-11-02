@@ -10,7 +10,6 @@ import java.util.Set;
 
 import model.portfolio.PortfolioImpl;
 import model.stock.Stock;
-import model.stockpriceprovider.StockProviderType;
 import model.stocktradings.TradeOperation;
 import model.trade.StockTradeImpl;
 import model.trade.Trade;
@@ -50,24 +49,6 @@ public class PortfolioTradeController implements TradeController {
       }
       // execute the menu option chosen.
       commands.get(menuOption).run();
-    }
-  }
-
-  private StockProviderType getPriceProvider() {
-    view.display("Do you wish to choose the Price Provider (y/n)?\n");
-    String input = view.input();
-    if (input.equals("Y") || input.equals("y")) {
-      view.display("Choose a Provider from below : \n");
-      view.display("1. Mock Provider\n");
-      view.display("2. API Provider\n");
-      try {
-        int option = Integer.parseInt(view.input());
-        return StockProviderType.from(option);
-      } catch (Exception e) {
-        return StockProviderType.API;
-      }
-    } else {
-      return StockProviderType.API;
     }
   }
 

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import model.stockpriceprovider.StockPriceProvider;
 
+
 /**
  * Represents a Regular Stock.
  */

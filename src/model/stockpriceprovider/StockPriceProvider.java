@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * An interface used to determine the price of any stock.
  */
-public interface StockDataProvider {
+public interface StockPriceProvider {
 
   /**
    * Returns the price of the given stock on the given date.
