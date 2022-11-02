@@ -20,6 +20,7 @@ public class MockStockDataProvider implements StockDataProvider {
   private CacheProvider<String, Map<LocalDate, Double>> stockData;
 
   private Set<String> validStocks;
+
   /**
    * creates an instance of random stock provider which initializes the cache of the
    * stock data.
@@ -42,7 +43,7 @@ public class MockStockDataProvider implements StockDataProvider {
 
   @Override
   public double price(String stock, LocalDate date) {
-    double price = (stock.toUpperCase().hashCode()+date.hashCode())/100000;
+    double price = (stock.toUpperCase().hashCode() / 10000) + date.getYear() + date.getDayOfMonth() + date.getMonthValue();
     if (stockData.contains(stock)) {
       if (!stockData.get(stock).containsKey(date)) {
         stockData.get(stock).put(date, price);

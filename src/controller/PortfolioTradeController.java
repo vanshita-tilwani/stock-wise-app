@@ -179,7 +179,8 @@ public class PortfolioTradeController implements TradeController {
     try {
       view.display("Enter the name of the portfolio you wish to evaluate\n");
       String portfolio = view.input();
-      view.display("Enter the date at which you wish to get the evaluation(in YYYY-MM-DD format)\n");
+      view.display("Enter the date at which you wish to get the evaluation(in YYYY-MM-DD " +
+              "format)\n");
       LocalDate date = LocalDate.parse(view.input());
       view.display("The value of portfolio is " + model.value(date, portfolio) + "\n");
     } catch (IllegalArgumentException e) {
@@ -198,7 +199,8 @@ public class PortfolioTradeController implements TradeController {
     String portfolio = view.input();
     Boolean result = model.save(portfolio);
     if (result) {
-      view.display("The portfolio saved to file successfully!\n");
+      view.display("The portfolio saved to file successfully to portfolio.txt in res folder in" +
+              "your current working directory!\n");
     } else {
       view.display("The save could not be completed. Please make sure the portfolio name" +
               "is entered correctly and the data source(file) exist.\n");
@@ -209,6 +211,8 @@ public class PortfolioTradeController implements TradeController {
    * Loads all the portfolio present in the data source.
    */
   private void loadPortfolio() {
+    view.display("Please make sure your file is saved in res folder in your current " +
+            "working directly directory as portfolio.txt");
     boolean result = model.load();
     if (result) {
       view.display("The load of portfolio is successfully completed!\n");
