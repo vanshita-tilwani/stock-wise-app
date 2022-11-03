@@ -1,13 +1,7 @@
 package model.portfolio;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import model.stock.Stock;
-import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
 /**

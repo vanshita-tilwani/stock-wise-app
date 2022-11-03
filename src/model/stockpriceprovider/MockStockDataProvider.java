@@ -43,7 +43,8 @@ public class MockStockDataProvider implements StockDataProvider {
 
   @Override
   public double price(String stock, LocalDate date) {
-    double price = (stock.toUpperCase().hashCode() / 10000) + date.getYear() + date.getDayOfMonth() + date.getMonthValue();
+    double price = (stock.toUpperCase().hashCode() / 10000) +
+            date.getYear() + date.getDayOfMonth() + date.getMonthValue();
     if (stockData.contains(stock)) {
       if (!stockData.get(stock).containsKey(date)) {
         stockData.get(stock).put(date, price);

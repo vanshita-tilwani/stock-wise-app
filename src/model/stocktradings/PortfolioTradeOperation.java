@@ -6,14 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import datarepo.*;
+import datarepo.DataRepository;
 import model.portfolio.Portfolio;
 import model.portfolio.PortfolioImpl;
 import model.stock.Stock;
 import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
+/**
+ * performs trade operations such as buying trade, getting the
+ * trade evaluation on a specific date.
+ */
 public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   private Map<String, Portfolio> portfolios;
@@ -91,7 +94,6 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
   }
 
   private List<Portfolio> parse(String data) {
-    // TODO parse
     List<Portfolio> portfolioList = new ArrayList<>();
     String[] portfolios = data.split("Portfolio Name : ");
     for (String portfolio : portfolios) {
@@ -105,7 +107,8 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
         String line = lines[i];
         String[] lineParsed = line.replace("Stock Symbol : ", "").
                 replace("Quantity : ", "").split(",");
-        Trade<Stock> share = new StockTradeImpl(lineParsed[0].trim(), Double.parseDouble(lineParsed[1]));
+        Trade<Stock> share = new StockTradeImpl(lineParsed[0].trim(),
+                Double.parseDouble(lineParsed[1]));
         shares.add(share);
       }
       portfolioList.add(new PortfolioImpl(portfolioName, shares));

@@ -23,15 +23,17 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
 
   @Override
   public V get(Object key) {
-    if (!map.containsKey(key))
+    if (!map.containsKey(key)) {
       return null;
+    }
     return map.get(key);
   }
 
   @Override
   public void put(K key, V value) {
-    if (map.containsKey(key))
+    if (map.containsKey(key)) {
       return;
+    }
     map.put(key, value);
   }
 

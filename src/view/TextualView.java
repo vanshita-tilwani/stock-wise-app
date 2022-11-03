@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * A class that implement View.
+ * It contains instructions for the user.
+ * Also take inputs and displays information.
+ */
 public class TextualView implements View {
   private final Scanner scanner;
   private final PrintStream out;

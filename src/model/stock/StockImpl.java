@@ -23,7 +23,8 @@ public class StockImpl implements Stock {
    * @param name               stock symbol.
    * @param stockPriceProvider price provider.
    */
-  public StockImpl(String name, StockDataProvider stockPriceProvider) throws IllegalArgumentException {
+  public StockImpl(String name, StockDataProvider stockPriceProvider)
+          throws IllegalArgumentException {
     if (!stockPriceProvider.isValid(name)) {
       throw new IllegalArgumentException(name + " is an Invalid Stock\n");
     }
