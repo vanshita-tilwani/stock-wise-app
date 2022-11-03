@@ -163,7 +163,7 @@ public class PortfolioTradeController implements TradeController {
   }
 
   /**
-   * Returns all the portfolios created by the user
+   * Returns all the portfolios created by the user.
    */
   private void getAllPortfolios() {
     Set<String> portfolios = this.model.getAllTrades();
