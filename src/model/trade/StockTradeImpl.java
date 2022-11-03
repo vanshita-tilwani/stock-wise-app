@@ -7,7 +7,7 @@ import model.stock.StockImpl;
 import model.stockpriceprovider.MockStockDataProvider;
 
 /**
- * Represents a Trade of stocks i.e. has properties with stock and
+ * Represents a Trade of stocks with stock as properties along with
  * the number of stocks contributing in the trade.
  */
 public class StockTradeImpl implements Trade<Stock> {

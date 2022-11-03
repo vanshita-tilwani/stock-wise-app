@@ -193,29 +193,9 @@ public class PortfolioTradeControllerTest {
     }
   }
 
-  @Test
-  public void MultiplePortfolios_WithFractionalQuantity() {
-    try {
-      this.input = "1\ntest1\n2\ngoogl\n1.5\naapl\n0.4\n1\ntest2\n2\ngoogl\n10.1\ntsla\n1.23" +
-              "\n2\n3\ntest1\n3\ntest2";
-      this.setup();
-      String actual = this.out.toString();
-      Assert.assertTrue(actual.contains("Portfolio Names : \ntest2\ntest1"));
-      Assert.assertTrue(actual.contains("Portfolio Name : test2\n" +
-              "Stock Symbol : tsla,Quantity : 1.23\n" +
-              "Stock Symbol : googl,Quantity : 10.1"));
-      Assert.assertTrue(actual.contains("Portfolio Name : test1\n" +
-              "Stock Symbol : aapl,Quantity : 0.4\n" +
-              "Stock Symbol : googl,Quantity : 1.5"));
-
-      System.out.println(actual);
-    } catch (Exception e) {
-      Assert.fail();
-    }
-  }
 
   @Test
-  public void PortflioWithSameName() {
+  public void PortfolioWithSameName() {
     try {
       this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n1\ntest1\n2\ngoogl\n1\ntsla\n1" +
               "\n2\n3\ntest1\n3\ntest2";
@@ -272,14 +252,12 @@ public class PortfolioTradeControllerTest {
   }
 
   @Test
-  public void getPortFolioValue_Fraction() {
+  public void createPortfolio_FractionNotAllowed() {
     try {
-      this.input = "1\ntest1\n2\ngoogl\n1.5\naapl\n0.4\n1\ntest2\n2\ngoogl\n10.1\ntsla\n1.23" +
-              "\n4\ntest1\n2021-10-10\n4\ntest2\n2016-10-10";
+      this.input = "1\ntest1\n2\ngoogl\n1.5\n2\nibm\n10";
       this.setup();
       String actual = this.out.toString();
-      Assert.assertTrue(actual.contains("The value of portfolio is 14157.9"));
-      Assert.assertTrue(actual.contains("The value of portfolio is 92065.21999999999"));
+      Assert.assertTrue(actual.contains("Fractional number of shares are not allowed"));
       System.out.println(actual);
     } catch (Exception e) {
       Assert.fail();

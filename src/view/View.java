@@ -3,7 +3,8 @@ package view;
 import java.util.Map;
 
 /**
- * Interface used to display info to user or read data.
+ * This interface represents the view in MVC design. It
+ * is used to read/display data to the user.
  */
 public interface View {
 
@@ -18,7 +19,7 @@ public interface View {
    * @return stock data.
    * @throws NumberFormatException if the input is not double.
    */
-  Map<String, Double> read() throws NumberFormatException;
+  Map<String, Double> readTrade() throws NumberFormatException;
 
   /**
    * Used to display information to user.

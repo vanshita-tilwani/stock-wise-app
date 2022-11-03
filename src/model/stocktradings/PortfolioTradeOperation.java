@@ -14,7 +14,7 @@ import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
 /**
- * performs trade operations such as buying trade, getting the
+ * Represents portfolio trade operations such as buying trade, getting the
  * trade evaluation on a specific date.
  */
 public class PortfolioTradeOperation implements TradeOperation<Portfolio> {

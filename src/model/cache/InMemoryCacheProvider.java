@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Implements the In Memory cache.
+ * Implementation of cache as in memory cache to reduce the
+ * time for data retrieval.
  *
  * @param <K> the type of key
  * @param <V> the type of value

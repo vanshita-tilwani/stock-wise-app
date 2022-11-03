@@ -3,7 +3,7 @@ package model.stockpriceprovider;
 import java.time.LocalDate;
 
 /**
- * An interface used to determine the price of any stock.
+ * An interface works as a data provider for any stock.
  */
 public interface StockDataProvider {
 
@@ -16,6 +16,11 @@ public interface StockDataProvider {
    */
   double price(String stock, LocalDate date) throws IllegalArgumentException;
 
+  /**
+   * Checks if the stock is valid or not
+   * @param stock stock
+   * @return true/false
+   */
   boolean isValid(String stock);
 
 }

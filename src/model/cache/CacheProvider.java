@@ -1,7 +1,7 @@
 package model.cache;
 
 /**
- * Works a cache for quick access of data i.e. to reduce fetch time for the records.
+ * Works a cache for quick access of data to reduce fetch time for the records.
  *
  * @param <K> the type of Key
  * @param <V> the type of value

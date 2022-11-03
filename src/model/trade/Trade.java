@@ -3,7 +3,7 @@ package model.trade;
 import java.time.LocalDate;
 
 /**
- * Represents a stock trade made by any User.
+ * Represents a trade(i.e a transaction).
  */
 public interface Trade<T> {
 

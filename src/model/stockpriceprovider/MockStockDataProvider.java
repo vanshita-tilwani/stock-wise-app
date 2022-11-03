@@ -12,7 +12,7 @@ import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
 
 /**
- * Generates a Price randomly for a stock at any given date.
+ * Implementation of data provider by mocking the real-time data.
  */
 public class MockStockDataProvider implements StockDataProvider {
 

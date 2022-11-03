@@ -8,21 +8,28 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * A class that implement View.
- * It contains instructions for the user.
- * Also take inputs and displays information.
+ * Implementation of View interface which used
+ * input stream and output stream to read and
+ * display data respectively.
  */
 public class TextualView implements View {
   private final Scanner scanner;
   private final PrintStream out;
 
+  /**
+   * Creates an instance of textual based view with
+   * input stream and output stream.
+   *
+   * @param input Input stream to the view.
+   * @param out Output stream to the view.
+   */
   public TextualView(InputStream input, OutputStream out) {
     this.scanner = new Scanner(input);
     this.out = new PrintStream(out);
   }
 
   @Override
-  public Map<String, Double> read() throws NumberFormatException {
+  public Map<String, Double> readTrade() throws NumberFormatException {
     this.display("Enter the number of stock trade you wish to carry out\n");
     int stocks = Integer.parseInt(this.scanner.nextLine());
     Map<String, Double> stockData = new HashMap<>();
@@ -30,11 +37,18 @@ public class TextualView implements View {
       this.display("Enter the stock symbol you wish to buy\n");
       String stock = scanner.nextLine();
       this.display("Enter the number of shares you wish to buy\n");
-      double value = Double.parseDouble(scanner.nextLine());
+      String shares = scanner.nextLine();
+      Double parseDouble = Double.parseDouble(shares);
+      while(parseDouble % 1.0 != 0) {
+        this.display("Fractional number of shares are not allowed\n");
+        this.display("Please enter the number of shares you wish to buy again\n");
+        shares = scanner.nextLine();
+        parseDouble = Double.parseDouble(shares);
+      }
       if (stockData.containsKey(stock)) {
-        stockData.put(stock, stockData.get(stock) + value);
+        stockData.put(stock, stockData.get(stock) + parseDouble);
       } else {
-        stockData.put(stock, value);
+        stockData.put(stock, parseDouble);
       }
     }
     return stockData;

@@ -113,7 +113,7 @@ public class PortfolioTradeController implements TradeController {
       if (name.isEmpty() || name == null) {
         view.display("You have entered an Invalid Name. Please try again\n");
       } else {
-        Map<String, Double> stockData = view.read();
+        Map<String, Double> stockData = view.readTrade();
         List<Trade<Stock>> shares = this.parseInputAndGetPortfolio(stockData);
         if (shares.size() > 0) {
           model.buy(new PortfolioImpl(name, shares));

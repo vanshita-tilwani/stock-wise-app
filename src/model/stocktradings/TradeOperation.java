@@ -36,6 +36,10 @@ public interface TradeOperation<T> {
    */
   T get(String trade) throws IllegalArgumentException;
 
+  /**
+   * Returns all the trades performed.
+   * @return All trade names
+   */
   Set<String> getAllTrades();
 
   /**
