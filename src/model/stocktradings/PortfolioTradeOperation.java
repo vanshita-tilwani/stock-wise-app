@@ -29,6 +29,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   @Override
   public void buy(Portfolio portfolio) throws IllegalArgumentException {
+    // if the portfolio already exist then throw a invalid argument exception
     if (this.portfolios.containsKey(portfolio.name())) {
       throw new IllegalArgumentException("The portfolio with same name exists." +
               "It cannot be changed after creation.\n");
@@ -39,9 +40,12 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
   @Override
   public double value(LocalDate date, String portfolio) throws IllegalArgumentException {
     LocalDate now = LocalDate.now();
+    // if the portfolio does not exist then throw an exception to let the controller know.
     if (!this.portfolios.containsKey(portfolio)) {
       throw new IllegalArgumentException("The portfolio with name provided does not exist.\n");
     }
+    // if the date is after today's date then throw exception since data cannot be
+    // available for a future date.
     if (date.isAfter(now)) {
       throw new IllegalArgumentException("The entered date is in future.\n");
     }
@@ -51,6 +55,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   @Override
   public Portfolio get(String trade) throws IllegalArgumentException {
+    // if the portfolio does not exist throw an exception
     if (!this.portfolios.containsKey(trade)) {
       throw new IllegalArgumentException("The portfolio with name provided does not exist.\n");
     }
@@ -66,13 +71,17 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
   @Override
   public boolean save(String portfolio) throws IllegalArgumentException {
     try {
+      // if the portfolio does not exist throw the exception
       if (!this.portfolios.containsKey(portfolio)) {
         throw new IllegalArgumentException("The portfolio with name : " + portfolio +
                 " does not exist.");
       }
+      // save the portfolio in the data source
       repository.save(this.portfolios.get(portfolio));
       return true;
     } catch (Exception e) {
+      // Catch any exception that was faced while saving data to the data source and return
+      // the return as false to let the caller know that save failed.
       return false;
     }
   }
@@ -80,19 +89,30 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
   @Override
   public boolean load() {
     try {
-      List<Portfolio> portfolios = this.parse(repository.read());
+      // Read the data from data source
+      String data = repository.read();
+      // Parse the data into required format
+      List<Portfolio> portfolios = this.parse(data);
       for (Portfolio portfolio : portfolios) {
+        // if the portfolio does not exist then load the portfolio in the application
         if (!this.portfolios.containsKey(portfolio.name())) {
           this.buy(portfolio);
         }
       }
       return true;
     } catch (Exception e) {
+      // Catch any exception that was faced while reading data from data source and return
+      // the return as false to let the caller know that load failed.
       return false;
     }
 
   }
 
+  /**
+   * Parses the data from data source in the required format.
+   * @param data Data read from data source.
+   * @return parsed data.
+   */
   private List<Portfolio> parse(String data) {
     // Reads input from file and parses it
     List<Portfolio> portfolioList = new ArrayList<>();

@@ -24,6 +24,7 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
 
   @Override
   public V get(Object key) {
+    // if the cache does not contain the key return null
     if (!map.containsKey(key)) {
       return null;
     }
@@ -32,6 +33,7 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
 
   @Override
   public void put(K key, V value) {
+    // Do not override the data is cache already contains the key.
     if (map.containsKey(key)) {
       return;
     }

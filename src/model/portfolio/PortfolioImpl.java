@@ -35,6 +35,7 @@ public class PortfolioImpl implements Portfolio {
 
   @Override
   public double value(LocalDate date) {
+    // Adds the value of each trade to calculate the total portfolio value
     double value = 0;
     for (Trade trade : shares) {
       double total = trade.value(date);
@@ -45,6 +46,7 @@ public class PortfolioImpl implements Portfolio {
 
   @Override
   public String toString() {
+    // Prepares the formatted string for Portfolio.
     StringBuilder sb = new StringBuilder();
     sb.append("Portfolio Name : ").append(this.name).append("\n");
     for (Trade share : shares) {

@@ -17,7 +17,8 @@ public interface StockDataProvider {
   double price(String stock, LocalDate date) throws IllegalArgumentException;
 
   /**
-   * Checks if the stock is valid or not
+   * Checks if the stock symbol is valid.
+   *
    * @param stock stock
    * @return true/false
    */

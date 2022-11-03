@@ -181,11 +181,11 @@ public class PortfolioTradeControllerTest {
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains("Portfolio Names : \ntest2\ntest1"));
       Assert.assertTrue(actual.contains("Portfolio Name : test2\n" +
-              "Stock Symbol : tsla,Quantity : 1.0\n" +
-              "Stock Symbol : googl,Quantity : 1.0"));
+              "Stock Symbol : TSLA,Quantity : 1.0\n" +
+              "Stock Symbol : GOOGL,Quantity : 1.0"));
       Assert.assertTrue(actual.contains("Portfolio Name : test1\n" +
-              "Stock Symbol : aapl,Quantity : 4.0\n" +
-              "Stock Symbol : googl,Quantity : 1.0"));
+              "Stock Symbol : AAPL,Quantity : 4.0\n" +
+              "Stock Symbol : GOOGL,Quantity : 1.0"));
 
       System.out.println(actual);
     } catch (Exception e) {

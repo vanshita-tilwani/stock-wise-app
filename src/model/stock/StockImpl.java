@@ -25,6 +25,7 @@ public class StockImpl implements Stock {
    */
   public StockImpl(String name, StockDataProvider stockPriceProvider)
           throws IllegalArgumentException {
+    // if the stock provided is invalid then throw an exception.
     if (!stockPriceProvider.isValid(name)) {
       throw new IllegalArgumentException(name + " is an Invalid Stock\n");
     }
@@ -45,6 +46,6 @@ public class StockImpl implements Stock {
 
   @Override
   public String toString() {
-    return this.name;
+    return this.name.toUpperCase();
   }
 }

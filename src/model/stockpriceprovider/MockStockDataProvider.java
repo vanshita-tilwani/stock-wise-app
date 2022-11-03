@@ -29,6 +29,7 @@ public class MockStockDataProvider implements StockDataProvider {
 
     stockData = new InMemoryCacheProvider<>();
     validStocks = new HashSet<>();
+    // Maintains a valid list of stocks supported by the application.
     validStocks.addAll(new ArrayList<>(Arrays.asList("AAPL", "MSFT", "GOOG", "GOOGL",
             "AMZN", "TSLA", "BRK/A", "BRK/B", "UNH", "XOM", "JNJ", "V", "WMT", "JPM", "CVX",
             "NVDA", "LLY", "PG", "TSM", "MA", "HD", "BAC", "PFE", "NVO", "ABBV", "KO", "MRK",
@@ -43,8 +44,10 @@ public class MockStockDataProvider implements StockDataProvider {
 
   @Override
   public double price(String stock, LocalDate date) {
+    // Mocks the stock data
     double price = (stock.toUpperCase().hashCode() / 10000) +
             date.getYear() + date.getDayOfMonth() + date.getMonthValue();
+    // Adds the stock data to cache to make sure there are no discrepancies.
     if (stockData.contains(stock)) {
       if (!stockData.get(stock).containsKey(date)) {
         stockData.get(stock).put(date, price);

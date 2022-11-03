@@ -58,11 +58,14 @@ public class PortfolioTradeController implements TradeController {
    * @return the menu options chosen by the user.
    */
   private int readMenuInput() {
+    // Displays the menu options to the user
     String menuOptions = this.getMenuOptions();
     view.display(menuOptions);
     try {
+      // read the menu option input by the user
       return Integer.parseInt(view.input());
     } catch (Exception e) {
+      // if the input is illegal then returns 0
       return 0;
     }
   }
@@ -73,6 +76,7 @@ public class PortfolioTradeController implements TradeController {
    * @return command map.
    */
   private Map<Integer, Runnable> getCommands() {
+    // creates a <menu item, runnable> map to execute flow based on user input
     Map<Integer, Runnable> commandMap = new HashMap<>();
     commandMap.put(1, () -> this.createPortfolio());
     commandMap.put(2, () -> this.getAllPortfolios());
@@ -90,6 +94,7 @@ public class PortfolioTradeController implements TradeController {
    * @return the menu options in string.
    */
   private String getMenuOptions() {
+    // Generates all the menu options displayed to the user.
     StringBuilder menu = new StringBuilder();
     menu.append("Main Menu :\n");
     menu.append("1. Create Portfolio\n");
@@ -108,17 +113,23 @@ public class PortfolioTradeController implements TradeController {
    */
   private void createPortfolio() {
     try {
+      // Asks for the user to input portfolio name to begin with
       view.display("Enter the name of the portfolio you wish to create\n");
       String name = view.input().trim();
       if (name.isEmpty() || name == null) {
+        // stop if the name entered is invalid
         view.display("You have entered an Invalid Name. Please try again\n");
       } else {
+        // Asks the view to read the trade information
         Map<String, Double> stockData = view.readTrade();
+        // Prepares the shares list to create portfolio
         List<Trade<Stock>> shares = this.parseInputAndGetPortfolio(stockData);
         if (shares.size() > 0) {
+          // asks the model to buy the portfolio if there are any valid shares
           model.buy(new PortfolioImpl(name, shares));
           view.display("Portfolio created successfully.\n");
         } else {
+          // if there are no valid shares, inform the user
           view.display("Portfolio could not be created since all the shares in the " +
                   "portfolio are Invalid.\n");
         }
@@ -131,6 +142,11 @@ public class PortfolioTradeController implements TradeController {
 
   }
 
+  /**
+   * Parses the stock data read by view.
+   * @param stockData Stock data read by view
+   * @return list of trades
+   */
   private List<Trade<Stock>> parseInputAndGetPortfolio(Map<String, Double> stockData) {
     Set<String> stocks = stockData.keySet();
     List<Trade<Stock>> shares = new ArrayList<>();
@@ -146,6 +162,9 @@ public class PortfolioTradeController implements TradeController {
     return shares;
   }
 
+  /**
+   * Returns all the portfolios created by the user
+   */
   private void getAllPortfolios() {
     Set<String> portfolios = this.model.getAllTrades();
     if (portfolios.size() > 0) {
