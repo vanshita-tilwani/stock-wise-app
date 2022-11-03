@@ -14,14 +14,14 @@ public interface View {
   String input();
 
   /**
-   * Reads the stock data from user
-   * @return stock data
-   * @throws NumberFormatException if the input is not double
+   * Reads the stock data from user.
+   * @return stock data.
+   * @throws NumberFormatException if the input is not double.
    */
   Map<String, Double> read() throws NumberFormatException;
 
   /**
-   * Used to display information to user
+   * Used to display information to user.
    * @param message display message.
    */
   void display(String message);

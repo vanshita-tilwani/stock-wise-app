@@ -94,23 +94,29 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
   }
 
   private List<Portfolio> parse(String data) {
+    // Reads input from file and parses it
     List<Portfolio> portfolioList = new ArrayList<>();
     String[] portfolios = data.split("Portfolio Name : ");
     for (String portfolio : portfolios) {
+      // if portfolio is empty then skip this one
       if (portfolio.isEmpty()) {
         continue;
       }
+      //Parse all the stock trades in the portfolio.
       String[] lines = portfolio.split("\n");
       String portfolioName = lines[0];
       List<Trade<Stock>> shares = new ArrayList<>();
       for (int i = 1; i < lines.length; i++) {
         String line = lines[i];
+        // Parses the stock value and quantity from stock trade
         String[] lineParsed = line.replace("Stock Symbol : ", "").
                 replace("Quantity : ", "").split(",");
         Trade<Stock> share = new StockTradeImpl(lineParsed[0].trim(),
                 Double.parseDouble(lineParsed[1]));
+        // maintains a list of trade
         shares.add(share);
       }
+      // Creates a portfolio with stock trades.
       portfolioList.add(new PortfolioImpl(portfolioName, shares));
     }
     return portfolioList;

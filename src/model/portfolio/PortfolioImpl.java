@@ -1,4 +1,5 @@
 package model.portfolio;
+
 import java.time.LocalDate;
 import java.util.List;
 import model.stock.Stock;

@@ -361,8 +361,8 @@ public class PortfolioTradeControllerTest {
     menu.append("4. Get the evaluation of an existing Portfolio\n");
     menu.append("5. Save the portfolio to file\n");
     menu.append("6. Load the portfolio\n");
-    menu.append("Enter the menu option you wish to choose.\nPress and enter any other key to exit the " +
-            "application.\n");
+    menu.append("Enter the menu option you wish to choose.\n");
+    menu.append("Press and enter any other key to exit the application.\n");
     if (!isValid) {
       menu.append("You have decided to exit the application. See you next time\n");
     }
