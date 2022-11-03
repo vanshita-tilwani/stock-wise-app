@@ -106,7 +106,7 @@ public class PortfolioTradeOperationTest {
       shares.add(new StockTradeImpl("GOOG", 2.0));
       this.trade.buy(new PortfolioImpl("test1", shares));
       Double value = this.trade.value(LocalDate.parse("2019-10-10"), "test1");
-      Double expected = 126.0;
+      Double expected = 4516.0;
       Assert.assertEquals(expected, value);
     } catch (IllegalArgumentException e) {
       Assert.fail();

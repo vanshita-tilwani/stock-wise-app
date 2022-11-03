@@ -264,7 +264,7 @@ public class PortfolioTradeControllerTest {
       this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n4\ntest1\n2015-10-23";
       this.setup();
       String actual = this.out.toString();
-      Assert.assertTrue(actual.contains("The value of portfolio is 965.0"));
+      Assert.assertTrue(actual.contains("The value of portfolio is 17840.0"));
 
     } catch (Exception e) {
       Assert.fail();
@@ -278,8 +278,8 @@ public class PortfolioTradeControllerTest {
               "\n4\ntest1\n2021-10-10\n4\ntest2\n2016-10-10";
       this.setup();
       String actual = this.out.toString();
-      Assert.assertTrue(actual.contains("The value of portfolio is 1105.9"));
-      Assert.assertTrue(actual.contains("The value of portfolio is 7364.509999999999"));
+      Assert.assertTrue(actual.contains("The value of portfolio is 14157.9"));
+      Assert.assertTrue(actual.contains("The value of portfolio is 92065.21999999999"));
       System.out.println(actual);
     } catch (Exception e) {
       Assert.fail();
@@ -292,7 +292,7 @@ public class PortfolioTradeControllerTest {
       this.input = "1\ntest1\n2\ngoogl\n1\naapl\n4\n4\ntest1\n2015-10-23\n4\ntest1\n2016-10-21";
       this.setup();
       String actual = this.out.toString();
-      Assert.assertTrue(actual.contains("The value of portfolio is 965.0"));
+      Assert.assertTrue(actual.contains("The value of portfolio is 17840.0"));
 
       System.out.println(actual);
     } catch (Exception e) {
@@ -307,7 +307,7 @@ public class PortfolioTradeControllerTest {
               "\n2\n3\ntest1\n3\ntest2\n5\ntest1";
       this.setup();
       String actual = this.out.toString();
-      Assert.assertTrue(actual.contains("The portfolio saved to file successfully!"));
+      Assert.assertTrue(actual.contains("The portfolio saved to file successfully"));
     } catch (Exception e) {
       Assert.fail();
     }
@@ -334,8 +334,8 @@ public class PortfolioTradeControllerTest {
     try {
       this.input = "6\n2";
       this.setup();
-      Assert.assertTrue(this.out.toString().contains("The load of portfolio is " +
-              "successfully completed!"));
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains("The load of portfolio is successfully completed"));
     } catch (Exception e) {
       Assert.fail();
     }
@@ -361,7 +361,7 @@ public class PortfolioTradeControllerTest {
     menu.append("4. Get the evaluation of an existing Portfolio\n");
     menu.append("5. Save the portfolio to file\n");
     menu.append("6. Load the portfolio\n");
-    menu.append("Enter the menu option you wish to choose.\nPlease any other key to exit the " +
+    menu.append("Enter the menu option you wish to choose.\nPress and enter any other key to exit the " +
             "application.\n");
     if (!isValid) {
       menu.append("You have decided to exit the application. See you next time\n");

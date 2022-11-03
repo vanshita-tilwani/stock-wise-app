@@ -98,7 +98,7 @@ public class PortfolioTradeController implements TradeController {
     menu.append("4. Get the evaluation of an existing Portfolio\n");
     menu.append("5. Save the portfolio to file\n");
     menu.append("6. Load the portfolio\n");
-    menu.append("Enter the menu option you wish to choose.\nPlease any other key to exit the " +
+    menu.append("Enter the menu option you wish to choose.\nPress and enter any other key to exit the " +
             "application.\n");
     return menu.toString();
   }
@@ -200,7 +200,7 @@ public class PortfolioTradeController implements TradeController {
     Boolean result = model.save(portfolio);
     if (result) {
       view.display("The portfolio saved to file successfully to portfolio.txt in res folder in" +
-              "your current working directory!\n");
+              " your current working directory!\n");
     } else {
       view.display("The save could not be completed. Please make sure the portfolio name" +
               "is entered correctly and the data source(file) exist.\n");
@@ -211,11 +211,10 @@ public class PortfolioTradeController implements TradeController {
    * Loads all the portfolio present in the data source.
    */
   private void loadPortfolio() {
-    view.display("Please make sure your file is saved in res folder in your current " +
-            "working directly directory as portfolio.txt");
     boolean result = model.load();
     if (result) {
-      view.display("The load of portfolio is successfully completed!\n");
+      view.display("The load of portfolio is successfully completed from portfolio.txt " +
+              "from the res folder in your current working directory!\n");
     } else {
       view.display("There were issues with portfolio load. Please make sure the file is in" +
               "expected format.\n");

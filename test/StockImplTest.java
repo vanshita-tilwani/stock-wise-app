@@ -29,7 +29,7 @@ public class StockImplTest {
     Stock stock = new StockImpl("NKE", new MockStockDataProvider());
     LocalDate date = LocalDate.parse("2014-12-01");
     Double actual = stock.price(date);
-    Double expected = 42.0;
+    Double expected = 2034.0;
     Assert.assertEquals(expected, actual);
   }
 }

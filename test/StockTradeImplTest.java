@@ -33,7 +33,7 @@ public class StockTradeImplTest {
   @Test
   public void value() {
     this.stockTrade = new StockTradeImpl("GOOG", 10);
-    Double expected = 630.0;
+    Double expected = 22770.0;
     Double actual = this.stockTrade.value(LocalDate.parse("2022-10-26"));
     Assert.assertEquals(expected, actual);
   }
@@ -41,7 +41,7 @@ public class StockTradeImplTest {
   @Test
   public void value2() {
     this.stockTrade = new StockTradeImpl("GOOG", 10);
-    Double expected = 630.0;
+    Double expected = 22740.0;
     Double value = this.stockTrade.value(LocalDate.parse("2022-10-23"));
     Assert.assertEquals(expected, value);
   }

@@ -1,5 +1,35 @@
-Portfolio Name : test3
-Stock Symbol : GOOG ,Quantity : 10.0
-Stock Symbol : AAPL ,Quantity : 10.0
-Portfolio Name : test4
-Stock Symbol : AAPL ,Quantity : 100.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0
+Portfolio Name : test1
+Stock Symbol : aapl,Quantity : 4.0
+Stock Symbol : googl,Quantity : 1.0
+Portfolio Name : test1
+Stock Symbol : GOOG,Quantity : 2.0

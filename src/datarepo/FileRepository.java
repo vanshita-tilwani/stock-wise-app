@@ -25,7 +25,6 @@ public class FileRepository<T> implements DataRepository<T> {
    */
   public FileRepository(String path) throws IOException {
     this.path = Paths.get(new File(".").getCanonicalPath(), path).toAbsolutePath();
-    System.out.println(this.path.toString());
     // clears the data source every time a instance is created.
     File file = new File(path);
     if (!file.exists()) {
