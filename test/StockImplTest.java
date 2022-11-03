@@ -7,6 +7,9 @@ import model.stock.Stock;
 import model.stock.StockImpl;
 import model.stockpriceprovider.MockStockDataProvider;
 
+/**
+ * Testing for StockImpl.
+ */
 public class StockImplTest {
 
   @Test

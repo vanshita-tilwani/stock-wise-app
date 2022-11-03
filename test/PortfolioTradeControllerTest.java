@@ -16,19 +16,22 @@ import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
 
+/**
+ * Testing for PortfolioTradeController.
+ */
 public class PortfolioTradeControllerTest {
 
-  private InputStream in;
   private OutputStream out;
   private String input;
-  private TradeController controller;
 
   private void setup() throws Exception {
-    this.in = new ByteArrayInputStream(input.getBytes());
+    InputStream in;
+    TradeController controller;
+    in = new ByteArrayInputStream(input.getBytes());
     this.out = new ByteArrayOutputStream();
     View view = this.getView(in, out);
     TradeOperation model = this.getModel();
-    this.controller = new PortfolioTradeController(view, model);
+    controller = new PortfolioTradeController(view, model);
     controller.execute();
   }
 
@@ -98,7 +101,8 @@ public class PortfolioTradeControllerTest {
       String actual = out.toString();
       StringBuilder expected = this.getMenuOptions(true);
       expected.append("Enter the name of the portfolio you wish to evaluate\n");
-      expected.append("Enter the date at which you wish to get the evaluation(in YYYY-MM-DD format)\n");
+      expected.append("Enter the date at which you wish to get the " +
+              "evaluation(in YYYY-MM-DD format)\n");
       expected.append("Please enter the Date in YYYY-MM-DD format and try again.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
@@ -161,7 +165,8 @@ public class PortfolioTradeControllerTest {
       this.input = "1\ntest1\n4\nGOO\n1\nNO\n4\nAPL\n6\nMST\n10\n2";
       this.setup();
       String actual = out.toString();
-      Assert.assertTrue(actual.contains("Portfolio could not be created since all the shares in the portfolio are Invalid.\n"));
+      Assert.assertTrue(actual.contains("Portfolio could not be created since " +
+              "all the shares in the portfolio are Invalid.\n"));
     } catch (Exception e) {
       Assert.fail();
     }
@@ -317,7 +322,8 @@ public class PortfolioTradeControllerTest {
       this.setup();
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains("The save could not be completed. " +
-              "Please make sure the portfolio nameis entered correctly and the data source(file) exist."));
+              "Please make sure the portfolio nameis entered correctly and " +
+              "the data source(file) exist."));
     } catch (Exception e) {
       Assert.fail();
     }
@@ -328,7 +334,8 @@ public class PortfolioTradeControllerTest {
     try {
       this.input = "6\n2";
       this.setup();
-      Assert.assertTrue(this.out.toString().contains("The load of portfolio is successfully completed!"));
+      Assert.assertTrue(this.out.toString().contains("The load of portfolio is " +
+              "successfully completed!"));
     } catch (Exception e) {
       Assert.fail();
     }

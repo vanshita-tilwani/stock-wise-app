@@ -10,10 +10,12 @@ import java.util.Map;
 import view.TextualView;
 import view.View;
 
+/**
+ * Testing the TextualView class.
+ */
 public class TextualViewTest {
 
   private String input;
-  private InputStream in;
   private OutputStream out;
   private View view;
 
@@ -74,9 +76,10 @@ public class TextualViewTest {
   }
 
   private void setup() {
-    this.in = new ByteArrayInputStream(this.input.getBytes());
+    InputStream in;
+    in = new ByteArrayInputStream(this.input.getBytes());
     this.out = new ByteArrayOutputStream();
-    view = new TextualView(this.in, this.out);
+    view = new TextualView(in, this.out);
   }
 
 }

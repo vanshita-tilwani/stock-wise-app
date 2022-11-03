@@ -16,6 +16,9 @@ import model.stocktradings.TradeOperation;
 import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
+/**
+ * Testing for PortfolioTradeOperation class.
+ */
 public class PortfolioTradeOperationTest {
 
   private TradeOperation trade;

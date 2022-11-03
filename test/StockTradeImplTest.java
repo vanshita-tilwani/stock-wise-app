@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
+/**
+ * Testing for StockTradeImpl class.
+ */
 public class StockTradeImplTest {
 
   private Trade stockTrade;
