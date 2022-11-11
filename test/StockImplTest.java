@@ -14,19 +14,19 @@ public class StockImplTest {
 
   @Test
   public void validStockSymbol() {
-    Stock stock = new StockImpl("TSLA", new MockStockDataProvider());
+    Stock stock = new StockImpl("TSLA");
     Assert.assertEquals("TSLA", stock.name());
     Assert.assertEquals("TSLA", stock.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void InvalidStockSymbol() {
-    new StockImpl("TSL", new MockStockDataProvider());
+    new StockImpl("TSL");
   }
 
   @Test
   public void value1() {
-    Stock stock = new StockImpl("NKE", new MockStockDataProvider());
+    Stock stock = new StockImpl("NKE");
     LocalDate date = LocalDate.parse("2014-12-01");
     Double actual = stock.price(date);
     Double expected = 2034.0;

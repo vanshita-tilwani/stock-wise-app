@@ -3,6 +3,8 @@ package model.stocktradings;
 import java.time.LocalDate;
 import java.util.Set;
 
+import model.trade.Trade;
+
 /**
  * Interface to perform trade operations such as buying trade, getting the
  * trade evaluation on a specific date.
@@ -12,11 +14,11 @@ import java.util.Set;
 public interface TradeOperation<T> {
 
   /**
-   * Used to Buy a trade.
+   * Used to create a trade.
    *
    * @param trade The trade object.
    */
-  void buy(T trade) throws IllegalArgumentException;
+  void create(T trade) throws IllegalArgumentException;
 
   /**
    * Returns the value of trade at a date.

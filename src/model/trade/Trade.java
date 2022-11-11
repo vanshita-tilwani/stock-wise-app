@@ -22,4 +22,13 @@ public interface Trade<T> {
    */
   double value(LocalDate date);
 
+  double quantity();
+
+  void buy(double quantity);
+
+  void sell(double quantity) throws IllegalArgumentException;
+
+  LocalDate purchased() throws IllegalArgumentException;
+
+
 }

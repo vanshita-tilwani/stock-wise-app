@@ -1,4 +1,4 @@
-package datarepo;
+package model.datarepo;
 
 import java.io.File;
 import java.io.IOException;

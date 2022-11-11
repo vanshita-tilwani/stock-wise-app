@@ -1,4 +1,4 @@
-package datarepo;
+package model.datarepo;
 
 /**
  * This interface is responsible for saving the objects to the

@@ -17,7 +17,7 @@ import model.cache.InMemoryCacheProvider;
 public class MockStockDataProvider implements StockDataProvider {
 
   // cache to store the data for the stock
-  private CacheProvider<String, Map<LocalDate, Double>> stockData;
+  private final CacheProvider<String, Map<LocalDate, Double>> stockData;
 
   private Set<String> validStocks;
 

@@ -8,10 +8,13 @@ import java.io.OutputStream;
 
 import controller.PortfolioTradeController;
 import controller.TradeController;
-import datarepo.DataRepository;
-import datarepo.FileRepository;
+import model.datarepo.DataRepository;
+import model.datarepo.FileRepository;
+import model.dataparseer.DataParser;
+import model.dataparseer.PortfolioDataParser;
 import model.portfolio.Portfolio;
 import model.stocktradings.PortfolioTradeOperation;
+import model.stocktradings.PortfolioTrader;
 import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
@@ -30,7 +33,7 @@ public class PortfolioTradeControllerTest {
     in = new ByteArrayInputStream(input.getBytes());
     this.out = new ByteArrayOutputStream();
     View view = this.getView(in, out);
-    TradeOperation model = this.getModel();
+    PortfolioTradeOperation model = this.getModel();
     controller = new PortfolioTradeController(view, model);
     controller.execute();
   }
@@ -324,9 +327,10 @@ public class PortfolioTradeControllerTest {
     return new TextualView(in, out);
   }
 
-  private TradeOperation getModel() throws Exception {
+  private PortfolioTradeOperation getModel() throws Exception {
     DataRepository<Portfolio> repository = new FileRepository<>("res/portfolio.txt");
-    TradeOperation model = new PortfolioTradeOperation(repository);
+    DataParser<Portfolio> parser = new PortfolioDataParser();
+    PortfolioTradeOperation model = new PortfolioTrader(repository, parser);
     return model;
   }
 

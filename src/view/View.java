@@ -14,12 +14,6 @@ public interface View {
    */
   String input();
 
-  /**
-   * Reads the stock data from user.
-   * @return stock data.
-   * @throws NumberFormatException if the input is not double.
-   */
-  Map<String, Double> readTrade() throws NumberFormatException;
 
   /**
    * Used to display information to user.

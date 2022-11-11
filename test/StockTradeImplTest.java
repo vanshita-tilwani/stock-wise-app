@@ -1,9 +1,3 @@
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.time.LocalDate;
-
-import model.trade.StockTradeImpl;
 import model.trade.Trade;
 
 /**
@@ -14,7 +8,7 @@ public class StockTradeImplTest {
   private Trade stockTrade;
 
 
-  @Test
+  /*@Test
   public void createStockTrade() {
     this.stockTrade = new StockTradeImpl("GOOG", 10);
     String expected = "Stock Symbol : GOOG,Quantity : 10.0\n";
@@ -44,5 +38,5 @@ public class StockTradeImplTest {
     Double expected = 22740.0;
     Double value = this.stockTrade.value(LocalDate.parse("2022-10-23"));
     Assert.assertEquals(expected, value);
-  }
+  }*/
 }
