@@ -4,56 +4,45 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import model.portfolio.MasterPortfolio;
+
+import model.portfolio.SimulatedPortfolio;
 import model.portfolio.Portfolio;
 import model.stock.Stock;
-import model.stockpriceprovider.StockDataProvider;
-import model.trade.CumulativeStockTrade;
+import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
 import view.View;
 
+/**
+ * Implementation of executor responsible for creating a portfolio of type cumulative
+ * in the application.
+ */
 public class CreateCumulativePortfolio extends CreatePortfolio {
 
   @Override
   protected Set<Trade<Stock>> readTradeData(View view) {
-    Map<String, Double> stockData = new HashMap<>();
+    Map<String, Trade<Stock>> stockData = new HashMap<>();
+    // reads number of trades that the portfolio is composed of.
     int stocks = this.readNumberOfStocks(view);
     for (int i = 0; i < stocks; i++) {
+      // reads the stock symbol
       String stock = this.readStockSymbol(view);
+      // reads the number of shares.
       Double shares = this.readShares(view);
-      // enter the trade information in the trade list
       if (stockData.containsKey(stock)) {
         // if stock already exists, then consolidate the amount of shares.
-        stockData.put(stock, stockData.get(stock) + shares);
+        stockData.get(stock).buy(shares);
       } else {
-        stockData.put(stock, shares);
+        // if stock does not already exist, add.
+        stockData.put(stock, new SimulatedStockTrade(stock, shares));
       }
     }
-    return this.parseInputAndGetPortfolio(view, stockData);
+    // parse the map to set of trades and return the resultant
+    return new HashSet<>(stockData.values());
   }
 
   @Override
   protected Portfolio createPortfolio(String name, Set<Trade<Stock>> shares) {
-    return new MasterPortfolio(name, shares);
-  }
-
-  /**
-   * Parses the stock data read by view.
-   * @param stockData Stock data read by view
-   * @return list of trades
-   */
-  private Set<Trade<Stock>> parseInputAndGetPortfolio(View view, Map<String, Double> stockData) {
-    Set<String> stocks = stockData.keySet();
-    Set<Trade<Stock>> shares = new HashSet<>();
-    for (String stock : stocks) {
-      Trade<Stock> share;
-      try {
-        share = new CumulativeStockTrade(stock, stockData.get(stock));
-        shares.add(share);
-      } catch (Exception e) {
-        view.display(e.getMessage());
-      }
-    }
-    return shares;
+    // creates a master/aggregated type of portfolio used for analysis purposes.
+    return new SimulatedPortfolio(name, shares);
   }
 }

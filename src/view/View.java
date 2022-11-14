@@ -1,5 +1,6 @@
 package view;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 /**
@@ -20,5 +21,7 @@ public interface View {
    * @param message display message.
    */
   void display(String message);
+
+  void draw(Map<LocalDate, Double> portfolioData);
 
 }

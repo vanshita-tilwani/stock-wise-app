@@ -1,6 +1,5 @@
 package controller;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,17 +7,16 @@ import controller.commandexecutors.AllPortfolio;
 import controller.commandexecutors.BuyStock;
 import controller.commandexecutors.CreateCumulativePortfolio;
 import controller.commandexecutors.CreateTransactionalPortfolio;
+import controller.commandexecutors.EvaluateCostBasis;
+import controller.commandexecutors.EvaluatePortfolioPerformance;
 import controller.commandexecutors.Executor;
 import controller.commandexecutors.LoadPortfolio;
 import controller.commandexecutors.PortfolioComposition;
+import controller.commandexecutors.PortfolioCompositionAtDate;
 import controller.commandexecutors.PortfolioEvaluation;
 import controller.commandexecutors.SavePortfolio;
 import controller.commandexecutors.SellStock;
-import model.cache.CacheProvider;
-import model.stockpriceprovider.StockDataProvider;
-import model.stockpriceprovider.WebAPIStockDataProvider;
 import model.stocktradings.PortfolioTradeOperation;
-import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
@@ -26,7 +24,9 @@ import view.View;
  */
 public class PortfolioTradeController implements TradeController {
 
+  // view responsible for input/display
   private final View view;
+  // model responsible for business logic
   private final PortfolioTradeOperation model;
 
 
@@ -43,6 +43,7 @@ public class PortfolioTradeController implements TradeController {
 
   @Override
   public void execute() {
+    // TODO : ask for data provider type or set default if time permits.
     // gets the commands as per the menu options to create, retrieve,
     // evaluate, save or load the portfolios.
     Map<Integer, Executor> commands = this.getCommands();
@@ -91,9 +92,12 @@ public class PortfolioTradeController implements TradeController {
     commandMap.put(4, new SellStock());
     commandMap.put(5, new AllPortfolio());
     commandMap.put(6, new PortfolioComposition());
-    commandMap.put(7, new PortfolioEvaluation());
-    commandMap.put(8, new SavePortfolio());
-    commandMap.put(9, new LoadPortfolio());
+    commandMap.put(7, new PortfolioCompositionAtDate());
+    commandMap.put(8, new PortfolioEvaluation());
+    commandMap.put(9, new EvaluateCostBasis());
+    commandMap.put(10, new EvaluatePortfolioPerformance());
+    commandMap.put(11, new SavePortfolio());
+    commandMap.put(12, new LoadPortfolio());
     return commandMap;
   }
 
@@ -111,10 +115,13 @@ public class PortfolioTradeController implements TradeController {
     menu.append("3. Buy Stock\n");
     menu.append("4. Sell Stock\n");
     menu.append("5. Get All the Portfolio Names\n");
-    menu.append("6. Get an existing Portfolio composition\n");
-    menu.append("7. Get the evaluation of an existing Portfolio\n");
-    menu.append("8. Save the portfolio to file\n");
-    menu.append("9. Load the portfolio\n");
+    menu.append("6. Get an existing Portfolio composition(end of all transactions)\n");
+    menu.append("7. Gen an existing Portfolio composition at a specific date\n");
+    menu.append("8. Get the evaluation of an existing Portfolio\n");
+    menu.append("9. Get the cost basis of a Portfolio\n");
+    menu.append("10. Get the portfolio Performance over a Period of time\n");
+    menu.append("11. Save the portfolio to file\n");
+    menu.append("12. Load the portfolio\n");
     menu.append("Enter the menu option you wish to choose.\n");
     menu.append("Press and enter any other key to exit the application.\n");
     return menu.toString();

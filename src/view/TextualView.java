@@ -3,7 +3,7 @@ package view;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -38,5 +38,13 @@ public class TextualView implements View {
   public void display(String message) {
     // displays the information to the user
     this.out.print(message);
+  }
+
+  @Override
+  public void draw(Map<LocalDate, Double> portfolioData) {
+    portfolioData.forEach((key, value) -> {
+      this.display(key + ": " + "*".repeat(value.intValue() / 1000));
+    });
+    this.display("Scale : * = $1000");
   }
 }

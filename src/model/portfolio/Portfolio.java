@@ -1,8 +1,7 @@
 package model.portfolio;
 
 import java.time.LocalDate;
-
-import model.trade.Trade;
+import java.util.Map;
 
 /**
  * Represents a collection of Stock trades.
@@ -30,9 +29,11 @@ public interface Portfolio {
    * @param stock the stock that the user wishes to buy.
    * @param shares the amount of shares of the stock.
    * @param date the date of purchase.
+   * @param commission the commission fee involved in the trade.
    * @throws IllegalArgumentException if the operation is invalid.
    */
-  void buy(String stock, Double shares, LocalDate date) throws IllegalArgumentException;
+  void buy(String stock, Double shares, LocalDate date, Double commission)
+          throws UnsupportedOperationException;
 
   /**
    * To sell a shares of a stock after it has been created.
@@ -40,9 +41,11 @@ public interface Portfolio {
    * @param stock the stock that the user wishes to sell.
    * @param shares the amount of shares of the stock.
    * @param date the date of purchase.
+   * @param commission the commission fee involved in the trade.
    * @throws IllegalArgumentException if the operation is invalid.
    */
-  void sell(String stock, Double shares, LocalDate date) throws IllegalArgumentException;
+  void sell(String stock, Double shares, LocalDate date, Double commission)
+          throws UnsupportedOperationException;
 
   /**
    * Returns the total money invested in the Portfolio at any time.
@@ -50,6 +53,32 @@ public interface Portfolio {
    * @param date the date at which you need to evaluate total invested amount.
    * @return the total invested amount.
    */
-  double cost(LocalDate date);
+  double costBasis(LocalDate date) throws UnsupportedOperationException;
+
+  /**
+   * Returns the aggregated composition of a Portfolio (i.e. describing each stock with the number
+   * of shares that a portfolio contains) at a date later than all the trades in the portfolio.
+   *
+   * @return composition of portfolio.
+   */
+  String composition();
+
+  /**
+   * Returns the aggregated composition of a Portfolio (i.e. describing each stock with the number
+   * of shares that a portfolio contains) at a specified date.
+   *
+   * @param date the date at which you want to evaluate portfolio composition.
+   * @return the composition of a portfolio.
+   */
+  String composition(LocalDate date);
+
+  /**
+   * Returns all value of portfolio within the time period specified in the argument.
+   *
+   * @param from the start date of the time period.
+   * @param to the last date of the time period.
+   * @return the value of portfolio at multiple dates.
+   */
+  Map<LocalDate, Double> analyze(LocalDate from, LocalDate to);
 
 }

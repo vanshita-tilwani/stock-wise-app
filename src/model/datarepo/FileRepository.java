@@ -10,9 +10,8 @@ import java.nio.file.StandardOpenOption;
 /**
  * Implements the data repository keeping File System as data source.
  *
- * @param <T> the type of object that needs to be saved in file system.
  */
-public class FileRepository<T> implements DataRepository<T> {
+public class FileRepository implements DataRepository<String> {
 
   // the path of the File that servers as data source.
   private final Path path;
@@ -35,9 +34,9 @@ public class FileRepository<T> implements DataRepository<T> {
   }
 
   @Override
-  public void save(T trade) throws Exception {
+  public void save(String trade) throws Exception {
     // appends the data to the file(i.e. data source).
-    Files.writeString(path, trade.toString(), StandardOpenOption.APPEND);
+    Files.writeString(path, trade, StandardOpenOption.APPEND);
   }
 
   @Override

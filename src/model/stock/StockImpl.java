@@ -2,10 +2,8 @@ package model.stock;
 
 import java.time.LocalDate;
 
-import model.stockpriceprovider.MockStockDataProvider;
 import model.stockpriceprovider.StockDataProvider;
-import model.stockpriceprovider.WebAPIStockDataProvider;
-
+import model.stockpriceprovider.StockDataProviderFactory;
 
 /**
  * Represents a Regular Stock.
@@ -22,14 +20,14 @@ public class StockImpl implements Stock {
    * A new stock with the stock symbol as name and the provider used to determine
    * the price of the stock.
    *
-   * @param name               stock symbol.
+   * @param name stock symbol.
    */
   public StockImpl(String name) {
-    this.stockPriceProvider = WebAPIStockDataProvider.getInstance();
+    this.stockPriceProvider = StockDataProviderFactory.getDataProvider();
     if (!this.stockPriceProvider.isValid(name)) {
       throw new IllegalArgumentException(name + " is an Invalid Stock\n");
     }
-    this.name = name;
+    this.name = name.toUpperCase();
   }
 
   @Override
@@ -45,7 +43,7 @@ public class StockImpl implements Stock {
 
   @Override
   public String toString() {
-    return this.name.toUpperCase();
+    return this.name;
   }
 
   @Override
@@ -56,11 +54,11 @@ public class StockImpl implements Stock {
       return false;
     }
     Stock stock = (StockImpl) obj;
-    return this.toString().equals(stock.toString());
+    return this.name.equals(stock.name());
   }
 
   @Override
   public int hashCode() {
-    return this.toString().hashCode();
+    return this.name.hashCode();
   }
 }

@@ -24,5 +24,5 @@ public interface DataRepository<T> {
    * @throws Exception throws Exception if there are any
    *                   exceptions while reading data from data source.
    */
-  String read() throws Exception;
+  T read() throws Exception;
 }
