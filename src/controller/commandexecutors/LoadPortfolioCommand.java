@@ -1,16 +1,17 @@
 package controller.commandexecutors;
 
-import model.stocktradings.PortfolioTradeOperation;
+import model.portfolio.Portfolio;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
  * Implementation of executor responsible for loading all the portfolios in the
  * data source to the application.
  */
-public class LoadPortfolio extends AbstractExecutor {
+public class LoadPortfolioCommand extends AbstractExecutor {
 
   @Override
-  public void execute(View view, PortfolioTradeOperation model) {
+  public void execute(View view, TradeOperation<Portfolio> model) {
     // loads the portfolios from data source to application.
     boolean result = model.load();
     if (result) {

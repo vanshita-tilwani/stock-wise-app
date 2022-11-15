@@ -3,20 +3,20 @@ package controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import controller.commandexecutors.AllPortfolio;
-import controller.commandexecutors.BuyStock;
-import controller.commandexecutors.CreateCumulativePortfolio;
-import controller.commandexecutors.CreateTransactionalPortfolio;
-import controller.commandexecutors.EvaluateCostBasis;
-import controller.commandexecutors.EvaluatePortfolioPerformance;
+import controller.commandexecutors.AllPortfoliosCommand;
+import controller.commandexecutors.BuyStockCommand;
+import controller.commandexecutors.CreateSimulatedPortfolioCommand;
+import controller.commandexecutors.CreateTransactionalPortfolioCommand;
+import controller.commandexecutors.EvaluateCostBasisCommand;
+import controller.commandexecutors.EvaluatePortfolioPerformanceCommand;
 import controller.commandexecutors.Executor;
-import controller.commandexecutors.LoadPortfolio;
-import controller.commandexecutors.PortfolioComposition;
-import controller.commandexecutors.PortfolioCompositionAtDate;
-import controller.commandexecutors.PortfolioEvaluation;
-import controller.commandexecutors.SavePortfolio;
-import controller.commandexecutors.SellStock;
-import model.stocktradings.PortfolioTradeOperation;
+import controller.commandexecutors.LoadPortfolioCommand;
+import controller.commandexecutors.PortfolioCompositionCommand;
+import controller.commandexecutors.PortfolioCompositionAtDateCommand;
+import controller.commandexecutors.PortfolioEvaluationCommand;
+import controller.commandexecutors.SavePortfolioCommand;
+import controller.commandexecutors.SellStockCommand;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
@@ -27,7 +27,7 @@ public class PortfolioTradeController implements TradeController {
   // view responsible for input/display
   private final View view;
   // model responsible for business logic
-  private final PortfolioTradeOperation model;
+  private final TradeOperation model;
 
 
   /**
@@ -36,7 +36,7 @@ public class PortfolioTradeController implements TradeController {
    * @param view  The view in MVC design
    * @param model The model in MVC design.
    */
-  public PortfolioTradeController(View view, PortfolioTradeOperation model) {
+  public PortfolioTradeController(View view, TradeOperation model) {
     this.view = view;
     this.model = model;
   }
@@ -86,18 +86,18 @@ public class PortfolioTradeController implements TradeController {
   private Map<Integer, Executor> getCommands() {
     // creates a <menu item, runnable> map to execute flow based on user input
     Map<Integer, Executor> commandMap = new HashMap<>();
-    commandMap.put(1, new CreateCumulativePortfolio());
-    commandMap.put(2, new CreateTransactionalPortfolio());
-    commandMap.put(3, new BuyStock());
-    commandMap.put(4, new SellStock());
-    commandMap.put(5, new AllPortfolio());
-    commandMap.put(6, new PortfolioComposition());
-    commandMap.put(7, new PortfolioCompositionAtDate());
-    commandMap.put(8, new PortfolioEvaluation());
-    commandMap.put(9, new EvaluateCostBasis());
-    commandMap.put(10, new EvaluatePortfolioPerformance());
-    commandMap.put(11, new SavePortfolio());
-    commandMap.put(12, new LoadPortfolio());
+    commandMap.put(1, new CreateSimulatedPortfolioCommand());
+    commandMap.put(2, new CreateTransactionalPortfolioCommand());
+    commandMap.put(3, new BuyStockCommand());
+    commandMap.put(4, new SellStockCommand());
+    commandMap.put(5, new AllPortfoliosCommand());
+    commandMap.put(6, new PortfolioCompositionCommand());
+    commandMap.put(7, new PortfolioCompositionAtDateCommand());
+    commandMap.put(8, new PortfolioEvaluationCommand());
+    commandMap.put(9, new EvaluateCostBasisCommand());
+    commandMap.put(10, new EvaluatePortfolioPerformanceCommand());
+    commandMap.put(11, new SavePortfolioCommand());
+    commandMap.put(12, new LoadPortfolioCommand());
     return commandMap;
   }
 

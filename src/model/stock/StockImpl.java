@@ -24,10 +24,11 @@ public class StockImpl implements Stock {
    */
   public StockImpl(String name) {
     this.stockPriceProvider = StockDataProviderFactory.getDataProvider();
-    if (!this.stockPriceProvider.isValid(name)) {
+    String tempName = name.toUpperCase();
+    if (!this.stockPriceProvider.isValid(tempName)) {
       throw new IllegalArgumentException(name + " is an Invalid Stock\n");
     }
-    this.name = name.toUpperCase();
+    this.name = tempName;
   }
 
   @Override

@@ -1,16 +1,17 @@
 package controller.commandexecutors;
 
-import model.stocktradings.PortfolioTradeOperation;
+import model.portfolio.Portfolio;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
  * Implementation of executor responsible for getting the saving the portfolio
  * to the data source.
  */
-public class SavePortfolio extends AbstractExecutor {
+public class SavePortfolioCommand extends AbstractExecutor {
 
   @Override
-  public void execute(View view, PortfolioTradeOperation model) {
+  public void execute(View view, TradeOperation<Portfolio> model) {
     // read name of the portfolio which you wish to save.
     String portfolio = this.readTradeName(view);
     // save the portfolio

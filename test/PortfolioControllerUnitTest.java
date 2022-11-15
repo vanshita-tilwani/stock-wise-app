@@ -3,54 +3,182 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.PrintStream;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import controller.PortfolioTradeController;
 import controller.TradeController;
-import model.dataparseer.DataParser;
-import model.dataparseer.PortfolioDataParser;
-import model.datarepo.DataRepository;
-import model.datarepo.FileRepository;
-import model.portfolio.Portfolio;
 import model.stocktradings.PortfolioTradeOperation;
+import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
 
 /**
  * Testing for PortfolioTradeController.
  */
-public class PortfolioControllerViewModelMockTest {
+public class PortfolioControllerUnitTest {
 
-  private OutputStream out;
-  private String input;
+  private StringBuilder modelBuilder;
+  private TradeController controller;
 
-  private void setup() throws Exception {
-    InputStream in;
-    TradeController controller;
-    in = new ByteArrayInputStream(input.getBytes());
-    this.out = new ByteArrayOutputStream();
-    View view = this.getView(in, out);
-    PortfolioTradeOperation model = this.getModel();
+
+  private void setup(String input) throws Exception {
+    modelBuilder = new StringBuilder();
+    View view = new TextualView(new ByteArrayInputStream(input.getBytes()), new PrintStream(new ByteArrayOutputStream()));
+    TradeOperation model = new LoggingModel(modelBuilder);
     controller = new PortfolioTradeController(view, model);
     controller.execute();
   }
 
   @Test
-  public void doesControllerDisplayMenu() {
-
+  public void doesControllerCallCreate() {
     try {
-      this.input = "";
-      this.setup();
-      String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(false);
-      Assert.assertEquals(expected.toString(), actual);
+      String expectedPortfolioName = "test1";
+      Map<String, Double> stocks = new HashMap<>();
+      stocks.put("AAPL", 1.0);
+      StringBuilder input = this.createSimulatedPortfolio(expectedPortfolioName, stocks);
+      StringBuilder expected = this.getSimulatedPortfolio(expectedPortfolioName, stocks);
+      this.setup(input.toString());
+      Assert.assertEquals(expected.toString(), modelBuilder.toString());
     } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
+  public void doesControllerCallCreateWithMultipleStock() {
+    try {
+      String expectedPortfolioName = "test1";
+      Map<String, Double> stocks = new HashMap<>();
+      stocks.put("AAPL", 1.0);
+      stocks.put("NOW", 1.0);
+      stocks.put("IBM", 1.0);
+      stocks.put("TSLA", 1.0);
+      stocks.put("GOOGL", 1.0);
+      stocks.put("META", 1.0);
+      stocks.put("COST", 1.0);
+      StringBuilder input = this.createSimulatedPortfolio(expectedPortfolioName, stocks);
+      StringBuilder expected = this.getSimulatedPortfolio(expectedPortfolioName, stocks);
+      this.setup(input.toString());
+      Assert.assertEquals(expected.toString(), modelBuilder.toString());
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void doesControllerShowAllPortfolios() {
+    try {
+      String input = getMenuOptions("AllPortfolio") + "\n";
+      String expected = "getAllTrades called\n";
+      this.setup(input);
+      Assert.assertEquals(expected, modelBuilder.toString());
+    }
+    catch(Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void doesControllerEvaluateValue() {
+    try {
+      String input = getMenuOptions("PortfolioEvaluation") + "\n";
+      String portfolioName = "test1";
+      LocalDate date = LocalDate.now();
+      String expected = "Value called for "+ portfolioName + " at "+ date +"\n";
+      this.setup(input+portfolioName+"\n"+date+"\n");
+      Assert.assertEquals(expected, modelBuilder.toString());
+    }
+    catch(Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void doesControllerGet() {
+
+    try {
+      String portfolioName = "test1";
+      String input = getMenuOptions("PortfolioComposition") + "\n";
+      this.setup(input+portfolioName+"\n");
+      String expected = "Get composition method called for " + portfolioName + "\n";
+      Assert.assertEquals(expected, modelBuilder.toString());
+    }
+    catch(Exception e) {
+      Assert.fail();
+    }
+  }
+
+
+  @Test
+  public void doesControlledCallSave() {
+    try {
+      String portfolioName = "test1";
+      String input = getMenuOptions("SavePortfolio") + "\n";
+      String expected = "Save portfolio : "+ portfolioName+"\n";
+      this.setup(input+portfolioName+"\n");
+      Assert.assertEquals(expected, modelBuilder.toString());
+    }
+    catch(Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void doesControlledCallLoad() {
+    try {
+      String expected = "Load all the portfolio in the data source\n";
+      String input = getMenuOptions("LoadPortfolio") + "\n";
+      this.setup(input);
+      Assert.assertEquals(expected, modelBuilder.toString());
+    }
+    catch(Exception e) {
+      Assert.fail();
+    }
+  }
+
+  private StringBuilder getSimulatedPortfolio(String name, Map<String, Double> stocks) {
+    StringBuilder input = new StringBuilder("Received : addPortfolio\nTYPE : MASTER\n");
+    input.append("Portfolio Name : "+name+"\n");
+    input.append("STOCKS : \n");
+    stocks.forEach((key, value) -> {
+      input.append("Stock Symbol : "+key.toUpperCase()+",Quantity : "+value+"\n");
+    });
+    input.append("------ END ------\n");
+    return input;
+  }
+
+  private StringBuilder createSimulatedPortfolio(String name, Map<String, Double> stocks) {
+    int operation = this.getMenuOptions("createSimulatedPortfolio");
+    StringBuilder input = new StringBuilder( operation+"\n");
+    input.append(name+"\n");
+    input.append(stocks.keySet().size()+"\n");
+    stocks.forEach((key, value) -> {
+      input.append(key+"\n");
+      input.append(value+"\n");
+    });
+    return input;
+  }
+
+  private Integer getMenuOptions(String operation) {
+    Map<String, Integer> commands = new HashMap<>();
+    commands.put("createSimulatedPortfolio",1);
+    commands.put("createTransactionalPortfolio", 2);
+    commands.put("BuyStock", 3);
+    commands.put("SellStock", 4);
+    commands.put("AllPortfolio", 5);
+    commands.put("PortfolioComposition", 6);
+    commands.put("PortfolioCompositionAtDate", 7);
+    commands.put("PortfolioEvaluation", 8);
+    commands.put("EvaluateCostBasis", 9);
+    commands.put("EvaluatePortfolioPerformance", 10);
+    commands.put("SavePortfolio", 11);
+    commands.put("LoadPortfolio", 12);
+    return commands.get(operation);
+  }
+  /*@Test
   public void invalidMenuOption() {
     try {
       this.input = "h";
@@ -319,35 +447,27 @@ public class PortfolioControllerViewModelMockTest {
       Assert.fail();
     }
 
-  }
+  }*/
 
-  private View getView(InputStream in, OutputStream out) {
-    return new TextualView(in, out);
-  }
-
-  private PortfolioTradeOperation getModel() throws Exception {
-    StringBuilder log=new StringBuilder();
-    DataRepository<Portfolio> repository = new FileRepository<>("res/portfolio.txt");
-    DataParser<Portfolio> parser = new PortfolioDataParser();
-    PortfolioTradeOperation model = new MockModel(repository, log);
-    return model;
-  }
-
-  private StringBuilder getMenuOptions(boolean isValid) {
+  private String getMenuOptions() {
+    // Generates all the menu options displayed to the user.
     StringBuilder menu = new StringBuilder();
     menu.append("Main Menu :\n");
-    menu.append("1. Create Portfolio\n");
-    menu.append("2. Get All the Portfolio Names\n");
-    menu.append("3. Get an existing Portfolio composition\n");
-    menu.append("4. Get the evaluation of an existing Portfolio\n");
-    menu.append("5. Save the portfolio to file\n");
-    menu.append("6. Load the portfolio\n");
+    menu.append("1. Create Master Portfolio\n");
+    menu.append("2. Create Transactional Portfolio\n");
+    menu.append("3. Buy Stock\n");
+    menu.append("4. Sell Stock\n");
+    menu.append("5. Get All the Portfolio Names\n");
+    menu.append("6. Get an existing Portfolio composition(end of all transactions)\n");
+    menu.append("7. Gen an existing Portfolio composition at a specific date\n");
+    menu.append("8. Get the evaluation of an existing Portfolio\n");
+    menu.append("9. Get the cost basis of a Portfolio\n");
+    menu.append("10. Get the portfolio Performance over a Period of time\n");
+    menu.append("11. Save the portfolio to file\n");
+    menu.append("12. Load the portfolio\n");
     menu.append("Enter the menu option you wish to choose.\n");
     menu.append("Press and enter any other key to exit the application.\n");
-    if (!isValid) {
-      menu.append("You have decided to exit the application. See you next time\n");
-    }
-    return menu;
+    return menu.toString();
   }
 
 

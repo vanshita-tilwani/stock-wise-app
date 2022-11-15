@@ -1,17 +1,19 @@
 package controller.commandexecutors;
 
 import java.time.LocalDate;
-import model.stocktradings.PortfolioTradeOperation;
+
+import model.portfolio.Portfolio;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
  * Implementation of executor responsible for evaluating the cost basis (total money
  * invested) of a portfolio.
  */
-public class EvaluateCostBasis extends AbstractExecutor {
+public class EvaluateCostBasisCommand extends AbstractExecutor {
 
   @Override
-  public void execute(View view, PortfolioTradeOperation model) {
+  public void execute(View view, TradeOperation<Portfolio> model) {
     try {
       // read the name of the portfolio.
       String portfolio = this.readTradeName(view);

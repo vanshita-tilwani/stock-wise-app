@@ -2,17 +2,18 @@ package controller.commandexecutors;
 
 import java.time.LocalDate;
 
-import model.stocktradings.PortfolioTradeOperation;
+import model.portfolio.Portfolio;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
  * Implementation of executor responsible for selling the stocks
  * in a portfolio.
  */
-public class SellStock extends AbstractExecutor {
+public class SellStockCommand extends AbstractExecutor {
 
   @Override
-  public void execute(View view, PortfolioTradeOperation model) {
+  public void execute(View view, TradeOperation<Portfolio> model) {
     try {
       // read the portfolio whose stocks you wish to sell.
       String portfolio = this.readTradeName(view);
@@ -25,7 +26,7 @@ public class SellStock extends AbstractExecutor {
       // reads the commission fee for the trade.
       Double commission = this.readCommissionFee(view);
       // sell the stock from the given portfolio
-      model.sellStock(portfolio, stock, shares, date, commission);
+      model.get(portfolio).sell(stock, shares, date, commission);
       view.display("The sale was completed successfully!\n");
     } catch (UnsupportedOperationException e) {
       view.display(e.getMessage());

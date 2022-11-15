@@ -13,6 +13,7 @@ import java.util.Map;
 
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
+import model.stock.Stock;
 import model.utility.JSONParser;
 
 /**

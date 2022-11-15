@@ -1,6 +1,7 @@
 package controller.commandexecutors;
 
-import model.stocktradings.PortfolioTradeOperation;
+import model.portfolio.Portfolio;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
@@ -16,5 +17,5 @@ public interface Executor {
    * @param view View in the MVC design responsible for reading and displaying data.
    * @param model The model in MVC design responsible for executing Business logic.
    */
-  void execute(View view, PortfolioTradeOperation model);
+  void execute(View view, TradeOperation<Portfolio> model);
 }

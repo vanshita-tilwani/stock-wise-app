@@ -14,7 +14,7 @@ import view.View;
  * Implementation of executor responsible for creating a portfolio of
  * type transactional in the application.
  */
-public class CreateTransactionalPortfolio extends CreatePortfolio {
+public class CreateTransactionalPortfolioCommand extends CreatePortfolioCommand {
 
   @Override
   protected Set<Trade<Stock>> readTradeData(View view) {

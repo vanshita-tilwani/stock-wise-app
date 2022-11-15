@@ -2,6 +2,8 @@ package model.stockpriceprovider;
 
 import java.time.LocalDate;
 
+import model.stock.Stock;
+
 /**
  * An interface works as a data provider for any stock.
  */

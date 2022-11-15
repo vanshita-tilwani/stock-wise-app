@@ -16,7 +16,7 @@ import view.View;
  * Implementation of executor responsible for creating a portfolio of type cumulative
  * in the application.
  */
-public class CreateCumulativePortfolio extends CreatePortfolio {
+public class CreateSimulatedPortfolioCommand extends CreatePortfolioCommand {
 
   @Override
   protected Set<Trade<Stock>> readTradeData(View view) {

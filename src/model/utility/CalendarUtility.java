@@ -22,7 +22,7 @@ public class CalendarUtility {
    */
   public static List<LocalDate> getWorkingDays(LocalDate from, LocalDate to) {
     CalendarScale calendarScale = CalendarScale.YEARLY;
-    if (isBetweenScale(ChronoUnit.DAYS, from, to, 1)) {
+    if (ChronoUnit.DAYS.between(from, to) <= MAX_SCALE) {
       calendarScale = CalendarScale.DAYS;
     } else if (isBetweenScale(ChronoUnit.WEEKS, from, to, 1)) {
       calendarScale = CalendarScale.WEEKS;

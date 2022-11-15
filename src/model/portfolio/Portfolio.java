@@ -32,7 +32,7 @@ public interface Portfolio {
    * @param commission the commission fee involved in the trade.
    * @throws IllegalArgumentException if the operation is invalid.
    */
-  void buy(String stock, Double shares, LocalDate date, Double commission)
+  void add(String stock, Double shares, LocalDate date, Double commission)
           throws UnsupportedOperationException;
 
   /**

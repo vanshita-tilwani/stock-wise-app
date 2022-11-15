@@ -2,17 +2,18 @@ package controller.commandexecutors;
 
 import java.time.LocalDate;
 
-import model.stocktradings.PortfolioTradeOperation;
+import model.portfolio.Portfolio;
+import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
  * Implementation of executor responsible for evaluating the performance of the portfolio
  * over a period of time.
  */
-public class EvaluatePortfolioPerformance extends AbstractExecutor {
+public class EvaluatePortfolioPerformanceCommand extends AbstractExecutor {
 
   @Override
-  public void execute(View view, PortfolioTradeOperation model) {
+  public void execute(View view, TradeOperation<Portfolio> model) {
     try {
       // read the name of the portfolio.
       String portfolio = this.readTradeName(view);
@@ -22,8 +23,11 @@ public class EvaluatePortfolioPerformance extends AbstractExecutor {
       LocalDate to = this.readToDate(view);
       // returns the composition and displays it.
       view.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
-      view.draw(model.analyzePortfolio(portfolio, from, to));
+      view.draw(model.analyze(portfolio, from, to));
     } catch (UnsupportedOperationException e) {
+      view.display(e.getMessage());
+    }
+    catch (IllegalArgumentException e) {
       view.display(e.getMessage());
     }
   }

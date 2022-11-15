@@ -43,8 +43,8 @@ public class TextualView implements View {
   @Override
   public void draw(Map<LocalDate, Double> portfolioData) {
     portfolioData.forEach((key, value) -> {
-      this.display(key + ": " + "*".repeat(value.intValue() / 1000));
+      this.display(key + ": " + "*".repeat(value.intValue())+"\n");
     });
-    this.display("Scale : * = $1000");
+    this.display("Scale : * = $1");
   }
 }

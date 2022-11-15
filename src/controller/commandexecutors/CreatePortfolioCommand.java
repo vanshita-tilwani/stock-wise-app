@@ -4,7 +4,7 @@ import java.util.Set;
 
 import model.portfolio.Portfolio;
 import model.stock.Stock;
-import model.stocktradings.PortfolioTradeOperation;
+import model.stocktradings.TradeOperation;
 import model.trade.Trade;
 import view.View;
 
@@ -13,10 +13,10 @@ import view.View;
  * code between classes which creates two different type of Portfolio. Package Private
  * since serves only abstraction of re-use of code.
  */
-abstract class CreatePortfolio extends AbstractExecutor {
+abstract class CreatePortfolioCommand extends AbstractExecutor {
 
   @Override
-  public void execute(View view, PortfolioTradeOperation model) {
+  public void execute(View view, TradeOperation<Portfolio> model) {
     try {
       // read the name of the portfolio.
       String name = this.readTradeName(view);

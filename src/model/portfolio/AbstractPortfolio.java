@@ -75,7 +75,7 @@ abstract class AbstractPortfolio implements Portfolio {
    */
   protected String getComposition(Set<Trade<Stock>> shares) {
     StringBuilder sb = new StringBuilder().append("TYPE : MASTER\n");
-    sb.append(super.toString());
+    sb.append("Portfolio Name : " + this.name + "\n");
     sb.append("STOCKS : \n");
     for (Trade share : shares) {
       sb.append(share.toString());

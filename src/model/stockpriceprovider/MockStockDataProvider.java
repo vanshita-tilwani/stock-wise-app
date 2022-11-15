@@ -10,6 +10,7 @@ import java.util.Set;
 
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
+import model.stock.Stock;
 
 /**
  * Implementation of data provider by mocking the real-time data.

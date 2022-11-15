@@ -34,7 +34,7 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   }
 
   @Override
-  public void buy(String stock, Double shares, LocalDate date, Double commission)
+  public void add(String stock, Double shares, LocalDate date, Double commission)
           throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Purchasing a new Stock is not allowed "
             + "in this portfolio\n");
