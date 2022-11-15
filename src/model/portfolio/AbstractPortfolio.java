@@ -38,8 +38,8 @@ abstract class AbstractPortfolio implements Portfolio {
   public Map<LocalDate, Double> analyze(LocalDate from, LocalDate to) {
     Map<LocalDate, Double> values = new HashMap<>();
     List<LocalDate> dates = CalendarUtility.getWorkingDays(from, to);
-    for (int i = 0; i < dates.size(); i++) {
-      values.put(dates.get(i), this.value(dates.get(i)));
+    for (LocalDate date : dates) {
+      values.put(date, this.value(date));
     }
     return values;
   }

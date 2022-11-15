@@ -19,7 +19,7 @@ public class PortfolioEvaluation extends AbstractExecutor {
       // reads the date of evaluation for the portfolio.
       LocalDate date = this.readDate(view);
       // gets the total value of portfolio and displays it.
-      view.display("The value of portfolio is " + model.value(date, portfolio) + "\n");
+      view.display("The value of portfolio is $" + model.value(date, portfolio) + "\n");
     } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
     } catch (DateTimeParseException e) {
