@@ -33,6 +33,9 @@ public class PortfolioTradeController implements TradeController {
   // model responsible for business logic
   private final TradeOperation model;
 
+  private final Map<Integer, Executor> commands;
+
+
   /**
    * Instantiates the Controller Object with the view responsible for
    * reading/displaying input data and model responsible for executing
@@ -44,16 +47,14 @@ public class PortfolioTradeController implements TradeController {
   public PortfolioTradeController(View view, TradeOperation model) {
     this.view = view;
     this.model = model;
+    this.commands = getCommands();
   }
 
   @Override
   public void execute() {
-
     // gets the commands as per the menu options to create, retrieve,
     // evaluate, save or load the portfolios.
-    Map<Integer, Executor> commands = this.getCommands();
     while (true) {
-
       // read the menu option from the view.
       int menuOption = this.readMenuInput();
       // if the menu option does not exist in commands then exit the application.

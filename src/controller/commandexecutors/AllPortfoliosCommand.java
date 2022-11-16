@@ -4,13 +4,14 @@ import java.util.Set;
 
 import model.portfolio.Portfolio;
 import model.stocktradings.TradeOperation;
+import model.trade.AbstractStockTrade;
 import view.View;
 
 /**
  * Implementation of Executor responsible for executing command to show all the available
  * Trades Performed in a given session in the Application by a User.
  */
-public class AllPortfoliosCommand implements Executor {
+public class AllPortfoliosCommand extends AbstractExecutor {
 
   @Override
   public void execute(View view, TradeOperation<Portfolio> model) {

@@ -31,15 +31,25 @@ abstract class AbstractExecutor implements Executor {
    */
   protected Double readShares(View view) {
     view.display("Enter the number of shares\n");
-    String input = view.input();
-    Double shares = Double.parseDouble(input);
+    boolean parsed = false;
+    Double shares = 0.0;
+    while(!parsed) {
+      try {
+        String input = view.input();
+        shares = Double.parseDouble(input);
+        parsed = true;
+      } catch (NumberFormatException e) {
+        view.display("Invalid number of shares\n");
+        view.display("Please enter the number of shares again.\n");
+      }
+    }
     // fractional shares are not allowed
     // If shares are fractional then user is asked to input the number of shares again
     // until he/she enters a whole number.
     while (shares % 1.0 != 0) {
       view.display("Fractional number of shares are not allowed\n");
       view.display("Please enter the number of shares again\n");
-      input = view.input();
+      String input = view.input();
       shares = Double.parseDouble(input);
     }
     return shares;
