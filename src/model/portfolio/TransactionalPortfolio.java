@@ -15,9 +15,10 @@ import model.trade.TransactionalStockTrade;
 import model.trade.Trade;
 
 /**
- * Implementation of Portfolio which contains an array of company stocks along with
- * the number of stocks. This type of portfolio is flexible and therefore allow
- * addition of stocks after creation.
+ * Represents a Transactional Portfolio used to make stock trades by the user.
+ * This portfolio support trading (i.e. purchase/sale) of the stock trades within the
+ * portfolio and stores the purchase and sale data to provide features such as
+ * analysing the total money invested till a specified date.
  */
 public class TransactionalPortfolio extends AbstractPortfolio {
 
@@ -25,11 +26,14 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   private final Set<Trade<Stock>> sold;
 
   /**
-   * Creates a transaction Portfolio with name and collection of purchases and sale.
+   * Creates a Transactional Portfolio used to make stock trades by the user.
+   * This portfolio support trading (i.e. purchase/sale) of the stock trades within the
+   * portfolio and stores the purchase and sale data to provide features such as
+   * analysing the total money invested till a specified date.
    *
    * @param name      the name of the portfolio.
-   * @param purchased the shares of stocks purchased.
-   * @param sold      the shares of stocks sold.
+   * @param purchased the set of purchases made by the user.
+   * @param sold      the set of sale made by the user.
    */
   public TransactionalPortfolio(String name, Set<Trade<Stock>> purchased, Set<Trade<Stock>> sold) {
     // Assuming that an empty portfolio will be created and then the stock
@@ -42,31 +46,36 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   @Override
   public void add(String stock, Double shares, LocalDate date, Double commission)
           throws IllegalArgumentException {
+    // new purchase of the stock
     Trade share = new TransactionalStockTrade(stock, shares, date, commission);
-    if(this.purchased.contains(share)) {
-      for(var purchase : purchased) {
-        if(purchase.equals(share)) {
-          purchase.buy(shares);
-        }
+    // adding the trade in the trade
+    for (var purchase : purchased) {
+      if (purchase.equals(share)) {
+        purchase.buy(shares);
       }
     }
-    else {
+    if (!this.purchased.contains(share)) {
       this.purchased.add(share);
     }
   }
 
   @Override
   public void sell(String stock, Double shares, LocalDate date, Double commission)
-          throws IllegalArgumentException {
-    // get all available shares with the
+          throws IllegalArgumentException, UnsupportedOperationException {
+    // predicate to get all available shares with trade date before the specified date
     Predicate<Trade<Stock>> predicate = x -> x.get().equals(new StockImpl(stock))
             && !x.tradeDate().isAfter(date);
+    // count the number of stocks purchases
     double availableShares = this.countIf(this.purchased, predicate);
+    // count the number of stock sold
     double sold = this.countIf(this.sold, predicate);
+    // get the remaining stocks available for sale
     double availableToSell = availableShares - sold;
+    // if the remaining stocks are less than shares that need to be sold, throw exception
     if (availableToSell < shares) {
       throw new IllegalArgumentException("You do not have enough shares of the stock to sell\n");
     }
+    // make the sale trade
     Trade share = new TransactionalStockTrade(stock, shares, date, commission);
     this.sold.add(share);
   }
@@ -74,33 +83,41 @@ public class TransactionalPortfolio extends AbstractPortfolio {
 
   @Override
   public double costBasis(LocalDate date) throws UnsupportedOperationException {
+    // predicate for all the purchased trade before the specified date
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
+    // get the total money invested using the predicate.
     return addPriceIf(predicate);
   }
 
   @Override
-  public double value(LocalDate date) {
+  public double value(LocalDate date) throws IllegalArgumentException {
+    // if the date specified is in the future, throw exception
     if (date.isAfter(LocalDate.now())) {
       throw new IllegalArgumentException("The entered date is in future.\n");
     }
+    // predicate to consolidate trade for a date before the specified date.
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
+    // consolidate all purchases and sale using the predicate.
     Set<Trade<Stock>> cumulative = this.consolidateIf(predicate);
+    // evaluated the total values of the stock composition.
     double value = this.evaluateValue(cumulative, date);
     return value;
   }
 
   @Override
   public String composition() {
+    // predicate to include all the purchases and sale trades
     Predicate<Trade<Stock>> predicate = x -> true;
-    Set<Trade<Stock>> shares = this.consolidateIf(predicate);
-    return getComposition(PortfolioType.TRANSACTIONAL, shares);
+    // get composition using predicate
+    return this.getComposition(predicate);
   }
 
   @Override
   public String composition(LocalDate date) {
+    // predicate to include all the purchases and sale trades made before the specified date.
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
-    Set<Trade<Stock>> shares = this.consolidateIf(predicate);
-    return getComposition(PortfolioType.TRANSACTIONAL, shares);
+    // get composition using predicate
+    return this.getComposition(predicate);
   }
 
   @Override
@@ -117,6 +134,20 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     }
     sb.append("------ END ------\n");
     return sb.toString();
+  }
+
+  /**
+   * Consolidates the purchases and sale made by the portfolio using the
+   * predicate on the trade and return the composition.
+   *
+   * @param predicate the predicate used to consolidate purchases and sale trades.
+   * @return the composition of the portfolio using predicate.
+   */
+  private String getComposition(Predicate<Trade<Stock>> predicate) {
+    // consolidate using the predicate
+    Set<Trade<Stock>> shares = this.consolidateIf(predicate);
+    // return the composition
+    return getComposition(PortfolioType.TRANSACTIONAL, shares);
   }
 
   /**
@@ -148,7 +179,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
 
 
   /**
-   * Count the total number of shares using the filter.
+   * Count the total number of shares of the stock using the filter.
    *
    * @param shares    the trade to be counted.
    * @param predicate the filter used to count the number of shares in each trade.
@@ -164,10 +195,16 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     return available;
   }
 
+  /**
+   * Determines the total money invested in the portfolio so far using a predicate.
+   *
+   * @param predicate contains the filter on date that is to be considered.
+   * @return the total money invested in the portfolio.
+   */
   private double addPriceIf(Predicate<Trade<Stock>> predicate) {
     double cost = 0;
     for (Trade<Stock> trade : purchased) {
-      if(predicate.test(trade)) {
+      if (predicate.test(trade)) {
         cost = cost + trade.value(trade.tradeDate()) + trade.commission();
       }
     }

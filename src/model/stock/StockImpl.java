@@ -6,7 +6,9 @@ import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.StockDataProviderFactory;
 
 /**
- * Represents a Regular Stock.
+ * Represents a Regular Stock. The name of the stock is the unique identification of
+ * a stock across the stock market. The name is also called as the unique ticker symbol
+ * for the stock.
  */
 public class StockImpl implements Stock {
 

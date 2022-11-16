@@ -4,7 +4,7 @@ package model.stockpriceprovider;
  * The type of data provider that will be used to fetch stock
  * data.
  */
-public enum DataProviderType {
+enum DataProviderType {
 
   // Web API based provider for stock data
   WEBAPI,

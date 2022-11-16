@@ -20,8 +20,8 @@ import model.stock.Stock;
 import model.utility.JSONParser;
 
 /**
- * Implementation of stock data provider that fetches the stock data from the
- * Alpha-vantage WEB API.
+ * Implementation of the stock data provider which uses WEB based API to fetch the value
+ * of the date. Stores the data in in-memory cache for faster look up.
  */
 public class WebAPIStockDataProvider implements StockDataProvider {
 
@@ -34,7 +34,7 @@ public class WebAPIStockDataProvider implements StockDataProvider {
   private final CacheProvider<String, Map<LocalDate, Double>> stockData;
 
   /**
-   * Creates an object of WebAPIStockDataProvider.
+   * Initializes the singleton object of WebAPIStockDataProvider.
    */
   private WebAPIStockDataProvider() {
     this.relativeURL = "https://www.alphavantage.co/query?"
@@ -44,9 +44,10 @@ public class WebAPIStockDataProvider implements StockDataProvider {
   }
 
   /**
-   * Returns the singleton object of this class.
+   * Returns the singleton object of the Web Data provider which can be used to
+   * query stock data for any specified stock and date..
    *
-   * @return object of web api stock data provider.
+   * @return Object of web api stock data provider.
    */
   public static StockDataProvider getInstance() {
     return instance;

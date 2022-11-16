@@ -8,9 +8,11 @@ import model.trade.PortfolioType;
 import model.trade.Trade;
 
 /**
- * Implementation of Portfolio which contains an array of company stocks along with
- * the number of stocks. This type of portfolio is Inflexible and therefore does not allow
- * any addition of stocks after creation.
+ * Represents a Simulated Portfolio with the portfolio name and collection of
+ * shares. This type of portfolio only support analyzing/understanding the stock
+ * collection that could be used for trading. This portfolio does not support
+ * trading (i.e. purchase/sale) of the stock trades within the portfolio once
+ * created.
  */
 public class SimulatedPortfolio extends AbstractPortfolio {
 
@@ -18,11 +20,14 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   protected Set<Trade<Stock>> shares;
 
   /**
-   * Creates an Inflexible Portfolio with the portfolio name and collection of
-   * shares.
+   * Creates a Simulated Portfolio with the portfolio name and collection of
+   * shares. This type of portfolio only support analyzing/understanding the stock
+   * collection that could be used for trading. This portfolio does not support
+   * trading (i.e. purchase/sale) of the stock trades within the portfolio once
+   * created.
    *
    * @param name   portfolio name
-   * @param shares collection of shares.
+   * @param shares collection of shares of stock.
    */
   public SimulatedPortfolio(String name, Set<Trade<Stock>> shares) {
     super(name);
@@ -30,7 +35,7 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   }
 
   @Override
-  public double value(LocalDate date) {
+  public double value(LocalDate date) throws IllegalArgumentException {
     if (date.isAfter(LocalDate.now())) {
       throw new IllegalArgumentException("The entered date is in future.\n");
     }
@@ -46,7 +51,7 @@ public class SimulatedPortfolio extends AbstractPortfolio {
 
   @Override
   public void sell(String stock, Double shares, LocalDate date, Double commission)
-          throws UnsupportedOperationException {
+          throws IllegalArgumentException, UnsupportedOperationException {
     throw new UnsupportedOperationException("Selling an existing Stock is not allowed "
             + "in Simulated Portfolio\n");
   }
@@ -63,14 +68,13 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   }
 
   @Override
-  public String composition(LocalDate date) throws UnsupportedOperationException {
+  public String composition(LocalDate date) {
     return this.getComposition(PortfolioType.SIMULATED, this.shares);
   }
 
 
   @Override
   public String toString() {
-
     return this.getComposition(PortfolioType.SIMULATED, this.shares);
   }
 

@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 /**
- * Implements the data repository keeping File System as data source.
- *
+ * Implementation responsible for reading/writing the data to data source. File Repository
+ * uses file as the data source to read data to and load data from.
  */
 public class FileRepository implements DataRepository<String> {
 
@@ -17,7 +17,8 @@ public class FileRepository implements DataRepository<String> {
   private final Path path;
 
   /**
-   * Creates an instance of File repo with path as the path to the data source.
+   * Creates an instance of File Repository with path as the path to the data source. The
+   * path argument specified the data source location in the file system.
    *
    * @param path The path to the data source.
    * @throws IOException if the path is invalid or any other errors while clearing the file.

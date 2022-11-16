@@ -14,7 +14,8 @@ import model.cache.InMemoryCacheProvider;
 import model.stock.Stock;
 
 /**
- * Implementation of data provider by mocking the real-time data.
+ * Implementation of the stock data provider which uses mock data to mimic the real time
+ * data of the stock. Stores the data in in-memory cache for faster look up.
  */
 public class MockStockDataProvider implements StockDataProvider {
 

@@ -5,7 +5,8 @@ import java.time.LocalDate;
 import model.stock.Stock;
 
 /**
- * An interface works as a data provider for any stock.
+ * The interface used to represent the stock data provider. Contains methods to
+ * evaluate the price of the stock at  the specified date.
  */
 public interface StockDataProvider {
 
@@ -26,6 +27,14 @@ public interface StockDataProvider {
    */
   boolean isValid(String stock);
 
+  /**
+   * Checks if the stock data is available for the stock on the specified date. The stock
+   * data is not available on Weekends and national holiday for any specified stock.
+   *
+   * @param stock the stock that needs to be checked for availability.
+   * @param date the date at which the stock data availability needs to be determined.
+   * @return if the data is available for the stock on the specified date.
+   */
   boolean isAvailable(String stock, LocalDate date);
 
 }

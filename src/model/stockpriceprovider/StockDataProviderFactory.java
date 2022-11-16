@@ -3,7 +3,8 @@ package model.stockpriceprovider;
 import model.configuration.InMemoryConfiguration;
 
 /**
- * Factory that returns the stock data provider for fetching Stock Data.
+ * Factory that returns the stock data provider for fetching Stock Data based on the
+ * in memory configuration settings of the application.
  */
 public class StockDataProviderFactory {
 
@@ -12,7 +13,8 @@ public class StockDataProviderFactory {
   private static final String key = "data-provider";
 
   /**
-   * Returns the StockDataProvider that needs to be used to fetch the stock data.
+   * Returns the StockDataProvider that needs to be used to query the stock data
+   * for a specified stock and date.
    *
    * @return the stock data provider.
    */

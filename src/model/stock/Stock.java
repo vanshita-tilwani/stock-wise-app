@@ -3,7 +3,7 @@ package model.stock;
 import java.time.LocalDate;
 
 /**
- * This interface represent a Stock of any Company.
+ * This interface represent a stock of any company.
  */
 public interface Stock {
 
@@ -15,7 +15,7 @@ public interface Stock {
   String name();
 
   /**
-   * Returns the price of this stock at the given date.
+   * Returns the price of this stock at the specified date.
    *
    * @param date The date at which price of the stock needs to be evaluated.
    * @return The stock price.
