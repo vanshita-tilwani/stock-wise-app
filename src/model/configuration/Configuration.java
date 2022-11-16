@@ -10,4 +10,5 @@ import model.cache.CacheProvider;
 public interface Configuration<K,V> extends CacheProvider<K,V> {
   // add all the extra methods that the configuration interface
   // offers to maintain all the config setting in the application.
+
 }

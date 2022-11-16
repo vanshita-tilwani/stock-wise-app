@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Implementation of Config interface to maintain all the configuration settings
- * in memory for faster lookups.
+ * Implementation of Configuration interface to maintain all the configuration settings
+ * in memory for faster lookups. This is a singleton class meaning will only have one instance
+ * of this class to support same configuration across the application.
  */
 public class InMemoryConfiguration implements Configuration<String, String> {
 
@@ -16,17 +17,24 @@ public class InMemoryConfiguration implements Configuration<String, String> {
   private final Map<String, String> configMap;
 
   /**
-   * Initializes an instance of in-memory config.
+   * Initializes an instance of the In-memory Configuration and adds the key value pair for
+   * data provider for the Stock Data as WEB based provider. This configuration can be used
+   * across the application to determine any and every configuration for the application.
    */
   private InMemoryConfiguration() {
+    // As of now sets the data provider for the application as web based provider
+    // Can switch between the provider based on user input as well later on using
+    // the singleton object of the configuration class.
     this.configMap = new HashMap<>();
-    // TODO : remove this and let client handle
     this.configMap.put("data-provider", "WEBAPI");
   }
 
   /**
-   * Returns the singleton instance of the in-memory configuration.
-   * @return in memory config object.
+   * Return the singleton instance of the In-memory Configuration and adds the key value pair for
+   * data provider for the Stock Data as WEB based provider. This configuration can be used
+   * across the application to determine any and every configuration for the application.
+   *
+   * @return singleton object of Configuration class.
    */
   public static Configuration<String, String> getInstance() {
     return instance;

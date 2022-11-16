@@ -5,7 +5,9 @@ import java.util.Map;
 
 /**
  * Implementation of cache as in memory cache to reduce the
- * time for data retrieval.
+ * time for data retrieval. In Memory Cache keeps the copy of the
+ * data in memory for faster retrieval and to reduce the
+ * network and database calls.
  *
  * @param <K> the type of key
  * @param <V> the type of value
@@ -16,7 +18,8 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
   private Map<K, V> map;
 
   /**
-   * Creates a new instance of in memory cache with empty cache.
+   * Instantiates an object of In Memory cache and sets the
+   * cache to empty.
    */
   public InMemoryCacheProvider() {
     map = new HashMap<>();
@@ -34,9 +37,6 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
   @Override
   public void put(K key, V value) {
     // Do not override the data is cache already contains the key.
-    if (map.containsKey(key)) {
-      return;
-    }
     map.put(key, value);
   }
 
