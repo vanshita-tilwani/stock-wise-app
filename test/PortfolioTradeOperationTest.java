@@ -7,12 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import model.dataparseer.DataParser;
 import model.datarepo.FileRepository;
-import model.portfolio.Portfolio;
 import model.portfolio.SimulatedPortfolio;
 import model.portfolio.TransactionalPortfolio;
 import model.stock.Stock;

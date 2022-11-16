@@ -1,4 +1,4 @@
-package model.dataparseer;
+package model.dataparser;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -8,10 +8,14 @@ import model.portfolio.Portfolio;
 import model.stock.Stock;
 import model.trade.Trade;
 
+
 /**
- * Abstract class that is used to parse string to Portfolio data.
+ * Abstract class used to have the common code abstracted for different types
+ * of portfolio parser. This class is used to create list of portfolios
+ * of different type using the concrete implementation of different types
+ * of portfolio parser.
  */
-abstract class AbstractDataParser implements DataParser<Portfolio> {
+abstract class AbstractPortfolioParser implements DataParser<Portfolio> {
 
   /**
    * Creates the trade object using the string data given to the method.

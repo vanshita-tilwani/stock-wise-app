@@ -1,4 +1,4 @@
-package model.dataparseer;
+package model.dataparser;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -9,9 +9,10 @@ import model.trade.TransactionalStockTrade;
 import model.trade.Trade;
 
 /**
- * Implementation responsible for parsing Transactional Portfolio.
+ * Implementation of Parser interface for type of Transactional Portfolio which is responsible
+ * for parsing the string data to Portfolio of type TransactionalPortfolio.
  */
-class TransactionalPortfolioParser extends AbstractDataParser {
+class TransactionalPortfolioParser extends AbstractPortfolioParser {
 
   @Override
   public Portfolio parse(String data) {

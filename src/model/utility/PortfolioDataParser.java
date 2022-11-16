@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.dataparseer.DataParserFactory;
+import model.dataparser.DataParserFactory;
 import model.portfolio.Portfolio;
 
 /**
