@@ -94,7 +94,7 @@ public class PortfolioTradeControllerIntegrationTest {
       expected.append("Enter the name of the portfolio\n");
       expected.append("Enter the date at which you wish to get the retrieve the " +
               "information(in YYYY-MM-DD format)\n");
-      expected.append("Please enter the Date in YYYY-MM-DD format and try again.\n");
+      expected.append("The date provided was not in the expected format.\n");
       expected.append(this.getMenuOptions(false));
       Assert.assertEquals(expected.toString(), actual);
     } catch (Exception e) {

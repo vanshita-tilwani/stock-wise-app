@@ -12,8 +12,10 @@ import model.trade.Trade;
 import view.View;
 
 /**
- * Implementation of executor responsible for creating a portfolio of
- * type transactional in the application.
+ * Responsible for creating TransactionalPortfolio which is used for trading stocks.
+ * It supports various features useful for trading management (i.e. purchasing more stocks and
+ * adding it in the portfolio, selling stocks from the portfolio, evaluating the cost
+ * basis for the portfolio).
  */
 public class CreateTransactionalPortfolioCommand extends CreatePortfolioCommand {
 

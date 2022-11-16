@@ -23,8 +23,8 @@ public class PortfolioEvaluationCommand extends AbstractExecutor {
       view.display("The value of portfolio is $" + model.get(portfolio).value(date) + "\n");
     } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
-    } catch (DateTimeParseException e) {
-      view.display("Please enter the Date in YYYY-MM-DD format and try again.\n");
+    } catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 }

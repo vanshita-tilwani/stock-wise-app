@@ -7,8 +7,8 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of executor responsible for getting all the trade name
- * in the application.
+ * Implementation of Executor responsible for executing command to show all the available
+ * Trades Performed in a given session in the Application by a User.
  */
 public class AllPortfoliosCommand implements Executor {
 

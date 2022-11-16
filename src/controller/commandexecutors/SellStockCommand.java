@@ -1,6 +1,7 @@
 package controller.commandexecutors;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import model.portfolio.Portfolio;
 import model.stocktradings.TradeOperation;
@@ -33,6 +34,9 @@ public class SellStockCommand extends AbstractExecutor {
     }
     catch (IllegalArgumentException e) {
       view.display(e.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 }

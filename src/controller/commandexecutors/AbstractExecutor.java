@@ -6,7 +6,8 @@ import view.View;
 
 /**
  * Abstract class responsible for abstracting common code for re-use. Have methods
- * to read/display common information among all the executors.
+ * to Read/Display common information from and to the View in the MVC
+ * Design Among all the Command Executors.
  */
 abstract class AbstractExecutor implements Executor {
 

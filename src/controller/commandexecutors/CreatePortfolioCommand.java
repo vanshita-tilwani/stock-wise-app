@@ -1,5 +1,6 @@
 package controller.commandexecutors;
 
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 
 import model.portfolio.Portfolio;
@@ -37,6 +38,9 @@ abstract class CreatePortfolioCommand extends AbstractExecutor {
       view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
     } catch (IllegalArgumentException exception) {
       view.display(exception.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 

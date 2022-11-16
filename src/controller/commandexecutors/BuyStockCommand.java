@@ -1,14 +1,18 @@
 package controller.commandexecutors;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import model.portfolio.Portfolio;
 import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of executor responsible for buying stocks for a portfolio
- * in the application.
+ * Implementation of Executor responsible for executing command to purchase a stock and
+ * adding it to the Portfolio specified by the User. The Simulated Portfolio does not allow
+ * adding Stocks to the Portfolio once created and therefore will accordingly
+ * display the message to the User. The message will be displayed to user if the trade to be
+ * performed is invalid due to illegal trade date/stock value.
  */
 public class BuyStockCommand extends AbstractExecutor {
 
@@ -30,9 +34,11 @@ public class BuyStockCommand extends AbstractExecutor {
       view.display("The purchase was completed successfully!\n");
     } catch (UnsupportedOperationException e) {
       view.display(e.getMessage());
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 }

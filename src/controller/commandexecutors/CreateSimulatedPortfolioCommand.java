@@ -13,8 +13,10 @@ import model.trade.Trade;
 import view.View;
 
 /**
- * Implementation of executor responsible for creating a portfolio of type cumulative
- * in the application.
+ * Responsible for creating SimulatedPortfolio which is used for planning/analyzing the set
+ * of stock combinations for trading. SimulatedPortfolio is only used for planning/analysis
+ * and does not support trading of stocks (i.e. purchasing more stocks and adding it in the
+ * portfolio, selling stocks from the portfolio).
  */
 public class CreateSimulatedPortfolioCommand extends CreatePortfolioCommand {
 
@@ -35,8 +37,7 @@ public class CreateSimulatedPortfolioCommand extends CreatePortfolioCommand {
         try {
           // if stock does not already exist, add.
           stockData.put(stock, new SimulatedStockTrade(stock, shares));
-        }
-        catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
           view.display(e.getMessage());
         }
       }

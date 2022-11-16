@@ -5,8 +5,8 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of executor responsible for loading all the portfolios in the
- * data source to the application.
+ * Implementation of Command Executor responsible for Loading all the portfolios
+ * from the data source to the application.
  */
 public class LoadPortfolioCommand extends AbstractExecutor {
 

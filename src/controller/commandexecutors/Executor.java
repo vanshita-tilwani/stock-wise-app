@@ -5,8 +5,9 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * An interface for executing various commands by the controller in order
- * to abstract the code.
+ * Interface responsible for executing Commands. The different type of commands are
+ * Create Portfolio, Purchase a Stock, Sell a Stock, etc. Used by Controlled to
+ * abstract the code and making each Command execute a Application Feature.
  */
 public interface Executor {
 

@@ -8,8 +8,13 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of executor responsible for evaluating the performance of the portfolio
- * over a period of time.
+ * Implementation of Command Executor responsible for evaluating Portfolio Performance
+ * for a Portfolio over a range of interval specified by the User.
+ * Portfolio Performance takes in account the portfolio composition at each time interval
+ * along with the trade value during the period for Transactional Portfolio.
+ * For Simulated Portfolio, the portfolio composition remains essentially same during the
+ * interval and majorly factors in the price fluctuations of combinations of stocks during
+ * the interval.
  */
 public class EvaluatePortfolioPerformanceCommand extends AbstractExecutor {
 
@@ -25,9 +30,11 @@ public class EvaluatePortfolioPerformanceCommand extends AbstractExecutor {
       // returns the composition and displays it.
       view.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
       view.draw(model.get(portfolio).values(from, to));
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 }

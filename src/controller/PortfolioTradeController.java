@@ -49,19 +49,16 @@ public class PortfolioTradeController implements TradeController {
     // evaluate, save or load the portfolios.
     Map<Integer, Executor> commands = this.getCommands();
     while (true) {
-      try {
-        // read the menu option from the view.
-        int menuOption = this.readMenuInput();
-        // if the menu option does not exist in commands then exit the application.
-        if (!commands.containsKey(menuOption)) {
-          view.display("You have decided to exit the application. See you next time\n");
-          break;
-        }
-        // execute the menu option chosen.
-        commands.get(menuOption).execute(view, model);
-      } catch (DateTimeParseException ex) {
-        view.display("The date provided was not in the expected format.\n");
+
+      // read the menu option from the view.
+      int menuOption = this.readMenuInput();
+      // if the menu option does not exist in commands then exit the application.
+      if (!commands.containsKey(menuOption)) {
+        view.display("You have decided to exit the application. See you next time\n");
+        break;
       }
+      // execute the menu option chosen.
+      commands.get(menuOption).execute(view, model);
     }
 
 
