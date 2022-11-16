@@ -48,11 +48,6 @@ public abstract class AbstractStockTrade implements Trade<Stock> {
   }
 
   @Override
-  public int hashCode() {
-    return this.stock.hashCode();
-  }
-
-  @Override
   public void sell(double quantity) {
     if (this.quantity < quantity) {
       throw new IllegalArgumentException("Not enough shares to sell");

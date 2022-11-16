@@ -41,7 +41,8 @@ public interface Portfolio {
    * @throws UnsupportedOperationException for portfolios which do not support
    *                                       trading options.
    */
-  void add(String stock, Double shares, LocalDate date, Double commission) throws UnsupportedOperationException;
+  void add(String stock, Double shares, LocalDate date, Double commission)
+          throws UnsupportedOperationException;
 
   /**
    * Method responsible for selling the specified shares of stock from the portfolio.
@@ -50,8 +51,9 @@ public interface Portfolio {
    * @param shares     the amount of shares of the stock.
    * @param date       the date of purchase.
    * @param commission the commission fee involved in the trade.
-   * @throws IllegalArgumentException      if the portfolio does not contain the stock or do not have
-   *                                       enough shares of the stock to make the sale.
+   * @throws IllegalArgumentException      if the portfolio does not contain the stock
+   *                                       or do not have enough shares of the stock to
+   *                                       make the sale.
    * @throws UnsupportedOperationException for portfolios which do not support
    *                                       trading options
    */
@@ -95,7 +97,6 @@ public interface Portfolio {
    * @param from the start date of the time period.
    * @param to   the last date of the time period.
    * @return the value of portfolios at equal intervals starting from start and end date specified
-   * by the user.
    */
   Map<LocalDate, Double> values(LocalDate from, LocalDate to) throws IllegalArgumentException;
 

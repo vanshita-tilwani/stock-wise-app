@@ -75,7 +75,6 @@ public class PortfolioTradeOperationTest {
   }
 
 
-
   @Test
   public void getPortfolio_MissingPortfolio() {
     try {
@@ -97,10 +96,11 @@ public class PortfolioTradeOperationTest {
               "Stock Symbol : GOOG,Quantity : 2.0\n" +
               "------ END ------\n";
 
-      String expectedP2 =  "TYPE : TRANSACTIONAL\n" +
+      String expectedP2 = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : test2\n" +
               "PURCHASES : \n" +
-              "Stock Symbol : GOOG,Quantity : 2.0,Date of Purchase : 2016-10-24,Commission Fee : 10.0\n" +
+              "Stock Symbol : GOOG,Quantity : 2.0,Date of Purchase : 2016-10-24," +
+              "Commission Fee : 10.0\n" +
               "SALE : \n" +
               "------ END ------\n";
       Assert.assertNotNull(portfolio1);
@@ -119,7 +119,8 @@ public class PortfolioTradeOperationTest {
       Set<String> allTrades = this.trade.all();
       Assert.assertNotNull(allTrades);
       Assert.assertTrue(allTrades.size() == 2);
-      Assert.assertTrue(allTrades.containsAll(new ArrayList<>(Arrays.asList("test1","test2"))));
+      Assert.assertTrue(allTrades.containsAll(new ArrayList<>(
+              Arrays.asList("test1", "test2"))));
     } catch (IllegalArgumentException e) {
       Assert.fail();
     }
@@ -148,7 +149,8 @@ public class PortfolioTradeOperationTest {
   public void loadPortfolio() {
     try {
       Assert.assertTrue(this.trade.load());
-      Assert.assertTrue(this.trade.all().containsAll(new ArrayList<>(Arrays.asList("test1","test2"))));
+      Assert.assertTrue(this.trade.all().containsAll(new
+              ArrayList<>(Arrays.asList("test1", "test2"))));
     } catch (IllegalArgumentException e) {
       Assert.fail();
     }

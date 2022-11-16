@@ -1,13 +1,14 @@
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.manipulation.Ordering;
 
 import java.time.LocalDate;
 
 import model.stockpriceprovider.MockStockDataProvider;
 import model.stockpriceprovider.StockDataProvider;
-import model.stockpriceprovider.StockDataProviderFactory;
 
+/**
+ * Class used to test MockDataProvider which is used to query on stock data.
+ */
 public class MockDataProviderTest {
 
   @Test
@@ -37,14 +38,14 @@ public class MockDataProviderTest {
   @Test
   public void price1() {
     StockDataProvider provider = MockStockDataProvider.getInstance();
-    Assert.assertEquals(2055.0,provider.price("IBM",
-            LocalDate.now().minusDays(1)),0.01);
+    Assert.assertEquals(2055.0, provider.price("IBM",
+            LocalDate.now().minusDays(1)), 0.01);
   }
 
   @Test
   public void price2() {
     StockDataProvider provider = MockStockDataProvider.getInstance();
-    Assert.assertEquals(2054.0,provider.price("IBM",
-            LocalDate.now().minusDays(2)),0.01);
+    Assert.assertEquals(2054.0, provider.price("IBM",
+            LocalDate.now().minusDays(2)), 0.01);
   }
 }

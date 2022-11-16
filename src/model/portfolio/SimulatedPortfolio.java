@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import model.stock.Stock;
-import model.trade.PortfolioType;
 import model.trade.Trade;
 
 /**

@@ -1,4 +1,5 @@
 package model.utility;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
@@ -20,40 +21,45 @@ public class Utility {
   public static Set<LocalDate> getEqualPeriod(LocalDate from, LocalDate to) {
 
     int delta = 0;
-    if(isRangeBetween(ChronoUnit.YEARS, from, to, 1)) {
+    if (isRangeBetween(ChronoUnit.YEARS, from, to, 1)) {
       delta = 365;
-    }
-    else if(isRangeBetween(ChronoUnit.YEARS, from, to, 4)) {
+    } else if (isRangeBetween(ChronoUnit.YEARS, from, to, 4)) {
       delta = 120;
-    }
-    else if (isRangeBetween(ChronoUnit.MONTHS, from, to, 1)) {
+    } else if (isRangeBetween(ChronoUnit.MONTHS, from, to, 1)) {
       delta = 30;
-    }
-    else if (isRangeBetween(ChronoUnit.WEEKS, from, to, 1)) {
+    } else if (isRangeBetween(ChronoUnit.WEEKS, from, to, 1)) {
       delta = 7;
-    }
-    else if(ChronoUnit.DAYS.between(from, to) >= 30){
+    } else if (ChronoUnit.DAYS.between(from, to) >= 30) {
       delta = 2;
-    }
-    else {
+    } else {
       delta = 1;
     }
 
     Set<LocalDate> days = new HashSet<>();
-    for(LocalDate date = from; !date.isAfter(to); date = date.plusDays(delta)) {
+    for (LocalDate date = from; !date.isAfter(to); date = date.plusDays(delta)) {
       days.add(date);
     }
-    if(!days.contains(to)) {
+    if (!days.contains(to)) {
       days.add(to);
     }
     return days;
   }
 
-  private static boolean isRangeBetween(ChronoUnit type, LocalDate from, LocalDate to, int factor)
-  {
+  /**
+   * Returns if the range is between the chronounit type (i.e. day, weeks, months)
+   *
+   * @param type the type of scale to be used.
+   * @param from the start date of the interval.
+   * @param to the start date of the interval.
+   * @param factor the factor diving the range
+   * @return if the range is between max and min scale.
+   */
+  private static boolean isRangeBetween(ChronoUnit type, LocalDate from, LocalDate to,
+                                        int factor) {
     long days = type.between(from, to) / factor;
-    return days <= 30 && days >=5;
+    return days <= 30 && days >= 5;
   }
+
   /**
    * Calculate and update values for tick spacing and nice
    * minimum and maximum data points on the axis.
@@ -61,8 +67,8 @@ public class Utility {
   public static double scale(int max, int min) {
     var range = evaluate(max - min, false);
     var tickSpacing = evaluate(range / 29, true);
-    while(max/tickSpacing > 50) {
-      tickSpacing = 2*tickSpacing;
+    while (max / tickSpacing > 50) {
+      tickSpacing = 2 * tickSpacing;
     }
     return tickSpacing;
   }
@@ -76,8 +82,8 @@ public class Utility {
    * @return a "nice" number to be used for the data range
    */
   private static double evaluate(double range, boolean round) {
-    double exponent; /** exponent of range */
-    double fraction; /** fractional part of range */
+    double exponent;
+    double fraction;
 
     exponent = Math.floor(Math.log10(range));
     fraction = range / Math.pow(10, exponent);
@@ -87,38 +93,29 @@ public class Utility {
 
   private static int fraction(boolean round, double fraction) {
     int finalFraction = 0;
-    if(round) {
+    if (round) {
       if (fraction < 1.5) {
         finalFraction = 1;
-      }
-      else if (fraction < 3) {
+      } else if (fraction < 3) {
         finalFraction = 2;
-      }
-      else if (fraction < 7) {
+      } else if (fraction < 7) {
         finalFraction = 5;
-      }
-      else {
+      } else {
         finalFraction = 10;
       }
-    }
-    else {
+    } else {
       if (fraction <= 1) {
         finalFraction = 1;
-      }
-      else if (fraction <= 2) {
+      } else if (fraction <= 2) {
         finalFraction = 2;
-      }
-      else if (fraction <= 5) {
+      } else if (fraction <= 5) {
         finalFraction = 5;
-      }
-      else {
+      } else {
         finalFraction = 10;
       }
     }
     return finalFraction;
   }
-
-
 
 
 }

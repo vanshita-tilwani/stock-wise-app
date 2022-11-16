@@ -1,6 +1,5 @@
 package model.stockpriceprovider;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.Set;
 
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
-import model.stock.Stock;
 
 /**
  * Implementation of the stock data provider which uses mock data to mimic the real time

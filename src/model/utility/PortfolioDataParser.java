@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.sound.sampled.Port;
-
 import model.dataparser.DataParserFactory;
 import model.portfolio.Portfolio;
-import model.trade.PortfolioType;
+import model.portfolio.PortfolioType;
 
 /**
  * Utility for parsing Data for loading the portfolio

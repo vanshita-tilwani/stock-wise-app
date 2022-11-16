@@ -1,7 +1,7 @@
 package model.dataparser;
 
 import model.portfolio.Portfolio;
-import model.trade.PortfolioType;
+import model.portfolio.PortfolioType;
 
 /**
  * Factory used to return the concrete implementation of parser interface for portfolio.

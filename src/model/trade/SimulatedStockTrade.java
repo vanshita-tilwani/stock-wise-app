@@ -41,7 +41,7 @@ public class SimulatedStockTrade extends AbstractStockTrade {
 
   @Override
   public int hashCode() {
-    return super.hashCode();
+    return this.stock.hashCode();
   }
 
   @Override

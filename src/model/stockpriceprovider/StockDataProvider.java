@@ -2,8 +2,6 @@ package model.stockpriceprovider;
 
 import java.time.LocalDate;
 
-import model.stock.Stock;
-
 /**
  * The interface used to represent the stock data provider. Contains methods to
  * evaluate the price of the stock at  the specified date.

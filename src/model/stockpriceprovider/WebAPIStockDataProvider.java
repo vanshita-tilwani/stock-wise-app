@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -16,7 +15,6 @@ import java.util.Map;
 
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
-import model.stock.Stock;
 import model.utility.JSONParser;
 
 /**
@@ -56,7 +54,7 @@ public class WebAPIStockDataProvider implements StockDataProvider {
 
   @Override
   public double price(String stock, LocalDate date) throws IllegalArgumentException {
-    while(!this.stockData.get(stock).containsKey(date)) {
+    while (!this.stockData.get(stock).containsKey(date)) {
       date = date.minusDays(1);
     }
     return this.stockData.get(stock).get(date);
@@ -74,8 +72,7 @@ public class WebAPIStockDataProvider implements StockDataProvider {
       this.stockData.put(stock, response);
     } catch (IOException e) {
       return false;
-    }
-    catch (JSONException e) {
+    } catch (JSONException e) {
       return false;
     }
     return true;

@@ -3,13 +3,11 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
-import model.trade.PortfolioType;
 import model.trade.SimulatedStockTrade;
 import model.trade.TransactionalStockTrade;
 import model.trade.Trade;

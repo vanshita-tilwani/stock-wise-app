@@ -2,15 +2,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
-import model.trade.AbstractStockTrade;
 import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
 
+/**
+ * Tests for SimulatedStockTrade.
+ */
 public class SimulatedStockTradeTest extends AbstractStockTradeTest {
 
 
@@ -56,7 +56,7 @@ public class SimulatedStockTradeTest extends AbstractStockTradeTest {
   @Test
   public void commission() {
     try {
-      LocalDate date =  LocalDate.parse("2022-10-24");
+      LocalDate date = LocalDate.parse("2022-10-24");
       this.trade = this.createTrade("AAPL", 12.0, date,
               1.0);
       Double actual = this.trade.commission();
@@ -65,6 +65,7 @@ public class SimulatedStockTradeTest extends AbstractStockTradeTest {
       // Pass here
     }
   }
+
   @Override
   protected Trade<Stock> createTrade(String name, Double shares, LocalDate date,
                                      Double commission) {

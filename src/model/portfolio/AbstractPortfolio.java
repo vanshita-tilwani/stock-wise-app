@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import model.stock.Stock;
-import model.trade.PortfolioType;
 import model.trade.Trade;
 import model.utility.Utility;
 
@@ -36,8 +35,8 @@ abstract class AbstractPortfolio implements Portfolio {
 
   @Override
   public Map<LocalDate, Double> values(LocalDate from, LocalDate to)
-          throws IllegalArgumentException{
-    if(from.isAfter(to)) {
+          throws IllegalArgumentException {
+    if (from.isAfter(to)) {
       throw new IllegalArgumentException("Start date cannot be after end date\n");
     }
     if (from.isAfter(LocalDate.now()) || to.isAfter(LocalDate.now())) {
@@ -76,7 +75,7 @@ abstract class AbstractPortfolio implements Portfolio {
    */
   protected String getComposition(PortfolioType type, Set<Trade<Stock>> shares) {
     StringBuilder sb = new StringBuilder();
-    sb.append("TYPE : "+type+"\n");
+    sb.append("TYPE : " + type + "\n");
     sb.append("Portfolio Name : " + this.name + "\n");
     sb.append("STOCKS : \n");
     for (Trade share : shares) {
@@ -85,7 +84,6 @@ abstract class AbstractPortfolio implements Portfolio {
     sb.append("------ END ------\n");
     return sb.toString();
   }
-
 
 
 }

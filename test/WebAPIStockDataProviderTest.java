@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.WebAPIStockDataProvider;
 
+/**
+ * Class ot test the WebAPIStockDataProvider.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WebAPIStockDataProviderTest {
 
@@ -42,25 +45,24 @@ public class WebAPIStockDataProviderTest {
   }
 
 
-
   @Test
   public void value1() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertEquals(144.34,provider.price("IBM",
-            LocalDate.now().minusDays(1)),0.01);
+    Assert.assertEquals(144.34, provider.price("IBM",
+            LocalDate.now().minusDays(1)), 0.01);
   }
 
   @Test
   public void value2() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertEquals(144.2,provider.price("IBM",
-            LocalDate.now().minusDays(2)),0.01);
+    Assert.assertEquals(144.2, provider.price("IBM",
+            LocalDate.now().minusDays(2)), 0.01);
   }
 
   @Test
   public void value3() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertEquals(129.9,provider.price("IBM",
-            LocalDate.parse("2022-10-23")),0.01);
+    Assert.assertEquals(129.9, provider.price("IBM",
+            LocalDate.parse("2022-10-23")), 0.01);
   }
 }

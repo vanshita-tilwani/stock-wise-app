@@ -1,6 +1,5 @@
 package model.stocktradings;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,10 @@ import model.datarepo.DataRepository;
 import model.portfolio.Portfolio;
 
 /**
- * Represents portfolio trade operations such as buying trade, getting the
- * trade evaluation on a specific date.
+ * Represents a class used to trade on Portfolio. Supports methods to create new
+ * portfolio, get an existing portfolio from the application, listing of all the
+ * portfolio trades created by the user in, saving and loading of portfolio to and
+ * from a data source specified by the user.
  */
 public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 

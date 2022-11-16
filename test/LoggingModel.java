@@ -1,23 +1,24 @@
-import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import model.portfolio.Portfolio;
 import model.portfolio.SimulatedPortfolio;
 import model.stocktradings.TradeOperation;
 
+/**
+ * Mock model which will be used to test the controller delegation.
+ */
 public class LoggingModel implements TradeOperation<Portfolio> {
   private StringBuilder log;
 
   public LoggingModel(StringBuilder log) {
-    this.log=log;
+    this.log = log;
   }
 
 
   @Override
   public void create(Portfolio trade) throws IllegalArgumentException {
-    log.append("Received : addPortfolio\n"+trade.toString());
+    log.append("Received : addPortfolio\n" + trade.toString());
 
   }
 
@@ -35,7 +36,7 @@ public class LoggingModel implements TradeOperation<Portfolio> {
 
   @Override
   public boolean save(String trade) throws IllegalArgumentException {
-    log.append("Save portfolio : "+ trade+"\n");
+    log.append("Save portfolio : " + trade + "\n");
     return true;
   }
 

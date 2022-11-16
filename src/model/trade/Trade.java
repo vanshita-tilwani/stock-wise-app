@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 /**
  * Represents a trade(i.e a transaction).
+ *
+ * @param <T> the type of trade.
  */
 public interface Trade<T> {
 

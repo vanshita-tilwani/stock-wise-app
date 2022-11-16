@@ -5,11 +5,13 @@ import java.time.LocalDate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
-import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
 import model.trade.TransactionalStockTrade;
 
-public class TransactionalStockTradeTest extends AbstractStockTradeTest{
+/**
+ * Tests for TransactionalStockTrade class.
+ */
+public class TransactionalStockTradeTest extends AbstractStockTradeTest {
 
   @Test
   public void createNewTransactionalTrade() {
@@ -28,7 +30,7 @@ public class TransactionalStockTradeTest extends AbstractStockTradeTest{
   @Test
   public void createNewTransactionalTrade_MarketClosed() {
     try {
-      LocalDate date =  LocalDate.parse("2022-10-23");
+      LocalDate date = LocalDate.parse("2022-10-23");
       this.trade = this.createTrade("AAPL", 12.0, date,
               1.0);
       Assert.fail();
@@ -56,7 +58,7 @@ public class TransactionalStockTradeTest extends AbstractStockTradeTest{
   @Test
   public void tradeDate() {
     try {
-      LocalDate date =  LocalDate.parse("2022-10-24");
+      LocalDate date = LocalDate.parse("2022-10-24");
       this.trade = this.createTrade("AAPL", 12.0, date,
               1.0);
       LocalDate actual = this.trade.tradeDate();
@@ -69,22 +71,20 @@ public class TransactionalStockTradeTest extends AbstractStockTradeTest{
   @Test
   public void commission() {
     try {
-      LocalDate date =  LocalDate.parse("2022-10-24");
+      LocalDate date = LocalDate.parse("2022-10-24");
       this.trade = this.createTrade("AAPL", 12.0, date,
               1.0);
       Double actual = this.trade.commission();
-      Assert.assertEquals(1.0, actual,0.01);
+      Assert.assertEquals(1.0, actual, 0.01);
     } catch (UnsupportedOperationException e) {
       Assert.fail();
     }
   }
 
 
-
-
   @Override
   protected Trade<Stock> createTrade(String name, Double shares, LocalDate date,
                                      Double commission) {
-    return new TransactionalStockTrade(name, shares,date, commission);
+    return new TransactionalStockTrade(name, shares, date, commission);
   }
 }

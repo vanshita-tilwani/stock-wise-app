@@ -7,6 +7,9 @@ import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.StockDataProviderFactory;
 import model.stockpriceprovider.WebAPIStockDataProvider;
 
+/**
+ * Class for testing StockDataProvider Factory.
+ */
 public class StockDataFactoryTest {
 
   @Test

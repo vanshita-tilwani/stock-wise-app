@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -51,11 +50,11 @@ public class TextualView implements View {
     Double scale = scale(portfolioData);
     List<LocalDate> keys = new ArrayList<>(portfolioData.keySet());
     Collections.sort(keys);
-    for(LocalDate key : keys) {
-      Double stars = portfolioData.get(key)/scale;
-      this.display(key + ": " + "*".repeat(stars.intValue())+ "\n");
+    for (LocalDate key : keys) {
+      Double stars = portfolioData.get(key) / scale;
+      this.display(key + ": " + "*".repeat(stars.intValue()) + "\n");
     }
-    this.display("Scale : * = $"+scale+"\n");
+    this.display("Scale : * = $" + scale + "\n");
   }
 
   private double scale(Map<LocalDate, Double> portfolioData) {

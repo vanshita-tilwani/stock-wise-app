@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -11,16 +10,20 @@ import model.stock.Stock;
 import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
 
-public class SimulatedPortfolioTest extends AbstractPortfolioTest{
+/**
+ * Class responsible for testing SimulatedPortfolio.
+ */
+public class SimulatedPortfolioTest extends AbstractPortfolioTest {
 
 
   @Test(expected = UnsupportedOperationException.class)
   public void add() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.add("NOW",10.0,LocalDate.parse("2022-11-04"),30.0);
+    this.portfolio.add("NOW", 10.0,
+            LocalDate.parse("2022-11-04"), 30.0);
 
   }
 
@@ -29,9 +32,10 @@ public class SimulatedPortfolioTest extends AbstractPortfolioTest{
   public void sell() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.sell("GOOG",10.0,LocalDate.parse("2022-11-04"),30.0);
+    this.portfolio.sell("GOOG", 10.0,
+            LocalDate.parse("2022-11-04"), 30.0);
 
   }
 
@@ -39,12 +43,11 @@ public class SimulatedPortfolioTest extends AbstractPortfolioTest{
   public void costBasis() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
     this.portfolio.costBasis(LocalDate.parse("2022-11-04"));
 
   }
-
 
 
   @Override
@@ -53,7 +56,8 @@ public class SimulatedPortfolioTest extends AbstractPortfolioTest{
   }
 
   @Override
-  protected Trade<Stock> createPurchase(String stock, Double quantity, LocalDate date, Double commission) {
+  protected Trade<Stock> createPurchase(String stock, Double quantity,
+                                        LocalDate date, Double commission) {
     return new SimulatedStockTrade(stock, quantity);
   }
 }

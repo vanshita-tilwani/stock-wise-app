@@ -1,4 +1,3 @@
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -6,7 +5,6 @@ import java.time.LocalDate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
-import model.stockpriceprovider.MockStockDataProvider;
 
 /**
  * Testing for StockImpl.
@@ -47,7 +45,7 @@ public class StockImplTest {
   }
 
   @Test
-  public void equals() {
+  public void equalsTest() {
     Stock stock = new StockImpl("NKE");
     Assert.assertTrue(stock.equals(new StockImpl("nke")));
   }

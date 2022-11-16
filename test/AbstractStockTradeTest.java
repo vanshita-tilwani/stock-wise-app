@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import model.stock.Stock;
 import model.trade.Trade;
 
+/**
+ * Abstract class to test the features of Simulated Trade and Transactional Trade.
+ */
 public abstract class AbstractStockTradeTest {
 
   protected Trade<Stock> trade;
@@ -91,7 +94,7 @@ public abstract class AbstractStockTradeTest {
   }
 
   @Test
-  public void equals() {
+  public void equalsTest() {
     try {
       this.trade = this.createTrade("GOOG", 10.0, LocalDate.parse("2022-10-24"),
               1.0);

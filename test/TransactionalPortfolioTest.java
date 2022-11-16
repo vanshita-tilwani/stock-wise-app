@@ -11,13 +11,16 @@ import model.stock.Stock;
 import model.trade.Trade;
 import model.trade.TransactionalStockTrade;
 
-public class TransactionalPortfolioTest extends AbstractPortfolioTest{
+/**
+ * Test for TransactionalPortfolio class.
+ */
+public class TransactionalPortfolioTest extends AbstractPortfolioTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void createPortfolio_InvalidPurchaseDate() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOO", 10.0,
-            LocalDate.parse("2030-10-24"),1.0));
+            LocalDate.parse("2030-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
   }
 
@@ -25,19 +28,19 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest{
   public void valueBeforePurchase() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
     Assert.assertEquals(0.0,
-            this.portfolio.value(LocalDate.parse("2022-10-19")),0.01);
+            this.portfolio.value(LocalDate.parse("2022-10-19")), 0.01);
   }
 
   @Test
   public void add() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.add("NOW",10.0,LocalDate.parse("2022-11-04"),30.0);
+    this.portfolio.add("NOW", 10.0, LocalDate.parse("2022-11-04"), 30.0);
     String actual = this.portfolio.composition();
     String expected = "TYPE : TRANSACTIONAL\n" +
             "Portfolio Name : portfolio1\n" +
@@ -52,9 +55,9 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest{
   public void sell_insufficient() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.sell("GOOG",11.0,LocalDate.parse("2022-11-04"),30.0);
+    this.portfolio.sell("GOOG", 11.0, LocalDate.parse("2022-11-04"), 30.0);
 
   }
 
@@ -62,9 +65,9 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest{
   public void sell() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.sell("GOOG",5.0,LocalDate.parse("2022-11-04"),30.0);
+    this.portfolio.sell("GOOG", 5.0, LocalDate.parse("2022-11-04"), 30.0);
     String actual = this.portfolio.composition();
     String expected = "TYPE : TRANSACTIONAL\n" +
             "Portfolio Name : portfolio1\n" +
@@ -78,7 +81,7 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest{
   public void costBasis() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
     Double invested = this.portfolio.costBasis(LocalDate.parse("2022-11-04"));
     Double expected = 1030.7;
@@ -89,7 +92,7 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest{
   public void costBasis_BeforePurchase() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
     Double invested = this.portfolio.costBasis(LocalDate.parse("2022-10-04"));
     Double expected = 0.0;
@@ -100,7 +103,7 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest{
   public void composition_AtDate() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"),1.0));
+            LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
     String portfolioComposition = this.portfolio.composition(LocalDate.parse("2022-10-23"));
     String expected = "Portfolio Name : portfolio1\n" +

@@ -33,8 +33,8 @@ public class TransactionalStockTrade extends AbstractStockTrade {
     super(stock, quantity);
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
     if (!stockDataProvider.isAvailable(stock, tradeDate)) {
-      throw new IllegalArgumentException("The Stock Market is closed on the specified date." +
-              "Invalid trade Date.\n");
+      throw new IllegalArgumentException("The Stock Market is closed on the specified date."
+              + "Invalid trade Date.\n");
     }
     this.tradeDate = tradeDate;
     this.commission = commission;
@@ -48,13 +48,13 @@ public class TransactionalStockTrade extends AbstractStockTrade {
       return false;
     }
     Trade trade = (TransactionalStockTrade) obj;
-    return this.get().equals(trade.get()) && this.tradeDate.equals(trade.tradeDate()) &&
-            this.commission == this.commission;
+    return this.get().equals(trade.get()) && this.tradeDate.equals(trade.tradeDate())
+            && this.commission == this.commission;
   }
 
   @Override
   public int hashCode() {
-    return super.hashCode() + this.tradeDate.hashCode()
+    return this.stock.hashCode() + this.tradeDate.hashCode()
             + Double.valueOf(this.commission).hashCode();
   }
 

@@ -14,20 +14,18 @@ import view.TextualView;
 import view.View;
 
 /**
- * Testing for PortfolioTradeController.
+ * Integration tests for PortfolioTradeController.
  */
 public class PortfolioTradeControllerIntegrationTest {
 
   private OutputStream out;
-
-  private TradeController controller;
 
   private void setup(String input) throws Exception {
 
     this.out = new ByteArrayOutputStream();
     View view = this.getView(new ByteArrayInputStream(input.getBytes()), out);
     PortfolioTradeOperation model = this.getModel();
-    controller = new PortfolioTradeController(view, model);
+    TradeController controller = new PortfolioTradeController(view, model);
     controller.execute();
   }
 
@@ -296,7 +294,7 @@ public class PortfolioTradeControllerIntegrationTest {
 
   @Test
   public void createTransactionalPortfolio() {
-    try{
+    try {
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n6\n" +
               "transaction1");
       String actual = this.out.toString();
@@ -308,17 +306,16 @@ public class PortfolioTradeControllerIntegrationTest {
               "------ END ------\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void addPurchaseToTransactionalPortfolio() {
-    try{
+    try {
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n3\n"
-      +"transaction1\nnow\n15\n2022-11-09\n50\n6\ntransaction1");
+              + "transaction1\nnow\n15\n2022-11-09\n50\n6\ntransaction1");
       String actual = this.out.toString();
       String expected = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction1\n" +
@@ -329,17 +326,16 @@ public class PortfolioTradeControllerIntegrationTest {
               "------ END ------\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void addPurchaseToTransactionalPortfolio2() {
-    try{
+    try {
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n3\n"
-              +"transaction1\ngoog\n15\n2022-11-09\n50\n6\ntransaction1");
+              + "transaction1\ngoog\n15\n2022-11-09\n50\n6\ntransaction1");
       String actual = this.out.toString();
       String expected = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction1\n" +
@@ -349,60 +345,56 @@ public class PortfolioTradeControllerIntegrationTest {
               "------ END ------\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void addPurchaseToPortfolio_SimulatedPortfolio() {
-    try{
+    try {
       this.setup("1\nmaster1\n2\ngoog\n8\naapl\n6\n3\nmaster1\nnow\n5\n2022-10-10\n"
-              +"12\n");
+              + "12\n");
       String actual = this.out.toString();
       String expected = "Purchasing a new Stock is not allowed in this portfolio\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void addPurchaseToPortfolio_PortfolioDoesNotExist() {
-    try{
+    try {
       this.setup("3\nmaster1\nnow\n5\n2022-10-10\n12\n");
       String actual = this.out.toString();
       String expected = "The portfolio with name provided does not exist.\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void sellFromPortfolio_PortfolioDoesNotExist() {
-    try{
+    try {
 
       this.setup("1\nmaster1\n2\ngoog\n8\naapl\n6\n4\nmaster1\nnow\n5\n2022-10-10\n"
-              +"12\n");
+              + "12\n");
       String actual = this.out.toString();
       String expected = "Selling an existing Stock is not allowed in Simulated Portfolio\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void sellFromPortfolio_NotEnoughStocksToSell() {
-    try{
+    try {
 
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
               "transaction1\nnow\n3\n2021-10-10\n12");
@@ -410,15 +402,14 @@ public class PortfolioTradeControllerIntegrationTest {
       String expected = "You do not have enough shares of the stock to sell\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void sellFromPortfolio() {
-    try{
+    try {
 
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
               "transaction1\ngoog\n3\n2022-11-15\n12\n6\ntransaction1");
@@ -433,30 +424,28 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.assertTrue(actual.contains(expected));
       Assert.assertTrue(actual.contains(expectedComposition));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void sellFromPortfolio_SimulatedPortfolio() {
-    try{
+    try {
 
       this.setup("4\nmaster1\nnow\n5\n2022-10-10\n12\n");
       String actual = this.out.toString();
       String expected = "The portfolio with name provided does not exist.\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void buyOnHoliday() {
-    try{
+    try {
 
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n3\n" +
               "transaction1\ngoog\n3\n2022-10-23\n12\n6\ntransaction1");
@@ -464,15 +453,14 @@ public class PortfolioTradeControllerIntegrationTest {
       String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void saleOnHoliday() {
-    try{
+    try {
 
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
               "transaction1\ngoog\n3\n2022-11-06\n12\n6\ntransaction1");
@@ -480,45 +468,42 @@ public class PortfolioTradeControllerIntegrationTest {
       String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void GetCompositionAtDate_DateNotInCorrectFormat() {
-    try{
+    try {
 
       this.setup("7\ntest1\n11-20-2022\n");
       String actual = this.out.toString();
       String expected = "The date provided was not in the expected format.\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void GetCompositionAtDate_NoPortfolio() {
-    try{
+    try {
 
       this.setup("7\ntest1\n2022-10-10\n");
       String actual = this.out.toString();
       String expected = "The portfolio with name provided does not exist.\n";
       Assert.assertTrue(actual.contains(expected));
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void CompositionAtDate() {
-    try{
+    try {
 
       this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n7\n" +
               "transaction1\n2022-10-25\n7\ntransaction1\n2022-10-18\n7\ntransaction1\n2022-11-01");
@@ -543,15 +528,14 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.assertTrue(actual.contains(expected3));
 
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
 
   @Test
   public void CompositionAtDate_SimulatedPortfolio() {
-    try{
+    try {
 
       this.setup("1\nmaster1\n2\nGOOG\n10\nAAPL\n10\n7\nmaster1\n2022-10-25\n7\nmaster1\n" +
               "2022-10-18\n7\nmaster1\n2022-11-01");
@@ -565,8 +549,7 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.assertTrue(actual.contains(expected1));
 
 
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -584,6 +567,7 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.fail();
     }
   }
+
   @Test
   public void value_transactionalPortfolio1() {
     try {
@@ -747,7 +731,7 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void loadTransactionalPortfolioToFile() {
     try {
-      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n11"+
+      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n11" +
               "\ntransaction10\n12\n6\ntransaction10\n");
       String actual = this.out.toString();
       String expected = "The load of portfolio is successfully completed from portfolio.txt " +
@@ -772,7 +756,7 @@ public class PortfolioTradeControllerIntegrationTest {
       this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
               "transaction10\ngoog\n5\n2022-10-27\n10\n3\ntransaction10\nnow\n10\n2022-11-03" +
               "\n100\n4\ntransaction10\naapl\n2\n2022-11-07\n50\n10\ntransaction10\n" +
-                      "2022-10-24\n2022-11-15\n");
+              "2022-10-24\n2022-11-15\n");
       String expected = "Performance of portfolio transaction10 from 2022-10-24 to 2022-11-15\n" +
               "2022-10-24: **\n" +
               "2022-10-25: **\n" +
@@ -924,7 +908,8 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   private PortfolioTradeOperation getModel() throws Exception {
-    PortfolioTradeOperation model = new PortfolioTradeOperation(new FileRepository("res/portfolio.txt"));
+    PortfolioTradeOperation model = new PortfolioTradeOperation(
+            new FileRepository("res/portfolio.txt"));
     return model;
   }
 
@@ -950,7 +935,6 @@ public class PortfolioTradeControllerIntegrationTest {
     }
     return menu;
   }
-
 
 
 }
