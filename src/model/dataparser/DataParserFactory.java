@@ -1,6 +1,7 @@
 package model.dataparser;
 
 import model.portfolio.Portfolio;
+import model.trade.PortfolioType;
 
 /**
  * Factory used to return the concrete implementation of parser interface for portfolio.
@@ -19,14 +20,11 @@ public class DataParserFactory {
    * @param type the type of portfolio that needs to be parsed.
    * @return the parser object.
    */
-  public static DataParser<Portfolio> getParser(String type) {
-    if (type == null || type.isEmpty()) {
-      return null;
-    }
+  public static DataParser<Portfolio> getParser(PortfolioType type) {
     switch (type) {
-      case "MASTER":
+      case SIMULATED:
         return new SimulatedPortfolioParser();
-      case "TRANSACTIONAL":
+      case TRANSACTIONAL:
         return new TransactionalPortfolioParser();
       default:
         throw new IllegalArgumentException("Unknown type " + type);

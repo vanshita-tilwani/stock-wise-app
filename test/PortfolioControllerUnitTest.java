@@ -140,7 +140,7 @@ public class PortfolioControllerUnitTest {
 
   private StringBuilder getSimulatedPortfolio(String name, Map<String, Double> stocks) {
     StringBuilder input = new StringBuilder("Received : addPortfolio\n");
-    input.append("TYPE : MASTER\n");
+    input.append("TYPE : SIMULATED\n");
     input.append("Portfolio Name : "+name+"\n");
     input.append("STOCKS : \n");
     stocks.forEach((key, value) -> {

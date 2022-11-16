@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.sound.sampled.Port;
+
 import model.dataparser.DataParserFactory;
 import model.portfolio.Portfolio;
+import model.trade.PortfolioType;
 
 /**
  * Utility for parsing Data for loading the portfolio
@@ -35,7 +38,7 @@ public class PortfolioDataParser {
       Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
       Matcher matcher = pattern.matcher(portfolio);
       if (matcher.find()) {
-        String type = matcher.group(0);
+        PortfolioType type = PortfolioType.valueOf(matcher.group(0));
         Portfolio parsedPortfolio = DataParserFactory.getParser(type).parse(portfolio);
         if (parsedPortfolio != null) {
           portfolioList.add(parsedPortfolio);

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import model.stock.Stock;
+import model.trade.PortfolioType;
 import model.trade.Trade;
 import model.utility.Utility;
 
@@ -73,7 +74,7 @@ abstract class AbstractPortfolio implements Portfolio {
    * @param shares the set of aggregated shares comprising portfolio.
    * @return the portfolio composition.
    */
-  protected String getComposition(String type, Set<Trade<Stock>> shares) {
+  protected String getComposition(PortfolioType type, Set<Trade<Stock>> shares) {
     StringBuilder sb = new StringBuilder();
     sb.append("TYPE : "+type+"\n");
     sb.append("Portfolio Name : " + this.name + "\n");

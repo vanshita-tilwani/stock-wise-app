@@ -91,7 +91,7 @@ public class PortfolioTradeOperationTest {
     try {
       Object portfolio1 = this.trade.get("test1");
       Object portfolio2 = this.trade.get("test2");
-      String expectedP1 = "TYPE : MASTER\n" +
+      String expectedP1 = "TYPE : SIMULATED\n" +
               "Portfolio Name : test1\n" +
               "STOCKS : \n" +
               "Stock Symbol : GOOG,Quantity : 2.0\n" +

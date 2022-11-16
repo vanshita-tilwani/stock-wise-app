@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
+import model.trade.PortfolioType;
 import model.trade.SimulatedStockTrade;
 import model.trade.TransactionalStockTrade;
 import model.trade.Trade;
@@ -92,14 +93,14 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   public String composition() {
     Predicate<Trade<Stock>> predicate = x -> true;
     Set<Trade<Stock>> shares = this.consolidateIf(predicate);
-    return getComposition("TRANSACTIONAL", shares);
+    return getComposition(PortfolioType.TRANSACTIONAL, shares);
   }
 
   @Override
   public String composition(LocalDate date) {
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
     Set<Trade<Stock>> shares = this.consolidateIf(predicate);
-    return getComposition("TRANSACTIONAL", shares);
+    return getComposition(PortfolioType.TRANSACTIONAL, shares);
   }
 
   @Override

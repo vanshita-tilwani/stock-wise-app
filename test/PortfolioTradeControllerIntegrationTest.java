@@ -556,7 +556,7 @@ public class PortfolioTradeControllerIntegrationTest {
       this.setup("1\nmaster1\n2\nGOOG\n10\nAAPL\n10\n7\nmaster1\n2022-10-25\n7\nmaster1\n" +
               "2022-10-18\n7\nmaster1\n2022-11-01");
       String actual = this.out.toString();
-      String expected1 = "TYPE : MASTER\n" +
+      String expected1 = "TYPE : SIMULATED\n" +
               "Portfolio Name : master1\n" +
               "STOCKS : \n" +
               "Stock Symbol : GOOG,Quantity : 10.0\n" +
@@ -894,7 +894,7 @@ public class PortfolioTradeControllerIntegrationTest {
       this.setup("1\nmaster1\n2\ngoog\n10\ngoog\n10\n6\nmaster1");
       String actual = this.out.toString();
       System.out.println(actual);
-      String expected = "TYPE : MASTER\n" +
+      String expected = "TYPE : SIMULATED\n" +
               "Portfolio Name : master1\n" +
               "STOCKS : \n" +
               "Stock Symbol : GOOG,Quantity : 20.0\n" +

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import model.stock.Stock;
+import model.trade.PortfolioType;
 import model.trade.Trade;
 
 /**
@@ -58,19 +59,19 @@ public class SimulatedPortfolio extends AbstractPortfolio {
 
   @Override
   public String composition() {
-    return this.getComposition("MASTER", this.shares);
+    return this.getComposition(PortfolioType.SIMULATED, this.shares);
   }
 
   @Override
   public String composition(LocalDate date) throws UnsupportedOperationException {
-    return this.getComposition("MASTER", this.shares);
+    return this.getComposition(PortfolioType.SIMULATED, this.shares);
   }
 
 
   @Override
   public String toString() {
 
-    return this.getComposition("MASTER", this.shares);
+    return this.getComposition(PortfolioType.SIMULATED, this.shares);
   }
 
 
