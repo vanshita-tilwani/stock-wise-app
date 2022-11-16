@@ -6,7 +6,10 @@ import view.View;
 
 /**
  * Implementation of Command Executor responsible for Loading all the portfolios
- * from the data source to the application.
+ * from the data source to the application. The model can be passed the data source that is
+ * to be considered for Load. This operation supports loading of portfolios from the File.
+ * If the load failed due to IO exception or Parse exception, the user will be displayed
+ * an error message.
  */
 public class LoadPortfolioCommand extends AbstractExecutor {
 

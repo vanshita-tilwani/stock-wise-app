@@ -8,8 +8,12 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of executor responsible for selling the stocks
- * in a portfolio.
+ * Implementation of the Executor responsible for Selling the stocks from
+ * the portfolio. This operation is not supported for Simulated Portfolio type
+ * since they do not support trading options.
+ * For Transactional Portfolio, the trade operations can be performed given the
+ * portfolio contains enough shares of the stock to be sold on the date of sale
+ * specified by the user.
  */
 public class SellStockCommand extends AbstractExecutor {
 

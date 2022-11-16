@@ -1,6 +1,5 @@
 package controller;
 
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,11 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of the controller to trade with portfolios.
+ * Portfolio Controller is the Controller layer in the design which can be consumed
+ * by the Client to trade with stocks within a Portfolio. This controller is
+ * responsible for starting the application and controlling the flow of the
+ * application and helps the user to navigate the features available to consume in
+ * the application.
  */
 public class PortfolioTradeController implements TradeController {
 
@@ -30,9 +33,10 @@ public class PortfolioTradeController implements TradeController {
   // model responsible for business logic
   private final TradeOperation model;
 
-
   /**
-   * Creates a Controller object with view and model as arguments.
+   * Instantiates the Controller Object with the view responsible for
+   * reading/displaying input data and model responsible for executing
+   * business logic of the application.
    *
    * @param view  The view in MVC design
    * @param model The model in MVC design.
@@ -44,7 +48,7 @@ public class PortfolioTradeController implements TradeController {
 
   @Override
   public void execute() {
-    // TODO : ask for data provider type or set default if time permits.
+
     // gets the commands as per the menu options to create, retrieve,
     // evaluate, save or load the portfolios.
     Map<Integer, Executor> commands = this.getCommands();

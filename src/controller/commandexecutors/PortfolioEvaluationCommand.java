@@ -8,8 +8,11 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of the executor responsible for getting the portfolio
- * evaluation (total value) at a date specified by the user.
+ * Implementation of Executor responsible for fetching the Total Value of the portfolio
+ * at the date specified by the User.
+ * For Simulated Portfolio, the value only depends on the stock prices for the specified
+ * date however for transactional portfolios, the transaction date along with the stock
+ * price combine to evaluate the total value of the portfolio at any given date.
  */
 public class PortfolioEvaluationCommand extends AbstractExecutor {
   @Override

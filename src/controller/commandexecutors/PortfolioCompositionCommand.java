@@ -5,7 +5,11 @@ import model.stocktradings.TradeOperation;
 import view.View;
 
 /**
- * Implementation of executor responsible for getting the portfolio composition.
+ * Implementation of executor responsible for getting the portfolio composition comprising
+ * all the trade transactions.
+ * For Simulation Portfolio, the Composition remains same after creation. For transactional
+ * Portfolio, all the transactions irrespective of data is considered for evaluation
+ * final Portfolio Composition.
  */
 public class PortfolioCompositionCommand extends AbstractExecutor {
   @Override
