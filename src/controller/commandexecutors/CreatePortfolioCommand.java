@@ -18,6 +18,7 @@ abstract class CreatePortfolioCommand extends AbstractExecutor {
   @Override
   public void execute(View view, TradeOperation<Portfolio> model) {
     try {
+      this.displayPortfolioMessage(view);
       // read the name of the portfolio.
       String name = this.readTradeName(view);
       // Read Trade Data
@@ -56,5 +57,7 @@ abstract class CreatePortfolioCommand extends AbstractExecutor {
    * @return A new portfolio.
    */
   protected abstract Portfolio createPortfolio(String name, Set<Trade<Stock>> shares);
+
+  protected abstract void displayPortfolioMessage(View view);
 
 }

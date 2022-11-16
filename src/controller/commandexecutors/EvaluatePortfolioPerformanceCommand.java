@@ -1,6 +1,7 @@
 package controller.commandexecutors;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import model.portfolio.Portfolio;
 import model.stocktradings.TradeOperation;
@@ -23,9 +24,7 @@ public class EvaluatePortfolioPerformanceCommand extends AbstractExecutor {
       LocalDate to = this.readToDate(view);
       // returns the composition and displays it.
       view.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
-      view.draw(model.analyze(portfolio, from, to));
-    } catch (UnsupportedOperationException e) {
-      view.display(e.getMessage());
+      view.draw(model.get(portfolio).values(from, to));
     }
     catch (IllegalArgumentException e) {
       view.display(e.getMessage());

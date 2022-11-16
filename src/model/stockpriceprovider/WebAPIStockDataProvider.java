@@ -1,10 +1,13 @@
 package model.stockpriceprovider;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -52,6 +55,9 @@ public class WebAPIStockDataProvider implements StockDataProvider {
 
   @Override
   public double price(String stock, LocalDate date) throws IllegalArgumentException {
+    while(!this.stockData.get(stock).containsKey(date)) {
+      date = date.minusDays(1);
+    }
     return this.stockData.get(stock).get(date);
   }
 
@@ -68,7 +74,15 @@ public class WebAPIStockDataProvider implements StockDataProvider {
     } catch (IOException e) {
       return false;
     }
+    catch (JSONException e) {
+      return false;
+    }
     return true;
+  }
+
+  @Override
+  public boolean isAvailable(String stock, LocalDate date) {
+    return this.stockData.get(stock.toUpperCase()).containsKey(date);
   }
 
   /**

@@ -2,13 +2,12 @@ package model.portfolio;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import model.stock.Stock;
 import model.trade.Trade;
-import model.utility.CalendarUtility;
+import model.utility.Utility;
 
 /**
  * Abstract Class to abstract out the Portfolio details pertaining to all
@@ -35,19 +34,20 @@ abstract class AbstractPortfolio implements Portfolio {
   }
 
   @Override
-  public Map<LocalDate, Double> analyze(LocalDate from, LocalDate to) {
+  public Map<LocalDate, Double> values(LocalDate from, LocalDate to)
+          throws IllegalArgumentException{
+    if(from.isAfter(to)) {
+      throw new IllegalArgumentException("Start date cannot be after end date\n");
+    }
+    if (from.isAfter(LocalDate.now()) || to.isAfter(LocalDate.now())) {
+      throw new IllegalArgumentException("The start/end date entered is in future.\n");
+    }
     Map<LocalDate, Double> values = new HashMap<>();
-    List<LocalDate> dates = CalendarUtility.getWorkingDays(from, to);
+    Set<LocalDate> dates = Utility.getEqualPeriod(from, to);
     for (LocalDate date : dates) {
       values.put(date, this.value(date));
     }
     return values;
-  }
-
-  @Override
-  public String toString() {
-    // Prepares the formatted string for Portfolio.
-    return "Portfolio Name : " + this.name + "\n";
   }
 
   /**
@@ -73,8 +73,9 @@ abstract class AbstractPortfolio implements Portfolio {
    * @param shares the set of aggregated shares comprising portfolio.
    * @return the portfolio composition.
    */
-  protected String getComposition(Set<Trade<Stock>> shares) {
-    StringBuilder sb = new StringBuilder().append("TYPE : MASTER\n");
+  protected String getComposition(String type, Set<Trade<Stock>> shares) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("TYPE : "+type+"\n");
     sb.append("Portfolio Name : " + this.name + "\n");
     sb.append("STOCKS : \n");
     for (Trade share : shares) {
@@ -83,5 +84,7 @@ abstract class AbstractPortfolio implements Portfolio {
     sb.append("------ END ------\n");
     return sb.toString();
   }
+
+
 
 }

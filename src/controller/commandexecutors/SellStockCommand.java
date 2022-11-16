@@ -31,5 +31,8 @@ public class SellStockCommand extends AbstractExecutor {
     } catch (UnsupportedOperationException e) {
       view.display(e.getMessage());
     }
+    catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    }
   }
 }

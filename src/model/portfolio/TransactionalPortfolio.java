@@ -3,6 +3,7 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -23,20 +24,6 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   private final Set<Trade<Stock>> sold;
 
   /**
-   * Creates a transaction Portfolio with name and collection of purchases.
-   *
-   * @param name   name of the portfolio
-   * @param shares the shares of stocks purchased.
-   */
-  public TransactionalPortfolio(String name, Set<Trade<Stock>> shares) {
-    // Assuming that an empty portfolio will be created and then the stock
-    // purchases will be made against that portfolio.
-    super(name);
-    this.purchased = shares;
-    this.sold = new HashSet<>();
-  }
-
-  /**
    * Creates a transaction Portfolio with name and collection of purchases and sale.
    *
    * @param name      the name of the portfolio.
@@ -55,7 +42,16 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   public void add(String stock, Double shares, LocalDate date, Double commission)
           throws IllegalArgumentException {
     Trade share = new TransactionalStockTrade(stock, shares, date, commission);
-    this.purchased.add(share);
+    if(this.purchased.contains(share)) {
+      for(var purchase : purchased) {
+        if(purchase.equals(share)) {
+          purchase.buy(shares);
+        }
+      }
+    }
+    else {
+      this.purchased.add(share);
+    }
   }
 
   @Override
@@ -77,15 +73,15 @@ public class TransactionalPortfolio extends AbstractPortfolio {
 
   @Override
   public double costBasis(LocalDate date) throws UnsupportedOperationException {
-    double cost = 0;
-    for (Trade<Stock> trade : purchased) {
-      cost = cost + trade.value(trade.tradeDate()) + trade.commission();
-    }
-    return cost;
+    Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
+    return addPriceIf(predicate);
   }
 
   @Override
   public double value(LocalDate date) {
+    if (date.isAfter(LocalDate.now())) {
+      throw new IllegalArgumentException("The entered date is in future.\n");
+    }
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
     Set<Trade<Stock>> cumulative = this.consolidateIf(predicate);
     double value = this.evaluateValue(cumulative, date);
@@ -96,20 +92,20 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   public String composition() {
     Predicate<Trade<Stock>> predicate = x -> true;
     Set<Trade<Stock>> shares = this.consolidateIf(predicate);
-    return getComposition(shares);
+    return getComposition("TRANSACTIONAL", shares);
   }
 
   @Override
   public String composition(LocalDate date) {
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
     Set<Trade<Stock>> shares = this.consolidateIf(predicate);
-    return getComposition(shares);
+    return getComposition("TRANSACTIONAL", shares);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder().append("TYPE : TRANSACTIONAL\n");
-    sb.append(super.toString());
+    sb.append("Portfolio Name : " + this.name + "\n");
     sb.append("PURCHASES : \n");
     for (Trade<Stock> trade : purchased) {
       sb.append(trade.toString());
@@ -149,6 +145,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     return new HashSet<>(consolidated.values());
   }
 
+
   /**
    * Count the total number of shares using the filter.
    *
@@ -164,6 +161,16 @@ public class TransactionalPortfolio extends AbstractPortfolio {
       }
     }
     return available;
+  }
+
+  private double addPriceIf(Predicate<Trade<Stock>> predicate) {
+    double cost = 0;
+    for (Trade<Stock> trade : purchased) {
+      if(predicate.test(trade)) {
+        cost = cost + trade.value(trade.tradeDate()) + trade.commission();
+      }
+    }
+    return cost;
   }
 
 

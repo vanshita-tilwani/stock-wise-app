@@ -48,19 +48,8 @@ public abstract class AbstractStockTrade implements Trade<Stock> {
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    } else if (!(obj instanceof AbstractStockTrade)) {
-      return false;
-    }
-    Trade trade = (AbstractStockTrade) obj;
-    return this.get().equals(trade.get());
-  }
-
-  @Override
   public int hashCode() {
-    return this.stock.hashCode() + Double.valueOf(this.quantity).hashCode();
+    return this.stock.hashCode();
   }
 
   @Override

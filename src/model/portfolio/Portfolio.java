@@ -70,7 +70,7 @@ public interface Portfolio {
    * @param date the date at which you want to evaluate portfolio composition.
    * @return the composition of a portfolio.
    */
-  String composition(LocalDate date);
+  String composition(LocalDate date) throws UnsupportedOperationException;
 
   /**
    * Returns all value of portfolio within the time period specified in the argument.
@@ -79,6 +79,6 @@ public interface Portfolio {
    * @param to the last date of the time period.
    * @return the value of portfolio at multiple dates.
    */
-  Map<LocalDate, Double> analyze(LocalDate from, LocalDate to);
+  Map<LocalDate, Double> values(LocalDate from, LocalDate to) throws IllegalArgumentException;
 
 }

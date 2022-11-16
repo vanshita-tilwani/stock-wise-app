@@ -26,4 +26,6 @@ public interface StockDataProvider {
    */
   boolean isValid(String stock);
 
+  boolean isAvailable(String stock, LocalDate date);
+
 }

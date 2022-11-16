@@ -32,8 +32,13 @@ public class CreateSimulatedPortfolioCommand extends CreatePortfolioCommand {
         // if stock already exists, then consolidate the amount of shares.
         stockData.get(stock).buy(shares);
       } else {
-        // if stock does not already exist, add.
-        stockData.put(stock, new SimulatedStockTrade(stock, shares));
+        try {
+          // if stock does not already exist, add.
+          stockData.put(stock, new SimulatedStockTrade(stock, shares));
+        }
+        catch(IllegalArgumentException e) {
+          view.display(e.getMessage());
+        }
       }
     }
     // parse the map to set of trades and return the resultant
@@ -44,5 +49,12 @@ public class CreateSimulatedPortfolioCommand extends CreatePortfolioCommand {
   protected Portfolio createPortfolio(String name, Set<Trade<Stock>> shares) {
     // creates a master/aggregated type of portfolio used for analysis purposes.
     return new SimulatedPortfolio(name, shares);
+  }
+
+  @Override
+  protected void displayPortfolioMessage(View view) {
+    view.display("NOTE : This type of portfolio is only for planning/analyzing trading" +
+            " of stocks in a Portfolio.\nIt does not support buying/sale of stocks and" +
+            " other features involving purchase/sale of stock trades.\n");
   }
 }

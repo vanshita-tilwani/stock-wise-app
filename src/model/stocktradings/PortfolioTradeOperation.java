@@ -42,21 +42,6 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
     this.portfolios.put(portfolio.name(), portfolio);
   }
 
-  @Override
-  public double value(String portfolio, LocalDate date) throws IllegalArgumentException {
-    LocalDate now = LocalDate.now();
-    // if the portfolio does not exist then throw an exception to let the controller know.
-    if (!this.portfolios.containsKey(portfolio)) {
-      throw new IllegalArgumentException("The portfolio with name provided does not exist.\n");
-    }
-    // if the date is after today's date then throw exception since data cannot be
-    // available for a future date.
-    if (date.isAfter(now)) {
-      throw new IllegalArgumentException("The entered date is in future.\n");
-    }
-    Portfolio trade = this.portfolios.get(portfolio);
-    return trade.value(date);
-  }
 
   @Override
   public Portfolio get(String trade) throws IllegalArgumentException {
@@ -114,14 +99,5 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   }
 
-  @Override
-  public Map<LocalDate, Double> analyze(String portfolio, LocalDate from, LocalDate to)
-          throws IllegalArgumentException {
-    if (!this.portfolios.containsKey(portfolio)) {
-      throw new IllegalArgumentException("The portfolio with name : " + portfolio
-              + " does not exist.");
-    }
-    return this.portfolios.get(portfolio).analyze(from, to);
-  }
 
 }

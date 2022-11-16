@@ -50,7 +50,7 @@ public interface Trade<T> {
    * @return the date of the trade.
    * @throws IllegalArgumentException if the trade does not have a date associated.
    */
-  LocalDate tradeDate() throws IllegalArgumentException;
+  LocalDate tradeDate() throws UnsupportedOperationException;
 
   /**
    * Returns the commission fee associated with a trade.
@@ -59,5 +59,4 @@ public interface Trade<T> {
    * @throws UnsupportedOperationException if the trade does not support commission fee.
    */
   double commission() throws UnsupportedOperationException;
-
 }

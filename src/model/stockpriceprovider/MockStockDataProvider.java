@@ -1,5 +1,6 @@
 package model.stockpriceprovider;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,5 +77,10 @@ public class MockStockDataProvider implements StockDataProvider {
   @Override
   public boolean isValid(String stock) {
     return this.validStocks.contains(stock.toUpperCase());
+  }
+
+  @Override
+  public boolean isAvailable(String stock, LocalDate date) {
+    return true;
   }
 }

@@ -1,3 +1,4 @@
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class StockImplTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void InvalidStockSymbol() {
-    new StockImpl("TSL");
+    new StockImpl("GOO");
   }
 
   @Test
@@ -29,7 +30,31 @@ public class StockImplTest {
     Stock stock = new StockImpl("NKE");
     LocalDate date = LocalDate.parse("2014-12-01");
     Double actual = stock.price(date);
-    Double expected = 2034.0;
+    Double expected = 97.69;
     Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void equals_sameRef() {
+    Stock stock = new StockImpl("NKE");
+    Assert.assertTrue(stock.equals(stock));
+  }
+
+  @Test
+  public void equals_diffType() {
+    Stock stock = new StockImpl("NKE");
+    Assert.assertFalse(stock.equals(12));
+  }
+
+  @Test
+  public void equals() {
+    Stock stock = new StockImpl("NKE");
+    Assert.assertTrue(stock.equals(new StockImpl("nke")));
+  }
+
+  @Test
+  public void notEquals() {
+    Stock stock = new StockImpl("NKE");
+    Assert.assertFalse(stock.equals(new StockImpl("IBM")));
   }
 }

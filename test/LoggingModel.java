@@ -14,22 +14,11 @@ public class LoggingModel implements TradeOperation<Portfolio> {
     this.log=log;
   }
 
-  @Override
-  public Map<LocalDate, Double> analyze(String portfolio, LocalDate from, LocalDate to) throws IllegalArgumentException {
-    log.append("Analyze Portfolio:"+portfolio+" From Date:"+from+" To Date:"+to+"\n" );
-    return null;
-  }
 
   @Override
   public void create(Portfolio trade) throws IllegalArgumentException {
     log.append("Received : addPortfolio\n"+trade.toString());
 
-  }
-
-  @Override
-  public double value(String portfolio, LocalDate date) throws IllegalArgumentException {
-    log.append("Value called for "+ portfolio + " at "+ date +"\n");
-    return 0;
   }
 
   @Override

@@ -5,6 +5,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import view.TextualView;
@@ -15,33 +18,48 @@ import view.View;
  */
 public class TextualViewTest {
 
-  private String input;
   private OutputStream out;
   private View view;
 
   @Test
   public void testDisplay() {
-    this.input = "Test Check";
-    this.setup();
-    view.display(this.input);
-    Assert.assertEquals(this.input, this.out.toString());
+    String input = "Test Check";
+    this.setup(input);
+    view.display(input);
+    Assert.assertEquals(input, this.out.toString());
   }
 
   @Test
   public void testInput() {
-    this.input = "Test check";
-    this.setup();
+    String input = "Test Check";
+    this.setup(input);
     String actual = view.input();
-    Assert.assertEquals(this.input, actual);
+    Assert.assertEquals(input, actual);
   }
 
+  @Test
+  public void testDraw() {
+    String expected = "2022-11-16: *****\n" +
+            "2022-11-17: **********\n" +
+            "2022-11-18: ***************\n" +
+            "2022-11-19: ********************\n" +
+            "2022-11-20: *************************\n" +
+            "Scale : * = $0.2\n";
+    this.setup("");
+    HashMap<LocalDate, Double> map = new HashMap<>();
+    map.put(LocalDate.now(), 1.0);
+    map.put(LocalDate.now().plusDays(1), 2.0);
+    map.put(LocalDate.now().plusDays(2), 3.0);
+    map.put(LocalDate.now().plusDays(3), 4.0);
+    map.put(LocalDate.now().plusDays(4), 5.0);
 
+    this.view.draw(map);
+    Assert.assertEquals(expected, this.out.toString());
+  }
 
-
-
-  private void setup() {
+  private void setup(String input) {
     InputStream in;
-    in = new ByteArrayInputStream(this.input.getBytes());
+    in = new ByteArrayInputStream(input.getBytes());
     this.out = new ByteArrayOutputStream();
     view = new TextualView(in, this.out);
   }

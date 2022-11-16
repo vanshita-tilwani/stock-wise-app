@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,16 +49,22 @@ public class PortfolioTradeController implements TradeController {
     // evaluate, save or load the portfolios.
     Map<Integer, Executor> commands = this.getCommands();
     while (true) {
-      // read the menu option from the view.
-      int menuOption = this.readMenuInput();
-      // if the menu option does not exist in commands then exit the application.
-      if (!commands.containsKey(menuOption)) {
-        view.display("You have decided to exit the application. See you next time\n");
-        break;
+      try {
+        // read the menu option from the view.
+        int menuOption = this.readMenuInput();
+        // if the menu option does not exist in commands then exit the application.
+        if (!commands.containsKey(menuOption)) {
+          view.display("You have decided to exit the application. See you next time\n");
+          break;
+        }
+        // execute the menu option chosen.
+        commands.get(menuOption).execute(view, model);
+      } catch (DateTimeParseException ex) {
+        view.display("The date provided was not in the expected format.\n");
       }
-      // execute the menu option chosen.
-      commands.get(menuOption).execute(view, model);
     }
+
+
   }
 
   /**
@@ -110,18 +117,18 @@ public class PortfolioTradeController implements TradeController {
     // Generates all the menu options displayed to the user.
     StringBuilder menu = new StringBuilder();
     menu.append("Main Menu :\n");
-    menu.append("1. Create Master Portfolio\n");
-    menu.append("2. Create Transactional Portfolio\n");
-    menu.append("3. Buy Stock\n");
-    menu.append("4. Sell Stock\n");
-    menu.append("5. Get All the Portfolio Names\n");
-    menu.append("6. Get an existing Portfolio composition(end of all transactions)\n");
-    menu.append("7. Gen an existing Portfolio composition at a specific date\n");
-    menu.append("8. Get the evaluation of an existing Portfolio\n");
-    menu.append("9. Get the cost basis of a Portfolio\n");
-    menu.append("10. Get the portfolio Performance over a Period of time\n");
-    menu.append("11. Save the portfolio to file\n");
-    menu.append("12. Load the portfolio\n");
+    menu.append("1.  Create a new Simulated Portfolio\n");
+    menu.append("2.  Create a new Transactional Portfolio\n");
+    menu.append("3.  Purchase a Stock and Add it to Transactional Portfolio\n");
+    menu.append("4.  Sell a Stock from the Transactional Portfolio\n");
+    menu.append("5.  Get all the available Portfolios in the Application\n");
+    menu.append("6.  Get final composition for an Existing Portfolio \n");
+    menu.append("7.  Get composition for an Existing Portfolio at a specific date\n");
+    menu.append("8.  Get the total value on an Existing Portfolio\n");
+    menu.append("9.  Get the cost basis of an Existing Transactional Portfolio\n");
+    menu.append("10. Get the performance of an Existing Portfolio over a period of time\n");
+    menu.append("11. Save an Existing Portfolio to file\n");
+    menu.append("12. Load portfolios to the Application\n");
     menu.append("Enter the menu option you wish to choose.\n");
     menu.append("Press and enter any other key to exit the application.\n");
     return menu.toString();

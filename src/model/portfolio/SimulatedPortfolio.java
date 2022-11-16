@@ -30,6 +30,9 @@ public class SimulatedPortfolio extends AbstractPortfolio {
 
   @Override
   public double value(LocalDate date) {
+    if (date.isAfter(LocalDate.now())) {
+      throw new IllegalArgumentException("The entered date is in future.\n");
+    }
     return this.evaluateValue(this.shares, date);
   }
 
@@ -44,30 +47,30 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   public void sell(String stock, Double shares, LocalDate date, Double commission)
           throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Selling an existing Stock is not allowed "
-            + "in this portfolio\n");
+            + "in Simulated Portfolio\n");
   }
 
   @Override
   public double costBasis(LocalDate date) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("The cost basis cannot be evaluated for Master"
-            + "Portfolio.");
+    throw new UnsupportedOperationException("The cost basis cannot be evaluated for Simulated"
+            + "Portfolio.\n");
   }
 
   @Override
   public String composition() {
-    return this.getComposition(this.shares);
+    return this.getComposition("MASTER", this.shares);
   }
 
   @Override
-  public String composition(LocalDate date) {
-    return this.getComposition(this.shares);
+  public String composition(LocalDate date) throws UnsupportedOperationException {
+    return this.getComposition("MASTER", this.shares);
   }
 
 
   @Override
   public String toString() {
-    // Prepares the formatted string for Portfolio.
-    return this.getComposition(this.shares);
+
+    return this.getComposition("MASTER", this.shares);
   }
 
 

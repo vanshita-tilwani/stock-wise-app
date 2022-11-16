@@ -4,8 +4,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import model.utility.Utility;
 
 /**
  * Implementation of View interface which used
@@ -42,9 +48,20 @@ public class TextualView implements View {
 
   @Override
   public void draw(Map<LocalDate, Double> portfolioData) {
-    portfolioData.forEach((key, value) -> {
-      this.display(key + ": " + "*".repeat(value.intValue())+"\n");
-    });
-    this.display("Scale : * = $1");
+    Double scale = scale(portfolioData);
+    List<LocalDate> keys = new ArrayList<>(portfolioData.keySet());
+    Collections.sort(keys);
+    for(LocalDate key : keys) {
+      Double stars = portfolioData.get(key)/scale;
+      this.display(key + ": " + "*".repeat(stars.intValue())+ "\n");
+    }
+    this.display("Scale : * = $"+scale+"\n");
+  }
+
+  private double scale(Map<LocalDate, Double> portfolioData) {
+    var max = Collections.max(portfolioData.values());
+    var min = Collections.min(portfolioData.values());
+    Double scale = Utility.scale(max.intValue(), min.intValue());
+    return scale;
   }
 }

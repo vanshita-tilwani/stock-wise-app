@@ -26,9 +26,6 @@ public class ProgramRunner {
     PortfolioTradeOperation model = new PortfolioTradeOperation(fileRepo);
     TradeController controller = new PortfolioTradeController(view, model);
     controller.execute();
-    //LocalDate end = LocalDate.now().plusDays(10).plusDays(4);
-    //var days= CalendarUtility.getWorkingDays(LocalDate.now(), end);
-    //System.out.println(days);
   }
 
 }

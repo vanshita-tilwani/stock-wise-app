@@ -2,6 +2,9 @@ package model.trade;
 
 import java.time.LocalDate;
 
+import model.stockpriceprovider.StockDataProvider;
+import model.stockpriceprovider.StockDataProviderFactory;
+
 /**
  * Represents a Regular Trade of stocks with stock as properties along with
  * the number of stocks contributing in the trade, date of trade, commission fee involved
@@ -26,7 +29,13 @@ public class TransactionalStockTrade extends AbstractStockTrade {
    */
   public TransactionalStockTrade(String stock, double quantity, LocalDate tradeDate,
                                  Double commission) {
+
     super(stock, quantity);
+    StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
+    if (!stockDataProvider.isAvailable(stock, tradeDate)) {
+      throw new IllegalArgumentException("The Stock Market is closed on the specified date." +
+              "Invalid trade Date.\n");
+    }
     this.tradeDate = tradeDate;
     this.commission = commission;
   }
@@ -39,7 +48,8 @@ public class TransactionalStockTrade extends AbstractStockTrade {
       return false;
     }
     Trade trade = (TransactionalStockTrade) obj;
-    return this.get().equals(trade.get()) && this.tradeDate.equals(trade.tradeDate());
+    return this.get().equals(trade.get()) && this.tradeDate.equals(trade.tradeDate()) &&
+            this.commission == this.commission;
   }
 
   @Override
@@ -65,4 +75,5 @@ public class TransactionalStockTrade extends AbstractStockTrade {
   public double commission() throws UnsupportedOperationException {
     return this.commission;
   }
+
 }

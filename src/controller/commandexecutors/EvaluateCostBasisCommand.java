@@ -20,8 +20,12 @@ public class EvaluateCostBasisCommand extends AbstractExecutor {
       // read the date at which you wish to determine the cost basis.
       LocalDate date = this.readDate(view);
       // returns the composition and displays it.
-      view.display("The cost basis for the portfolio is " + model.get(portfolio).costBasis(date));
+      view.display("The cost basis for the portfolio is $" + model.get(portfolio).costBasis(date)
+      +"\n");
     } catch (UnsupportedOperationException e) {
+      view.display(e.getMessage());
+    }
+    catch (IllegalArgumentException e) {
       view.display(e.getMessage());
     }
   }

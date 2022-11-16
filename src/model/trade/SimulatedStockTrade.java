@@ -20,14 +20,13 @@ public class SimulatedStockTrade extends AbstractStockTrade {
 
   @Override
   public LocalDate tradeDate() throws IllegalArgumentException {
-    throw new IllegalArgumentException("Does not support purchases, only for analysis");
+    throw new UnsupportedOperationException("Does not support purchases, only for analysis\n");
   }
 
   @Override
   public double commission() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("NOT SUPPORTED");
+    throw new UnsupportedOperationException("This type of trade does not support commissions\n");
   }
-
 
   @Override
   public boolean equals(Object obj) {
