@@ -62,6 +62,9 @@ The program supports all the stocks supported by Alpha-Vantage API
 The program supports all the dates for portfolio value evaluation
 The program does not support purchase/sale transactions to be made on days when Stock Market is closed.
 
+References Used :
+1. Nicenum algorithm to understand the algorithm for the scale of bar chart
+
 Library Used :
 1. https://mvnrepository.com/artifact/org.json/json - Using org.json for Parsing string to JSON
 
