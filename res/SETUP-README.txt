@@ -1,54 +1,63 @@
 Setup:
-Run "java -jar pdpassignment4.jar" in terminal to run jar file from any location.
+Run "java -jar pdpassignment5.jar" in terminal to run jar file from any location.
 
 Requirement:
 Java jdk must be installed correctly.
 
-Step 1 : Steps to create a portfolio with 3 different stocks:
-1. Enter 1. 
+Step 1 : Steps to create a transactional portfolio with 3 different stock trades
+1. Enter 2. 
 2. Enter name of the portfolio-> sample1
 3. You will be prompted to input the number of stocks for the portfolio, Enter->3.
-4. Next Enter the stock symbol you wish to buy-> AAPL
-5. After step 4 you will Enter the number of shares you wish to buy->100
-6. Repeat steps 4 and 5.
-   6.1 NFLX->35
-   6.2 IBM->40
+4. Enter the stock symbol you wish to buy-> AAPL
+5. Enter the number of shares you wish to buy->1
+6. Enter the date of the transaction -> 2022-10-24
+7. Enter the commission fee associated with the transaction -> 10
+6. Repeat steps 4 to 7.
+   6.1 GOOG->1->2022-10-28->10
+   6.2 NOW->2->2022-11-04->10
 7. A message saying portolio has successfully created will be displayed on your screen.
-[1->sample1->3->AAPL->100->NFLX->35->IBM->40]
+[2->sample1->3->AAPL->1->2022-10-24->10->GOOG->1->2022-10-28->10->NOW->2->2022-11-04->10]
 
-Step 2 : Steps to create a portfolio with 2 different stocks 
-1. Enter->1. 
-2. Enter name of the portfolio-> sample2
-3. You will be prompted to input the number of stocks for the portfolio, Enter->2.
-4. Next Enter the stock symbol you wish to buy-> MCD
-5. After step 4 you will Enter the number of shares you wish to buy->100
-6. Repeat steps 4 and 5.
-   6.1 NFLX->35
-7.A message saying portolio has successfully created will be displayed on your screen.
-[1->sample2->2->MCD->100->NFLX->35]
+Step 2 : Steps to add more stocks in the portfolio
+1. Enter->3. 
+2. Enter name of the portfolio you created in Step 1 -> sample1
+3. You will be prompted to input the stock you wish to buy, Enter->IBM.
+4. Next enter the number of shares you wish to buy-> 5
+5. Enter the date of the transaction -> 2022-11-09
+6. Enter the commission fee associated with the transaction -> 10
+7.A message saying the purchase was successfull will be displayed on your screen.
+[3->sample2->IBM->5->2022-11-09->10]
 
 Step 3 : Steps to query value of Porfolio created in Step1(i.e. sample1) on a date
-1. You will see the menu again, now Enter->4.
-9. Enter name of the portfolio for which you want the evaluation. Here ->sample1
-10. Enter the date in YYYY-MM-DD format-> 2022-11-01. 
-11. This will retrieve the value of the portfolio on the asked date. 
-[4->sample1->2022-11-01]
+1. You will see the menu again, now Enter->8.
+2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
+3. Enter the date in YYYY-MM-DD format-> 2022-11-02. 
+4. This will retrieve the value of the portfolio on the asked date. 
+[4->sample1->2022-11-02]
 
-Step 4 : Steps to query value of Porfolio created in Step2(i.e. sample2) on a date
-1. You will see the menu again, now Enter->4.
-9. Enter name of the portfolio for which you want the evaluation. Here ->sample2
-10. Enter the date in YYYY-MM-DD format-> 2022-10-01. 
-11. This will retrieve the value of the portfolio on the asked date. 
-[4->sample2->2022-10-01]
+Step 4 : Steps to query value of Porfolio created in Step1(i.e. sample1) on a different date
+1. You will see the menu again, now Enter->8.
+2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
+3. Enter the date in YYYY-MM-DD format-> 2022-11-15. 
+4. This will retrieve the value of the portfolio on the asked date. 
+[8->sample1->2022-11-15]
 
 
-Valid Ticker symbols permitted by the program:
-"AAPL","MSFT","GOOG","GOOGL", "AMZN","TSLA","BRK/A","BRK/B","UNH","XOM","JNJ","V",
-"WMT","JPM","CVX", "NVDA", "LLY","PG","TSM","MA","HD","BAC","PFE","NVO","ABBV","KO",
-"MRK","PEP","META","COST","ORCL","MCD","TMO","SHEL","AVGO","DIS","TMUS","AZN","TM",
-"CSCO","ASML","DHR","WFC","ACN","ABT","NVS","BABA","BMY","COP","VZ","NEE","CRM",
-"SCHW","TXN","LIN","AMGN","UPS","NKE","MS","ADBE","PM", "RTX","TTE","HON","CMCSA",
-"T","QCOM","RY","ELV","CVS","LMT","NFLX","BHP","IBM","UNP","GS","LOW","DE","INTC",
-"EQNR","TD","MDT","HDB","CAT","UL","INTU","SAP","AXP","SNY","HSBC","SPGI","BP","ADP",
-"BUD","PLD","SBUX","GILD","AMD","CI","BLK","AMT","PYPL","DEO","BA","C","SONY","CB",
-"RIO","MDLZ"
+Step 5 : Steps to query cost basis of Porfolio created in Step1(i.e. sample1) on a date
+1. You will see the menu again, now Enter->9.
+2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
+3. Enter the date in YYYY-MM-DD format-> 2022-11-02. 
+4. This will retrieve the cost basis of the portfolio on the asked date. 
+[9->sample1->2022-11-02]
+
+Step 4 : Steps to query cost basis of Porfolio created in Step1(i.e. sample1) on a different date
+1. You will see the menu again, now Enter->9.
+2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
+3. Enter the date in YYYY-MM-DD format-> 2022-11-15. 
+4. This will retrieve the cost basis of the portfolio on 2022-11-15. 
+[9->sample1->2022-11-15]
+
+NOTE :
+The program supports all the stocks supported by Alpha-Vantage API
+The program supports all the dates for portfolio value evaluation
+The program does not support purchase/sale transactions to be made on days when Stock Market is closed.
