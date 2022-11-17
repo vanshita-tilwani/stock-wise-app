@@ -57,6 +57,9 @@ Step 4 : Steps to query cost basis of Portfolio created in Step1(i.e. sample1) o
 4. This will retrieve the cost basis of the portfolio on 2022-11-15. 
 [9->sample1->2022-11-15]
 
+Step 5 : Exit the application
+Enter any key other than menu option and press enter to exit.
+
 NOTE :
 The program supports all the stocks supported by Alpha-Vantage API
 The program supports all the dates for portfolio value evaluation
