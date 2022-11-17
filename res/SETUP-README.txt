@@ -26,7 +26,7 @@ Step 2 : Steps to add more stocks in the portfolio
 5. Enter the date of the transaction -> 2022-11-09
 6. Enter the commission fee associated with the transaction -> 10
 7.A message saying the purchase was successful will be displayed on your screen.
-[3->sample2->IBM->5->2022-11-09->10]
+[3->sample1->IBM->5->2022-11-09->10]
 
 Step 3 : Steps to query value of Portfolio created in Step1(i.e. sample1) on a date
 1. You will see the menu again, now Enter->8.
