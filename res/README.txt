@@ -12,7 +12,7 @@ This following features are supported by the application :
 8.  Ability to get the total value of the Portfolio at a specific date.
 9.  Ability to get cost basis of the transactional portfolio
 10. Ability to fetch the portfolio performance over a period of time.
-11. Ability to save the Portolio on disk.
+11. Ability to save the Portfolio on disk.
 12. Ability to load all the portfolios in the application from the disk.
 
 

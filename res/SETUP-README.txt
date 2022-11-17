@@ -15,7 +15,7 @@ Step 1 : Steps to create a transactional portfolio with 3 different stock trades
 6. Repeat steps 4 to 7.
    6.1 GOOG->1->2022-10-28->10
    6.2 NOW->2->2022-11-04->10
-7. A message saying portolio has successfully created will be displayed on your screen.
+7. A message saying portfolio has successfully created will be displayed on your screen.
 [2->sample1->3->AAPL->1->2022-10-24->10->GOOG->1->2022-10-28->10->NOW->2->2022-11-04->10]
 
 Step 2 : Steps to add more stocks in the portfolio
@@ -25,17 +25,17 @@ Step 2 : Steps to add more stocks in the portfolio
 4. Next enter the number of shares you wish to buy-> 5
 5. Enter the date of the transaction -> 2022-11-09
 6. Enter the commission fee associated with the transaction -> 10
-7.A message saying the purchase was successfull will be displayed on your screen.
+7.A message saying the purchase was successful will be displayed on your screen.
 [3->sample2->IBM->5->2022-11-09->10]
 
-Step 3 : Steps to query value of Porfolio created in Step1(i.e. sample1) on a date
+Step 3 : Steps to query value of Portfolio created in Step1(i.e. sample1) on a date
 1. You will see the menu again, now Enter->8.
 2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
 3. Enter the date in YYYY-MM-DD format-> 2022-11-02. 
 4. This will retrieve the value of the portfolio on the asked date. 
 [4->sample1->2022-11-02]
 
-Step 4 : Steps to query value of Porfolio created in Step1(i.e. sample1) on a different date
+Step 4 : Steps to query value of Portfolio created in Step1(i.e. sample1) on a different date
 1. You will see the menu again, now Enter->8.
 2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
 3. Enter the date in YYYY-MM-DD format-> 2022-11-15. 
@@ -43,14 +43,14 @@ Step 4 : Steps to query value of Porfolio created in Step1(i.e. sample1) on a di
 [8->sample1->2022-11-15]
 
 
-Step 5 : Steps to query cost basis of Porfolio created in Step1(i.e. sample1) on a date
+Step 5 : Steps to query cost basis of Portfolio created in Step1(i.e. sample1) on a date
 1. You will see the menu again, now Enter->9.
 2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
 3. Enter the date in YYYY-MM-DD format-> 2022-11-02. 
 4. This will retrieve the cost basis of the portfolio on the asked date. 
 [9->sample1->2022-11-02]
 
-Step 4 : Steps to query cost basis of Porfolio created in Step1(i.e. sample1) on a different date
+Step 4 : Steps to query cost basis of Portfolio created in Step1(i.e. sample1) on a different date
 1. You will see the menu again, now Enter->9.
 2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
 3. Enter the date in YYYY-MM-DD format-> 2022-11-15. 
