@@ -61,3 +61,17 @@ NOTE :
 The program supports all the stocks supported by Alpha-Vantage API
 The program supports all the dates for portfolio value evaluation
 The program does not support purchase/sale transactions to be made on days when Stock Market is closed.
+
+Library Used :
+1. https://mvnrepository.com/artifact/org.json/json - Using org.json for Parsing string to JSON
+
+Setting up in IntelliJ
+1. Click setting on the right side in IntelliJ
+2. Click on Project Structure in settings
+3. From the left hand, select the Library module
+4. You will see a + sign
+5. Click on the + sign and select "From Maven" option
+6. You will see a dialog box with search
+7. Enter "org.json:json:20220924" in search and select it.
+8. Click on Save, the library will get added to the project.
+9. Click Apply and close the settings.
