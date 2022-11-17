@@ -33,7 +33,7 @@ Step 3 : Steps to query value of Portfolio created in Step1(i.e. sample1) on a d
 2. Enter name of the portfolio for which you want the evaluation. Here ->sample1
 3. Enter the date in YYYY-MM-DD format-> 2022-11-02. 
 4. This will retrieve the value of the portfolio on the asked date. 
-[4->sample1->2022-11-02]
+[8->sample1->2022-11-02]
 
 Step 4 : Steps to query value of Portfolio created in Step1(i.e. sample1) on a different date
 1. You will see the menu again, now Enter->8.
