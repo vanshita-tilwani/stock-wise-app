@@ -33,7 +33,7 @@ abstract class AbstractExecutor implements Executor {
     view.display("Enter the number of shares\n");
     boolean parsed = false;
     Double shares = 0.0;
-    while(!parsed) {
+    while (!parsed) {
       try {
         String input = view.input();
         shares = Double.parseDouble(input);

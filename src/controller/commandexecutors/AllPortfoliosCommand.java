@@ -4,7 +4,6 @@ import java.util.Set;
 
 import model.portfolio.Portfolio;
 import model.stocktradings.TradeOperation;
-import model.trade.AbstractStockTrade;
 import view.View;
 
 /**
