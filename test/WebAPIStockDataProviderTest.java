@@ -48,15 +48,17 @@ public class WebAPIStockDataProviderTest {
   @Test
   public void value1() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertEquals(144.34, provider.price("IBM",
-            LocalDate.now().minusDays(1)), 0.01);
+    LocalDate date = LocalDate.parse("2022-11-16");
+    Assert.assertEquals(144.52, provider.price("IBM",
+            date), 0.01);
   }
 
   @Test
   public void value2() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertEquals(144.2, provider.price("IBM",
-            LocalDate.now().minusDays(2)), 0.01);
+    LocalDate date = LocalDate.parse("2022-11-15");
+    Assert.assertEquals(144.34, provider.price("IBM",
+            date), 0.01);
   }
 
   @Test

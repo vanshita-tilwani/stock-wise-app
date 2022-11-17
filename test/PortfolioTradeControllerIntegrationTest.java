@@ -116,10 +116,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void createPortfolio_InvalidStockQuantity() {
     try {
-      this.setup("1\ntest1\n1\nGOOG\nhfd");
+      this.setup("1\ntest1\n1\nGOOG\nhfd\n1");
       String actual = out.toString();
-      String expected = "Please make sure you input valid number of " +
-              "stocks/quantity of stocks.\n";
+      String expected = "Invalid number of shares\n" +
+              "Please enter the number of shares again.\n";
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();

@@ -45,11 +45,12 @@ public class TextualViewTest {
             "Scale : * = $0.2\n";
     this.setup("");
     HashMap<LocalDate, Double> map = new HashMap<>();
-    map.put(LocalDate.now(), 1.0);
-    map.put(LocalDate.now().plusDays(1), 2.0);
-    map.put(LocalDate.now().plusDays(2), 3.0);
-    map.put(LocalDate.now().plusDays(3), 4.0);
-    map.put(LocalDate.now().plusDays(4), 5.0);
+    LocalDate date = LocalDate.parse("2022-11-16");
+    map.put(date, 1.0);
+    map.put(date.plusDays(1), 2.0);
+    map.put(date.plusDays(2), 3.0);
+    map.put(date.plusDays(3), 4.0);
+    map.put(date.plusDays(4), 5.0);
 
     this.view.draw(map);
     Assert.assertEquals(expected, this.out.toString());

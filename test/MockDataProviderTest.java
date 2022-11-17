@@ -38,14 +38,16 @@ public class MockDataProviderTest {
   @Test
   public void price1() {
     StockDataProvider provider = MockStockDataProvider.getInstance();
-    Assert.assertEquals(2055.0, provider.price("IBM",
-            LocalDate.now().minusDays(1)), 0.01);
+    LocalDate date = LocalDate.parse("2022-11-16");
+    Assert.assertEquals(2056.0, provider.price("IBM",
+            date), 0.01);
   }
 
   @Test
   public void price2() {
     StockDataProvider provider = MockStockDataProvider.getInstance();
-    Assert.assertEquals(2054.0, provider.price("IBM",
-            LocalDate.now().minusDays(2)), 0.01);
+    LocalDate date = LocalDate.parse("2022-11-15");
+    Assert.assertEquals(2055.0, provider.price("IBM",
+            date), 0.01);
   }
 }
