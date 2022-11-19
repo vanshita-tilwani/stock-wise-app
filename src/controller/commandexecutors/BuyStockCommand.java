@@ -30,7 +30,7 @@ public class BuyStockCommand extends AbstractExecutor {
       // reads the commission fee for the trade.
       Double commission = this.readCommissionFee(view);
       // buys the trade and adds it in portfolio.
-      model.get(portfolio).add(stock, shares, date, commission);
+      model.get(portfolio).buy(stock, shares, date, commission);
       view.display("The purchase was completed successfully!\n");
     } catch (UnsupportedOperationException e) {
       view.display(e.getMessage());

@@ -22,7 +22,7 @@ public class SimulatedPortfolioTest extends AbstractPortfolioTest {
     shares.add(this.createPurchase("GOOG", 10.0,
             LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.add("NOW", 10.0,
+    this.portfolio.buy("NOW", 10.0,
             LocalDate.parse("2022-11-04"), 30.0);
 
   }

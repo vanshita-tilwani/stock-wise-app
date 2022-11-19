@@ -1,6 +1,7 @@
 package controller.commandexecutors;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import view.View;
 
@@ -75,8 +76,7 @@ abstract class AbstractExecutor implements Executor {
    */
   protected LocalDate readDateOfPurchase(View view) {
     view.display("Enter the date of purchase (in YYYY-MM-DD format)\n");
-    LocalDate date = LocalDate.parse(view.input());
-    return date;
+    return readDateFromUser(view);
   }
 
   /**
@@ -87,8 +87,7 @@ abstract class AbstractExecutor implements Executor {
    */
   protected LocalDate readDateOfSale(View view) {
     view.display("Enter the date of sale (in YYYY-MM-DD format)\n");
-    LocalDate date = LocalDate.parse(view.input());
-    return date;
+    return readDateFromUser(view);
   }
 
   /**
@@ -116,9 +115,9 @@ abstract class AbstractExecutor implements Executor {
   protected LocalDate readDate(View view) {
     view.display("Enter the date at which you wish to get the retrieve the information"
             + "(in YYYY-MM-DD format)\n");
-    LocalDate date = LocalDate.parse(view.input());
-    return date;
+    return readDateFromUser(view);
   }
+
 
   /**
    * Reads the start date for portfolio performance evaluation.
@@ -128,8 +127,7 @@ abstract class AbstractExecutor implements Executor {
    */
   protected LocalDate readFromDate(View view) {
     view.display("Enter the start date for performance evaluation(in YYYY-MM-DD format)\n");
-    LocalDate date = LocalDate.parse(view.input());
-    return date;
+    return readDateFromUser(view);
   }
 
   /**
@@ -140,8 +138,7 @@ abstract class AbstractExecutor implements Executor {
    */
   protected LocalDate readToDate(View view) {
     view.display("Enter the end date for performance evaluation(in YYYY-MM-DD format)\n");
-    LocalDate date = LocalDate.parse(view.input());
-    return date;
+    return readDateFromUser(view);
   }
 
   /**
@@ -152,7 +149,34 @@ abstract class AbstractExecutor implements Executor {
    */
   protected double readCommissionFee(View view) {
     view.display("Enter the commission fee for this transaction\n");
-    double commission = Double.parseDouble(view.input());
-    return commission;
+    while (true) {
+      try {
+        Double commission = Double.parseDouble(view.input());
+        if (commission >= 0.0) {
+          return commission;
+        }
+        view.display("You have entered an invalid commission fee.Please re-enter the fee\n");
+      } catch (NumberFormatException e) {
+        view.display("You have entered an invalid commission fee.Please re-enter the fee\n");
+      }
+    }
+  }
+
+  /**
+   * Takes a date an input from the user and performs validation on entered date. If invalid
+   * asks the user to input again
+   *
+   * @param view View in MVC design
+   * @return the parsed date.
+   */
+  private LocalDate readDateFromUser(View view) {
+    while (true) {
+      try {
+        LocalDate date = LocalDate.parse(view.input());
+        return date;
+      } catch (DateTimeParseException e) {
+        view.display("You have entered an invalid date.Please re-enter the date\n");
+      }
+    }
   }
 }

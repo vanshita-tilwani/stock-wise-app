@@ -42,7 +42,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   }
 
   @Override
-  public void add(String stock, Double shares, LocalDate date, Double commission)
+  public void buy(String stock, Double shares, LocalDate date, Double commission)
           throws IllegalArgumentException {
     // new purchase of the stock
     Trade share = new TransactionalStockTrade(stock, shares, date, commission);

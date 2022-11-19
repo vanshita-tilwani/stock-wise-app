@@ -41,7 +41,7 @@ public interface Portfolio {
    * @throws UnsupportedOperationException for portfolios which do not support
    *                                       trading options.
    */
-  void add(String stock, Double shares, LocalDate date, Double commission)
+  void buy(String stock, Double shares, LocalDate date, Double commission)
           throws UnsupportedOperationException;
 
   /**

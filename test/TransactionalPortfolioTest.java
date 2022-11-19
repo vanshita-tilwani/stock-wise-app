@@ -35,12 +35,12 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest {
   }
 
   @Test
-  public void add() {
+  public void buy() {
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(this.createPurchase("GOOG", 10.0,
             LocalDate.parse("2022-10-24"), 1.0));
     this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.add("NOW", 10.0, LocalDate.parse("2022-11-04"), 30.0);
+    this.portfolio.buy("NOW", 10.0, LocalDate.parse("2022-11-04"), 30.0);
     String actual = this.portfolio.composition();
     String expected = "TYPE : TRANSACTIONAL\n" +
             "Portfolio Name : portfolio1\n" +
@@ -51,13 +51,36 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest {
     Assert.assertEquals(expected, actual);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
+  public void buyOnHoliday() {
+    try {
+      Set<Trade<Stock>> shares = new HashSet<>();
+      shares.add(this.createPurchase("GOOG", 10.0,
+              LocalDate.parse("2022-10-18"), 1.0));
+      this.portfolio = createPortfolio("portfolio1", shares);
+      this.portfolio.buy("NOW", 10.0,
+              LocalDate.parse("2022-10-23"), 30.0);
+      Assert.fail();
+    } catch (IllegalArgumentException e) {
+      String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
+      Assert.assertEquals(expected, e.getMessage());
+    }
+  }
+
+  @Test
   public void sell_insufficient() {
-    Set<Trade<Stock>> shares = new HashSet<>();
-    shares.add(this.createPurchase("GOOG", 10.0,
-            LocalDate.parse("2022-10-24"), 1.0));
-    this.portfolio = createPortfolio("portfolio1", shares);
-    this.portfolio.sell("GOOG", 11.0, LocalDate.parse("2022-11-04"), 30.0);
+    try {
+      Set<Trade<Stock>> shares = new HashSet<>();
+      shares.add(this.createPurchase("GOOG", 10.0,
+              LocalDate.parse("2022-10-24"), 1.0));
+      this.portfolio = createPortfolio("portfolio1", shares);
+      this.portfolio.sell("GOOG", 11.0, LocalDate.parse("2022-11-04"),
+              30.0);
+      Assert.fail();
+    } catch (IllegalArgumentException e) {
+      String expected = "You do not have enough shares of the stock to sell\n";
+      Assert.assertEquals(expected, e.getMessage());
+    }
 
   }
 
@@ -75,6 +98,23 @@ public class TransactionalPortfolioTest extends AbstractPortfolioTest {
             "Stock Symbol : GOOG,Quantity : 5.0\n" +
             "------ END ------\n";
     Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sellOnHoliday() {
+    try {
+      Set<Trade<Stock>> shares = new HashSet<>();
+      shares.add(this.createPurchase("GOOG", 10.0,
+              LocalDate.parse("2022-10-18"), 1.0));
+      this.portfolio = createPortfolio("portfolio1", shares);
+      this.portfolio.sell("GOOG", 5.0,
+              LocalDate.parse("2022-10-23"), 30.0);
+      Assert.fail();
+    } catch (IllegalArgumentException e) {
+      String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
+      Assert.assertEquals(expected, e.getMessage());
+    }
+
   }
 
   @Test

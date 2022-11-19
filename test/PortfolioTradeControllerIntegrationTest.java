@@ -86,15 +86,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void getPortfolioEvaluation_InvalidDate() {
     try {
-      this.setup("8\ntest1\n23-10-2022");
+      this.setup("8\ntest1\n23-10-2022\n2022-10-23");
       String actual = out.toString();
-      StringBuilder expected = this.getMenuOptions(true);
-      expected.append("Enter the name of the portfolio\n");
-      expected.append("Enter the date at which you wish to get the retrieve the " +
-              "information(in YYYY-MM-DD format)\n");
-      expected.append("The date provided was not in the expected format.\n");
-      expected.append(this.getMenuOptions(false));
-      Assert.assertEquals(expected.toString(), actual);
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();
     }
@@ -474,12 +469,40 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   @Test
+  public void invalidCommissionFee() {
+    try {
+
+      this.setup("2\ntransaction1\n1\ngoog\n10\n2022-10-24\nabc\n1");
+      String actual = this.out.toString();
+      String expected = "You have entered an invalid commission fee.Please re-enter the fee\n";
+      Assert.assertTrue(actual.contains(expected));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void invalidCommissionFee_Negative() {
+    try {
+
+      this.setup("2\ntransaction1\n1\ngoog\n10\n2022-10-24\n-12\n1");
+      String actual = this.out.toString();
+      String expected = "You have entered an invalid commission fee.Please re-enter the fee\n";
+      Assert.assertTrue(actual.contains(expected));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
   public void GetCompositionAtDate_DateNotInCorrectFormat() {
     try {
 
-      this.setup("7\ntest1\n11-20-2022\n");
+      this.setup("7\ntest1\n11-20-2022\n2022-11-20");
       String actual = this.out.toString();
-      String expected = "The date provided was not in the expected format.\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
       Assert.assertTrue(actual.contains(expected));
 
     } catch (Exception e) {
@@ -712,6 +735,7 @@ public class PortfolioTradeControllerIntegrationTest {
     }
   }
 
+
   @Test
   public void saveTransactionalPortfolioToFile2() {
     try {
@@ -831,7 +855,6 @@ public class PortfolioTradeControllerIntegrationTest {
       this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n10\n" +
               "master1\n2022-10-24\n2022-11-10");
       String actual = this.out.toString();
-      System.out.println(actual);
       String expected = "Performance of portfolio master1 from 2022-10-24 to 2022-11-10\n" +
               "2022-10-24: *******************************\n" +
               "2022-10-25: ********************************\n" +
@@ -859,6 +882,62 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   @Test
+  public void SimulatedPortfolioPerformance_InvalidStartDate() {
+    try {
+      this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n10\n" +
+              "master1\nabc\n2022-10-24\n2022-11-10");
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void SimulatedPortfolioPerformance_InvalidEndDate() {
+    try {
+      this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n10\n" +
+              "master1\n2022-10-24\nabc\n2022-11-10");
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void TransactionalPortfolioPerformance_InvalidStartDate() {
+    try {
+      this.setup("2\nmaster1\n1\ngoog\n10\n2022-10-24\n10\n10\n" +
+              "master1\nabc\n2022-10-24\n2022-11-10");
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void TransactionalPortfolioPerformance_InvalidEndDate() {
+    try {
+      this.setup("2\nmaster1\n1\ngoog\n10\n2022-10-24\n10\n10\n" +
+              "master1\n2022-10-24\nacc\n2022-11-10");
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
   public void PortfolioNameEmpty() {
     try {
       this.setup("1\n \n2\ngoog\n10\naapl\n10\n10\n" +
@@ -871,6 +950,9 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.fail();
     }
   }
+
+
+
 
   @Test
   public void ConsolidateTrades_Simulated() {
