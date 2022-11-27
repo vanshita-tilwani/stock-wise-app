@@ -56,7 +56,7 @@ public class PortfolioTradeController implements TradeController {
     // evaluate, save or load the portfolios.
     while (true) {
       // read the menu option from the view.
-      int menuOption = this.readMenuInput();
+      int menuOption = view.readMenu();
       // if the menu option does not exist in commands then exit the application.
       if (!commands.containsKey(menuOption)) {
         view.display("You have decided to exit the application. See you next time\n");
@@ -67,24 +67,6 @@ public class PortfolioTradeController implements TradeController {
     }
 
 
-  }
-
-  /**
-   * Read input from the menu options to accordingly perform actions.
-   *
-   * @return the menu options chosen by the user.
-   */
-  private int readMenuInput() {
-    // Displays the menu options to the user
-    String menuOptions = this.getMenuOptions();
-    view.display(menuOptions);
-    try {
-      // read the menu option input by the user
-      return Integer.parseInt(view.input());
-    } catch (Exception e) {
-      // if the input is illegal then returns 0
-      return 0;
-    }
   }
 
   /**

@@ -25,6 +25,7 @@ public class StockImpl implements Stock {
    * @param name stock symbol.
    */
   public StockImpl(String name) {
+    // TODO : change to 1 API call for all the stocks in the portfolio
     this.stockPriceProvider = StockDataProviderFactory.getDataProvider();
     String tempName = name.toUpperCase();
     if (!this.stockPriceProvider.isValid(tempName)) {

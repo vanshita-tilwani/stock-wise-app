@@ -3,6 +3,7 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -20,6 +21,7 @@ import model.trade.Trade;
  */
 public class TransactionalPortfolio extends AbstractPortfolio {
 
+  // TODO : change all the set to map
   private final Set<Trade<Stock>> purchased;
   private final Set<Trade<Stock>> sold;
 
@@ -47,6 +49,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     // new purchase of the stock
     Trade share = new TransactionalStockTrade(stock, shares, date, commission);
     // adding the trade in the trade
+    // TODO : don't have this because commission will be counted only once.
     for (var purchase : purchased) {
       if (purchase.equals(share)) {
         purchase.buy(shares);

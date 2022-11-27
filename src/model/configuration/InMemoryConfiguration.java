@@ -22,7 +22,7 @@ public class InMemoryConfiguration implements Configuration<String, String> {
    * across the application to determine any and every configuration for the application.
    */
   private InMemoryConfiguration() {
-    // As of now sets the data provider for the application as web based provider
+    // TODO : As of now sets the data provider for the application as web based provider
     // Can switch between the provider based on user input as well later on using
     // the singleton object of the configuration class.
     this.configMap = new HashMap<>();
