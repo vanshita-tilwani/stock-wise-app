@@ -14,7 +14,7 @@ import java.nio.file.StandardOpenOption;
 public class FileRepository implements DataRepository<String> {
 
   // the path of the File that servers as data source.
-  private final Path path;
+  private Path path;
 
   /**
    * Creates an instance of File Repository with path as the path to the data source. The

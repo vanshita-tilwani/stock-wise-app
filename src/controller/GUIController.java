@@ -99,4 +99,15 @@ public class GUIController implements Features {
       view.display(e.getMessage());
     }
   }
+
+  @Override
+  public void loadPortfolio() {
+    try {
+      model.load();
+      view.display("The portfolio load completed successfully!");
+    }
+    catch (Exception e) {
+      view.display("The portfolio load failed!");
+    }
+  }
 }

@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.security.spec.ECField;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,9 +130,11 @@ public class PortfolioTradeOperationTest {
   @Test
   public void savePortfolio() {
     try {
-      Assert.assertTrue(this.trade.save("test1"));
-      Assert.assertTrue(this.trade.save("test2"));
+      this.trade.save("test1");
+      this.trade.save("test2");
     } catch (IllegalArgumentException e) {
+      Assert.fail();
+    } catch (Exception e) {
       Assert.fail();
     }
   }
@@ -139,19 +142,22 @@ public class PortfolioTradeOperationTest {
   @Test
   public void savePortfolio_Fail() {
     try {
-      Assert.assertFalse(this.trade.save("test10"));
-    } catch (IllegalArgumentException e) {
+      this.trade.save("test10");
       Assert.fail();
+    } catch (Exception e) {
+      // Test pass
     }
   }
 
   @Test
   public void loadPortfolio() {
     try {
-      Assert.assertTrue(this.trade.load());
+      this.trade.load();
       Assert.assertTrue(this.trade.all().containsAll(new
               ArrayList<>(Arrays.asList("test1", "test2"))));
     } catch (IllegalArgumentException e) {
+      Assert.fail();
+    }catch (Exception e) {
       Assert.fail();
     }
   }
@@ -160,11 +166,12 @@ public class PortfolioTradeOperationTest {
   public void loadPortfolio_Fail() {
     try {
       this.trade = new PortfolioTradeOperation(new FileRepository("res"));
-      Assert.assertFalse(this.trade.load());
+      this.trade.load();
+      Assert.fail();
     } catch (IllegalArgumentException e) {
       Assert.fail();
-    } catch (IOException e) {
-      Assert.fail();
+    } catch (Exception e) {
+      // PASS
     }
   }
 

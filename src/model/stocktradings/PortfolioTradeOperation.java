@@ -60,44 +60,29 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
 
   @Override
-  public boolean save(String portfolio) throws IllegalArgumentException {
-    try {
-      // if the portfolio does not exist throw the exception
-      if (!this.portfolios.containsKey(portfolio)) {
-        throw new IllegalArgumentException("The portfolio with name : " + portfolio
-                + " does not exist.");
-      }
-      //this.portfolios.get(portfolio).save();
-      // save the portfolio in the data source
-      repository.save(this.portfolios.get(portfolio).toString());
-      return true;
-    } catch (Exception e) {
-      // Catch any exception that was faced while saving data to the data source and return
-      // the return as false to let the caller know that save failed.
-      return false;
+  public void save(String portfolio) throws Exception {
+    // if the portfolio does not exist throw the exception
+    if (!this.portfolios.containsKey(portfolio)) {
+      throw new IllegalArgumentException("The portfolio with name : " + portfolio
+              + " does not exist.");
     }
+    //this.portfolios.get(portfolio).save();
+    // save the portfolio in the data source
+    repository.save(this.portfolios.get(portfolio).toString());
+
   }
 
   @Override
-  public boolean load() {
-    try {
-      // Read the data from data source
-      String data = repository.read().toString();
-      // Parse the data into required format
-      List<Portfolio> portfolios = PortfolioDataParser.parse(data);
-      for (Portfolio portfolio : portfolios) {
-        // if the portfolio does not exist then load the portfolio in the application
-        if (!this.portfolios.containsKey(portfolio.name())) {
-          this.create(portfolio);
-        }
+  public void load() throws Exception {
+    String data = repository.read().toString();
+    // Parse the data into required format
+    List<Portfolio> portfolios = PortfolioDataParser.parse(data);
+    for (Portfolio portfolio : portfolios) {
+      // if the portfolio does not exist then load the portfolio in the application
+      if (!this.portfolios.containsKey(portfolio.name())) {
+        this.create(portfolio);
       }
-      return true;
-    } catch (Exception e) {
-      // Catch any exception that was faced while reading data from data source and return
-      // the return as false to let the caller know that load failed.
-      return false;
     }
-
   }
 
 

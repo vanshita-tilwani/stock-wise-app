@@ -1,4 +1,4 @@
-Assignment 4 (Stocks)
+Assignment 5
 
 This following features are supported by the application :
 
@@ -101,7 +101,7 @@ Description of the functionalities :
 -- The program then prompts the user to input the portfolio name that needs to be saved in the system.
 -- Once the user inputs, the program saves the portfolio in the file system.
 
-6. Ability to load all the portfolios in the application from the disk :
+12. Ability to load all the portfolios in the application from the disk :
 -- The program starts by displaying a menu option.
 -- To load Portfolios in the file system, user must input 12.
 -- The user will then load the portfolios in the program from /res/portfolio.txt

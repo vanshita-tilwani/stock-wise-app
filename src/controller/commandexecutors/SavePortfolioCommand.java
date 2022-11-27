@@ -17,11 +17,12 @@ public class SavePortfolioCommand extends AbstractExecutor {
     // read name of the portfolio which you wish to save.
     String portfolio = this.readTradeName(view);
     // save the portfolio
-    Boolean result = model.save(portfolio);
-    if (result) {
+    try {
+      model.save(portfolio);
       view.display("The portfolio saved to file successfully to portfolio.txt in res folder in"
               + " your current working directory!\n");
-    } else {
+    }
+    catch (Exception e) {
       view.display("The save could not be completed. Please make sure the portfolio name"
               + " is entered correctly and the data source(file) exist.\n");
     }

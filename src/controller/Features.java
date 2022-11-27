@@ -18,4 +18,6 @@ public interface Features {
   void evaluateCostBasis(String portfolio, LocalDate date);
 
   void evaluateComposition(String portfolio, LocalDate date);
+
+  void loadPortfolio();
 }

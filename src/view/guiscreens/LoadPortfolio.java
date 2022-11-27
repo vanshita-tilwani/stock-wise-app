@@ -1,5 +1,6 @@
 package view.guiscreens;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -10,11 +11,16 @@ import controller.Features;
 public class LoadPortfolio extends AbstractScreen {
 
   private final JFileChooser file;
-  private int userSelection;
+  private JLabel output;
 
   public LoadPortfolio() {
     super("Load Portfolio", "");
     file = new JFileChooser();
+    output = new JLabel();
+    JPanel mainPanel = new JPanel();
+    mainPanel.add(file);
+    mainPanel.add(output);
+    this.add(mainPanel, BorderLayout.CENTER);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -22,7 +28,7 @@ public class LoadPortfolio extends AbstractScreen {
 
   @Override
   public void display(String text) {
-
+    this.output.setText(text);
   }
 
   @Override
@@ -31,7 +37,10 @@ public class LoadPortfolio extends AbstractScreen {
             new PropertyChangeListener() {
               @Override
               public void propertyChange(PropertyChangeEvent evt) {
+
                 System.out.println("Loaded");
+                System.out.println(file.getSelectedFile().getAbsolutePath());
+                features.loadPortfolio();
               }
             });
     file.showOpenDialog(this);

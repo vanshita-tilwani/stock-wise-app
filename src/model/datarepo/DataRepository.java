@@ -1,5 +1,7 @@
 package model.datarepo;
 
+import java.nio.file.Path;
+
 /**
  * This interface is responsible for saving the objects to the
  * data source. Serves as a repository layer for the business logic.

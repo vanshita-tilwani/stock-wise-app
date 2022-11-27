@@ -37,12 +37,12 @@ public interface TradeOperation<T> {
    *
    * @param trade the trade object.
    */
-  boolean save(String trade) throws IllegalArgumentException;
+  void save(String trade) throws Exception;
 
   /**
    * Loads all the trades available in the data-source to the application.
    */
-  boolean load();
+  void load() throws Exception;
 
 
 }

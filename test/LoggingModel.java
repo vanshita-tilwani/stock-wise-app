@@ -35,14 +35,12 @@ public class LoggingModel implements TradeOperation<Portfolio> {
   }
 
   @Override
-  public boolean save(String trade) throws IllegalArgumentException {
+  public void save(String trade) throws Exception {
     log.append("Save portfolio : " + trade + "\n");
-    return true;
   }
 
   @Override
-  public boolean load() {
+  public void load() {
     log.append("Load all the portfolio in the data source\n");
-    return false;
   }
 }

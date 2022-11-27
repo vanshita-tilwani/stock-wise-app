@@ -1,35 +1,6 @@
+TYPE : TRANSACTIONAL
 Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
-Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
-Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
-Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
-Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
-Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
-Portfolio Name : test1
-Stock Symbol : aapl,Quantity : 4.0
-Stock Symbol : googl,Quantity : 1.0
-Portfolio Name : test1
-Stock Symbol : GOOG,Quantity : 2.0
+PURCHASES : 
+Stock Symbol : GOOG,Quantity : 1.0,Date of Purchase : 2022-10-24,Commission Fee : 10.0
+SALE : 
+------ END ------
