@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public abstract class AbstractScreen extends JFrame implements GUIView {
+public abstract class AbstractScreen extends JFrame implements Screen {
   protected final JLabel message;
   protected final JButton submit;
   protected final JButton back;

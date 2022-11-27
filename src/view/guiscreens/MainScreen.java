@@ -2,14 +2,12 @@ package view.guiscreens;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.AbstractList;
-import java.util.Map;
 
 import javax.swing.*;
 
 import controller.Features;
 
-public class MainScreen extends JFrame implements GUIView {
+public class MainScreen extends JFrame implements Screen {
 
   private final JButton submit;
   private final ButtonGroup menuGroup;

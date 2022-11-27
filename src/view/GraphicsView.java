@@ -6,14 +6,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.sound.sampled.Port;
 import javax.swing.*;
 
 import controller.Features;
 import view.guiscreens.AllPortfolio;
 import view.guiscreens.BuyStock;
 import view.guiscreens.CreatePortfolio;
-import view.guiscreens.GUIView;
+import view.guiscreens.Screen;
 import view.guiscreens.LoadPortfolio;
 import view.guiscreens.MainScreen;
 import view.guiscreens.PortfolioComposition;
@@ -24,8 +23,8 @@ import view.guiscreens.SellStock;
 public class GraphicsView implements View, ActionListener {
 
   private final Map<String, Runnable> actionMap;
-  private GUIView currentScreen;
-  private GUIView mainScreen;
+  private Screen currentScreen;
+  private Screen mainScreen;
 
   private Features features;
   public GraphicsView() {
@@ -122,51 +121,6 @@ public class GraphicsView implements View, ActionListener {
       this.currentScreen.addFeatures(features);
 
     });
-    //
-    /*Map<String, Runnable> commands = new HashMap<>();
-    commands.put("Create Portfolio", () -> {
-      menuButton.setActionCommand("Submit - "+this.menuGroup.getSelection().getActionCommand());
-    });
-    commands.put("Menu - Show All Portfolios", () -> {
-      menuButton.setActionCommand("Submit - "+this.menuGroup.getSelection().getActionCommand());
-    });
-    commands.put("Menu - Buy Stock", () -> {
-      menuButton.setActionCommand("Submit - "+this.menuGroup.getSelection().getActionCommand());
-    });
-    commands.put("Menu - Sell Stock", () -> {
-      menuButton.setActionCommand("Submit - "+this.menuGroup.getSelection().getActionCommand());
-    });
-    commands.put("Menu - Evaluate Value", () -> {
-      menuButton.setActionCommand("Submit - "+this.menuGroup.getSelection().getActionCommand());
-    });
-    commands.put("Menu - Evaluate Cost Basis", () -> {
-      menuButton.setActionCommand("Submit - "+this.menuGroup.getSelection().getActionCommand());
-    });
-    commands.put("Submit - Menu - Create Portfolio", () -> {
-      this.currentScreen = new CreatePortfolio();
-      this.currentScreen.addActionListener(this);
-      this.currentScreen.addFeatures(features);
-      this.setVisible(false);
-    });
-    commands.put("Submit - Menu - Show All Portfolios", () -> {
-      this.currentScreen = new AllPortfolio();
-      this.currentScreen.addActionListener(this);
-      this.features.getAllPortfolios();
-      this.setVisible(false);
-    });
-    commands.put("Submit - Menu - Buy Stock", () -> {
-      this.currentScreen = new BuyStock();
-      this.currentScreen.addActionListener(this);
-      this.currentScreen.addFeatures(features);
-      this.setVisible(false);
-    });
-    commands.put("Go Back", () -> {
-      this.setVisible(true);
-      this.menuGroup.clearSelection();
-      ((JFrame)this.currentScreen).dispose();
-    });
-
-    return commands;*/
     return commands;
   }
 }

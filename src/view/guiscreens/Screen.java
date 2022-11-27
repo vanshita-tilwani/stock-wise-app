@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import controller.Features;
 
-public interface GUIView {
+public interface Screen {
 
   void display(String text);
 
