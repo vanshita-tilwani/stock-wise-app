@@ -1,7 +1,15 @@
 package view.guiscreens;
 
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.*;
 
@@ -9,29 +17,36 @@ import controller.Features;
 
 public class PortfolioComposition extends AbstractScreen {
 
-  private final JTextField portfolioName;
-  private final JTextField date;
+  private final JComboBox<String> portfolioName;
+  private final JDatePickerImpl date;
   private final JLabel output;
   public PortfolioComposition() {
-    super("Portfolio Composition", "Enter the data for the portfolio composition");
+    super("Trading Application - Portfolio Composition Window","");
     JPanel portfolioDetails = new JPanel();
 
 
-    this.portfolioName = new javax.swing.JTextField(20);
+    this.portfolioName = new JComboBox<String>();
     var nameLabel = new JLabel("Enter the portfolio name : ");
     this.portfolioName.setToolTipText("Enter Portfolio Name");
     portfolioDetails.add(nameLabel);
     portfolioDetails.add(this.portfolioName);
     JPanel evaluationData = new JPanel();
-    this.date = new javax.swing.JTextField(8);
+    Properties p = new Properties();
+    p.put("text.today", "Today");
+    p.put("text.month", "Month");
+    p.put("text.year", "Year");
+    UtilDateModel dateModel = new UtilDateModel();
+
+    dateModel.setSelected(true);
+
+    JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
+    this.date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
     this.date.setToolTipText("Enter the date of evaluation");
     evaluationData.add(new JLabel("Enter the date of evaluation of the portfolio : "));
     evaluationData.add(this.date);
     this.output = new JLabel("");
 
     var mainPanel = new JPanel();
-    mainPanel.add(new JScrollPane());
-
     mainPanel.add(portfolioDetails);
     mainPanel.add(evaluationData);
     mainPanel.add(this.output);
@@ -48,8 +63,14 @@ public class PortfolioComposition extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e -> features.evaluateComposition(this.portfolioName.getText(),
-            LocalDate.parse(this.date.getText())));
+    features.getAllPortfolios().forEach(e -> this.portfolioName.addItem(e));
+
+    this.submit.addActionListener(e -> {
+      Date f = (Date) this.date.getModel().getValue();
+      features.evaluateComposition(
+              this.portfolioName.getItemAt(this.portfolioName.getSelectedIndex()),
+              f.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+    });
   }
 
 }

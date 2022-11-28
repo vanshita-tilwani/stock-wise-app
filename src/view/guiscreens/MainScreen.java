@@ -5,12 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 import controller.Features;
 
@@ -24,6 +19,8 @@ public class MainScreen extends JFrame implements Screen {
     setTitle("Welcome to Trading Application");
     setSize(600, 600);
     menuOptions = new ArrayList<>();
+    var header = new JPanel();
+    header.add(new JLabel("Choose the menu option you wish to proceed with."));
     var panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     this.menuGroup = new ButtonGroup();
@@ -31,12 +28,15 @@ public class MainScreen extends JFrame implements Screen {
     menuOptions.add(new JRadioButton("Show All Portfolios"));
     menuOptions.add(new JRadioButton("Buy Stock"));
     menuOptions.add( new JRadioButton("Sell Stock"));
+    menuOptions.add(new JRadioButton("Create Fixed Investment Strategy"));
+    menuOptions.add(new JRadioButton("Create Recurring Investment Strategy"));
     menuOptions.add(new JRadioButton("Portfolio Composition"));
     menuOptions.add(new JRadioButton("Evaluate Value"));
     menuOptions.add(new JRadioButton("Evaluate Cost Basis"));
     menuOptions.add(new JRadioButton("Save Portfolio"));
     menuOptions.add(new JRadioButton("Load Portfolio"));
     menuOptions.add(new JRadioButton("Show Bar Chart"));
+
     this.submit = new JButton("Submit");
 
 
@@ -47,7 +47,7 @@ public class MainScreen extends JFrame implements Screen {
 
     JPanel actions = new JPanel();
     actions.add(submit);
-
+    this.add(header, BorderLayout.PAGE_START);
     this.add(panel, BorderLayout.CENTER);
     this.add(actions, BorderLayout.PAGE_END);
     setLocationRelativeTo(null);

@@ -11,13 +11,13 @@ import controller.Features;
 
 public class SavePortfolio extends AbstractScreen {
 
-  private final JTextField portfolioName;
+  private final JComboBox<String> portfolioName;
   private JLabel output;
 
   public SavePortfolio() {
-    super("Save Portfolio", "Enter the data for saving a portfolio");
+    super("Trading Application - Portfolio Save Window","");
     JPanel portfolioDetails = new JPanel();
-    this.portfolioName = new javax.swing.JTextField(20);
+    this.portfolioName = new JComboBox<String>();
     var nameLabel = new JLabel("Enter the portfolio name : ");
     this.portfolioName.setToolTipText("Enter Portfolio Name");
     portfolioDetails.add(nameLabel);
@@ -39,6 +39,8 @@ public class SavePortfolio extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
+    features.getAllPortfolios().forEach(e -> this.portfolioName.addItem(e));
+
     this.submit.addActionListener(e -> {
 
       JFileChooser file = new JFileChooser();
@@ -51,7 +53,8 @@ public class SavePortfolio extends AbstractScreen {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                   String path = file.getSelectedFile().getAbsolutePath() + ".txt";
-                  features.savePortfolio(path, frame.portfolioName.getText());
+                  features.savePortfolio(path,
+                          frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
                   System.out.println();
                 }
               });

@@ -1,7 +1,16 @@
 package view.guiscreens;
 
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.*;
 
@@ -9,23 +18,22 @@ import controller.Features;
 
 public class BuyStock extends AbstractScreen {
 
-  private final JTextField portfolioName;
+  private final JComboBox<String> portfolioName;
 
-  private final JTextField date;
+  private final JDatePickerImpl date;
   private final JLabel output;
   private final JTextField stock;
   private final JSpinner shares;
   private final JSpinner commission;
   public BuyStock() {
-    super("Buy Stock", "Enter the data for stock to be purchased");
+    super("Trading Application - Purchase Window","");
     JPanel portfolioDetails = new JPanel();
-
-
-    this.portfolioName = new javax.swing.JTextField(20);
-    var nameLabel = new JLabel("Enter the portfolio name : ");
+    this.portfolioName = new JComboBox<String>();
     this.portfolioName.setToolTipText("Enter Portfolio Name");
+    var nameLabel = new JLabel("Enter the portfolio name : ");
     portfolioDetails.add(nameLabel);
     portfolioDetails.add(this.portfolioName);
+
     JPanel stockData = new JPanel();
     this.stock = new javax.swing.JTextField(8);
     this.stock.setToolTipText("Enter the name of the stock you wish to purchase");
@@ -39,12 +47,20 @@ public class BuyStock extends AbstractScreen {
     shareData.add(this.shares);
 
     JPanel purchaseData = new JPanel();
-    this.date = new javax.swing.JTextField(8);
-    this.date.setToolTipText("Enter the date of purchase");
+    Properties p = new Properties();
+    p.put("text.today", "Today");
+    p.put("text.month", "Month");
+    p.put("text.year", "Year");
+    UtilDateModel dateModel = new UtilDateModel();
+
+    dateModel.setSelected(true);
+
+    JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
+    this.date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
     purchaseData.add(new JLabel("Enter the date of purchase of the stock : "));
     purchaseData.add(this.date);
-    JPanel commissionData = new JPanel();
 
+    JPanel commissionData = new JPanel();
     this.commission = new javax.swing.JSpinner();
     this.commission.setToolTipText("Enter the commission fee for the purchase");
     commissionData.add(new JLabel("Enter the commission fee for the purchase : "));
@@ -52,8 +68,8 @@ public class BuyStock extends AbstractScreen {
     this.output = new JLabel("");
     //this.datePicker = new JDatePickerImpl();
     var mainPanel = new JPanel();
-    mainPanel.add(new JScrollPane());
-
+    //mainPanel.add(new JScrollPane());
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(portfolioDetails);
     mainPanel.add(stockData);
     mainPanel.add(shareData);
@@ -73,12 +89,19 @@ public class BuyStock extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e ->
-            features.addStockPurchaseToPortfolio(this.portfolioName.getText(),
+    features.getAllPortfolios().forEach(e -> this.portfolioName.addItem(e));
+
+
+    this.submit.addActionListener(e -> {
+            Date f = (Date) this.date.getModel().getValue();
+            features.addStockPurchaseToPortfolio(
+                    this.portfolioName.getItemAt(this.portfolioName.getSelectedIndex()),
                     this.stock.getText(),
                     Double.parseDouble(this.shares.getValue()+""),
-                    LocalDate.parse(this.date.getText()),
-                    Double.parseDouble(this.shares.getValue() + "")));
+                    f.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    Double.parseDouble(this.shares.getValue() + ""));
+    }
+    );
   }
 
 }

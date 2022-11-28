@@ -22,6 +22,7 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     backPanel.add(this.back);
     backPanel.add(this.submit);
     this.message = new javax.swing.JLabel(message);
+    this.message.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     var messagePanel = new JPanel();
     messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
     messagePanel.add(this.message);
