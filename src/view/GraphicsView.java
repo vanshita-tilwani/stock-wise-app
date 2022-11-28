@@ -10,8 +10,10 @@ import javax.swing.*;
 
 import controller.Features;
 import view.guiscreens.AllPortfolio;
+import view.guiscreens.BarChart;
 import view.guiscreens.BuyStock;
 import view.guiscreens.CreatePortfolio;
+import view.guiscreens.SavePortfolio;
 import view.guiscreens.Screen;
 import view.guiscreens.LoadPortfolio;
 import view.guiscreens.MainScreen;
@@ -76,6 +78,7 @@ public class GraphicsView implements View, ActionListener {
     });
     commands.put("Show All Portfolios", () -> {
       this.currentScreen = new AllPortfolio();
+      this.currentScreen.addFeatures(features);
       this.currentScreen.addActionListener(this);
       this.features.getAllPortfolios();
       this.mainScreen.setVisibility(false);
@@ -120,6 +123,19 @@ public class GraphicsView implements View, ActionListener {
       this.currentScreen.addActionListener(this);
       this.currentScreen.addFeatures(features);
 
+    });
+    commands.put("Save Portfolio", () -> {
+      this.mainScreen.setVisibility(false);
+      this.currentScreen = new SavePortfolio();
+      this.currentScreen.addActionListener(this);
+      this.currentScreen.addFeatures(features);
+
+    });
+    commands.put("Show Bar Chart", () -> {
+      this.mainScreen.setVisibility(false);
+      this.currentScreen = new BarChart();
+      this.currentScreen.addActionListener(this);
+      this.currentScreen.addFeatures(features);
     });
     return commands;
   }

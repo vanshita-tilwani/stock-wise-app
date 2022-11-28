@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Features;
 
@@ -37,24 +38,16 @@ public class LoadPortfolio extends AbstractScreen {
             new PropertyChangeListener() {
               @Override
               public void propertyChange(PropertyChangeEvent evt) {
-
-                System.out.println("Loaded");
-                System.out.println(file.getSelectedFile().getAbsolutePath());
-                features.loadPortfolio();
+                features.loadPortfolio(file.getSelectedFile().getAbsolutePath());
               }
             });
-    file.showOpenDialog(this);
     file.setDialogTitle("Specify a file to open");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
+    file.setAcceptAllFileFilterUsed(false);
+    //file.getFileFilter();
+    file.addChoosableFileFilter(filter);
+    file.showOpenDialog(this);
 
-  }
-
-  @Override
-  public String getPortfolioName() {
-    return null;
-  }
-
-  @Override
-  public void setVisibility(boolean visible) {
 
   }
 }

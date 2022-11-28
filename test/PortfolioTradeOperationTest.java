@@ -28,8 +28,10 @@ public class PortfolioTradeOperationTest {
   private TradeOperation trade;
 
   @Before
-  public void setup() throws IOException {
-    this.trade = new PortfolioTradeOperation(new FileRepository("res/portfolio.txt"));
+  public void setup() throws Exception {
+    var fileRepo = FileRepository.getInstance();
+    fileRepo.setDataSource("res/portfolio.txt");
+    this.trade = new PortfolioTradeOperation(fileRepo);
     Set<Trade<Stock>> shares = new HashSet<>();
     shares.add(new SimulatedStockTrade("GOOG", 2.0));
     this.trade.create(new SimulatedPortfolio("test1", shares));
@@ -165,7 +167,9 @@ public class PortfolioTradeOperationTest {
   @Test
   public void loadPortfolio_Fail() {
     try {
-      this.trade = new PortfolioTradeOperation(new FileRepository("res"));
+      var fileRepo = FileRepository.getInstance();
+      fileRepo.setDataSource("res/portfolio.txt");
+      this.trade = new PortfolioTradeOperation(fileRepo);
       this.trade.load();
       Assert.fail();
     } catch (IllegalArgumentException e) {

@@ -12,7 +12,5 @@ public interface Screen {
 
   void addFeatures(Features features);
 
-  String getPortfolioName();
-
   void setVisibility(boolean visible);
 }

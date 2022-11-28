@@ -1,9 +1,16 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import controller.Features;
 
@@ -11,45 +18,32 @@ public class MainScreen extends JFrame implements Screen {
 
   private final JButton submit;
   private final ButtonGroup menuGroup;
-  private final JRadioButton[] menuOptions;
+  private final List<JRadioButton> menuOptions;
   public MainScreen() {
     super();
     setTitle("Welcome to Trading Application");
     setSize(600, 600);
-    menuOptions = new JRadioButton[9];
+    menuOptions = new ArrayList<>();
     var panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    this.menuGroup = new javax.swing.ButtonGroup();
-    menuOptions[0] = new javax.swing.JRadioButton("Create Portfolio");
-    menuOptions[1] = new javax.swing.JRadioButton("Show All Portfolios");
-    menuOptions[2] = new javax.swing.JRadioButton("Buy Stock");
-    menuOptions[3] = new javax.swing.JRadioButton("Sell Stock");
-    menuOptions[4] = new JRadioButton("Portfolio Composition");
-    menuOptions[5] = new javax.swing.JRadioButton("Evaluate Value");
-    menuOptions[6] = new javax.swing.JRadioButton("Evaluate Cost Basis");
-    menuOptions[7] = new JRadioButton("Save Portfolio");
-    menuOptions[8] = new JRadioButton("Load Portfolio");
-    this.submit = new javax.swing.JButton("Submit");
+    this.menuGroup = new ButtonGroup();
+    menuOptions.add(new JRadioButton("Create Portfolio"));
+    menuOptions.add(new JRadioButton("Show All Portfolios"));
+    menuOptions.add(new JRadioButton("Buy Stock"));
+    menuOptions.add( new JRadioButton("Sell Stock"));
+    menuOptions.add(new JRadioButton("Portfolio Composition"));
+    menuOptions.add(new JRadioButton("Evaluate Value"));
+    menuOptions.add(new JRadioButton("Evaluate Cost Basis"));
+    menuOptions.add(new JRadioButton("Save Portfolio"));
+    menuOptions.add(new JRadioButton("Load Portfolio"));
+    menuOptions.add(new JRadioButton("Show Bar Chart"));
+    this.submit = new JButton("Submit");
 
-    this.menuGroup.add(menuOptions[0]);
-    this.menuGroup.add(menuOptions[1]);
-    this.menuGroup.add(menuOptions[2]);
-    this.menuGroup.add(menuOptions[3]);
-    this.menuGroup.add(menuOptions[4]);
-    this.menuGroup.add(menuOptions[5]);
-    this.menuGroup.add(menuOptions[6]);
-    this.menuGroup.add(menuOptions[7]);
-    this.menuGroup.add(menuOptions[8]);
 
-    panel.add(menuOptions[0]);
-    panel.add(menuOptions[1]);
-    panel.add(menuOptions[2]);
-    panel.add(menuOptions[3]);
-    panel.add(menuOptions[4]);
-    panel.add(menuOptions[5]);
-    panel.add(menuOptions[6]);
-    panel.add(menuOptions[7]);
-    panel.add(menuOptions[8]);
+    this.menuOptions.forEach(e -> {
+      this.menuGroup.add(e);
+      panel.add(e);
+    });
 
     JPanel actions = new JPanel();
     actions.add(submit);
@@ -67,11 +61,11 @@ public class MainScreen extends JFrame implements Screen {
 
   @Override
   public void addActionListener(ActionListener listener) {
-    for(int i = 0; i < menuOptions.length; i ++) {
-      menuOptions[i].addActionListener((e) -> {
+    menuOptions.forEach(menuOption -> {
+      menuOption.addActionListener((e) -> {
         this.submit.setActionCommand(e.getActionCommand());
       });
-    }
+    });
     this.submit.addActionListener(listener);
   }
 
@@ -80,10 +74,6 @@ public class MainScreen extends JFrame implements Screen {
 
   }
 
-  @Override
-  public String getPortfolioName() {
-    return null;
-  }
 
   @Override
   public void setVisibility(boolean visible) {

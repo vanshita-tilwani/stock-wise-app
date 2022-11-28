@@ -74,20 +74,11 @@ public class BuyStock extends AbstractScreen {
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(e ->
-            features.addStockPurchaseToPortfolio(this.getPortfolioName(),
+            features.addStockPurchaseToPortfolio(this.portfolioName.getText(),
                     this.stock.getText(),
                     Double.parseDouble(this.shares.getValue()+""),
                     LocalDate.parse(this.date.getText()),
                     Double.parseDouble(this.shares.getValue() + "")));
   }
 
-  @Override
-  public String getPortfolioName() {
-    return this.portfolioName.getText();
-  }
-
-  @Override
-  public void setVisibility(boolean visible) {
-    setVisible(visible);
-  }
 }

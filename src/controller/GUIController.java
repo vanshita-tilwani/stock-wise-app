@@ -1,9 +1,12 @@
 package controller;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import model.datarepo.FileRepository;
 import model.portfolio.Portfolio;
 import model.portfolio.TransactionalPortfolio;
 import model.stocktradings.TradeOperation;
@@ -34,13 +37,10 @@ public class GUIController implements Features {
   }
 
   @Override
-  public void getAllPortfolios() {
+  public Set<String> getAllPortfolios() {
     Set<String> all = model.all();
-    String result = "The application does not contain any portfolio!";
-    if(all.size() > 0) {
-      result = "<html>" + String.join("<br>", all);
-    }
-    view.display(result);
+    return all;
+
   }
 
   @Override
@@ -101,13 +101,31 @@ public class GUIController implements Features {
   }
 
   @Override
-  public void loadPortfolio() {
+  public void loadPortfolio(String dataSource) {
     try {
+      FileRepository.getInstance().setDataSource(dataSource);
       model.load();
       view.display("The portfolio load completed successfully!");
     }
     catch (Exception e) {
       view.display("The portfolio load failed!");
     }
+  }
+
+  @Override
+  public void savePortfolio(String dataSource, String portfolioName) {
+    try {
+      FileRepository.getInstance().setDataSource(dataSource);
+      model.save(portfolioName);
+      view.display("The portfolio save completed successfully!");
+    }
+    catch (Exception e) {
+      view.display("The portfolio save failed!");
+    }
+  }
+
+  @Override
+  public Map<LocalDate, Double> getBarChartData(String portfolioName, LocalDate from, LocalDate end){
+    return model.get(portfolioName).values(from, end);
   }
 }

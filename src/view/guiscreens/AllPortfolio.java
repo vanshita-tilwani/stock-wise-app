@@ -1,6 +1,8 @@
 package view.guiscreens;
 
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
@@ -16,7 +18,7 @@ public class AllPortfolio extends AbstractScreen {
     var mainPanel = new JPanel();
     mainPanel.add(this.output);
     this.add(mainPanel, BorderLayout.CENTER);
-    //pack();
+
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -29,16 +31,19 @@ public class AllPortfolio extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e -> features.getAllPortfolios());
+    var frame = this;
+    this.addComponentListener(new ComponentAdapter() {
+
+      @Override
+      public void componentShown(ComponentEvent e) {
+        var portfolios = features.getAllPortfolios();
+        String result = "The application does not contain any portfolio!";
+        if(portfolios.size() > 0) {
+          result = "<html>" + String.join("<br>", portfolios);
+        }
+        frame.display(result);
+      }}
+    );
   }
 
-  @Override
-  public String getPortfolioName() {
-    return null;
-  }
-
-  @Override
-  public void setVisibility(boolean visible) {
-    setVisible(visible);
-  }
 }

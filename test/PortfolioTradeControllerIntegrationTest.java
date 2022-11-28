@@ -990,8 +990,9 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   private PortfolioTradeOperation getModel() throws Exception {
-    PortfolioTradeOperation model = new PortfolioTradeOperation(
-            new FileRepository("res/portfolio.txt"));
+    var fileRepo = FileRepository.getInstance();
+    fileRepo.setDataSource("res/portfolio.txt");
+    PortfolioTradeOperation model = new PortfolioTradeOperation(fileRepo);
     return model;
   }
 

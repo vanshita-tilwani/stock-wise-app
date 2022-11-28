@@ -33,8 +33,12 @@ public abstract class AbstractScreen extends JFrame implements Screen {
 
   @Override
   public void addActionListener(ActionListener listener) {
-    //this.submit.addActionListener(listener);
     this.back.addActionListener(listener);
+  }
+
+  @Override
+  public void setVisibility(boolean visible) {
+    setVisible(visible);
   }
 
 

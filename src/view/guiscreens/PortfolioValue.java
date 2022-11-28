@@ -45,17 +45,8 @@ public class PortfolioValue extends AbstractScreen{
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e -> features.evaluateValue(this.getPortfolioName(),
+    this.submit.addActionListener(e -> features.evaluateValue(this.portfolioName.getText(),
             LocalDate.parse(this.date.getText())));
   }
 
-  @Override
-  public String getPortfolioName() {
-    return portfolioName.getText();
-  }
-
-  @Override
-  public void setVisibility(boolean visible) {
-    setVisible(visible);
-  }
 }

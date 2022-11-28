@@ -46,8 +46,9 @@ public class ProgramRunner {
   public static Map<Integer, Runnable> getCommands() {
     DataRepository fileRepo = null;
     try {
-      fileRepo = new FileRepository("res/portfolio.txt");
-    } catch (IOException e) {
+      fileRepo = FileRepository.getInstance();
+      fileRepo.setDataSource("res/portfolio.txt");
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
     Map<Integer, Runnable> menuOptions = new HashMap<>();

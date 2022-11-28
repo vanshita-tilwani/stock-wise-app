@@ -10,6 +10,7 @@ import java.nio.file.Path;
  */
 public interface DataRepository<T> {
 
+  void setDataSource(String dataSource) throws Exception;
   /**
    * Saves the trade of type T to the data source.
    *

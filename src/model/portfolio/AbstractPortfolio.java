@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import model.stock.Stock;
 import model.trade.Trade;
@@ -42,7 +44,7 @@ abstract class AbstractPortfolio implements Portfolio {
     if (from.isAfter(LocalDate.now()) || to.isAfter(LocalDate.now())) {
       throw new IllegalArgumentException("The start/end date entered is in future.\n");
     }
-    Map<LocalDate, Double> values = new HashMap<>();
+    SortedMap<LocalDate, Double> values = new TreeMap<>();
     Set<LocalDate> dates = Utility.getEqualPeriod(from, to);
     for (LocalDate date : dates) {
       values.put(date, this.value(date));

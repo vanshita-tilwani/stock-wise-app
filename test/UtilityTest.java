@@ -78,25 +78,25 @@ public class UtilityTest {
   @Test
   public void scale1() {
     double scale = Utility.scale(10000, 0);
-    Assert.assertEquals(500.0, scale, 0.1);
+    Assert.assertEquals(200.0, scale, 0.1);
   }
 
   @Test
   public void scale2() {
     double scale = Utility.scale(10000, 9000);
-    Assert.assertEquals(200.0, scale, 0.1);
+    Assert.assertEquals(320.0, scale, 0.1);
   }
 
   @Test
   public void scale3() {
     double scale = Utility.scale(10000, 90);
-    Assert.assertEquals(500.0, scale, 0.1);
+    Assert.assertEquals(200.0, scale, 0.1);
   }
 
   @Test
   public void scale4() {
     double scale = Utility.scale(10000, 900);
-    Assert.assertEquals(500.0, scale, 0.1);
+    Assert.assertEquals(200.0, scale, 0.1);
   }
 
   @Test
@@ -109,6 +109,12 @@ public class UtilityTest {
   public void scale6() {
     double scale = Utility.scale(10000, 9700);
     Assert.assertEquals(320.0, scale, 0.1);
+  }
+
+  @Test
+  public void scale7() {
+    double scale = Utility.scale(Integer.MAX_VALUE, 0);
+    Assert.assertEquals(1.0E8, scale, 0.1);
   }
 
 }

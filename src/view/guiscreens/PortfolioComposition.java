@@ -48,17 +48,8 @@ public class PortfolioComposition extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e -> features.evaluateComposition(this.getPortfolioName(),
+    this.submit.addActionListener(e -> features.evaluateComposition(this.portfolioName.getText(),
             LocalDate.parse(this.date.getText())));
   }
 
-  @Override
-  public String getPortfolioName() {
-    return portfolioName.getText();
-  }
-
-  @Override
-  public void setVisibility(boolean visible) {
-    setVisible(visible);
-  }
 }
