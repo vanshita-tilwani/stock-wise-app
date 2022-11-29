@@ -1,8 +1,5 @@
 package view;
 
-import java.time.LocalDate;
-import java.util.Map;
-
 import controller.Features;
 
 /**

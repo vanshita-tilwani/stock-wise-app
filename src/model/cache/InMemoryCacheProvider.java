@@ -2,6 +2,7 @@ package model.cache;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Implementation of cache as in memory cache to reduce the
@@ -43,5 +44,10 @@ public class InMemoryCacheProvider<K, V> implements CacheProvider<K, V> {
   @Override
   public boolean contains(K key) {
     return map.containsKey(key);
+  }
+
+  @Override
+  public Set<K> keys() {
+    return map.keySet();
   }
 }

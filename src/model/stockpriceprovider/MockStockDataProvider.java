@@ -79,7 +79,7 @@ public class MockStockDataProvider implements StockDataProvider {
   }
 
   @Override
-  public boolean isAvailable(String stock, LocalDate date) {
+  public boolean isAvailable(LocalDate date) {
     return true;
   }
 }

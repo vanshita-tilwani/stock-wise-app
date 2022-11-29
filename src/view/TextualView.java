@@ -46,7 +46,8 @@ public class TextualView implements View {
               "12. Load portfolios to the Application\n" +
               "13. Create a one time investment strategy\n" +
               "14. Create a recurring investment strategy\n" +
-              "15. Apply a strategy to a portfolio\n" +
+              "15. Get all the existing strategies\n" +
+              "16. Apply a strategy to a portfolio\n" +
               "Enter the menu option you wish to choose.\n" +
               "Press and enter any other key to exit the application.\n";
       this.display(menuOptions);
@@ -109,8 +110,10 @@ public class TextualView implements View {
       var values = features.values(portfolio,
             from,
             to);
-      this.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
-      this.drawGraph(values);
+      if(values != null) {
+        this.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
+        this.drawGraph(values);
+      }
     });
     commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
@@ -133,11 +136,18 @@ public class TextualView implements View {
               this.readPrincipal(),
               this.readTradeData(true),
               this.readStartDate(),
-              this.readEndDate(),
+              this.isOngoingStrategy() ? null : this.readEndDate(),
               this.readFrequency(),
               this.readCommissionFee()
     ));
-    commands.put(15, () -> features.applyStrategy(this.readTradeName(),
+    commands.put(15, () -> {
+      var strategies = features.getAllStrategy();
+      String result = strategies.size() > 0 ?
+              "Strategy Names : \n" + String.join("\n", strategies)+"\n"
+              : "The application does not contain any strategy.\n";
+      this.display(result);
+    });
+    commands.put(16, () -> features.applyStrategy(this.readTradeName(),
             this.readStrategyName()));
   }
 
@@ -163,6 +173,28 @@ public class TextualView implements View {
       // if the input is illegal then returns 0
       return 0;
     }
+  }
+
+  private boolean isOngoingStrategy() {
+    boolean parsed = false;
+    boolean isOngoing = false;
+    String input = "";
+    while(!parsed) {
+      this.display("Do you wish to enter a end trade for the strategy?(y/n)\n");
+      input = this.input();
+      if(input.equals("y") ||  input.equals("Y") ) {
+        isOngoing = true;
+        parsed = true;
+      }
+      else if(input.equals("n") || input.equals("N")) {
+        isOngoing = false;
+        parsed = true;
+      }
+      else {
+        this.display("Invalid Input\n");
+      }
+    }
+    return isOngoing;
   }
 
   private Double readPrincipal() {
@@ -234,12 +266,12 @@ public class TextualView implements View {
           parsed = true;
         }
         else {
-          this.display("Invalid number of shares\n");
-          this.display("Please enter the number of shares again.\n");
+          this.display("Invalid weight\n");
+          this.display("Please Enter the weight of stock again\n");
         }
       } catch (NumberFormatException e) {
-        this.display("Invalid number of shares\n");
-        this.display("Please enter the number of shares again.\n");
+        this.display("Invalid weight\n");
+        this.display("Please Enter the weight of stock again\n");
       }
     }
     return shares;
@@ -352,9 +384,25 @@ public class TextualView implements View {
   }
 
   private int readNumberOfStocks() {
-    this.display("Enter the number of stocks you wish to purchase\n");
-    int stocks = Integer.parseInt(this.input());
+    boolean parsed = false;
+    int stocks = 0;
+    while(!parsed) {
+      try {
+        this.display("Enter the number of stocks you wish to purchase\n");
+        stocks = Integer.parseInt(this.input());
+        if(stocks > 0) {
+          parsed = true;
+        }
+        else {
+          this.display("Invalid number of stocks\n");
+        }
+      }
+      catch(NumberFormatException e) {
+        this.display("Invalid number of stocks\n");
+      }
+    }
     return stocks;
+
   }
 
   private Integer readFrequency() {

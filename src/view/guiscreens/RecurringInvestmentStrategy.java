@@ -22,8 +22,10 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
   private final JSpinner stocks;
   private final JDatePickerImpl startDate;
   private final JDatePickerImpl endDate;
+  private final JPanel endDataPanel;
   private final JSpinner frequency;
   private final JSpinner commission;
+  private final JCheckBox isOngoing;
 
   private Screen frame;
 
@@ -64,11 +66,20 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
     purchaseData.add(new JLabel("Enter the start date for the investment : "));
     purchaseData.add(this.startDate);
 
-    JPanel endData = new JPanel();
+    JPanel ongoingInfo = new JPanel();
+    this.isOngoing = new JCheckBox();
+    var frame = this;
+    this.isOngoing.addActionListener(f -> {
+      frame.endDataPanel.setVisible(!frame.isOngoing.isSelected());
+    });
+    ongoingInfo.add(new JLabel("Check the box if the strategy is ongoing : "));
+    ongoingInfo.add(this.isOngoing);
+
+    endDataPanel = new JPanel();
     this.endDate = new JDatePickerImpl(datePanel, new DateComponentFormatter());
     this.endDate.setToolTipText("Enter the end date for the investment");
-    endData.add(new JLabel("Enter the end date for the investment : "));
-    endData.add(this.endDate);
+    endDataPanel.add(new JLabel("Enter the end date for the investment : "));
+    endDataPanel.add(this.endDate);
 
     JPanel frequencyData = new JPanel();
     this.frequency = new JSpinner();
@@ -91,7 +102,8 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
     mainPanel.add(principalDetails);
     mainPanel.add(stockData);
     mainPanel.add(purchaseData);
-    mainPanel.add(endData);
+    mainPanel.add(ongoingInfo);
+    mainPanel.add(endDataPanel);
     mainPanel.add(frequencyData);
     mainPanel.add(commissionData);
     this.add(mainPanel, BorderLayout.CENTER);
@@ -120,7 +132,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
               toDouble(this.principal.getText()),
               toInt(this.stocks),
               this.getDate(this.startDate),
-              this.getDate(this.endDate),
+              this.isOngoing.isSelected() ? null : this.getDate(this.endDate),
               toInt(this.frequency),
               toDouble(this.commission));
       var listeners = this.back.getActionListeners();

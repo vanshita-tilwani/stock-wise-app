@@ -1,5 +1,7 @@
 package model.cache;
 
+import java.util.Set;
+
 /**
  * Works a cache for quick access of data to reduce fetch time for the records.
  * Support different types of key,value pair for the cache. Supports
@@ -36,5 +38,7 @@ public interface CacheProvider<K, V> {
    * @return true/false.
    */
   boolean contains(K key);
+
+  Set<K> keys();
 
 }

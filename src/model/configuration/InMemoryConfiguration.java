@@ -2,6 +2,7 @@ package model.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Implementation of Configuration interface to maintain all the configuration settings
@@ -53,5 +54,10 @@ public class InMemoryConfiguration implements Configuration<String, String> {
   @Override
   public boolean contains(String key) {
     return this.configMap.containsKey(key);
+  }
+
+  @Override
+  public Set<String> keys() {
+    return configMap.keySet();
   }
 }

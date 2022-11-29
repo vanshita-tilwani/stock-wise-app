@@ -250,7 +250,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     }
     while (true) {
       // TODO : handle purchases on holiday
-      currDate = nextAvailableDate("AAPL", currDate);
+      currDate = nextAvailableDate(currDate);
       if (currDate.isAfter(endDate) || currDate.isAfter(LocalDate.now())) {
         break;
       }
@@ -259,9 +259,11 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     }
   }
 
-  private LocalDate nextAvailableDate(String stock, LocalDate tradeDate) {
+  private LocalDate nextAvailableDate(LocalDate tradeDate) {
+    if(tradeDate.isAfter(LocalDate.now()))
+      return tradeDate;
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
-    while (!stockDataProvider.isAvailable(stock, tradeDate)) {
+    while (!stockDataProvider.isAvailable(tradeDate)) {
       tradeDate = tradeDate.plusDays(1);
     }
     return tradeDate;

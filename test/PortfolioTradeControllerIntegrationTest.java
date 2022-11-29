@@ -5,8 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import controller.Features;
 import controller.PortfolioTradeController;
 import model.datarepo.FileRepository;
 import model.stocktradings.PortfolioTradeOperation;
@@ -25,7 +23,7 @@ public class PortfolioTradeControllerIntegrationTest {
     this.out = new ByteArrayOutputStream();
     View view = this.getView(new ByteArrayInputStream(input.getBytes()), out);
     PortfolioTradeOperation model = this.getModel();
-    Features controller = new PortfolioTradeController(view, model);
+    new PortfolioTradeController(view, model);
   }
 
   @Test
@@ -87,7 +85,7 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("8\ntest1\n23-10-2022\n2022-10-23");
       String actual = out.toString();
-      String expected = "You have entered an invalid date. Please re-enter the date\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();
@@ -97,10 +95,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void createPortfolio_InvalidStockNumbers() {
     try {
-      this.setup("1\ntest1\nfdh");
+      this.setup("1\ntest1\nfdh\n1\ngoog\n10");
       String actual = out.toString();
-      String expected = "Please make sure you input valid " +
-              "number of stocks/quantity of stocks.\n";
+      String expected = "Invalid number of stocks\n" +
+              "Enter the number of stocks you wish to purchase\n";
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();
@@ -121,7 +119,7 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   @Test
-  public void createPortfolio_ValidStocks() throws InterruptedException {
+  public void createPortfolio_ValidStocks() {
     try {
       this.setup("1\ntest1\n4\nGOOG\n1\nNOW\n4\nAAPL\n6\nMSFT\n10\n5");
       String actual = out.toString();
@@ -284,7 +282,6 @@ public class PortfolioTradeControllerIntegrationTest {
 
   }
 
-  // TODO : Transactional Portfolio
 
   @Test
   public void createTransactionalPortfolio() {
@@ -357,10 +354,9 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("1\nmaster1\n2\ngoog\n8\naapl\n6\n3\nmaster1\nnow\n5\n2022-10-10\n"
               + "12\n");
-      Assert.fail();
-
-    } catch (UnsupportedOperationException e) {
-      // PASS HERE
+      String expected = "Purchasing a new Stock is not allowed in this portfolio\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();
     }
@@ -520,9 +516,9 @@ public class PortfolioTradeControllerIntegrationTest {
   public void GetCompositionAtDate_DateNotInCorrectFormat() {
     try {
 
-      this.setup("7\ntest1\n11-20-2022\n2022-11-20");
+      this.setup("7\ntest1\n11-20-2022\n2024-11-20");
       String actual = this.out.toString();
-      String expected = "You have entered an invalid date. Please re-enter the date\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
       Assert.assertTrue(actual.contains(expected));
 
     } catch (Exception e) {
@@ -857,6 +853,20 @@ public class PortfolioTradeControllerIntegrationTest {
     }
   }
 
+  @Test
+  public void portfolioPerformance_InvalidPortfolio() {
+    try {
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n10\n2022-10-24\n100\n" +
+              "10\ntransaction1\n2022-10-24\n2022-11-15");
+      String expected = "The portfolio with name provided does not exist";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
 
   @Test
   public void portfolioPerformance_Simulated() {
@@ -929,7 +939,7 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n10\n" +
               "master1\nabc\n2022-10-24\n2022-11-10");
-      String expected = "You have entered an invalid date. Please re-enter the date\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -943,7 +953,7 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n" +
               "10\nmaster1\n2022-10-24\nabc\n2022-11-10");
-      String expected = "You have entered an invalid date. Please re-enter the date\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -958,7 +968,23 @@ public class PortfolioTradeControllerIntegrationTest {
       this.setup("2\nmaster1\n" +
               "3\nmaster1\ngoog\n10\n2022-10-24\n10\n10\n" +
               "master1\nabc\n2022-10-24\n2022-11-10");
-      String expected = "You have entered an invalid date. Please re-enter the date\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createAlreadyExistingFlexiblePortfolio() {
+    try {
+      this.setup("2\nmaster1\n" +
+              "3\nmaster1\ngoog\n10\n2022-10-24\n10\n" +
+              "2\nmaster1\n");
+      String expected = "The portfolio with same name exists." +
+              "It cannot be changed after creation.\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -972,7 +998,7 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("2\nmaster1\n3\nmaster1\ngoog\n10\n2022-10-24\n10\n10\n" +
               "master1\n2022-10-24\nacc\n2022-11-10");
-      String expected = "You have entered an invalid date. Please re-enter the date\n";
+      String expected = "You have entered an invalid date.Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -1028,6 +1054,350 @@ public class PortfolioTradeControllerIntegrationTest {
     }
   }
 
+  @Test
+  public void createOneTimeStrategy_OneStock() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Strategy created successfully\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid1() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n50\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "The strategy could not be created due to invalid stock percentages\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid2() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n101\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid weight\n" +
+              "Please Enter the weight of stock again\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid3() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\nabc\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid weight\n" +
+              "Please Enter the weight of stock again\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid4() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n-100\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid weight\n" +
+              "Please Enter the weight of stock again\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid5() {
+
+    try {
+      String input = "13\ns1\n2000\nabc\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid number of stocks\n" +
+              "Enter the number of stocks you wish to purchase";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid6() {
+
+    try {
+      String input = "13\ns1\n2000\nabc\n-100\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid number of stocks\n" +
+              "Enter the number of stocks you wish to purchase";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid7() {
+
+    try {
+      String input = "13\ns1\n2000\nabc\n0\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid number of stocks\n" +
+              "Enter the number of stocks you wish to purchase";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid8() {
+
+    try {
+      String input = "13\ns1\n2000\nabc\n-1.5\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid number of stocks\n" +
+              "Enter the number of stocks you wish to purchase";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid9() {
+
+    try {
+      String input = "13\ns1\n2000\nabc\n1.5\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid number of stocks\n" +
+              "Enter the number of stocks you wish to purchase";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid10() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n100\n10-24-2022\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "You have entered an invalid date.Please re-enter the date";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_OneStock_Invalid11() {
+
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n100\n2022-10-24\n-1\n0";
+      this.setup(input);
+      String expected = "You have entered an invalid commission fee.Please re-enter the fee";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_MultipleStocks() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Strategy created successfully";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_MultipleStocks_InvalidRatio1() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n26\naapl\n25\nnow\n25\nibm\n25\n24\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid Weight for the stock\n" +
+              "Enter the weight of shares";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createOneTimeStrategy_MultipleStocks_InvalidRatio2() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n26\naapl\n25\nnow\n25\nibm\n25\n20\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "The strategy could not be created due to invalid stock percentages\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void getStrategies_NoStrategy() {
+    try {
+      String input = "15\n";
+      this.setup(input);
+      String expected = "The application does not contain any strategy.\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void getStrategies_Single() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0\n" +
+              "15\n";
+      this.setup(input);
+      String expected = "Strategy Names : \n" +
+              "s1\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void getStrategies_Multiple() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0\n" +
+              "13\ns2\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0\n" +
+              "15\n";
+      this.setup(input);
+      String expected = "Strategy Names : \n" +
+              "s1\n" +
+              "s2\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void applyOneTimeStrategy_Case1() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0\n" +
+              "13\ns2\n2000\n1\ngoog\n100\n2022-10-24\n0\n" +
+              "2\nsample1\n" +
+              "16\nsample1\ns1\n" +
+              "16\nsample1\ns2\n" +
+              "6\nsample1";
+      this.setup(input);
+      String expected = "Strategy applied successfully to the portfolio\n";
+      String composition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : sample1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 4.855783237836263\n" +
+              "Stock Symbol : AAPL,Quantity : 3.345600535296086\n" +
+              "Stock Symbol : IBM,Quantity : 3.768181475619866\n" +
+              "Stock Symbol : NOW,Quantity : 1.3640331732867743\n" +
+              "------ END ------\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+      Assert.assertTrue(actual.contains(composition));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void applyOneTimeStrategy_Case2() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0\n" +
+              "13\ns2\n2000\n1\ngoog\n100\n2022-10-24\n0\n" +
+              "1\nsample1\n1\ngoog\n10\n" +
+              "16\nsample1\ns1\n" +
+              "16\nsample1\ns2\n" +
+              "6\nsample1";
+      this.setup(input);
+      String expected = "This portfolio does not support applying investment strategies\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void applyOneTimeStrategy_Case3() {
+    try {
+      String input = "13\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\n0\n" +
+              "13\ns2\n2000\n1\ngoog\n100\n2022-10-24\n0\n" +
+              "16\nsample1\ns1\n" +
+              "16\nsample1\ns2\n" +
+              "6\nsample1";
+      this.setup(input);
+      String expected = "The portfolio with name provided does not exist.\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
   private View getView(InputStream in, OutputStream out) {
     return new TextualView(in, out);
   }
@@ -1054,6 +1424,10 @@ public class PortfolioTradeControllerIntegrationTest {
     menu.append("10. Get the performance of an Existing Portfolio over a period of time\n");
     menu.append("11. Save an Existing Portfolio to file\n");
     menu.append("12. Load portfolios to the Application\n");
+    menu.append("13. Create a one time investment strategy\n");
+    menu.append("14. Create a recurring investment strategy\n");
+    menu.append("15. Get all the existing strategies\n");
+    menu.append("16. Apply a strategy to a portfolio\n");
     menu.append("Enter the menu option you wish to choose.\n");
     menu.append("Press and enter any other key to exit the application.\n");
     if (!isValid) {

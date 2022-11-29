@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Map;
 
 import model.cache.CacheProvider;
@@ -78,8 +79,25 @@ public class WebAPIStockDataProvider implements StockDataProvider {
   }
 
   @Override
-  public boolean isAvailable(String stock, LocalDate date) {
-    return this.stockData.get(stock.toUpperCase()).containsKey(date);
+  public boolean isAvailable(LocalDate date) {
+    try {
+      var stockList = new ArrayList<String>();
+      stockList.addAll(this.stockData.keys());
+      var stock = "GOOG";
+      if (stockList.size() > 0) {
+        stock = stockList.get(0);
+      }
+      if (!this.stockData.contains(stock)) {
+        Map<LocalDate, Double> response = this.getAPIResponse(stock);
+        this.stockData.put(stock, response);
+      }
+      return this.stockData.get(stock.toUpperCase()).containsKey(date);
+    }
+    catch (IOException e) {
+      return false;
+    } catch (JSONException e) {
+      return false;
+    }
   }
 
   /**

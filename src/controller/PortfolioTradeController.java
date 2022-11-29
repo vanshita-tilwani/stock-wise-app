@@ -1,7 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -52,14 +52,8 @@ public class PortfolioTradeController implements Features {
         view.display("Portfolio could not be created since all the shares in the "
                 + "portfolio are Invalid.\n");
       }
-    }
-    catch (NumberFormatException exception) {
-      view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
     } catch (IllegalArgumentException exception) {
       view.display(exception.getMessage());
-    }
-    catch (DateTimeParseException ex) {
-      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -70,7 +64,7 @@ public class PortfolioTradeController implements Features {
       this.model.create(portfolio);
       this.view.display("The portfolio is created successfully!\n");
     }
-    catch(Exception e) {
+    catch(IllegalArgumentException e) {
       this.view.display(e.getMessage());
     }
   }
@@ -131,9 +125,6 @@ public class PortfolioTradeController implements Features {
       view.display(e.getMessage());
     } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
-    }
-    catch (DateTimeParseException ex) {
-      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -230,8 +221,11 @@ public class PortfolioTradeController implements Features {
       this.model.get(portfolioName).applyStrategy(strategy);
       view.display("Strategy applied successfully to the portfolio\n");
     }
-    catch(Exception e) {
-      view.display("Strategy could not be applied to the portfolio\n");
+    catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    }
+    catch(UnsupportedOperationException e) {
+      view.display(e.getMessage());
     }
   }
 }

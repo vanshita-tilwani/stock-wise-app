@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public interface StrategyBuilder {
 
-  StrategyBuilder addStock(String stock, Double weight);
+  StrategyBuilder addStock(String stock, Double weight) throws IllegalArgumentException;
 
   StrategyBuilder setCommission(Double commission);
 
@@ -16,6 +16,6 @@ public interface StrategyBuilder {
 
   StrategyBuilder setFrequency(int frequency);
 
-  Strategy build();
+  Strategy build() throws IllegalArgumentException;
 
 }

@@ -20,7 +20,7 @@ public class MockDataProviderTest {
   @Test
   public void price() {
     StockDataProvider provider = MockStockDataProvider.getInstance();
-    Assert.assertTrue(provider.isAvailable("IBM", LocalDate.parse("2022-10-10")));
+    Assert.assertTrue(provider.isAvailable(LocalDate.parse("2022-10-10")));
   }
 
   @Test

@@ -33,7 +33,7 @@ public class TransactionalStockTrade extends AbstractStockTrade {
 
     super(stock, quantity);
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
-    if (!stockDataProvider.isAvailable(stock, tradeDate)) {
+    if (!stockDataProvider.isAvailable(tradeDate)) {
       throw new IllegalArgumentException("The Stock Market is closed on the specified date."
               + "Invalid trade Date.\n");
     }
@@ -45,7 +45,7 @@ public class TransactionalStockTrade extends AbstractStockTrade {
                                  Double commission) {
     super(stock);
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
-    if (!stockDataProvider.isAvailable(stock, tradeDate)) {
+    if (!stockDataProvider.isAvailable(tradeDate)) {
       throw new IllegalArgumentException("The Stock Market is closed on the specified date."
               + "Invalid trade Date.\n");
     }

@@ -46,7 +46,7 @@ public class Utility {
   }
 
   /**
-   * Returns if the range is between the chronounit type (i.e. day, weeks, months)
+   * Returns if the range is between the Chrono unit type (i.e. day, weeks, months)
    *
    * @param type the type of scale to be used.
    * @param from the start date of the interval.

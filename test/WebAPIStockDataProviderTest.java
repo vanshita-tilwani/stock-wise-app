@@ -35,13 +35,13 @@ public class WebAPIStockDataProviderTest {
   @Test
   public void available() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertTrue(provider.isAvailable("IBM", LocalDate.parse("2022-10-24")));
+    Assert.assertTrue(provider.isAvailable(LocalDate.parse("2022-10-24")));
   }
 
   @Test
   public void unavailable() {
     StockDataProvider provider = WebAPIStockDataProvider.getInstance();
-    Assert.assertFalse(provider.isAvailable("IBM", LocalDate.parse("2022-10-23")));
+    Assert.assertFalse(provider.isAvailable(LocalDate.parse("2022-10-23")));
   }
 
 

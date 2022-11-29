@@ -75,7 +75,7 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   @Override
   public void applyStrategy(Strategy strategy) {
     throw new UnsupportedOperationException("This portfolio does not support applying investment" +
-            " strategies");
+            " strategies\n");
   }
 
 

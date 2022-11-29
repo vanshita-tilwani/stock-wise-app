@@ -33,6 +33,6 @@ public interface StockDataProvider {
    * @param date the date at which the stock data availability needs to be determined.
    * @return if the data is available for the stock on the specified date.
    */
-  boolean isAvailable(String stock, LocalDate date);
+  boolean isAvailable(LocalDate date);
 
 }
