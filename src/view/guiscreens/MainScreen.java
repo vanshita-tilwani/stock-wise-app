@@ -23,7 +23,6 @@ public class MainScreen extends JFrame implements Screen {
     menuOptions = new ArrayList<>();
     var header = new JPanel();
     var label = new JLabel("Choose the menu option you wish to proceed with.");
-    //label.setFont(new Font(null, Font.PLAIN, 15));
     header.add(label);
     var panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -45,11 +44,7 @@ public class MainScreen extends JFrame implements Screen {
     menuOptions.add(new JRadioButton("Apply a strategy to a portfolio"));
 
     this.submit = new JButton("Submit");
-
-    header.setFont(new Font(null, Font.PLAIN, 15));
-    this.submit.setFont(new Font(null, Font.BOLD, 15));
     this.menuOptions.forEach(e -> {
-      //e.setFont(new Font(null, Font.PLAIN, 14));
       this.menuGroup.add(e);
       panel.add(e);
     });
@@ -69,7 +64,6 @@ public class MainScreen extends JFrame implements Screen {
 
     this.add(panel, BorderLayout.CENTER);
     this.add(actions, BorderLayout.PAGE_END);
-    //this.setFont(new Font(null, Font.BOLD, 15));
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);

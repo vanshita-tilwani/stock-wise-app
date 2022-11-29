@@ -12,7 +12,6 @@ import controller.Features;
 public class SavePortfolio extends AbstractScreen {
 
   private final JComboBox<String> portfolioName;
-  private JLabel output;
 
   public SavePortfolio() {
     super("Trading Application - Portfolio Save Window","");
@@ -22,30 +21,12 @@ public class SavePortfolio extends AbstractScreen {
     this.portfolioName.setToolTipText("Enter Portfolio Name");
     portfolioDetails.add(nameLabel);
     portfolioDetails.add(this.portfolioName);
-    output = new JLabel();
     JPanel mainPanel = new JPanel();
     mainPanel.add(portfolioDetails);
-    mainPanel.add(output);
     this.add(mainPanel, BorderLayout.CENTER);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
-  }
-
-  @Override
-  public void display(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.GREEN);
-  }
-
-  @Override
-  public void error(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.RED);
-  }
-
-  private void setOutputText(String text) {
-    this.output.setText(text);
   }
 
   @Override

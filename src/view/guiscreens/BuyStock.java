@@ -13,4 +13,6 @@ public class BuyStock extends AbstractTransactionScreen {
                            LocalDate date, Double commission) {
     features.buyStock(portfolioName, stock, shares, date, commission);
   }
+
+
 }

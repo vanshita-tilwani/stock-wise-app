@@ -10,37 +10,16 @@ import controller.Features;
 
 public class AllPortfolio extends AbstractScreen {
 
-  private final JLabel output;
   public AllPortfolio() {
     super("Show All Portfolios",
             "The following portfolios exist in the application");
-    this.output = new JLabel("");
-    var mainPanel = new JPanel();
-    mainPanel.add(this.output);
+
     this.submit.setEnabled(false);
-    this.add(mainPanel, BorderLayout.CENTER);
 
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
   }
-
-  @Override
-  public void display(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.GREEN);
-  }
-
-  @Override
-  public void error(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.RED);
-  }
-
-  private void setOutputText(String text) {
-    this.output.setText(text);
-  }
-
 
   @Override
   public void addFeatures(Features features) {
@@ -55,6 +34,7 @@ public class AllPortfolio extends AbstractScreen {
           result = "<html>" + String.join("<br>", portfolios);
         }
         frame.display(result);
+        frame.pack();
       }}
     );
   }

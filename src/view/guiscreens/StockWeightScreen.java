@@ -24,7 +24,6 @@ public class StockWeightScreen extends AbstractScreen {
   private final List<JTextField> stockTickers;
   private final List<JTextField> percentage;
 
-  private final JLabel output;
   public StockWeightScreen(String name, Double principal, int stocks, LocalDate startDate,
                            LocalDate endDate, int frequency, double commission) {
     super("Trading Application - Enter Stock Weightage", "");
@@ -53,28 +52,10 @@ public class StockWeightScreen extends AbstractScreen {
       mainPanel.add(stockPanel);
       mainPanel.add(percentagePanel);
     }
-    this.output = new JLabel();
-    mainPanel.add(this.output);
     this.add(mainPanel, BorderLayout.CENTER);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
-  }
-
-  @Override
-  public void display(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.GREEN);
-  }
-
-  @Override
-  public void error(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.RED);
-  }
-
-  private void setOutputText(String text) {
-    this.output.setText(text);
   }
 
   @Override

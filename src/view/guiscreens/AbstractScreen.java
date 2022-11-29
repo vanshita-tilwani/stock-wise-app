@@ -9,28 +9,35 @@ public abstract class AbstractScreen extends JFrame implements Screen {
   protected final JLabel message;
   protected final JButton submit;
   protected final JButton back;
+  private final JLabel output;
 
   protected AbstractScreen(String caption, String message) {
     super(caption);
     setSize(600, 600);
-    this.submit = new javax.swing.JButton("Submit");
-    this.back = new javax.swing.JButton("Go Back");
-
-    this.submit.setActionCommand(caption);
-    var backPanel = new JPanel();
-    backPanel.setLayout(new BoxLayout(backPanel, BoxLayout.X_AXIS));
-    backPanel.add(this.back);
-    backPanel.add(this.submit);
     this.message = new javax.swing.JLabel(message);
     this.message.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    this.message.setFont(new Font(null, Font.PLAIN, 15));
-    this.submit.setFont(new Font(null, Font.BOLD, 15));
-    this.back.setFont(new Font(null, Font.BOLD, 15));
-    var messagePanel = new JPanel();
-    messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
-    messagePanel.add(this.message);
-    this.add(messagePanel, BorderLayout.PAGE_START);
-    this.add(backPanel, BorderLayout.PAGE_END);
+    var header = new JPanel();
+    header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
+    header.add(this.message);
+
+    var outputPanel = new JPanel();
+    this.output = new JLabel();
+    outputPanel.add(this.output);
+
+    this.submit = new javax.swing.JButton("Submit");
+    this.back = new javax.swing.JButton("Go Back");
+    this.submit.setActionCommand(caption);
+    var actionsPanel = new JPanel();
+    actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.X_AXIS));
+    actionsPanel.add(this.back);
+    actionsPanel.add(this.submit);
+
+    var footer = new JPanel();
+    footer.setLayout(new BoxLayout(footer, BoxLayout.Y_AXIS));
+    footer.add(outputPanel);
+    footer.add(actionsPanel);
+    this.add(header, BorderLayout.PAGE_START);
+    this.add(footer, BorderLayout.PAGE_END);
   }
 
 
@@ -42,6 +49,22 @@ public abstract class AbstractScreen extends JFrame implements Screen {
   @Override
   public void setVisibility(boolean visible) {
     setVisible(visible);
+  }
+
+  @Override
+  public void display(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.GREEN.darker());
+  }
+
+  @Override
+  public void error(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.RED);
+  }
+
+  private void setOutputText(String text) {
+    this.output.setText(text);
   }
 
   protected Double toDouble(JSpinner value) {

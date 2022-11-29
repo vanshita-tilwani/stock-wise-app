@@ -33,7 +33,6 @@ import controller.Features;
 
 public class BarChart extends AbstractScreen {
 
-  private final JLabel output;
 
   private final JComboBox<String> portfolios;
   private final JDatePickerImpl from;
@@ -67,7 +66,6 @@ public class BarChart extends AbstractScreen {
 
     this.from = new JDatePickerImpl(fromDatePanel, new DateComponentFormatter());
     this.to = new JDatePickerImpl(toDatePanel, new DateComponentFormatter());
-    this.output = new JLabel("");
 
     mainPanel.add(this.portfolios);
     mainPanel.add(this.from);
@@ -75,7 +73,6 @@ public class BarChart extends AbstractScreen {
 
     box.add(mainPanel);
     box.add(this.chart);
-    box.add(this.output);
 
     this.add(box, BorderLayout.CENTER);
     setLocationRelativeTo(null);
@@ -83,21 +80,6 @@ public class BarChart extends AbstractScreen {
     setVisible(true);
   }
 
-  @Override
-  public void display(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.GREEN);
-  }
-
-  @Override
-  public void error(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.RED);
-  }
-
-  private void setOutputText(String text) {
-    this.output.setText(text);
-  }
 
   @Override
   public void addFeatures(Features features) {

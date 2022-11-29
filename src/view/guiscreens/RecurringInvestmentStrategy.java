@@ -1,6 +1,5 @@
 package view.guiscreens;
 
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -26,7 +25,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
   private final JSpinner frequency;
   private final JSpinner commission;
 
-  private Screen jframe;
+  private Screen frame;
 
   public RecurringInvestmentStrategy() {
     super("Trading Application - Create One Time Strategy" ,"");
@@ -96,7 +95,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
     mainPanel.add(frequencyData);
     mainPanel.add(commissionData);
     this.add(mainPanel, BorderLayout.CENTER);
-    this.jframe = null;
+    this.frame = null;
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -105,19 +104,19 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void display(String text) {
-    this.jframe.display(text);
+    this.frame.display(text);
   }
 
   @Override
   public void error(String text) {
-    this.jframe.error(text);
+    this.frame.error(text);
   }
 
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
       this.setVisibility(false);
-      this.jframe = new StockWeightScreen(this.name.getText(),
+      this.frame = new StockWeightScreen(this.name.getText(),
               toDouble(this.principal.getText()),
               toInt(this.stocks),
               this.getDate(this.startDate),
@@ -125,8 +124,8 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
               toInt(this.frequency),
               toDouble(this.commission));
       var listeners = this.back.getActionListeners();
-      this.jframe.bindListener(listeners[0]);
-      this.jframe.addFeatures(features);
+      this.frame.bindListener(listeners[0]);
+      this.frame.addFeatures(features);
 
     });
   }

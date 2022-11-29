@@ -9,7 +9,6 @@ import controller.Features;
 public class ApplyStrategyToPortfolio extends AbstractScreen {
   private final JComboBox<String> portfolioName;
   private final JComboBox<String> strategyName;
-  private final JLabel output;
   public ApplyStrategyToPortfolio() {
     super("Trading Window - Apply Strategy to Portfolio", "");
 
@@ -27,34 +26,15 @@ public class ApplyStrategyToPortfolio extends AbstractScreen {
     strategyDetails.add(strategyLabel);
     strategyDetails.add(this.strategyName);
 
-    this.output = new JLabel();
-
     var mainPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
     mainPanel.add(portfolioDetails);
     mainPanel.add(strategyDetails);
-    mainPanel.add(this.output);
     this.add(mainPanel, BorderLayout.CENTER);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
-  }
-
-  @Override
-  public void display(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.GREEN);
-  }
-
-  @Override
-  public void error(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.RED);
-  }
-
-  private void setOutputText(String text) {
-    this.output.setText(text);
   }
 
   @Override

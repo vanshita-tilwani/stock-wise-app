@@ -15,4 +15,5 @@ public interface Screen {
   void addFeatures(Features features);
 
   void setVisibility(boolean visible);
+
 }

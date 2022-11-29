@@ -12,37 +12,18 @@ import controller.Features;
 public class LoadPortfolio extends AbstractScreen {
 
   private final JFileChooser file;
-  private JLabel output;
 
   public LoadPortfolio() {
     super("Load Portfolio", "");
     file = new JFileChooser();
-    output = new JLabel();
     JPanel mainPanel = new JPanel();
     mainPanel.add(file);
-    mainPanel.add(output);
     this.submit.setEnabled(false);
     this.add(mainPanel, BorderLayout.CENTER);
 
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
-  }
-
-  @Override
-  public void display(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.GREEN);
-  }
-
-  @Override
-  public void error(String text) {
-    this.setOutputText(text);
-    this.output.setForeground(Color.RED);
-  }
-
-  private void setOutputText(String text) {
-    this.output.setText(text);
   }
 
   @Override
@@ -57,7 +38,6 @@ public class LoadPortfolio extends AbstractScreen {
     file.setDialogTitle("Specify a file to open");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
     file.setAcceptAllFileFilterUsed(false);
-    //file.getFileFilter();
     file.addChoosableFileFilter(filter);
     file.showOpenDialog(this);
 
