@@ -125,6 +125,12 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
   }
 
   @Override
+  public void disposeScreen() {
+    this.frame.disposeScreen();
+    super.disposeScreen();
+  }
+
+  @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
       this.setVisibility(false);

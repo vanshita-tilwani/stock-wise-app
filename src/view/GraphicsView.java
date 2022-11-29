@@ -71,7 +71,7 @@ public class GraphicsView implements View, ActionListener {
     });
     commands.put("Go Back", () -> {
       this.mainScreen.setVisibility(true);
-      ((JFrame)this.currentScreen).dispose();
+      this.currentScreen.disposeScreen();
     });
     commands.put("Buy Stock", () -> {
       createScreenAndSetDefault(new BuyStock(), features);

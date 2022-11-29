@@ -112,6 +112,11 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     });
   }
 
+  @Override
+  public void disposeScreen() {
+    this.frame.disposeScreen();
+    super.disposeScreen();
+  }
 
   private LocalDate getDate() {
     Date dateFromPicker = (Date) this.date.getModel().getValue();

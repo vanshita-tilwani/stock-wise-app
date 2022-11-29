@@ -63,6 +63,11 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     this.output.setForeground(Color.RED);
   }
 
+  @Override
+  public void disposeScreen() {
+    this.dispose();
+  }
+
   private void setOutputText(String text) {
     this.output.setText(text);
   }

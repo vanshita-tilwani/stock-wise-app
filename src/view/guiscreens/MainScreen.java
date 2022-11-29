@@ -102,4 +102,9 @@ public class MainScreen extends JFrame implements Screen {
   public void setVisibility(boolean visible) {
     setVisible(visible);
   }
+
+  @Override
+  public void disposeScreen() {
+    this.dispose();
+  }
 }
