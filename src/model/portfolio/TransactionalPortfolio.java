@@ -10,6 +10,8 @@ import java.util.function.Predicate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
+import model.stockpriceprovider.StockDataProvider;
+import model.stockpriceprovider.StockDataProviderFactory;
 import model.strategy.Strategy;
 import model.trade.SimulatedStockTrade;
 import model.trade.TransactionalStockTrade;
@@ -248,13 +250,21 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     }
     while (true) {
       // TODO : handle purchases on holiday
-      //currDate = nextAvailableDate(stock.get(0), currDate);
+      currDate = nextAvailableDate("AAPL", currDate);
       if (currDate.isAfter(endDate) || currDate.isAfter(LocalDate.now())) {
         break;
       }
       buyOnce(principal, weight, currDate, commission);
       currDate = currDate.plusDays(frequency);
     }
+  }
+
+  private LocalDate nextAvailableDate(String stock, LocalDate tradeDate) {
+    StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
+    while (!stockDataProvider.isAvailable(stock, tradeDate)) {
+      tradeDate = tradeDate.plusDays(1);
+    }
+    return tradeDate;
   }
 
 
