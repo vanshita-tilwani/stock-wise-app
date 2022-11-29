@@ -39,9 +39,16 @@ public class PortfolioTradeController implements Features {
           this.view.display(e.getMessage());
         }
       });
-      var portfolio = new SimulatedPortfolio(name, trades);
-      this.model.create(portfolio);
-      this.view.display("The portfolio is created successfully!\n");
+      if (trades.size() > 0) {
+        // asks the model to buy the portfolio if there are any valid shares
+        var portfolio = new SimulatedPortfolio(name, trades);
+        this.model.create(portfolio);
+        view.display("Portfolio created successfully.\n");
+      } else {
+        // if there are no valid shares, inform the user
+        view.display("Portfolio could not be created since all the shares in the "
+                + "portfolio are Invalid.\n");
+      }
     }
     catch (NumberFormatException exception) {
       view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
@@ -78,8 +85,13 @@ public class PortfolioTradeController implements Features {
       model.get(portfolio).buy(stock, shares, date, commission);
       view.display("The purchase was completed successfully!\n");
     }
-    catch (Exception e) {
-      view.display(e.getMessage());
+    catch (NumberFormatException exception) {
+      view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
+    } catch (IllegalArgumentException exception) {
+      view.display(exception.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -90,8 +102,14 @@ public class PortfolioTradeController implements Features {
       model.get(portfolio).sell(stock, shares, date, commission);
       view.display("The sale was completed successfully!\n");
     }
-    catch (Exception e) {
+    catch (UnsupportedOperationException e) {
       view.display(e.getMessage());
+    }
+    catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -101,8 +119,10 @@ public class PortfolioTradeController implements Features {
       Double value = model.get(portfolio).value(date);
       view.display("The value of portfolio is $"+value+"\n");
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
       view.display(e.getMessage());
+    } catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -112,8 +132,13 @@ public class PortfolioTradeController implements Features {
       Double costBasis = model.get(portfolio).costBasis(date);
       view.display("The cost basis for the portfolio is $"+costBasis+"\n");
     }
-    catch (Exception e) {
+    catch (UnsupportedOperationException e) {
       view.display(e.getMessage());
+    } catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -123,7 +148,7 @@ public class PortfolioTradeController implements Features {
       String composition = model.get(portfolio).composition();
       return composition;
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
       return e.getMessage();
     }
   }
@@ -134,8 +159,10 @@ public class PortfolioTradeController implements Features {
       String composition = model.get(portfolio).composition(date);
       return composition;
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
       return e.getMessage();
+    } catch (DateTimeParseException ex) {
+      return "The date provided was not in the expected format.\n";
     }
   }
 
@@ -144,10 +171,11 @@ public class PortfolioTradeController implements Features {
     try {
       FileRepository.getInstance().setDataSource(dataSource);
       model.load();
-      view.display("The portfolio load completed successfully!\n");
+      view.display("The load of portfolio is successfully completed\n");
     }
     catch (Exception e) {
-      view.display("The portfolio load failed!");
+      view.display("There were issues with portfolio load. Please make sure the file is in"
+              + "expected format.\n");
     }
   }
 
@@ -156,15 +184,23 @@ public class PortfolioTradeController implements Features {
     try {
       FileRepository.getInstance().setDataSource(dataSource);
       model.save(portfolioName);
-      view.display("The portfolio save completed successfully!\n");
+      view.display("The portfolio saved to file successfully\n");
     }
     catch (Exception e) {
-      view.display("The portfolio save failed!");
+      view.display("The save could not be completed. Please make sure the portfolio name"
+              + " is entered correctly and the data source(file) exist.\n");
     }
   }
 
   @Override
-  public Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end){
-    return model.get(portfolioName).values(from, end);
+  public Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end) {
+    try {
+      return model.get(portfolioName).values(from, end);
+    } catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    } catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
+    }
+    return null;
   }
 }

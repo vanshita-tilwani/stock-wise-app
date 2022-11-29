@@ -58,8 +58,16 @@ public class TextualView implements View {
   }
 
   private void initializeFeatures(Features features) {
-    commands.put(1, () -> { features.createInflexiblePortfolio(this.readTradeName(),
-            this.readTradeData());});
+    commands.put(1, () -> {
+      try {
+        features.createInflexiblePortfolio(this.readTradeName(),
+                this.readTradeData());
+      }
+      catch(NumberFormatException e) {
+        this.display("Please make sure you input valid " +
+                "number of stocks/quantity of stocks.\n");
+      }
+    });
     commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName());});
     commands.put(3, () -> { features.buyStock(this.readTradeName(),
             this.readStockSymbol(),
@@ -74,7 +82,7 @@ public class TextualView implements View {
     commands.put(5, () -> {
       var portfolios = features.getPortfolios();
       String result = portfolios.size() > 0 ?
-              "Portfolio Names : \n" + String.join("\n", portfolios)
+              "Portfolio Names : \n" + String.join("\n", portfolios)+"\n"
               : "The application does not contain any portfolio.\n";
       this.display(result);
     });
@@ -126,11 +134,6 @@ public class TextualView implements View {
   @Override
   public void display(String message) {
     this.out.print(message);
-  }
-
-  @Override
-  public void draw(Map<LocalDate, Double> portfolioData) {
-
   }
 
   private void drawGraph(Map<LocalDate, Double> portfolioData) {

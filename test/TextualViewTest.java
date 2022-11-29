@@ -35,26 +35,6 @@ public class TextualViewTest {
     Assert.assertEquals(input, actual);
   }
 
-  @Test
-  public void testDraw() {
-    String expected = "2022-11-16: **********\n" +
-            "2022-11-17: ********************\n" +
-            "2022-11-18: ******************************\n" +
-            "2022-11-19: ****************************************\n" +
-            "2022-11-20: **************************************************\n" +
-            "Scale : * = $0.1\n";
-    this.setup("");
-    HashMap<LocalDate, Double> map = new HashMap<>();
-    LocalDate date = LocalDate.parse("2022-11-16");
-    map.put(date, 1.0);
-    map.put(date.plusDays(1), 2.0);
-    map.put(date.plusDays(2), 3.0);
-    map.put(date.plusDays(3), 4.0);
-    map.put(date.plusDays(4), 5.0);
-
-    this.view.draw(map);
-    Assert.assertEquals(expected, this.out.toString());
-  }
 
   private void setup(String input) {
     InputStream in;

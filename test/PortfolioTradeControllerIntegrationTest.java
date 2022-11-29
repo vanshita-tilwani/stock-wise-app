@@ -87,7 +87,7 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("8\ntest1\n23-10-2022\n2022-10-23");
       String actual = out.toString();
-      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String expected = "You have entered an invalid date. Please re-enter the date\n";
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();
@@ -289,8 +289,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void createTransactionalPortfolio() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n6\n" +
-              "transaction1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "6\ntransaction1");
       String actual = this.out.toString();
       String expected = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction1\n" +
@@ -308,8 +310,11 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void addPurchaseToTransactionalPortfolio() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n3\n"
-              + "transaction1\nnow\n15\n2022-11-09\n50\n6\ntransaction1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "3\ntransaction1\nnow\n15\n2022-11-09\n50\n" +
+              "6\ntransaction1");
       String actual = this.out.toString();
       String expected = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction1\n" +
@@ -328,8 +333,11 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void addPurchaseToTransactionalPortfolio2() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n3\n"
-              + "transaction1\ngoog\n15\n2022-11-09\n50\n6\ntransaction1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "3\ntransaction1\ngoog\n15\n2022-11-09\n50\n" +
+              "6\ntransaction1");
       String actual = this.out.toString();
       String expected = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction1\n" +
@@ -349,10 +357,10 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("1\nmaster1\n2\ngoog\n8\naapl\n6\n3\nmaster1\nnow\n5\n2022-10-10\n"
               + "12\n");
-      String actual = this.out.toString();
-      String expected = "Purchasing a new Stock is not allowed in this portfolio\n";
-      Assert.assertTrue(actual.contains(expected));
+      Assert.fail();
 
+    } catch (UnsupportedOperationException e) {
+      // PASS HERE
     } catch (Exception e) {
       Assert.fail();
     }
@@ -390,8 +398,10 @@ public class PortfolioTradeControllerIntegrationTest {
   public void sellFromPortfolio_NotEnoughStocksToSell() {
     try {
 
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
-              "transaction1\nnow\n3\n2021-10-10\n12");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "4\ntransaction1\nnow\n3\n2021-10-10\n12");
       String actual = this.out.toString();
       String expected = "You do not have enough shares of the stock to sell\n";
       Assert.assertTrue(actual.contains(expected));
@@ -405,8 +415,11 @@ public class PortfolioTradeControllerIntegrationTest {
   public void sellFromPortfolio() {
     try {
 
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
-              "transaction1\ngoog\n3\n2022-11-15\n12\n6\ntransaction1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "4\ntransaction1\ngoog\n3\n2022-11-15\n12\n" +
+              "6\ntransaction1");
       String actual = this.out.toString();
       String expected = "The sale was completed successfully!\n";
       String expectedComposition = "TYPE : TRANSACTIONAL\n" +
@@ -441,8 +454,11 @@ public class PortfolioTradeControllerIntegrationTest {
   public void buyOnHoliday() {
     try {
 
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n3\n" +
-              "transaction1\ngoog\n3\n2022-10-23\n12\n6\ntransaction1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "3\ntransaction1\ngoog\n3\n2022-10-23\n12\n" +
+              "6\ntransaction1");
       String actual = this.out.toString();
       String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
       Assert.assertTrue(actual.contains(expected));
@@ -456,8 +472,11 @@ public class PortfolioTradeControllerIntegrationTest {
   public void saleOnHoliday() {
     try {
 
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
-              "transaction1\ngoog\n3\n2022-11-06\n12\n6\ntransaction1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "4\ntransaction1\ngoog\n3\n2022-11-06\n12\n" +
+              "6\ntransaction1");
       String actual = this.out.toString();
       String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
       Assert.assertTrue(actual.contains(expected));
@@ -471,7 +490,8 @@ public class PortfolioTradeControllerIntegrationTest {
   public void invalidCommissionFee() {
     try {
 
-      this.setup("2\ntransaction1\n1\ngoog\n10\n2022-10-24\nabc\n1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\nabc\n1");
       String actual = this.out.toString();
       String expected = "You have entered an invalid commission fee.Please re-enter the fee\n";
       Assert.assertTrue(actual.contains(expected));
@@ -485,7 +505,8 @@ public class PortfolioTradeControllerIntegrationTest {
   public void invalidCommissionFee_Negative() {
     try {
 
-      this.setup("2\ntransaction1\n1\ngoog\n10\n2022-10-24\n-12\n1");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n-12\n1");
       String actual = this.out.toString();
       String expected = "You have entered an invalid commission fee.Please re-enter the fee\n";
       Assert.assertTrue(actual.contains(expected));
@@ -501,7 +522,7 @@ public class PortfolioTradeControllerIntegrationTest {
 
       this.setup("7\ntest1\n11-20-2022\n2022-11-20");
       String actual = this.out.toString();
-      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String expected = "You have entered an invalid date. Please re-enter the date\n";
       Assert.assertTrue(actual.contains(expected));
 
     } catch (Exception e) {
@@ -527,8 +548,12 @@ public class PortfolioTradeControllerIntegrationTest {
   public void CompositionAtDate() {
     try {
 
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n7\n" +
-              "transaction1\n2022-10-25\n7\ntransaction1\n2022-10-18\n7\ntransaction1\n2022-11-01");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "7\ntransaction1\n2022-10-25\n" +
+              "7\ntransaction1\n2022-10-18\n" +
+              "7\ntransaction1\n2022-11-01");
       String actual = this.out.toString();
       String expected1 = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction1\n" +
@@ -579,7 +604,7 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void value_transactionalPortfolio_AfterToday() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n8\n" +
+      this.setup("2\ntransaction1\n3\ngoog\n10\n2022-10-24\n100\n3\naapl\n10\n2022-11-01\n10\n8\n" +
               "transaction1\n2023-10-19");
       String actual = this.out.toString();
       String expected1 = "The entered date is in future.\n";
@@ -593,7 +618,7 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void value_transactionalPortfolio1() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n8\n" +
+      this.setup("2\ntransaction1\n3\ngoog\n10\n2022-10-24\n100\n3\naapl\n10\n2022-11-01\n10\n8\n" +
               "transaction1\n2022-10-19");
       String actual = this.out.toString();
       String expected1 = "The value of portfolio is $0.0";
@@ -607,8 +632,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void value_transactionalPortfolio2() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n8\n" +
-              "transaction1\n2022-10-24");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "8\ntransaction1\n2022-10-24");
       String actual = this.out.toString();
       String expected1 = "The value of portfolio is $1029.7";
       Assert.assertTrue(actual.contains(expected1));
@@ -621,8 +648,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void value_transactionalPortfolio3() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n8\n" +
-              "transaction1\n2022-11-02");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "8\ntransaction1\n2022-11-02");
       String actual = this.out.toString();
       String expected1 = "The value of portfolio is $2321.0";
       Assert.assertTrue(actual.contains(expected1));
@@ -661,8 +690,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void costBasis_TransactionalPortfolio1() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n9\n" +
-              "transaction1\n2022-10-23");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "9\ntransaction1\n2022-10-23");
       String actual = this.out.toString();
       String expected1 = "The cost basis for the portfolio is $0.0";
       Assert.assertTrue(actual.contains(expected1));
@@ -675,8 +706,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void costBasis_TransactionalPortfolio2() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n9\n" +
-              "transaction1\n2022-10-24");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "9\ntransaction1\n2022-10-24");
       String actual = this.out.toString();
       String expected1 = "The cost basis for the portfolio is $1129.7";
       Assert.assertTrue(actual.contains(expected1));
@@ -689,8 +722,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void costBasis_TransactionalPortfolio3() {
     try {
-      this.setup("2\ntransaction1\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n9\n" +
-              "transaction1\n2022-11-02");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction1\naapl\n10\n2022-11-01\n10\n" +
+              "9\ntransaction1\n2022-11-02");
       String actual = this.out.toString();
       String expected1 = "The cost basis for the portfolio is $2646.2";
       Assert.assertTrue(actual.contains(expected1));
@@ -703,11 +738,12 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void saveTransactionalPortfolioToFile1() {
     try {
-      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n11\n" +
-              "transaction10\n");
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction10\naapl\n10\n2022-11-01\n10\n" +
+              "11\ntransaction10\n");
       String actual = this.out.toString();
-      String expected = "The portfolio saved to file successfully to portfolio.txt in res " +
-              "folder in your current working directory!";
+      String expected = "The portfolio saved to file successfully";
       Assert.assertTrue(actual.contains(expected));
 
     } catch (Exception e) {
@@ -718,8 +754,11 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void buyStock_ConsolidateSameTradesInTransactional() {
     try {
-      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n" +
-              "3\ntransaction10\ngoog\n5\n2022-10-24\n100\n6\ntransaction10");
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction10\naapl\n10\n2022-11-01\n10\n" +
+              "3\ntransaction10\ngoog\n5\n2022-10-24\n100\n" +
+              "6\ntransaction10");
       String actual = this.out.toString();
       String expected = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction10\n" +
@@ -738,12 +777,13 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void saveTransactionalPortfolioToFile2() {
     try {
-      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n" +
-              "4\ntransaction10\ngoog\n5\n2022-10-25\n100\n11\n" +
-              "transaction10\n");
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction10\naapl\n10\n2022-11-01\n10\n" +
+              "4\ntransaction10\ngoog\n5\n2022-10-25\n100\n" +
+              "11\ntransaction10\n");
       String actual = this.out.toString();
-      String expected = "The portfolio saved to file successfully to portfolio.txt in res " +
-              "folder in your current working directory!";
+      String expected = "The portfolio saved to file successfully";
       Assert.assertTrue(actual.contains(expected));
 
     } catch (Exception e) {
@@ -754,11 +794,12 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void loadTransactionalPortfolioToFile() {
     try {
-      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n11" +
-              "\ntransaction10\n12\n6\ntransaction10\n");
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction10\naapl\n10\n2022-11-01\n10\n" +
+              "11\ntransaction10\n12\n6\ntransaction10\n");
       String actual = this.out.toString();
-      String expected = "The load of portfolio is successfully completed from portfolio.txt " +
-              "from the res folder in your current working directory!";
+      String expected = "The load of portfolio is successfully";
       String expectedComposition = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : transaction10\n" +
               "STOCKS : \n" +
@@ -776,35 +817,38 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void portfolioPerformance_Transactional2() {
     try {
-      this.setup("2\ntransaction10\n2\ngoog\n10\n2022-10-24\n100\naapl\n10\n2022-11-01\n10\n4\n" +
-              "transaction10\ngoog\n5\n2022-10-27\n10\n3\ntransaction10\nnow\n10\n2022-11-03" +
-              "\n100\n4\ntransaction10\naapl\n2\n2022-11-07\n50\n10\ntransaction10\n" +
-              "2022-10-24\n2022-11-15\n");
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n10\n2022-10-24\n100\n" +
+              "3\ntransaction10\naapl\n10\n2022-11-01\n10\n" +
+              "4\ntransaction10\ngoog\n5\n2022-10-27\n10\n" +
+              "3\ntransaction10\nnow\n10\n2022-11-03\n100\n" +
+              "4\ntransaction10\naapl\n2\n2022-11-07\n50\n" +
+              "10\ntransaction10\n2022-10-24\n2022-11-15\n");
       String expected = "Performance of portfolio transaction10 from 2022-10-24 to 2022-11-15\n" +
-              "2022-10-24: **\n" +
-              "2022-10-25: **\n" +
-              "2022-10-26: *\n" +
-              "2022-10-27: \n" +
-              "2022-10-28: \n" +
-              "2022-10-29: \n" +
-              "2022-10-30: \n" +
-              "2022-10-31: \n" +
-              "2022-11-01: ***\n" +
-              "2022-11-02: ***\n" +
-              "2022-11-03: ***********\n" +
-              "2022-11-04: **********\n" +
-              "2022-11-05: **********\n" +
-              "2022-11-06: **********\n" +
-              "2022-11-07: **********\n" +
-              "2022-11-08: **********\n" +
-              "2022-11-09: **********\n" +
-              "2022-11-10: ***********\n" +
-              "2022-11-11: ***********\n" +
-              "2022-11-12: ***********\n" +
-              "2022-11-13: ***********\n" +
-              "2022-11-14: ***********\n" +
-              "2022-11-15: ***********\n" +
-              "Scale : * = $500.0\n";
+              "2022-10-24: *****\n" +
+              "2022-10-25: *****\n" +
+              "2022-10-26: ****\n" +
+              "2022-10-27: **\n" +
+              "2022-10-28: **\n" +
+              "2022-10-29: **\n" +
+              "2022-10-30: **\n" +
+              "2022-10-31: **\n" +
+              "2022-11-01: *********\n" +
+              "2022-11-02: *********\n" +
+              "2022-11-03: ****************************\n" +
+              "2022-11-04: ***************************\n" +
+              "2022-11-05: ***************************\n" +
+              "2022-11-06: ***************************\n" +
+              "2022-11-07: *************************\n" +
+              "2022-11-08: **************************\n" +
+              "2022-11-09: *************************\n" +
+              "2022-11-10: ****************************\n" +
+              "2022-11-11: ****************************\n" +
+              "2022-11-12: ****************************\n" +
+              "2022-11-13: ****************************\n" +
+              "2022-11-14: ****************************\n" +
+              "2022-11-15: *****************************\n" +
+              "Scale : * = $200.0";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
 
@@ -885,7 +929,7 @@ public class PortfolioTradeControllerIntegrationTest {
     try {
       this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n10\n" +
               "master1\nabc\n2022-10-24\n2022-11-10");
-      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String expected = "You have entered an invalid date. Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -897,9 +941,9 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void SimulatedPortfolioPerformance_InvalidEndDate() {
     try {
-      this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n10\n" +
-              "master1\n2022-10-24\nabc\n2022-11-10");
-      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      this.setup("1\nmaster1\n2\ngoog\n10\naapl\n10\n" +
+              "10\nmaster1\n2022-10-24\nabc\n2022-11-10");
+      String expected = "You have entered an invalid date. Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -911,9 +955,10 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void TransactionalPortfolioPerformance_InvalidStartDate() {
     try {
-      this.setup("2\nmaster1\n1\ngoog\n10\n2022-10-24\n10\n10\n" +
+      this.setup("2\nmaster1\n" +
+              "3\nmaster1\ngoog\n10\n2022-10-24\n10\n10\n" +
               "master1\nabc\n2022-10-24\n2022-11-10");
-      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String expected = "You have entered an invalid date. Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -925,9 +970,9 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void TransactionalPortfolioPerformance_InvalidEndDate() {
     try {
-      this.setup("2\nmaster1\n1\ngoog\n10\n2022-10-24\n10\n10\n" +
+      this.setup("2\nmaster1\n3\nmaster1\ngoog\n10\n2022-10-24\n10\n10\n" +
               "master1\n2022-10-24\nacc\n2022-11-10");
-      String expected = "You have entered an invalid date.Please re-enter the date\n";
+      String expected = "You have entered an invalid date. Please re-enter the date\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }
@@ -939,8 +984,7 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void PortfolioNameEmpty() {
     try {
-      this.setup("1\n \n2\ngoog\n10\naapl\n10\n10\n" +
-              "master1\n2022-10-24\n2022-11-10");
+      this.setup("1\n \nsample1\n2\ngoog\n10\naapl\n10\n");
       String actual = this.out.toString();
       System.out.println(actual);
       String expected = "You have entered an invalid name. Please enter the name again\n";
@@ -973,11 +1017,11 @@ public class PortfolioTradeControllerIntegrationTest {
   @Test
   public void Illegal_TransactionPortfolio() {
     try {
-      this.setup("2\ntransaction1\n1\ngoog\n1\n2022-10-23\n10\n");
+      this.setup("2\ntransaction1\n" +
+              "3\ntransaction1\ngoog\n1\n2022-10-23\n10\n");
       String actual = this.out.toString();
       System.out.println(actual);
-      String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n" +
-              "Portfolio could not be created since all the shares in the portfolio are Invalid.\n";
+      String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
       Assert.fail();

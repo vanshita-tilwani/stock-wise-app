@@ -168,7 +168,7 @@ public class PortfolioTradeOperationTest {
   public void loadPortfolio_Fail() {
     try {
       var fileRepo = FileRepository.getInstance();
-      fileRepo.setDataSource("res/portfolio.txt");
+      fileRepo.setDataSource("res");
       this.trade = new PortfolioTradeOperation(fileRepo);
       this.trade.load();
       Assert.fail();

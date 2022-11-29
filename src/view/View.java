@@ -27,6 +27,4 @@ public interface View {
    */
   void display(String message);
 
-  void draw(Map<LocalDate, Double> portfolioData);
-
 }

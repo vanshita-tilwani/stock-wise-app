@@ -58,11 +58,6 @@ public class GraphicsView implements View, ActionListener {
   }
 
   @Override
-  public void draw(Map<LocalDate, Double> portfolioData) {
-
-  }
-
-  @Override
   public void actionPerformed(ActionEvent e) {
     var actionCommand = e.getActionCommand();
     this.actionMap.get(actionCommand).run();
