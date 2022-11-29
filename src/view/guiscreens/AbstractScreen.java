@@ -23,6 +23,9 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     backPanel.add(this.submit);
     this.message = new javax.swing.JLabel(message);
     this.message.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    this.message.setFont(new Font(null, Font.PLAIN, 15));
+    this.submit.setFont(new Font(null, Font.BOLD, 15));
+    this.back.setFont(new Font(null, Font.BOLD, 15));
     var messagePanel = new JPanel();
     messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
     messagePanel.add(this.message);
@@ -31,9 +34,8 @@ public abstract class AbstractScreen extends JFrame implements Screen {
   }
 
 
-
   @Override
-  public void addActionListener(ActionListener listener) {
+  public void bindListener(ActionListener listener) {
     this.back.addActionListener(listener);
   }
 

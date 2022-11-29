@@ -8,7 +8,9 @@ public interface Screen {
 
   void display(String text);
 
-  void addActionListener(ActionListener listener);
+  void error(String text);
+
+  void bindListener(ActionListener listener);
 
   void addFeatures(Features features);
 

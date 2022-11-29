@@ -21,7 +21,9 @@ public class LoadPortfolio extends AbstractScreen {
     JPanel mainPanel = new JPanel();
     mainPanel.add(file);
     mainPanel.add(output);
+    this.submit.setEnabled(false);
     this.add(mainPanel, BorderLayout.CENTER);
+
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -29,6 +31,17 @@ public class LoadPortfolio extends AbstractScreen {
 
   @Override
   public void display(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.GREEN);
+  }
+
+  @Override
+  public void error(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.RED);
+  }
+
+  private void setOutputText(String text) {
     this.output.setText(text);
   }
 
@@ -38,7 +51,7 @@ public class LoadPortfolio extends AbstractScreen {
             new PropertyChangeListener() {
               @Override
               public void propertyChange(PropertyChangeEvent evt) {
-                features.loadPortfolio(file.getSelectedFile().getAbsolutePath());
+                features.load(file.getSelectedFile().getAbsolutePath());
               }
             });
     file.setDialogTitle("Specify a file to open");

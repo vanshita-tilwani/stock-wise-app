@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -30,8 +31,9 @@ public class GraphicsView implements View, ActionListener {
 
   private Features features;
   public GraphicsView() {
+    setDefaultUI();
     this.mainScreen = new MainScreen();
-    this.mainScreen.addActionListener(this);
+    this.mainScreen.bindListener(this);
     this.actionMap = initializeMap();
   }
 
@@ -71,7 +73,7 @@ public class GraphicsView implements View, ActionListener {
     commands.put("Create Portfolio", () -> {
       System.out.println("Create");
       this.currentScreen = new CreatePortfolio();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
       this.currentScreen.setVisibility(true);
       this.mainScreen.setVisibility(false);
@@ -79,8 +81,8 @@ public class GraphicsView implements View, ActionListener {
     commands.put("Show All Portfolios", () -> {
       this.currentScreen = new AllPortfolio();
       this.currentScreen.addFeatures(features);
-      this.currentScreen.addActionListener(this);
-      this.features.getAllPortfolios();
+      this.currentScreen.bindListener(this);
+      this.features.getPortfolios();
       this.mainScreen.setVisibility(false);
     });
     commands.put("Go Back", () -> {
@@ -89,54 +91,62 @@ public class GraphicsView implements View, ActionListener {
     });
     commands.put("Buy Stock", () -> {
       this.currentScreen = new BuyStock();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
       this.mainScreen.setVisibility(false);
     });
     commands.put("Sell Stock", () -> {
       this.currentScreen = new SellStock();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
       this.mainScreen.setVisibility(false);
     });
     commands.put("Portfolio Composition", () -> {
       this.currentScreen = new PortfolioComposition();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
       this.mainScreen.setVisibility(false);
     });
     commands.put("Evaluate Value", () -> {
       this.currentScreen = new PortfolioValue();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
       this.mainScreen.setVisibility(false);
     });
     commands.put("Evaluate Cost Basis", () -> {
       this.currentScreen = new PortfolioCostBasis();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
       this.mainScreen.setVisibility(false);
     });
     commands.put("Load Portfolio", () -> {
       this.mainScreen.setVisibility(false);
       this.currentScreen = new LoadPortfolio();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
 
     });
     commands.put("Save Portfolio", () -> {
       this.mainScreen.setVisibility(false);
       this.currentScreen = new SavePortfolio();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
 
     });
     commands.put("Show Bar Chart", () -> {
       this.mainScreen.setVisibility(false);
       this.currentScreen = new BarChart();
-      this.currentScreen.addActionListener(this);
+      this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
     });
     return commands;
+  }
+
+  private void setDefaultUI() {
+    Font f = new Font(null, Font.PLAIN, 15);
+    UIManager.put("Button.font", f.deriveFont(1));
+    UIManager.put("RadioButton.font", f.deriveFont(14.0F));
+    UIManager.put("Label.font", f);
+    UIManager.put("TextField.font", f);
   }
 }

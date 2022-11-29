@@ -1,6 +1,6 @@
 package view.guiscreens;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,17 @@ public class MainScreen extends JFrame implements Screen {
   private final JButton submit;
   private final ButtonGroup menuGroup;
   private final List<JRadioButton> menuOptions;
+
+  private JLabel output;
   public MainScreen() {
     super();
     setTitle("Welcome to Trading Application");
     setSize(600, 600);
     menuOptions = new ArrayList<>();
     var header = new JPanel();
-    header.add(new JLabel("Choose the menu option you wish to proceed with."));
+    var label = new JLabel("Choose the menu option you wish to proceed with.");
+    //label.setFont(new Font(null, Font.PLAIN, 15));
+    header.add(label);
     var panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     this.menuGroup = new ButtonGroup();
@@ -39,31 +43,53 @@ public class MainScreen extends JFrame implements Screen {
 
     this.submit = new JButton("Submit");
 
-
+    header.setFont(new Font(null, Font.PLAIN, 15));
+    this.submit.setFont(new Font(null, Font.BOLD, 15));
     this.menuOptions.forEach(e -> {
+      //e.setFont(new Font(null, Font.PLAIN, 14));
       this.menuGroup.add(e);
       panel.add(e);
     });
 
     JPanel actions = new JPanel();
+    this.output = new JLabel();
+    this.output.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    this.submit.setEnabled(false);
+    this.submit.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    actions.setLayout(new BoxLayout(actions, BoxLayout.Y_AXIS));
+    actions.add(this.output);
     actions.add(submit);
+
+
+
     this.add(header, BorderLayout.PAGE_START);
+
     this.add(panel, BorderLayout.CENTER);
     this.add(actions, BorderLayout.PAGE_END);
+    //this.setFont(new Font(null, Font.BOLD, 15));
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
   }
   @Override
   public void display(String text) {
-
+    this.output.setText(text);
+    this.output.setForeground(Color.GREEN.darker());
+    this.output.setFont(new Font(null, Font.BOLD, 15));
   }
 
   @Override
-  public void addActionListener(ActionListener listener) {
+  public void error(String text) {
+    // NOTHING
+  }
+
+  @Override
+  public void bindListener(ActionListener listener) {
     menuOptions.forEach(menuOption -> {
       menuOption.addActionListener((e) -> {
         this.submit.setActionCommand(e.getActionCommand());
+        this.display("You have selected menu option : " + e.getActionCommand());
+        this.submit.setEnabled(true);
       });
     });
     this.submit.addActionListener(listener);

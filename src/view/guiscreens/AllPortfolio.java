@@ -17,6 +17,7 @@ public class AllPortfolio extends AbstractScreen {
     this.output = new JLabel("");
     var mainPanel = new JPanel();
     mainPanel.add(this.output);
+    this.submit.setEnabled(false);
     this.add(mainPanel, BorderLayout.CENTER);
 
     setLocationRelativeTo(null);
@@ -26,8 +27,20 @@ public class AllPortfolio extends AbstractScreen {
 
   @Override
   public void display(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.GREEN);
+  }
+
+  @Override
+  public void error(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.RED);
+  }
+
+  private void setOutputText(String text) {
     this.output.setText(text);
   }
+
 
   @Override
   public void addFeatures(Features features) {
@@ -36,7 +49,7 @@ public class AllPortfolio extends AbstractScreen {
 
       @Override
       public void componentShown(ComponentEvent e) {
-        var portfolios = features.getAllPortfolios();
+        var portfolios = features.getPortfolios();
         String result = "The application does not contain any portfolio!";
         if(portfolios.size() > 0) {
           result = "<html>" + String.join("<br>", portfolios);

@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import controller.Features;
 import controller.PortfolioTradeController;
-import controller.TradeController;
 import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
@@ -26,8 +26,7 @@ public class PortfolioControllerUnitTest {
     View view = new TextualView(new ByteArrayInputStream(input.getBytes()),
             new PrintStream(new ByteArrayOutputStream()));
     TradeOperation model = new LoggingModel(modelBuilder);
-    TradeController controller = new PortfolioTradeController(view, model);
-    controller.execute();
+    Features controller = new PortfolioTradeController(view, model);
   }
 
   @Test

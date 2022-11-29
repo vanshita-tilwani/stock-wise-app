@@ -6,23 +6,27 @@ import java.util.Set;
 
 public interface Features {
 
-  void createPortfolio(String name);
-  Set<String> getAllPortfolios();
+  void createInflexiblePortfolio(String name , Map<String, Double> purchases);
+  void createFlexiblePortfolio(String name);
+  Set<String> getPortfolios();
 
-  void addStockPurchaseToPortfolio(String portfolio, String stock, Double shares, LocalDate date,
-                                   Double commission);
+  void buyStock(String portfolio, String stock, Double shares, LocalDate date,
+                Double commission);
 
-  void sellFromPortfolio(String portfolio, String stock, Double shares, LocalDate date,
-                         Double commission);
+  void sellStock(String portfolio, String stock, Double shares, LocalDate date,
+                 Double commission);
 
-  void evaluateValue(String portfolio, LocalDate date);
+  void value(String portfolio, LocalDate date);
 
-  void evaluateCostBasis(String portfolio, LocalDate date);
+  void costBasis(String portfolio, LocalDate date);
 
-  void evaluateComposition(String portfolio, LocalDate date);
+  String composition(String portfolio);
 
-  void loadPortfolio(String dataSource);
-  void savePortfolio(String dataSource, String portfolioName);
+  String composition(String portfolio, LocalDate date);
 
-  Map<LocalDate, Double> getBarChartData(String portfolioName, LocalDate from, LocalDate end);
+  void load(String dataSource);
+
+  void save(String dataSource, String portfolioName);
+
+  Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end);
 }

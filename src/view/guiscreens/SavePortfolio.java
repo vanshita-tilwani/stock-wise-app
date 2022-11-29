@@ -34,12 +34,23 @@ public class SavePortfolio extends AbstractScreen {
 
   @Override
   public void display(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.GREEN);
+  }
+
+  @Override
+  public void error(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.RED);
+  }
+
+  private void setOutputText(String text) {
     this.output.setText(text);
   }
 
   @Override
   public void addFeatures(Features features) {
-    features.getAllPortfolios().forEach(e -> this.portfolioName.addItem(e));
+    features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
 
     this.submit.addActionListener(e -> {
 
@@ -53,7 +64,7 @@ public class SavePortfolio extends AbstractScreen {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                   String path = file.getSelectedFile().getAbsolutePath() + ".txt";
-                  features.savePortfolio(path,
+                  features.save(path,
                           frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
                   System.out.println();
                 }

@@ -6,8 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import controller.Features;
 import controller.PortfolioTradeController;
-import controller.TradeController;
 import model.datarepo.FileRepository;
 import model.stocktradings.PortfolioTradeOperation;
 import view.TextualView;
@@ -25,8 +25,7 @@ public class PortfolioTradeControllerIntegrationTest {
     this.out = new ByteArrayOutputStream();
     View view = this.getView(new ByteArrayInputStream(input.getBytes()), out);
     PortfolioTradeOperation model = this.getModel();
-    TradeController controller = new PortfolioTradeController(view, model);
-    controller.execute();
+    Features controller = new PortfolioTradeController(view, model);
   }
 
   @Test

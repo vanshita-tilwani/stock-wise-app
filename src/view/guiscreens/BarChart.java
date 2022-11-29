@@ -85,12 +85,23 @@ public class BarChart extends AbstractScreen {
 
   @Override
   public void display(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.GREEN);
+  }
+
+  @Override
+  public void error(String text) {
+    this.setOutputText(text);
+    this.output.setForeground(Color.RED);
+  }
+
+  private void setOutputText(String text) {
     this.output.setText(text);
   }
 
   @Override
   public void addFeatures(Features features) {
-    features.getAllPortfolios().forEach(e -> this.portfolios.addItem(e));
+    features.getPortfolios().forEach(e -> this.portfolios.addItem(e));
     this.submit.addActionListener(e -> validateAndRenderChart(e, features));
   }
 
@@ -106,7 +117,7 @@ public class BarChart extends AbstractScreen {
     // TODO: Validate the above properties
     // TODO: Rename the above properties.
 
-    var data = features.getBarChartData(portfolioName, ff, gg);
+    var data = features.values(portfolioName, ff, gg);
 
     // TODO: Implement the bar drawing method.
     draw(data);

@@ -1,121 +1,170 @@
 package controller;
 
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import controller.commandexecutors.AllPortfoliosCommand;
-import controller.commandexecutors.BuyStockCommand;
-import controller.commandexecutors.CreateSimulatedPortfolioCommand;
-import controller.commandexecutors.CreateTransactionalPortfolioCommand;
-import controller.commandexecutors.EvaluateCostBasisCommand;
-import controller.commandexecutors.EvaluatePortfolioPerformanceCommand;
-import controller.commandexecutors.Executor;
-import controller.commandexecutors.LoadPortfolioCommand;
-import controller.commandexecutors.PortfolioCompositionCommand;
-import controller.commandexecutors.PortfolioCompositionAtDateCommand;
-import controller.commandexecutors.PortfolioEvaluationCommand;
-import controller.commandexecutors.SavePortfolioCommand;
-import controller.commandexecutors.SellStockCommand;
+import model.datarepo.FileRepository;
+import model.portfolio.Portfolio;
+import model.portfolio.SimulatedPortfolio;
+import model.portfolio.TransactionalPortfolio;
+import model.stock.Stock;
 import model.stocktradings.TradeOperation;
+import model.trade.SimulatedStockTrade;
+import model.trade.Trade;
 import view.View;
 
-/**
- * Portfolio Controller is the Controller layer in the design which can be consumed
- * by the Client to trade with stocks within a Portfolio. This controller is
- * responsible for starting the application and controlling the flow of the
- * application and helps the user to navigate the features available to consume in
- * the application.
- */
-public class PortfolioTradeController implements TradeController {
+public class PortfolioTradeController implements Features {
 
-  // view responsible for input/display
   private final View view;
-  // model responsible for business logic
-  private final TradeOperation model;
+  private final TradeOperation<Portfolio> model;
 
-  private final Map<Integer, Executor> commands;
-
-
-  /**
-   * Instantiates the Controller Object with the view responsible for
-   * reading/displaying input data and model responsible for executing
-   * business logic of the application.
-   *
-   * @param view  The view in MVC design
-   * @param model The model in MVC design.
-   */
-  public PortfolioTradeController(View view, TradeOperation model) {
+  public PortfolioTradeController(View view, TradeOperation<Portfolio> model) {
     this.view = view;
     this.model = model;
-    this.commands = getCommands();
+    view.addFeatures(this);
   }
 
   @Override
-  public void execute() {
-    // gets the commands as per the menu options to create, retrieve,
-    // evaluate, save or load the portfolios.
-    while (true) {
-      // read the menu option from the view.
-      int menuOption = view.readMenu();
-      // if the menu option does not exist in commands then exit the application.
-      if (!commands.containsKey(menuOption)) {
-        view.display("You have decided to exit the application. See you next time\n");
-        break;
-      }
-      // execute the menu option chosen.
-      commands.get(menuOption).execute(view, model);
+  public void createInflexiblePortfolio(String name, Map<String, Double> purchases) {
+    try {
+      Set<Trade<Stock>> trades = new HashSet<>();
+      purchases.forEach((key, value) -> {
+        try {
+          trades.add(new SimulatedStockTrade(key, value));
+        }
+        catch (Exception e) {
+          this.view.display(e.getMessage());
+        }
+      });
+      var portfolio = new SimulatedPortfolio(name, trades);
+      this.model.create(portfolio);
+      this.view.display("The portfolio is created successfully!\n");
     }
-
-
+    catch (NumberFormatException exception) {
+      view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
+    } catch (IllegalArgumentException exception) {
+      view.display(exception.getMessage());
+    }
+    catch (DateTimeParseException ex) {
+      view.display("The date provided was not in the expected format.\n");
+    }
   }
 
-  /**
-   * Returns the command map for the menu options.
-   *
-   * @return command map.
-   */
-  private Map<Integer, Executor> getCommands() {
-    // creates a <menu item, runnable> map to execute flow based on user input
-    Map<Integer, Executor> commandMap = new HashMap<>();
-    commandMap.put(1, new CreateSimulatedPortfolioCommand());
-    commandMap.put(2, new CreateTransactionalPortfolioCommand());
-    commandMap.put(3, new BuyStockCommand());
-    commandMap.put(4, new SellStockCommand());
-    commandMap.put(5, new AllPortfoliosCommand());
-    commandMap.put(6, new PortfolioCompositionCommand());
-    commandMap.put(7, new PortfolioCompositionAtDateCommand());
-    commandMap.put(8, new PortfolioEvaluationCommand());
-    commandMap.put(9, new EvaluateCostBasisCommand());
-    commandMap.put(10, new EvaluatePortfolioPerformanceCommand());
-    commandMap.put(11, new SavePortfolioCommand());
-    commandMap.put(12, new LoadPortfolioCommand());
-    return commandMap;
+  @Override
+  public void createFlexiblePortfolio(String name) {
+    try {
+      var portfolio = new TransactionalPortfolio(name, new HashSet<>(), new HashSet<>());
+      this.model.create(portfolio);
+      this.view.display("The portfolio is created successfully!\n");
+    }
+    catch(Exception e) {
+      this.view.display(e.getMessage());
+    }
   }
 
-  /**
-   * Initializes the menu options for the user to choose from.
-   *
-   * @return the menu options in string.
-   */
-  private String getMenuOptions() {
-    // Generates all the menu options displayed to the user.
-    StringBuilder menu = new StringBuilder();
-    menu.append("Main Menu :\n");
-    menu.append("1.  Create a new Simulated Portfolio\n");
-    menu.append("2.  Create a new Transactional Portfolio\n");
-    menu.append("3.  Purchase a Stock and Add it to Transactional Portfolio\n");
-    menu.append("4.  Sell a Stock from the Transactional Portfolio\n");
-    menu.append("5.  Get all the available Portfolios in the Application\n");
-    menu.append("6.  Get final composition for an Existing Portfolio \n");
-    menu.append("7.  Get composition for an Existing Portfolio at a specific date\n");
-    menu.append("8.  Get the total value on an Existing Portfolio\n");
-    menu.append("9.  Get the cost basis of an Existing Transactional Portfolio\n");
-    menu.append("10. Get the performance of an Existing Portfolio over a period of time\n");
-    menu.append("11. Save an Existing Portfolio to file\n");
-    menu.append("12. Load portfolios to the Application\n");
-    menu.append("Enter the menu option you wish to choose.\n");
-    menu.append("Press and enter any other key to exit the application.\n");
-    return menu.toString();
+  @Override
+  public Set<String> getPortfolios() {
+    Set<String> all = model.all();
+    return all;
   }
 
+  @Override
+  public void buyStock(String portfolio, String stock, Double shares, LocalDate date,
+                       Double commission) {
+    try{
+      model.get(portfolio).buy(stock, shares, date, commission);
+      view.display("The purchase was completed successfully!\n");
+    }
+    catch (Exception e) {
+      view.display(e.getMessage());
+    }
+  }
+
+  @Override
+  public void sellStock(String portfolio, String stock, Double shares, LocalDate date,
+                        Double commission) {
+    try{
+      model.get(portfolio).sell(stock, shares, date, commission);
+      view.display("The sale was completed successfully!\n");
+    }
+    catch (Exception e) {
+      view.display(e.getMessage());
+    }
+  }
+
+  @Override
+  public void value(String portfolio, LocalDate date) {
+    try{
+      Double value = model.get(portfolio).value(date);
+      view.display("The value of portfolio is $"+value+"\n");
+    }
+    catch (Exception e) {
+      view.display(e.getMessage());
+    }
+  }
+
+  @Override
+  public void costBasis(String portfolio, LocalDate date) {
+    try{
+      Double costBasis = model.get(portfolio).costBasis(date);
+      view.display("The cost basis for the portfolio is $"+costBasis+"\n");
+    }
+    catch (Exception e) {
+      view.display(e.getMessage());
+    }
+  }
+
+  @Override
+  public String composition(String portfolio) {
+    try{
+      String composition = model.get(portfolio).composition();
+      return composition;
+    }
+    catch (Exception e) {
+      return e.getMessage();
+    }
+  }
+
+  @Override
+  public String composition(String portfolio, LocalDate date) {
+    try{
+      String composition = model.get(portfolio).composition(date);
+      return composition;
+    }
+    catch (Exception e) {
+      return e.getMessage();
+    }
+  }
+
+  @Override
+  public void load(String dataSource) {
+    try {
+      FileRepository.getInstance().setDataSource(dataSource);
+      model.load();
+      view.display("The portfolio load completed successfully!\n");
+    }
+    catch (Exception e) {
+      view.display("The portfolio load failed!");
+    }
+  }
+
+  @Override
+  public void save(String dataSource, String portfolioName) {
+    try {
+      FileRepository.getInstance().setDataSource(dataSource);
+      model.save(portfolioName);
+      view.display("The portfolio save completed successfully!\n");
+    }
+    catch (Exception e) {
+      view.display("The portfolio save failed!");
+    }
+  }
+
+  @Override
+  public Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end){
+    return model.get(portfolioName).values(from, end);
+  }
 }

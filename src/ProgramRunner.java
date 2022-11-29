@@ -1,11 +1,8 @@
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import controller.Features;
-import controller.GUIController;
-import controller.TradeController;
 import controller.PortfolioTradeController;
 import model.datarepo.DataRepository;
 import model.datarepo.FileRepository;
@@ -31,7 +28,7 @@ public class ProgramRunner {
     System.out.println("Choose the type of view you wish to proceed with?");
     System.out.println("1. Console Based View");
     System.out.println("2. GUI Based View");
-    int menuOption = 2;//new Scanner(System.in).nextInt();
+    int menuOption = new Scanner(System.in).nextInt();
     while(!menuOptions.containsKey(menuOption)) {
       System.out.println("Invalid Option");
       System.out.println("Choose the type of view you wish to proceed with?");
@@ -40,7 +37,6 @@ public class ProgramRunner {
       menuOption = new Scanner(System.in).nextInt();
     }
     menuOptions.get(menuOption).run();
-    //new SwingFeaturesFrame();
   }
 
   public static Map<Integer, Runnable> getCommands() {
@@ -53,17 +49,16 @@ public class ProgramRunner {
     }
     Map<Integer, Runnable> menuOptions = new HashMap<>();
     DataRepository finalFileRepo = fileRepo;
+
     menuOptions.put(1, () -> {
       View view = new TextualView(System.in, System.out);
-
       PortfolioTradeOperation model = new PortfolioTradeOperation(finalFileRepo);
-      TradeController controller = new PortfolioTradeController(view, model);
-      controller.execute();
+      Features controller = new PortfolioTradeController(view, model);
     });
     menuOptions.put(2, () -> {
       View view = new GraphicsView();
       PortfolioTradeOperation model = new PortfolioTradeOperation(finalFileRepo);
-      Features controller = new GUIController(view, model);
+      Features controller = new PortfolioTradeController(view, model);
     });
     return menuOptions;
   }
