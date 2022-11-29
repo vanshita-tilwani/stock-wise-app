@@ -15,6 +15,10 @@ import model.stock.Stock;
 import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.WebAPIStockDataProvider;
 import model.stocktradings.TradeOperation;
+import model.strategy.OneTimeStrategy;
+import model.strategy.RecurringStrategy;
+import model.strategy.Strategy;
+import model.strategy.StrategyBuilder;
 import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
 import model.trade.TransactionalStockTrade;
@@ -192,54 +196,61 @@ public class PortfolioTradeController implements Features {
       return model.get(portfolioName).values(from, end);
     } catch (IllegalArgumentException e) {
       view.display(e.getMessage());
-    } catch (DateTimeParseException ex) {
-      view.display("The date provided was not in the expected format.\n");
     }
     return null;
   }
 
   @Override
-  public void invest(String portfolioName, Double principal, Map<String, Double> weights,
+  public void createStrategy(String name, Double principal, Map<String, Double> weights,
                      LocalDate date, Double commission) {
-    double totalWeight = 0.0;
-    for (Map.Entry<String, Double> entry : weights.entrySet()) {
-      String key = entry.getKey();
-      Double value = entry.getValue();
-      totalWeight += value;
-      if(totalWeight > 100.0) {
-        throw new IllegalArgumentException("The one time investment failed due to invalid" +
-                " weights\n");
+    try {
+      StrategyBuilder strategyBuilder = new OneTimeStrategy.OneTimeStrategyBuilder()
+              .setPrincipal(principal)
+              .setStartDate(date)
+              .setCommission(commission);
+      for (Map.Entry<String, Double> entry : weights.entrySet()) {
+        strategyBuilder.addStock(entry.getKey(), entry.getValue());
       }
-      try {
-        var trade = new TransactionalStockTrade(key, principal, value, date, commission);
-        model.get(portfolioName).buy(trade.get().name(), trade.quantity(),
-                trade.tradeDate(), trade.commission());
-      }
-      catch (UnsupportedOperationException e) {
-        view.display(e.getMessage());
-      } catch (IllegalArgumentException exception) {
-        view.display(exception.getMessage());
-      }
+      this.model.createStrategy(name, strategyBuilder.build());
+      view.display("Strategy created successfully\n");
     }
+    catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    }
+
   }
 
   @Override
-  public void invest(String portfolioName, Double principal, Map<String, Double> weights,
+  public void createRecurringStrategy(String name, Double principal, Map<String, Double> weights,
                      LocalDate start, LocalDate end, int days, Double commission) {
-    LocalDate currDate = start;
-    LocalDate presentDate = LocalDate.now();
-    if(presentDate.isBefore(end) || end == null) {
-      end = presentDate;
-    }
-    while(!(currDate.isAfter(end))) {
+    try {
+      StrategyBuilder strategyBuilder = new RecurringStrategy.RecurringStrategyBuilder()
+              .setPrincipal(principal)
+              .setStartDate(start)
+              .setEndDate(end)
+              .setFrequency(days)
+              .setCommission(commission);
       for (Map.Entry<String, Double> entry : weights.entrySet()) {
-        var trade = new TransactionalStockTrade(entry.getKey(), principal, entry.getValue(),
-                currDate, commission);
-        model.get(portfolioName).buy(trade.get().name(), trade.quantity(),
-                trade.tradeDate(), trade.commission());
+        strategyBuilder.addStock(entry.getKey(), entry.getValue());
       }
-      currDate = currDate.plusDays(days);
+      this.model.createStrategy(name, strategyBuilder.build());
+      view.display("Strategy created successfully\n");
+    }
+    catch(IllegalArgumentException e ){
+      view.display(e.getMessage());
     }
 
+  }
+
+  @Override
+  public void applyStrategy(String portfolioName, String strategyName) {
+    try {
+      Strategy strategy = this.model.getStrategy(strategyName);
+      this.model.get(portfolioName).applyStrategy(strategy);
+      view.display("Strategy applied successfully to the portfolio\n");
+    }
+    catch(Exception e) {
+      view.display("Strategy could not be applied to the portfolio\n");
+    }
   }
 }

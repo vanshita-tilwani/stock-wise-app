@@ -3,12 +3,14 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import model.stock.Stock;
 import model.stock.StockImpl;
+import model.strategy.Strategy;
 import model.trade.SimulatedStockTrade;
 import model.trade.TransactionalStockTrade;
 import model.trade.Trade;
@@ -24,6 +26,8 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   // TODO : change all the set to map
   private final Set<Trade<Stock>> purchased;
   private final Set<Trade<Stock>> sold;
+
+  private final Set<Strategy> strategies;
 
   /**
    * Creates a Transactional Portfolio used to make stock trades by the user.
@@ -41,6 +45,17 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     super(name);
     this.purchased = purchased;
     this.sold = sold;
+    this.strategies = new HashSet<>();
+  }
+
+  public TransactionalPortfolio(String name, Set<Trade<Stock>> purchased, Set<Trade<Stock>> sold,
+                                Set<Strategy> strategies) {
+    // Assuming that an empty portfolio will be created and then the stock
+    // purchases will be made against that portfolio.
+    super(name);
+    this.purchased = purchased;
+    this.sold = sold;
+    this.strategies = strategies;
   }
 
   @Override
@@ -119,6 +134,12 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     Predicate<Trade<Stock>> predicate = x -> !x.tradeDate().isAfter(date);
     // get composition using predicate
     return this.getComposition(predicate);
+  }
+
+  @Override
+  public void applyStrategy(Strategy strategy) throws UnsupportedOperationException {
+    buyPeriodic(strategy.principle(), strategy.stockProportion(), strategy.startDate(),
+            strategy.endDate(), strategy.frequency(), strategy.commission());
   }
 
   @Override
@@ -211,6 +232,32 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     }
     return cost;
   }
+
+  private void buyOnce(Double principal, Map<String, Double> stockData, LocalDate date,
+                       Double commission) {
+    for (Map.Entry<String, Double> entry : stockData.entrySet()) {
+      this.purchased.add(new TransactionalStockTrade(entry.getKey(),principal,entry.getValue(),
+              date, commission));
+    }
+  }
+  private void buyPeriodic(Double principal, Map<String, Double> weight, LocalDate beginDate,
+                           LocalDate endDate, int frequency, Double commission) {
+    LocalDate currDate = beginDate;
+    if (endDate == null) {
+      endDate = LocalDate.now();
+    }
+    while (true) {
+      // TODO : handle purchases on holiday
+      //currDate = nextAvailableDate(stock.get(0), currDate);
+      if (currDate.isAfter(endDate) || currDate.isAfter(LocalDate.now())) {
+        break;
+      }
+      buyOnce(principal, weight, currDate, commission);
+      currDate = currDate.plusDays(frequency);
+    }
+  }
+
+
 
 
 }

@@ -1,10 +1,16 @@
 package model.stocktradings;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import model.strategy.OneTimeStrategy;
+import model.strategy.RecurringStrategy;
+import model.strategy.Strategy;
+import model.strategy.StrategyBuilder;
+import model.trade.TransactionalStockTrade;
 import model.utility.PortfolioDataParser;
 import model.datarepo.DataRepository;
 import model.portfolio.Portfolio;
@@ -19,6 +25,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   // create a map for portfolios available in the application.
   private Map<String, Portfolio> portfolios;
+  private Map<String, Strategy> strategies;
   // repository to read/write from data source.
   private final DataRepository repository;
 
@@ -30,6 +37,7 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
    */
   public PortfolioTradeOperation(DataRepository repository) {
     portfolios = new HashMap<>();
+    this.strategies = new HashMap<>();
     this.repository = repository;
   }
 
@@ -84,6 +92,17 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
       }
     }
   }
+
+  @Override
+  public Strategy getStrategy(String name) {
+    return this.strategies.get(name);
+  }
+
+  @Override
+  public void createStrategy(String name,Strategy strategy) {
+    this.strategies.put(name, strategy);
+  }
+
 
 
 }

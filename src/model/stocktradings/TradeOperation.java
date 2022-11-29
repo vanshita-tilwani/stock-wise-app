@@ -1,6 +1,10 @@
 package model.stocktradings;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
+
+import model.strategy.Strategy;
 
 /**
  * Interface to perform trade operations such as creating a new trade, getting the trade
@@ -25,6 +29,7 @@ public interface TradeOperation<T> {
    */
   T get(String trade) throws IllegalArgumentException;
 
+
   /**
    * Returns the name of all the trades performed by a user.
    *
@@ -43,6 +48,9 @@ public interface TradeOperation<T> {
    * Loads all the trades available in the data-source to the application.
    */
   void load() throws Exception;
+
+  Strategy getStrategy(String name);
+  void createStrategy(String name, Strategy strategy);
 
 
 }

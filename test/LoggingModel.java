@@ -4,6 +4,7 @@ import java.util.Set;
 import model.portfolio.Portfolio;
 import model.portfolio.SimulatedPortfolio;
 import model.stocktradings.TradeOperation;
+import model.strategy.Strategy;
 
 /**
  * Mock model which will be used to test the controller delegation.
@@ -42,5 +43,16 @@ public class LoggingModel implements TradeOperation<Portfolio> {
   @Override
   public void load() {
     log.append("Load all the portfolio in the data source\n");
+  }
+
+  @Override
+  public Strategy getStrategy(String name) {
+    log.append("getStrategy : "+name+ "\n");
+    return null;
+  }
+
+  @Override
+  public void createStrategy(String name, Strategy strategy) {
+    log.append("createStrategy : "+name+ "\n");
   }
 }

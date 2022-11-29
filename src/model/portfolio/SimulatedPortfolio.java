@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import model.stock.Stock;
+import model.strategy.Strategy;
 import model.trade.Trade;
 
 /**
@@ -69,6 +70,12 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   @Override
   public String composition(LocalDate date) {
     return this.getComposition(PortfolioType.SIMULATED, this.shares);
+  }
+
+  @Override
+  public void applyStrategy(Strategy strategy) {
+    throw new UnsupportedOperationException("This portfolio does not support applying investment" +
+            " strategies");
   }
 
 

@@ -44,8 +44,9 @@ public class TextualView implements View {
               "10. Get the performance of an Existing Portfolio over a period of time\n" +
               "11. Save an Existing Portfolio to file\n" +
               "12. Load portfolios to the Application\n" +
-              "13. Make a one-time investment\n" +
-              "14. Make a recurring investment\n" +
+              "13. Create a one time investment strategy\n" +
+              "14. Create a recurring investment strategy\n" +
+              "15. Apply a strategy to a portfolio\n" +
               "Enter the menu option you wish to choose.\n" +
               "Press and enter any other key to exit the application.\n";
       this.display(menuOptions);
@@ -114,14 +115,14 @@ public class TextualView implements View {
     commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
     commands.put(13, () ->
-      features.invest(this.readTradeName(),
+      features.createStrategy(this.readStrategyName(),
               this.readPrincipal(),
               this.readTradeData(true),
               this.readDateOfTransaction(),
               this.readCommissionFee()
     ));
     commands.put(14, () ->
-      features.invest(this.readTradeName(),
+      features.createRecurringStrategy(this.readStrategyName(),
               this.readPrincipal(),
               this.readTradeData(true),
               this.readStartDate(),
@@ -129,6 +130,8 @@ public class TextualView implements View {
               this.readFrequency(),
               this.readCommissionFee()
     ));
+    commands.put(15, () -> features.applyStrategy(this.readTradeName(),
+            this.readStrategyName()));
   }
 
 
@@ -142,6 +145,7 @@ public class TextualView implements View {
   public void display(String message) {
     this.out.print(message);
   }
+
 
   private int readMenu() {
     try {
@@ -193,6 +197,16 @@ public class TextualView implements View {
   }
   private String readTradeName() {
     this.display("Enter the name of the portfolio\n");
+    String portfolio = this.input();
+    while (portfolio == null || portfolio.isBlank() || portfolio.isEmpty()) {
+      this.display("You have entered an invalid name. Please enter the name again\n");
+      portfolio = this.input().trim();
+    }
+    return portfolio;
+  }
+
+  private String readStrategyName() {
+    this.display("Enter the name of the strategy\n");
     String portfolio = this.input();
     while (portfolio == null || portfolio.isBlank() || portfolio.isEmpty()) {
       this.display("You have entered an invalid name. Please enter the name again\n");
