@@ -64,94 +64,59 @@ public class GraphicsView implements View, ActionListener {
   private Map<String, Runnable> initializeMap() {
     Map<String, Runnable> commands  = new HashMap<>();
     commands.put("Create Portfolio", () -> {
-      System.out.println("Create");
-      this.currentScreen = new CreatePortfolio();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
-      this.currentScreen.setVisibility(true);
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new CreatePortfolio(), features);
     });
     commands.put("Show All Portfolios", () -> {
-      this.currentScreen = new AllPortfolio();
-      this.currentScreen.addFeatures(features);
-      this.currentScreen.bindListener(this);
-      this.features.getPortfolios();
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new AllPortfolio(), features);
     });
     commands.put("Go Back", () -> {
       this.mainScreen.setVisibility(true);
       ((JFrame)this.currentScreen).dispose();
     });
     commands.put("Buy Stock", () -> {
-      this.currentScreen = new BuyStock();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new BuyStock(), features);
     });
     commands.put("Sell Stock", () -> {
-      this.currentScreen = new SellStock();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new SellStock(), features);
     });
     commands.put("Portfolio Composition", () -> {
-      this.currentScreen = new PortfolioComposition();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new PortfolioComposition(), features);
     });
     commands.put("Evaluate Value", () -> {
-      this.currentScreen = new PortfolioValue();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new PortfolioValue(), features);
     });
     commands.put("Evaluate Cost Basis", () -> {
-      this.currentScreen = new PortfolioCostBasis();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
-      this.mainScreen.setVisibility(false);
+      createScreenAndSetDefault(new PortfolioCostBasis(), features);
     });
     commands.put("Load Portfolio", () -> {
-      this.mainScreen.setVisibility(false);
-      this.currentScreen = new LoadPortfolio();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
+      createScreenAndSetDefault(new LoadPortfolio(), features);
 
     });
     commands.put("Save Portfolio", () -> {
-      this.mainScreen.setVisibility(false);
-      this.currentScreen = new SavePortfolio();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
+      createScreenAndSetDefault(new SavePortfolio(), features);
 
     });
     commands.put("Show Bar Chart", () -> {
-      this.mainScreen.setVisibility(false);
-      this.currentScreen = new BarChart();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
+      createScreenAndSetDefault(new BarChart(), features);
     });
     commands.put("Create a one time investment strategy", () -> {
-      this.mainScreen.setVisibility(false);
-      this.currentScreen = new OneTimeInvestmentStrategy();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
+      createScreenAndSetDefault(new OneTimeInvestmentStrategy(), features);
     });
     commands.put("Create a recurring investment strategy", () -> {
-      this.mainScreen.setVisibility(false);
-      this.currentScreen = new RecurringInvestmentStrategy();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
+      createScreenAndSetDefault(new RecurringInvestmentStrategy(), features);
     });
     commands.put("Apply a strategy to a portfolio", () -> {
-      this.mainScreen.setVisibility(false);
-      this.currentScreen = new ApplyStrategyToPortfolio();
-      this.currentScreen.bindListener(this);
-      this.currentScreen.addFeatures(features);
+      createScreenAndSetDefault(new ApplyStrategyToPortfolio(), features);
     });
     //
     return commands;
+  }
+
+  private void createScreenAndSetDefault(Screen screen, Features features) {
+    this.mainScreen.setVisibility(false);
+    this.currentScreen = screen;
+    this.currentScreen.bindListener(this);
+    this.currentScreen.addFeatures(features);
   }
 
   private void setDefaultUI() {
