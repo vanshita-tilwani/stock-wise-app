@@ -5,15 +5,19 @@ import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import model.datarepo.FileRepository;
 import model.portfolio.Portfolio;
 import model.portfolio.SimulatedPortfolio;
 import model.portfolio.TransactionalPortfolio;
 import model.stock.Stock;
+import model.stockpriceprovider.StockDataProvider;
+import model.stockpriceprovider.WebAPIStockDataProvider;
 import model.stocktradings.TradeOperation;
 import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
+import model.trade.TransactionalStockTrade;
 import view.View;
 
 public class PortfolioTradeController implements Features {
@@ -85,13 +89,10 @@ public class PortfolioTradeController implements Features {
       model.get(portfolio).buy(stock, shares, date, commission);
       view.display("The purchase was completed successfully!\n");
     }
-    catch (NumberFormatException exception) {
-      view.display("Please make sure you input valid number of stocks/quantity of stocks.\n");
+    catch (UnsupportedOperationException e) {
+      view.display(e.getMessage());
     } catch (IllegalArgumentException exception) {
       view.display(exception.getMessage());
-    }
-    catch (DateTimeParseException ex) {
-      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -108,9 +109,6 @@ public class PortfolioTradeController implements Features {
     catch (IllegalArgumentException e) {
       view.display(e.getMessage());
     }
-    catch (DateTimeParseException ex) {
-      view.display("The date provided was not in the expected format.\n");
-    }
   }
 
   @Override
@@ -121,8 +119,6 @@ public class PortfolioTradeController implements Features {
     }
     catch (IllegalArgumentException e) {
       view.display(e.getMessage());
-    } catch (DateTimeParseException ex) {
-      view.display("The date provided was not in the expected format.\n");
     }
   }
 
@@ -161,8 +157,6 @@ public class PortfolioTradeController implements Features {
     }
     catch (IllegalArgumentException e) {
       return e.getMessage();
-    } catch (DateTimeParseException ex) {
-      return "The date provided was not in the expected format.\n";
     }
   }
 
@@ -202,5 +196,50 @@ public class PortfolioTradeController implements Features {
       view.display("The date provided was not in the expected format.\n");
     }
     return null;
+  }
+
+  @Override
+  public void invest(String portfolioName, Double principal, Map<String, Double> weights,
+                     LocalDate date, Double commission) {
+    double totalWeight = 0.0;
+    for (Map.Entry<String, Double> entry : weights.entrySet()) {
+      String key = entry.getKey();
+      Double value = entry.getValue();
+      totalWeight += value;
+      if(totalWeight > 100.0) {
+        throw new IllegalArgumentException("The one time investment failed due to invalid" +
+                " weights\n");
+      }
+      try {
+        var trade = new TransactionalStockTrade(key, principal, value, date, commission);
+        model.get(portfolioName).buy(trade.get().name(), trade.quantity(),
+                trade.tradeDate(), trade.commission());
+      }
+      catch (UnsupportedOperationException e) {
+        view.display(e.getMessage());
+      } catch (IllegalArgumentException exception) {
+        view.display(exception.getMessage());
+      }
+    }
+  }
+
+  @Override
+  public void invest(String portfolioName, Double principal, Map<String, Double> weights,
+                     LocalDate start, LocalDate end, int days, Double commission) {
+    LocalDate currDate = start;
+    LocalDate presentDate = LocalDate.now();
+    if(presentDate.isBefore(end) || end == null) {
+      end = presentDate;
+    }
+    while(!(currDate.isAfter(end))) {
+      for (Map.Entry<String, Double> entry : weights.entrySet()) {
+        var trade = new TransactionalStockTrade(entry.getKey(), principal, entry.getValue(),
+                currDate, commission);
+        model.get(portfolioName).buy(trade.get().name(), trade.quantity(),
+                trade.tradeDate(), trade.commission());
+      }
+      currDate = currDate.plusDays(days);
+    }
+
   }
 }

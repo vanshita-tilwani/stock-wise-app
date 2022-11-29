@@ -2,6 +2,7 @@ package model.trade;
 
 import java.time.LocalDate;
 
+import model.stock.StockImpl;
 import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.StockDataProviderFactory;
 
@@ -36,6 +37,21 @@ public class TransactionalStockTrade extends AbstractStockTrade {
       throw new IllegalArgumentException("The Stock Market is closed on the specified date."
               + "Invalid trade Date.\n");
     }
+    this.tradeDate = tradeDate;
+    this.commission = commission;
+  }
+
+  public TransactionalStockTrade(String stock, double principal, double weight, LocalDate tradeDate,
+                                 Double commission) {
+    super(stock);
+    StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
+    if (!stockDataProvider.isAvailable(stock, tradeDate)) {
+      throw new IllegalArgumentException("The Stock Market is closed on the specified date."
+              + "Invalid trade Date.\n");
+    }
+    var amount = principal * weight/100;
+    var currentVal = this.stock.price(tradeDate);
+    this.quantity = amount/currentVal;
     this.tradeDate = tradeDate;
     this.commission = commission;
   }

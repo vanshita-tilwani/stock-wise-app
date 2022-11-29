@@ -44,6 +44,8 @@ public class TextualView implements View {
               "10. Get the performance of an Existing Portfolio over a period of time\n" +
               "11. Save an Existing Portfolio to file\n" +
               "12. Load portfolios to the Application\n" +
+              "13. Make a one-time investment\n" +
+              "14. Make a recurring investment\n" +
               "Enter the menu option you wish to choose.\n" +
               "Press and enter any other key to exit the application.\n";
       this.display(menuOptions);
@@ -61,7 +63,7 @@ public class TextualView implements View {
     commands.put(1, () -> {
       try {
         features.createInflexiblePortfolio(this.readTradeName(),
-                this.readTradeData());
+                this.readTradeData(false));
       }
       catch(NumberFormatException e) {
         this.display("Please make sure you input valid " +
@@ -101,8 +103,8 @@ public class TextualView implements View {
             this.readDateOfEvaluation());});
     commands.put(10, () -> {
       var portfolio = this.readTradeName();
-      LocalDate from = this.readDateOfEvaluation();
-      LocalDate to = this.readDateOfEvaluation();
+      LocalDate from = this.readStartDate();
+      LocalDate to = this.readEndDate();
       var values = features.values(portfolio,
             from,
             to);
@@ -111,11 +113,37 @@ public class TextualView implements View {
     });
     commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
+    commands.put(13, () ->
+      features.invest(this.readTradeName(),
+              this.readPrincipal(),
+              this.readTradeData(true),
+              this.readDateOfTransaction(),
+              this.readCommissionFee()
+    ));
+    commands.put(14, () ->
+      features.invest(this.readTradeName(),
+              this.readPrincipal(),
+              this.readTradeData(true),
+              this.readStartDate(),
+              this.readEndDate(),
+              this.readFrequency(),
+              this.readCommissionFee()
+    ));
+  }
 
+
+
+  @Override
+  public String input() {
+    return scanner.nextLine();
   }
 
   @Override
-  public int readMenu() {
+  public void display(String message) {
+    this.out.print(message);
+  }
+
+  private int readMenu() {
     try {
       String input = this.input();
       // read the menu option input by the user
@@ -126,14 +154,24 @@ public class TextualView implements View {
     }
   }
 
-  @Override
-  public String input() {
-    return scanner.nextLine();
-  }
-
-  @Override
-  public void display(String message) {
-    this.out.print(message);
+  private Double readPrincipal() {
+    boolean isParsed = false;
+    Double amount = 0.0;
+    while(!isParsed) {
+      try {
+        this.display("Enter the amount you wish to invest\n");
+        amount = Double.parseDouble(this.input());
+        if(amount > 0) {
+          isParsed = true;
+        }
+        else {
+          this.display("Invalid amount entered\n");
+        }
+      } catch (NumberFormatException ex) {
+        this.display("Invalid amount entered\n");
+      }
+    }
+    return amount;
   }
 
   private void drawGraph(Map<LocalDate, Double> portfolioData) {
@@ -163,6 +201,28 @@ public class TextualView implements View {
     return portfolio;
   }
 
+  private Double readSharePercentage() {
+    this.display("Enter the weight of shares\n");
+    boolean parsed = false;
+    Double shares = 0.0;
+    while (!parsed) {
+      try {
+        String input = this.input();
+        shares = Double.parseDouble(input);
+        if(shares <=100 && shares >0) {
+          parsed = true;
+        }
+        else {
+          this.display("Invalid number of shares\n");
+          this.display("Please enter the number of shares again.\n");
+        }
+      } catch (NumberFormatException e) {
+        this.display("Invalid number of shares\n");
+        this.display("Please enter the number of shares again.\n");
+      }
+    }
+    return shares;
+  }
   private Double readShares() {
     this.display("Enter the number of shares\n");
     boolean parsed = false;
@@ -171,6 +231,13 @@ public class TextualView implements View {
       try {
         String input = this.input();
         shares = Double.parseDouble(input);
+        if(shares > 0) {
+          parsed = true;
+        }
+        else {
+          this.display("Invalid number of shares\n");
+          this.display("Please enter the number of shares again.\n");
+        }
         parsed = true;
       } catch (NumberFormatException e) {
         this.display("Invalid number of shares\n");
@@ -195,8 +262,7 @@ public class TextualView implements View {
     return stock;
   }
 
-  private LocalDate readDateOfTransaction() {
-    this.display("Enter the date of the transaction (in YYYY-MM-DD format)\n");
+  private LocalDate readDateFromUser() {
     while (true) {
       try {
         LocalDate date = LocalDate.parse(this.input());
@@ -206,17 +272,24 @@ public class TextualView implements View {
       }
     }
   }
+  private LocalDate readDateOfTransaction() {
+    this.display("Enter the date of the transaction (in YYYY-MM-DD format)\n");
+    return this.readDateFromUser();
+  }
 
   private LocalDate readDateOfEvaluation() {
     this.display("Enter the date of the evaluation (in YYYY-MM-DD format)\n");
-    while (true) {
-      try {
-        LocalDate date = LocalDate.parse(this.input());
-        return date;
-      } catch (DateTimeParseException e) {
-        this.display("You have entered an invalid date. Please re-enter the date\n");
-      }
-    }
+    return readDateFromUser();
+  }
+
+  private LocalDate readStartDate() {
+    this.display("Enter the start date (in YYYY-MM-DD format)\n");
+    return readDateFromUser();
+  }
+
+  private LocalDate readEndDate() {
+    this.display("Enter the end date (in YYYY-MM-DD format)\n");
+    return readDateFromUser();
   }
 
   private double readCommissionFee() {
@@ -234,15 +307,23 @@ public class TextualView implements View {
     }
   }
 
-  private Map<String, Double> readTradeData() {
+  private Map<String, Double> readTradeData(boolean isPercentage) {
     Map<String, Double> stockData = new HashMap<>();
     // reads number of trades that the portfolio is composed of.
     int stocks = this.readNumberOfStocks();
+    double totalShares = 0;
     for (int i = 0; i < stocks; i++) {
       // reads the stock symbol
       String stock = this.readStockSymbol();
       // reads the number of shares.
-      Double shares = this.readShares();
+      Double shares = isPercentage ? this.readSharePercentage() : this.readShares();
+      if(isPercentage) {
+        while(totalShares + shares > 100) {
+          this.display("Invalid Weight for the stock\n");
+          shares = this.readSharePercentage();
+        }
+        totalShares += shares;
+      }
       stockData.put(stock, stockData.getOrDefault(stock,0.0)+shares);
     }
     // parse the map to set of trades and return the resultant
@@ -253,5 +334,27 @@ public class TextualView implements View {
     this.display("Enter the number of stocks you wish to purchase\n");
     int stocks = Integer.parseInt(this.input());
     return stocks;
+  }
+
+  private Integer readFrequency() {
+    boolean parsed = false;
+    Integer frequency = 0;
+    while (!parsed) {
+      try {
+        this.display("Enter the Frequency in days\n");
+        String input = this.input();
+        frequency = Integer.parseInt(input);
+        if(frequency > 0) {
+          parsed = true;
+        }
+        else {
+          this.display("Invalid Frequency Amount\n");
+        }
+        parsed = true;
+      } catch (NumberFormatException e) {
+        this.display("Invalid Frequency Amount\n");
+      }
+    }
+    return frequency;
   }
 }

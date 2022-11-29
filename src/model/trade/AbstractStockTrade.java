@@ -27,6 +27,12 @@ public abstract class AbstractStockTrade implements Trade<Stock> {
     this.quantity = quantity;
   }
 
+  protected  AbstractStockTrade(String stock) {
+    this.stock = new StockImpl(stock);
+  }
+
+
+
   @Override
   public Stock get() {
     return this.stock;

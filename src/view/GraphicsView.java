@@ -43,11 +43,6 @@ public class GraphicsView implements View, ActionListener {
   }
 
   @Override
-  public int readMenu() {
-    return 0;
-  }
-
-  @Override
   public String input() {
     return null;
   }

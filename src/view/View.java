@@ -13,13 +13,11 @@ public interface View {
 
   void addFeatures(Features features);
 
-  int readMenu();
   /**
    * Reads input from the user.
    * @return Input string
    */
   String input();
-
 
   /**
    * Used to display information to user.

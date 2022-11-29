@@ -29,4 +29,10 @@ public interface Features {
   void save(String dataSource, String portfolioName);
 
   Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end);
+
+  void invest(String portfolioName, Double principal, Map<String, Double> weights, LocalDate date,
+              Double commission);
+
+  void invest(String portfolioName, Double principal, Map<String, Double> weights, LocalDate start,
+              LocalDate end, int days, Double commission);
 }
