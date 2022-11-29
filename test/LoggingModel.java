@@ -55,4 +55,10 @@ public class LoggingModel implements TradeOperation<Portfolio> {
   public void createStrategy(String name, Strategy strategy) {
     log.append("createStrategy : "+name+ "\n");
   }
+
+  @Override
+  public Set<String> getAllStrategy() {
+    log.append("getAllStrategy\n");
+    return null;
+  }
 }

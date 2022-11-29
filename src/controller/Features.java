@@ -30,11 +30,10 @@ public interface Features {
 
   Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end);
 
-  void createStrategy(String name, Double principal, Map<String, Double> weights, LocalDate date,
-              Double commission);
-
-  void createRecurringStrategy(String name, Double principal, Map<String, Double> weights, LocalDate start,
+  void createStrategy(String name, Double principal, Map<String, Double> weights, LocalDate start,
               LocalDate end, int days, Double commission);
+
+  Set<String> getAllStrategy();
 
   void applyStrategy(String portfolioName, String strategy);
 }

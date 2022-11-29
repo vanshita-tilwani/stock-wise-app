@@ -114,15 +114,22 @@ public class TextualView implements View {
     });
     commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
-    commands.put(13, () ->
-      features.createStrategy(this.readStrategyName(),
-              this.readPrincipal(),
-              this.readTradeData(true),
-              this.readDateOfTransaction(),
-              this.readCommissionFee()
-    ));
+    commands.put(13, () ->{
+      String name = this.readStrategyName();
+      Double principal = this.readPrincipal();
+      var trade = this.readTradeData(true);
+      var date = this.readDateOfTransaction();
+      var commission = this.readCommissionFee();
+      features.createStrategy(name,
+              principal,
+              trade,
+              date,
+              date,
+              1,
+              commission
+    );});
     commands.put(14, () ->
-      features.createRecurringStrategy(this.readStrategyName(),
+      features.createStrategy(this.readStrategyName(),
               this.readPrincipal(),
               this.readTradeData(true),
               this.readStartDate(),

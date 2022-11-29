@@ -11,9 +11,12 @@ import javax.swing.*;
 
 import controller.Features;
 import view.guiscreens.AllPortfolio;
+import view.guiscreens.ApplyStrategyToPortfolio;
 import view.guiscreens.BarChart;
 import view.guiscreens.BuyStock;
 import view.guiscreens.CreatePortfolio;
+import view.guiscreens.OneTimeInvestmentStrategy;
+import view.guiscreens.RecurringInvestmentStrategy;
 import view.guiscreens.SavePortfolio;
 import view.guiscreens.Screen;
 import view.guiscreens.LoadPortfolio;
@@ -129,6 +132,25 @@ public class GraphicsView implements View, ActionListener {
       this.currentScreen.bindListener(this);
       this.currentScreen.addFeatures(features);
     });
+    commands.put("Create a one time investment strategy", () -> {
+      this.mainScreen.setVisibility(false);
+      this.currentScreen = new OneTimeInvestmentStrategy();
+      this.currentScreen.bindListener(this);
+      this.currentScreen.addFeatures(features);
+    });
+    commands.put("Create a recurring investment strategy", () -> {
+      this.mainScreen.setVisibility(false);
+      this.currentScreen = new RecurringInvestmentStrategy();
+      this.currentScreen.bindListener(this);
+      this.currentScreen.addFeatures(features);
+    });
+    commands.put("Apply a strategy to a portfolio", () -> {
+      this.mainScreen.setVisibility(false);
+      this.currentScreen = new ApplyStrategyToPortfolio();
+      this.currentScreen.bindListener(this);
+      this.currentScreen.addFeatures(features);
+    });
+    //
     return commands;
   }
 

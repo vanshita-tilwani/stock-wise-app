@@ -44,6 +44,18 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     setVisible(visible);
   }
 
+  protected Double toDouble(JSpinner value) {
+    return Double.parseDouble(value.getValue() + "");
+  }
+
+  protected Integer toInt(JSpinner value) {
+    return Integer.parseInt(value.getValue() + "");
+  }
+
+  protected Double toDouble(String value) {
+    return Double.parseDouble(value);
+  }
+
 
 
 }

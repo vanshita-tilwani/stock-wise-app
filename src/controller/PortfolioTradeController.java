@@ -5,23 +5,18 @@ import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import model.datarepo.FileRepository;
 import model.portfolio.Portfolio;
 import model.portfolio.SimulatedPortfolio;
 import model.portfolio.TransactionalPortfolio;
 import model.stock.Stock;
-import model.stockpriceprovider.StockDataProvider;
-import model.stockpriceprovider.WebAPIStockDataProvider;
 import model.stocktradings.TradeOperation;
-import model.strategy.OneTimeStrategy;
-import model.strategy.RecurringStrategy;
+import model.strategy.InvestmentStrategy;
 import model.strategy.Strategy;
 import model.strategy.StrategyBuilder;
 import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
-import model.trade.TransactionalStockTrade;
 import view.View;
 
 public class PortfolioTradeController implements Features {
@@ -200,31 +195,12 @@ public class PortfolioTradeController implements Features {
     return null;
   }
 
+
   @Override
   public void createStrategy(String name, Double principal, Map<String, Double> weights,
-                     LocalDate date, Double commission) {
-    try {
-      StrategyBuilder strategyBuilder = new OneTimeStrategy.OneTimeStrategyBuilder()
-              .setPrincipal(principal)
-              .setStartDate(date)
-              .setCommission(commission);
-      for (Map.Entry<String, Double> entry : weights.entrySet()) {
-        strategyBuilder.addStock(entry.getKey(), entry.getValue());
-      }
-      this.model.createStrategy(name, strategyBuilder.build());
-      view.display("Strategy created successfully\n");
-    }
-    catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
-    }
-
-  }
-
-  @Override
-  public void createRecurringStrategy(String name, Double principal, Map<String, Double> weights,
                      LocalDate start, LocalDate end, int days, Double commission) {
     try {
-      StrategyBuilder strategyBuilder = new RecurringStrategy.RecurringStrategyBuilder()
+      StrategyBuilder strategyBuilder = new InvestmentStrategy.InvestmentStrategyBuilder()
               .setPrincipal(principal)
               .setStartDate(start)
               .setEndDate(end)
@@ -240,6 +216,11 @@ public class PortfolioTradeController implements Features {
       view.display(e.getMessage());
     }
 
+  }
+
+  @Override
+  public Set<String> getAllStrategy() {
+    return this.model.getAllStrategy();
   }
 
   @Override

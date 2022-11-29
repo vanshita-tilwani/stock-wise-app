@@ -1,16 +1,11 @@
 package model.stocktradings;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.strategy.OneTimeStrategy;
-import model.strategy.RecurringStrategy;
 import model.strategy.Strategy;
-import model.strategy.StrategyBuilder;
-import model.trade.TransactionalStockTrade;
 import model.utility.PortfolioDataParser;
 import model.datarepo.DataRepository;
 import model.portfolio.Portfolio;
@@ -103,6 +98,10 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
     this.strategies.put(name, strategy);
   }
 
+  @Override
+  public Set<String> getAllStrategy() {
+    return this.strategies.keySet();
+  }
 
 
 }

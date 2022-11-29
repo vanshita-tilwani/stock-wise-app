@@ -26,14 +26,14 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
 
   public AbstractTransactionScreen(String caption) {
     super(caption, "");
+
     JPanel portfolioDetails = new JPanel();
-
-
     this.portfolioName = new JComboBox<String>();
     var nameLabel = new JLabel("Enter the portfolio name : ");
     this.portfolioName.setToolTipText("Enter Portfolio Name");
     portfolioDetails.add(nameLabel);
     portfolioDetails.add(this.portfolioName);
+
     JPanel stockData = new JPanel();
     this.stock = new javax.swing.JTextField(8);
     this.stock.setToolTipText("Enter the name of the stock for the transaction");
@@ -124,7 +124,5 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
     return this.portfolioName.getItemAt(index);
   }
 
-  private Double toDouble(JSpinner value) {
-    return Double.parseDouble(value.getValue() + "");
-  }
+
 }

@@ -9,14 +9,18 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
   protected Map<String, Double> weights;
   protected LocalDate start;
   protected double commission;
+  protected LocalDate end;
+  protected int frequency;
 
   private double totalWeight;
   protected AbstractStrategyBuilder() {
     this.principal = 0.0;
     this.start = null;
+    this.end = null;
     this.commission = 0.0;
     this.weights = new HashMap<>();
     this.totalWeight = 0.0;
+    this.frequency = 1;
   }
   @Override
   public StrategyBuilder addStock(String stock, Double weight) {

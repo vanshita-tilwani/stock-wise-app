@@ -40,6 +40,9 @@ public class MainScreen extends JFrame implements Screen {
     menuOptions.add(new JRadioButton("Save Portfolio"));
     menuOptions.add(new JRadioButton("Load Portfolio"));
     menuOptions.add(new JRadioButton("Show Bar Chart"));
+    menuOptions.add(new JRadioButton("Create a one time investment strategy"));
+    menuOptions.add(new JRadioButton("Create a recurring investment strategy"));
+    menuOptions.add(new JRadioButton("Apply a strategy to a portfolio"));
 
     this.submit = new JButton("Submit");
 

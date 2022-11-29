@@ -52,5 +52,7 @@ public interface TradeOperation<T> {
   Strategy getStrategy(String name);
   void createStrategy(String name, Strategy strategy);
 
+  Set<String> getAllStrategy();
+
 
 }
