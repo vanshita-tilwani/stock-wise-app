@@ -111,13 +111,13 @@ public class GraphicsView implements View, ActionListener {
     commands.put("Show Bar Chart", () -> {
       createScreenAndSetDefault(new BarChart(), features);
     });
-    commands.put("Create a one time investment strategy", () -> {
+    commands.put("Create a One Time Fixed Investment Strategy", () -> {
       createScreenAndSetDefault(new OneTimeInvestmentStrategy(), features);
     });
-    commands.put("Create a recurring investment strategy", () -> {
+    commands.put("Create a Recurring Investment Strategy", () -> {
       createScreenAndSetDefault(new RecurringInvestmentStrategy(), features);
     });
-    commands.put("Apply a strategy to a portfolio", () -> {
+    commands.put("Apply a Strategy to a Portfolio", () -> {
       createScreenAndSetDefault(new ApplyStrategyToPortfolio(), features);
     });
     //

@@ -80,16 +80,15 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
   }
 
   private boolean isInputsValid() {
-    boolean valid = true;
     if(this.getTrade() == null) {
-      valid = false;
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
+      return false;
     }
     if(this.getDate().isAfter(LocalDate.now())) {
-      valid = false;
       this.error("The selected evaluation date is in future.\nPlease select " +
               "a new date and try again");
+      return false;
     }
-    return valid;
+    return true;
   }
 }
