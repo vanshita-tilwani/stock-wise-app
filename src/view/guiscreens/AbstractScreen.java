@@ -1,7 +1,18 @@
 package view.guiscreens;
 
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.*;
 
@@ -84,6 +95,73 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     return Double.parseDouble(value);
   }
 
+  protected JDatePickerImpl createDateField(String tooltip) {
+    Properties p = new Properties();
+    p.put("text.today", "Today");
+    p.put("text.month", "Month");
+    p.put("text.year", "Year");
+    UtilDateModel dateModel = new UtilDateModel();
+    dateModel.setSelected(true);
+    JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
+    var datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+    datePicker.setToolTipText(tooltip);
+    return datePicker;
+  }
 
+  protected LocalDate getLocalDate(JDatePickerImpl date) {
+    Date dateFromPicker = (Date) date.getModel().getValue();
+    LocalDate localDate = dateFromPicker.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    return localDate;
+  }
+
+  protected JComboBox<String> createComboBoxField(String tooltip) {
+    var jComboBox = new JComboBox<String>();
+    jComboBox.setToolTipText("Enter Portfolio Name");
+    return jComboBox;
+  }
+
+  protected String getComboBoxValue(JComboBox<String> comboBoxList) {
+    int index = comboBoxList.getSelectedIndex();
+    return comboBoxList.getItemAt(index);
+  }
+
+  protected JSpinner createSpinnerField(String tooltip) {
+    var jSpinner = new JSpinner();
+    jSpinner.setToolTipText(tooltip);
+    return jSpinner;
+  }
+
+  protected JTextField createTextField(String tooltip) {
+    var jTextField = new JTextField(10);
+    jTextField.setToolTipText(tooltip);
+    return jTextField;
+  }
+
+  protected JLabel createLabelField(String label) {
+    var jLabel = new JLabel(label);
+    jLabel.setToolTipText(label);
+    return jLabel;
+  }
+
+  protected JPanel createMainPanel(List<Map.Entry<String, JComponent>> panels) {
+    var mainPanel = new JPanel();
+
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    for(var each : panels) {
+      JPanel panel = new JPanel();
+      panel.add(new JLabel(each.getKey()));
+      panel.add(each.getValue());
+      mainPanel.add(panel);
+    }
+    mainPanel.add(new JScrollPane());
+    return mainPanel;
+  }
+
+  protected void renderFrame() {
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setVisible(true);
+
+  }
 
 }

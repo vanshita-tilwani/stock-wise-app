@@ -15,10 +15,7 @@ public class AllPortfolio extends AbstractScreen {
             "The following portfolios exist in the application");
 
     this.submit.setEnabled(false);
-
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
+    renderFrame();
   }
 
   @Override
@@ -38,5 +35,4 @@ public class AllPortfolio extends AbstractScreen {
       }}
     );
   }
-
 }

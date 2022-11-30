@@ -8,7 +8,12 @@ import org.jdatepicker.impl.UtilDateModel;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.*;
@@ -17,71 +22,59 @@ import controller.Features;
 
 public class OneTimeInvestmentStrategy extends AbstractScreen {
 
-  private final JTextField name;
-  private final JTextField principal;
-  private final JSpinner stocks;
-  private final JDatePickerImpl date;
-  private final JSpinner commission;
+  protected final JTextField name;
+  protected final JTextField principal;
+  protected final JSpinner stocks;
+  protected final JDatePickerImpl date;
+  protected final JSpinner commission;
 
-  private Screen frame;
+  protected JPanel mainPanel;
+  protected Screen frame;
+
   public OneTimeInvestmentStrategy() {
-    super("Trading Application - Create One Time Strategy" ,"");
+    this("Trading Application - Create One Time Strategy");
+    renderFrame();
+  }
 
-    JPanel strategyName = new JPanel();
-    this.name = new JTextField(10);
-    var nameLabel = new JLabel("Enter the strategy name : ");
-    this.name.setToolTipText("Enter the strategy name");
-    strategyName.add(nameLabel);
-    strategyName.add(this.name);
-
-    JPanel principalDetails = new JPanel();
-    this.principal = new JTextField(10);
-    var principalLabel = new JLabel("Enter the principal amount(in dollars) : ");
-    this.principal.setToolTipText("Enter the principal amount(in dollars)");
-    principalDetails.add(principalLabel);
-    principalDetails.add(this.principal);
-
-    JPanel stockData = new JPanel();
-    this.stocks = new JSpinner();
-    var stockLabel = new JLabel("Enter the number of stocks : ");
-    this.stocks.setToolTipText("Enter the number of stocks");
-    stockData.add(stockLabel);
-    stockData.add(this.stocks);
-
-    JPanel purchaseData = new JPanel();
-    Properties p = new Properties();
-    p.put("text.today", "Today");
-    p.put("text.month", "Month");
-    p.put("text.year", "Year");
-    UtilDateModel dateModel = new UtilDateModel();
-    dateModel.setSelected(true);
-    JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
-    this.date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-    this.date.setToolTipText("Enter the date for one time investment");
-    purchaseData.add(new JLabel("Enter the date for one time investment : "));
-    purchaseData.add(this.date);
-
-    JPanel commissionData = new JPanel();
-    this.commission = new JSpinner();
-    var commissionLabel = new JLabel("Enter the commission fee for the strategy : ");
-    this.stocks.setToolTipText("Enter the commission fee for the strategy");
-    commissionData.add(commissionLabel);
-    commissionData.add(this.commission);
-
-    var mainPanel = new JPanel();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
-    mainPanel.add(strategyName);
-    mainPanel.add(principalDetails);
-    mainPanel.add(stockData);
-    mainPanel.add(purchaseData);
-    mainPanel.add(commissionData);
-    this.add(mainPanel, BorderLayout.CENTER);
+  public OneTimeInvestmentStrategy(String caption) {
+    super(caption, "");
+    this.name = this.createTextField("Enter the strategy name");
+    this.principal = this.createTextField("Enter the principal amount");
+    this.stocks = this.createSpinnerField("Enter the number of stocks");
+    this.commission = this.createSpinnerField("Enter the commission fee for the strategy");
+    this.date = this.createDateField("Enter the date for one time investment");
     this.frame = null;
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
 
+    this.mainPanel = initMainPanel();
+    this.add(mainPanel, BorderLayout.CENTER);
+  }
+
+  protected JPanel initMainPanel() {
+    var components = getDefaultComponents();
+    var mainPanel = this.createMainPanel(components);
+    getAdditionalComponents().stream()
+            .filter(e -> e != null)
+            .forEach(e -> mainPanel.add(e));
+    return mainPanel;
+  }
+
+  protected final java.util.List<Map.Entry<String, JComponent>> getDefaultComponents() {
+    var self = this;
+    java.util.List<Map.Entry<String, JComponent>> components = new ArrayList<>();
+    components.add(new AbstractMap.SimpleEntry<>("Enter the strategy name : ", self.name));
+    components.add(new AbstractMap.SimpleEntry<>("Enter the principal amount : ", self.principal));
+    components.add(new AbstractMap.SimpleEntry<>("Enter the number of stocks : ", self.stocks));
+    components.add(new AbstractMap.SimpleEntry<>("Enter the commission fee for the strategy : "
+            , self.commission));
+
+    return components;
+  }
+
+  protected List<JPanel> getAdditionalComponents() {
+    JPanel purchaseData = new JPanel();
+    purchaseData.add(this.createLabelField("Enter the date for one time investment : "));
+    purchaseData.add(this.date);
+    return Arrays.asList(purchaseData);
   }
 
   @Override
@@ -112,8 +105,8 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
         this.frame = new StockWeightScreen(this.name.getText(),
                 toDouble(this.principal.getText()),
                 toInt(this.stocks),
-                this.getDate(),
-                this.getDate(),
+                this.getLocalDate(this.date),
+                this.getLocalDate(this.date),
                 1,
                 toDouble(this.commission));
         var listeners = this.back.getActionListeners();
@@ -131,14 +124,20 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     super.disposeScreen();
   }
 
-  private LocalDate getDate() {
-    Date dateFromPicker = (Date) this.date.getModel().getValue();
-    LocalDate date = dateFromPicker.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    return date;
+
+  protected boolean isInputsValid() {
+    if(!validateItems()) {
+      return false;
+    }
+    if(this.getLocalDate(this.date).isAfter(LocalDate.now())) {
+      this.error("The selected date is in future.\nPlease select " +
+              "a new date and try again");
+      return false;
+    }
+    return true;
   }
 
-  private boolean isInputsValid() {
-
+  protected boolean validateItems() {
     if(this.name == null  || this.name.getText().trim().isBlank() ||
             this.name.getText().trim().isEmpty()){
       this.error("Invalid Strategy Name. Please enter again and try");
@@ -150,11 +149,6 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     }
     if(toInt(this.stocks) <= 0) {
       this.error("Invalid number of shares. Please enter and try again");
-      return false;
-    }
-    if(this.getDate().isAfter(LocalDate.now())) {
-      this.error("The selected date is in future.\nPlease select " +
-              "a new date and try again");
       return false;
     }
     if(toInt(this.commission) < 0) {

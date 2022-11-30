@@ -1,7 +1,6 @@
 package view.guiscreens;
 
 import java.time.LocalDate;
-
 import controller.Features;
 
 public class PortfolioValue extends AbstractEvaluationScreen {

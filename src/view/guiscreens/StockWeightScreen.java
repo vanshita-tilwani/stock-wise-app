@@ -2,6 +2,7 @@ package view.guiscreens;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,26 +37,27 @@ public class StockWeightScreen extends AbstractScreen {
     this.commission = commission;
     this.stockTickers = new ArrayList<>();
     this.percentage = new ArrayList<>();
-    JPanel mainPanel = new JPanel();
-    for(int i = 0; i < this.stocks; i ++) {
-      JPanel stockPanel = new JPanel();
-      var stockLabel = new JLabel("Enter the stock symbol : ");
-      this.stockTickers.add(new JTextField(10));
-      stockPanel.add(stockLabel);
-      stockPanel.add(stockTickers.get(i));
 
-      JPanel percentagePanel = new JPanel();
-      var percentageLabel = new JLabel("Enter the percentage : ");
-      this.percentage.add(new JTextField(10));
-      percentagePanel.add(percentageLabel);
-      percentagePanel.add(percentage.get(i));
-      mainPanel.add(stockPanel);
-      mainPanel.add(percentagePanel);
+    initComponents();
+  }
+
+  private void initComponents() {
+    List<Map.Entry<String, JComponent>> components = new ArrayList<>();
+    for(int i = 0; i < this.stocks; i++) {
+      var stockField = this.createTextField("");
+      this.stockTickers.add(stockField);
+
+      var percentageField = this.createTextField("");
+      this.percentage.add(percentageField);
+
+      components.add(new AbstractMap.SimpleEntry<String, JComponent>("Enter the stock symbol : "
+              , stockField));
+      components.add(new AbstractMap.SimpleEntry<String, JComponent>("Enter the percentage : "
+              , percentageField));
     }
+    var mainPanel = this.createMainPanel(components);
     this.add(mainPanel, BorderLayout.CENTER);
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
+    renderFrame();
   }
 
   @Override
@@ -77,7 +79,8 @@ public class StockWeightScreen extends AbstractScreen {
   private Map<String, Double> toStockData() {
     var map = new HashMap<String, Double>();
     for(int i = 0; i < stocks; i ++){
-      map.put(stockTickers.get(i).getText(), map.getOrDefault(stockTickers.get(i).getText(),0.0)+
+      map.put(stockTickers.get(i).getText(),
+              map.getOrDefault(stockTickers.get(i).getText(),0.0)+
               Double.parseDouble(percentage.get(i).getText()));
     }
     return map;

@@ -4,6 +4,10 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,18 +20,16 @@ public class SavePortfolio extends AbstractScreen {
 
   public SavePortfolio() {
     super("Trading Application - Portfolio Save Window","");
-    JPanel portfolioDetails = new JPanel();
-    this.portfolioName = new JComboBox<String>();
-    var nameLabel = new JLabel("Enter the portfolio name : ");
-    this.portfolioName.setToolTipText("Enter Portfolio Name");
-    portfolioDetails.add(nameLabel);
-    portfolioDetails.add(this.portfolioName);
-    JPanel mainPanel = new JPanel();
-    mainPanel.add(portfolioDetails);
+
+    this.portfolioName = this.createComboBoxField("Enter Portfolio Name");
+
+    var self = this;
+    List<Map.Entry<String, JComponent>> components = new ArrayList<>();
+    components.add(new AbstractMap.SimpleEntry<>("Enter the portfolio name : "
+            , self.portfolioName));
+    var mainPanel = this.createMainPanel(components);
     this.add(mainPanel, BorderLayout.CENTER);
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
+    renderFrame();
   }
 
   @Override
@@ -35,9 +37,10 @@ public class SavePortfolio extends AbstractScreen {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
 
     this.submit.addActionListener(e -> {
-      if(this.getTradeName() != null) {
+      if(this.getComboBoxValue(this.portfolioName) != null) {
         JFileChooser file = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES"
+                , "txt");
         file.setFileFilter(filter);
         file.setDialogTitle("Specify a file to save");
         var frame = this;
@@ -48,12 +51,10 @@ public class SavePortfolio extends AbstractScreen {
                     File selectedFile= file.getSelectedFile();
                     if(selectedFile != null) {
                       String path = selectedFile.getAbsolutePath() + ".txt";
-                      features.save(path,
-                              frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
+                      features.save(path, frame.getComboBoxValue(frame.portfolioName));
                     }
                   }
                 });
-
         file.setAcceptAllFileFilterUsed(false);
         file.showSaveDialog(this);
       }
@@ -66,8 +67,4 @@ public class SavePortfolio extends AbstractScreen {
 
   }
 
-  private String getTradeName() {
-    int index = this.portfolioName.getSelectedIndex();
-    return this.portfolioName.getItemAt(index);
-  }
 }

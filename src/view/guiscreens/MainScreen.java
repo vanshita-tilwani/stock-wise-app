@@ -16,6 +16,7 @@ public class MainScreen extends JFrame implements Screen {
   private final List<JRadioButton> menuOptions;
 
   private JLabel output;
+
   public MainScreen() {
     super();
     setTitle("Welcome to Trading Application");
@@ -30,7 +31,7 @@ public class MainScreen extends JFrame implements Screen {
     menuOptions.add(new JRadioButton("Create Portfolio"));
     menuOptions.add(new JRadioButton("Show All Portfolios"));
     menuOptions.add(new JRadioButton("Buy Stock"));
-    menuOptions.add( new JRadioButton("Sell Stock"));
+    menuOptions.add(new JRadioButton("Sell Stock"));
     menuOptions.add(new JRadioButton("Portfolio Composition"));
     menuOptions.add(new JRadioButton("Evaluate Value"));
     menuOptions.add(new JRadioButton("Evaluate Cost Basis"));
@@ -57,7 +58,6 @@ public class MainScreen extends JFrame implements Screen {
     actions.add(submit);
 
 
-
     this.add(header, BorderLayout.PAGE_START);
 
     this.add(panel, BorderLayout.CENTER);
@@ -66,6 +66,7 @@ public class MainScreen extends JFrame implements Screen {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
   }
+
   @Override
   public void display(String text) {
     this.output.setText(text);
@@ -92,7 +93,7 @@ public class MainScreen extends JFrame implements Screen {
 
   @Override
   public void addFeatures(Features features) {
-
+    // EMPTY
   }
 
 

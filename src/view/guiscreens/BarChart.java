@@ -32,52 +32,34 @@ import org.jdatepicker.impl.UtilDateModel;
 import controller.Features;
 
 public class BarChart extends AbstractScreen {
-
-
   private final JComboBox<String> portfolios;
   private final JDatePickerImpl from;
   private final JDatePickerImpl to;
 
   private BarChartPanel chart;
-  private JPanel mainPanel = new JPanel();
-
-  Box box = new Box(BoxLayout.Y_AXIS);
 
   public BarChart() {
-
     super("Show Bar Chart", "Portfolio Performance");
     super.setSize(1000, 800);
+
     this.chart = new BarChartPanel(new HashMap<>());
     this.chart.setPreferredSize(new Dimension(1000, 800));
-    this.portfolios = new JComboBox<String>();
 
-    Properties p = new Properties();
-    p.put("text.today", "Today");
-    p.put("text.month", "Month");
-    p.put("text.year", "Year");
-    UtilDateModel fromModel = new UtilDateModel();
-    UtilDateModel toModel = new UtilDateModel();
+    this.portfolios = this.createComboBoxField("Portfolio");
+    this.from = this.createDateField("From");
+    this.to = this.createDateField("To");
 
-    fromModel.setSelected(true);
-    toModel.setSelected(true);
-
-    JDatePanelImpl fromDatePanel = new JDatePanelImpl(fromModel, p);
-    JDatePanelImpl toDatePanel = new JDatePanelImpl(toModel, p);
-
-    this.from = new JDatePickerImpl(fromDatePanel, new DateComponentFormatter());
-    this.to = new JDatePickerImpl(toDatePanel, new DateComponentFormatter());
-
+    JPanel mainPanel = new JPanel();
     mainPanel.add(this.portfolios);
     mainPanel.add(this.from);
     mainPanel.add(this.to);
 
+    Box box = new Box(BoxLayout.Y_AXIS);
     box.add(mainPanel);
     box.add(this.chart);
 
     this.add(box, BorderLayout.CENTER);
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
+    renderFrame();
   }
 
 
@@ -88,21 +70,30 @@ public class BarChart extends AbstractScreen {
   }
 
   private void validateAndRenderChart(ActionEvent e, Features features) {
-    Date f = (Date) this.from.getModel().getValue();
-    LocalDate ff = f.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    if(isInputsValid()) {
+      String portfolioName = this.getComboBoxValue(this.portfolios);
+      LocalDate f = this.getLocalDate(this.from), t = this.getLocalDate(this.to);
+      var data = features.values(portfolioName, f, t);
+      draw(data);
+    }
+  }
 
-    Date g = (Date) this.to.getModel().getValue();
-    LocalDate gg = g.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-    String portfolioName = String.valueOf(this.portfolios.getSelectedItem());
-
-    // TODO: Validate the above properties
-    // TODO: Rename the above properties.
-
-    var data = features.values(portfolioName, ff, gg);
-
-    // TODO: Implement the bar drawing method.
-    draw(data);
+  private boolean isInputsValid() {
+    LocalDate f = this.getLocalDate(this.from), t = this.getLocalDate(this.to);
+    if(this.getComboBoxValue(this.portfolios) == null) {
+      this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
+      return false;
+    }
+    else if(f.isAfter(LocalDate.now()) || t.isAfter(LocalDate.now())) {
+      this.error("The selected evaluation date is in future.\nPlease select " +
+              "a new date and try again");
+      return false;
+    }
+    else if(f.isAfter(t)) {
+      this.error("The selected from date should be less than to date.");
+      return false;
+    }
+    return true;
   }
 
   private void draw(Map<LocalDate, Double> data) {
@@ -112,7 +103,6 @@ public class BarChart extends AbstractScreen {
     this.chart.repaint();
   }
 
-  // TODO: Move to another class?
   class BarChartPanel extends JPanel {
     private static final long serialVersionUID = 8242113760993687819L;
     private final int margin = 20;
@@ -127,8 +117,8 @@ public class BarChart extends AbstractScreen {
       this.data = data;
     }
 
-    public void setData(Map<LocalDate, Double> data2) {
-      this.data = data2;
+    public void setData(Map<LocalDate, Double> data) {
+      this.data = data;
     }
 
     @Override
@@ -179,6 +169,5 @@ public class BarChart extends AbstractScreen {
       affineTransform.rotate(Math.toRadians(angle), 0, 0);
       return font.deriveFont(affineTransform);
     }
-
   }
 }

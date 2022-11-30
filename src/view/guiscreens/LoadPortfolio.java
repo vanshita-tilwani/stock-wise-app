@@ -22,8 +22,7 @@ public class LoadPortfolio extends AbstractScreen {
     this.submit.setEnabled(false);
     this.add(mainPanel, BorderLayout.CENTER);
 
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    renderFrame();
   }
 
   @Override

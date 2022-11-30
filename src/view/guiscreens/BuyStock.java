@@ -1,5 +1,7 @@
 package view.guiscreens;
+
 import java.time.LocalDate;
+
 import controller.Features;
 
 public class BuyStock extends AbstractTransactionScreen {

@@ -1,6 +1,10 @@
 package view.guiscreens;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.*;
 
 import controller.Features;
@@ -11,20 +15,17 @@ public class CreatePortfolio extends AbstractScreen {
   public CreatePortfolio() {
     super("Create Portfolio",
             "Please enter the name of the portfolio you wish to create?");
+
+    this.portfolioName = this.createTextField("Enter Portfolio Name");
+
     JPanel portfolioDetails = new JPanel();
-    this.portfolioName = new javax.swing.JTextField(20);
-    this.portfolioName.setToolTipText("Enter Portfolio Name");
     portfolioDetails.add(this.portfolioName);
 
-
-    var mainPanel = new JPanel();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    List<Map.Entry<String, JComponent>> components = new ArrayList<>();
+    var mainPanel = this.createMainPanel(components);
     mainPanel.add(portfolioDetails);
     this.add(mainPanel, BorderLayout.CENTER);
-
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
+    renderFrame();
   }
 
 
