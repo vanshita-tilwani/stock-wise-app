@@ -1,13 +1,13 @@
 package view;
 
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 import controller.Features;
 import view.guiscreens.AllPortfolio;
@@ -26,6 +26,9 @@ import view.guiscreens.PortfolioCostBasis;
 import view.guiscreens.PortfolioValue;
 import view.guiscreens.SellStock;
 
+/**
+ * A class to implement the GUI.
+ */
 public class GraphicsView implements View, ActionListener {
 
   private final Map<String, Runnable> actionMap;
@@ -33,6 +36,10 @@ public class GraphicsView implements View, ActionListener {
   private Screen mainScreen;
 
   private Features features;
+
+  /**
+   * Constructor to initialise the variables.
+   */
   public GraphicsView() {
     setDefaultUI();
     this.mainScreen = new MainScreen();

@@ -1,6 +1,5 @@
 package model.datarepo;
 
-import java.nio.file.Path;
 
 /**
  * This interface is responsible for saving the objects to the
@@ -18,6 +17,7 @@ public interface DataRepository<T> {
    * @throws Exception throws Exception if there are any
    *                   exceptions while saving data to data source.
    */
+
   void save(T trade) throws Exception;
 
   /**

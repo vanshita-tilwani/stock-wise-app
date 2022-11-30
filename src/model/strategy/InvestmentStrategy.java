@@ -19,7 +19,7 @@ public class InvestmentStrategy implements Strategy {
     this.commission = commission;
     this.startDate = start;
     this.endDate = end;
-    this.frequency= days;
+    this.frequency = days;
   }
 
   @Override
@@ -52,8 +52,14 @@ public class InvestmentStrategy implements Strategy {
     return this.commission;
   }
 
+  /**
+   * A class for the investment strategy.
+   */
   public static class InvestmentStrategyBuilder extends AbstractStrategyBuilder {
 
+    /**
+     * Constructor to initialize the class variables.
+     */
     public InvestmentStrategyBuilder() {
       super();
     }

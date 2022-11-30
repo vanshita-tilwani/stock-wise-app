@@ -2,18 +2,46 @@ package model.strategy;
 
 import java.time.LocalDate;
 
+/**
+ * An interface for the strategy builder.
+ */
 public interface StrategyBuilder {
 
   StrategyBuilder addStock(String stock, Double weight) throws IllegalArgumentException;
 
+  /**
+   * sets the commission.
+   * @param commission commission to be set
+   * @return returns the strategy builder
+   */
   StrategyBuilder setCommission(Double commission);
 
+  /**
+   * To set the investment.
+   * @param principal sets the investment
+   * @return returns a strategy builder
+   */
   StrategyBuilder setPrincipal(Double principal);
 
+  /**
+   * To set the start date.
+   * @param date date to be set as start
+   * @return returns a strategy builder
+   */
   StrategyBuilder setStartDate(LocalDate date);
 
+  /**
+   * To set the end date.
+   * @param date setting the end date.
+   * @return returns the strategy builder
+   */
   StrategyBuilder setEndDate(LocalDate date);
 
+  /**
+   * To set the frequency.
+   * @param frequency sets the frequency
+   * @return returns the strategy builder
+   */
   StrategyBuilder setFrequency(int frequency);
 
   Strategy build() throws IllegalArgumentException;

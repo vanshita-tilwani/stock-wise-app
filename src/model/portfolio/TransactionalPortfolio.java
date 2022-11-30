@@ -3,7 +3,6 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -50,6 +49,13 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     this.strategies = new HashSet<>();
   }
 
+  /**
+   * Constructor to initialise the variables.
+   * @param name name of the portfolio.
+   * @param purchased Set of purchases stocks
+   * @param sold set of sold stocks
+   * @param strategies all the current strategies
+   */
   public TransactionalPortfolio(String name, Set<Trade<Stock>> purchased, Set<Trade<Stock>> sold,
                                 Set<Strategy> strategies) {
     // Assuming that an empty portfolio will be created and then the stock
@@ -242,6 +248,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
               date, commission));
     }
   }
+
   private void buyPeriodic(Double principal, Map<String, Double> weight, LocalDate beginDate,
                            LocalDate endDate, int frequency, Double commission) {
     LocalDate currDate = beginDate;

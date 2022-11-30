@@ -2,7 +2,7 @@ package model.trade;
 
 import java.time.LocalDate;
 
-import model.stock.StockImpl;
+
 import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.StockDataProviderFactory;
 
@@ -41,6 +41,14 @@ public class TransactionalStockTrade extends AbstractStockTrade {
     this.commission = commission;
   }
 
+  /**
+   * Constructor to initialise the variables.
+   * @param stock name of the stock
+   * @param principal investment
+   * @param weight proportion of the stocks
+   * @param tradeDate the date on which the trade as to be made
+   * @param commission the commission for the transaction
+   */
   public TransactionalStockTrade(String stock, double principal, double weight, LocalDate tradeDate,
                                  Double commission) {
     super(stock);
@@ -51,7 +59,7 @@ public class TransactionalStockTrade extends AbstractStockTrade {
     }
     var amount = principal * weight/100;
     var currentVal = this.stock.price(tradeDate);
-    this.quantity = amount/currentVal;
+    this.quantity = amount / currentVal;
     this.tradeDate = tradeDate;
     this.commission = commission;
   }

@@ -1,7 +1,5 @@
 package model.stocktradings;
 
-import java.time.LocalDate;
-import java.util.Map;
 import java.util.Set;
 
 import model.strategy.Strategy;
@@ -50,6 +48,7 @@ public interface TradeOperation<T> {
   void load() throws Exception;
 
   Strategy getStrategy(String name);
+
   void createStrategy(String name, Strategy strategy);
 
   Set<String> getAllStrategy();
