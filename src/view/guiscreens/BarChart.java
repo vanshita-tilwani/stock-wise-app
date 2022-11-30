@@ -106,12 +106,10 @@ public class BarChart extends AbstractScreen {
     private static final long serialVersionUID = 8242113760993687819L;
     private final int margin = 20;
     private final Color background = Color.WHITE;
-    private final List<Color> barColors = Arrays.asList(Color.RED, Color.BLUE,
-            Color.GREEN, Color.GRAY, Color.MAGENTA, Color.ORANGE);
+    private final List<Color> barColors = Arrays.asList(Color.RED, Color.BLUE, Color.GREEN,
+            Color.GRAY, Color.MAGENTA, Color.ORANGE);
 
-    private int width;
-    private int height;
-    private int y;
+    private int width, height, x, y;
     private Map<LocalDate, Double> data;
 
     public BarChartPanel(Map<LocalDate, Double> data) {
@@ -126,8 +124,9 @@ public class BarChart extends AbstractScreen {
     protected void paintComponent(final Graphics g) {
       super.paintComponent(g);
 
-      this.width = this.getWidth() - (2 * margin);
+      this.width = this.getWidth() - 4 * margin;
       this.height = this.getHeight() - (4 * margin);
+      this.x = 4 * margin;
       this.y = this.height + margin;
       draw((Graphics2D) g);
     }
@@ -136,40 +135,65 @@ public class BarChart extends AbstractScreen {
       g.setColor(background);
       g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-      if (this.data == null || this.data.size() == 0) {
+      if(this.data == null || this.data.size() == 0) {
         return;
       }
-
       double max = Collections.max(this.data.values());
-      int barWidth = (int) (this.width / this.data.size());
+      int barWidth = (int) ((this.width) / this.data.size());
       int gap = (int) Math.floor(0.1 * barWidth);
 
       int count = 0;
       for (var element : data.entrySet()) {
-        int eachbarHeight = (int) (element.getValue() * this.height / max);
+        int eachbarHeight = (int)(element.getValue() * this.height / max);
         int eachBarWidth = barWidth - gap;
-        int xCoord = margin + barWidth * count;
+        int xCoord = this.x + barWidth * count;
         int yCoord = this.y - eachbarHeight;
+
+        if(count == 0) {
+          drawXAxis(g);
+        }
 
         g.setColor(this.barColors.get(count % this.barColors.size()));
         g.fillRect(xCoord, yCoord, eachBarWidth, eachbarHeight);
 
         g.setFont(getFont(0));
-        g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4),
-                yCoord - (margin / 8));
+        g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4), yCoord - (margin / 8));
 
-        g.setFont(getFont(25));
-        g.drawString(element.getKey().toString(), xCoord, this.y + (margin / 2));
+        g.setFont(getFont(20));
+        g.drawString(element.getKey().toString(), xCoord, this.y + (margin/2));
 
         count += 1;
       }
     }
 
+    private void drawXAxis(Graphics2D g) {
+      g.setColor(Color.BLACK);
+      g.fillRect(this.x - margin, this.y - this.height, 2, this.height);
+
+      double max = Collections.max(this.data.values());
+      double eachValue = max / 10;
+      double each = this.height / 10;
+      for(double i = 0, j = 0; i < this.height; i += each, j += eachValue) {
+        g.setFont(getFont(0));
+        g.drawString(this.xAxisLabelWithSuffix(j), 10, (int)(this.y - i));
+      }
+    }
+
     private Font getFont(double angle) {
-      Font font = new Font(null, Font.BOLD, 10);
+      Font font = new Font(null, Font.BOLD, 12);
       AffineTransform affineTransform = new AffineTransform();
       affineTransform.rotate(Math.toRadians(angle), 0, 0);
       return font.deriveFont(affineTransform);
+    }
+
+    private String xAxisLabelWithSuffix(double value) {
+      if(value < 1000) {
+        return String.format("%.1f",value);
+      }
+
+      int exponent = (int) (Math.log(value) / Math.log(1000));
+      char character = "kMGTPE".charAt(exponent - 1);
+      return String.format("%.1f%c", value / Math.pow(1000, exponent), character);
     }
   }
 }
