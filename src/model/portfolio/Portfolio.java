@@ -100,8 +100,13 @@ public interface Portfolio {
    * @param to   the last date of the time period.
    * @return the value of portfolios at equal intervals starting from start and end date specified
    */
-  // TODO : change name
   Map<LocalDate, Double> values(LocalDate from, LocalDate to) throws IllegalArgumentException;
 
+  /**
+   * Applies a given investment strategy to the portoflio.
+   *
+   * @param strategy the strategy to be applied.
+   * @throws UnsupportedOperationException If the portfolio is inflexible portfolio.
+   */
   void applyStrategy(Strategy strategy) throws UnsupportedOperationException;
 }

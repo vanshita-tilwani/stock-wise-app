@@ -20,7 +20,6 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
 
   // create a map for portfolios available in the application.
   private Map<String, Portfolio> portfolios;
-  private Map<String, Strategy> strategies;
   // repository to read/write from data source.
   private final DataRepository repository;
 
@@ -32,7 +31,6 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
    */
   public PortfolioTradeOperation(DataRepository repository) {
     portfolios = new HashMap<>();
-    this.strategies = new HashMap<>();
     this.repository = repository;
   }
 

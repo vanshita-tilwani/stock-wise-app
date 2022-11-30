@@ -1,27 +1,29 @@
 Design Changes :
 
 Controller Changes :
-1. Segregated the controller logic by using Command Design Pattern. Created a new interface called Executor which works as the interface for command pattern.
-2. Created Multiple Command Classes like CreatePortfolio, BuyStock, SellStock, etc.
+1. Created a new Interface called "Features" which has all the API supported by the application.
+2. The Controller class now implements "Features" interface and implements all the API, calls the model
+to get specific information required in the API and returns the result back to View.
+3. Removed all the command executors which were used previously since now View controls the application and
+not Controller.
 
 Model Changes (not user facing) :
-1. Added methods to support composition at a date, cost basis in the Portfolio Interface.
-2. Created Two Different Implementations of Portfolio to segregate the two different type of portfolio offered by the application.
-3. Created Abstract Class - AbstractPortfolio to abstract the common code between the two implementation.
-4. Created two different implementation of Trade<T> interface one for supporting simulated Portfolio and another to support transactional trade.
-5. Created a Abstract class called AbstractStockTrade to abstract out the common code between the two implementations.
-6. Created a new implementation of Stock Data Provider called WebAPIStockDataProvider to support Alpha-Vantage API
-7. Created a Configuration interface extended by CacheProvider to store the config settings for the applications
-8. Created a implementation called InMemory Configuration class for Configuration which can be used to store key and value pair of application config and uses cache for faster lookup
-9. The StockDataProviderFactory can now use the in-memory configuration to lookup the API provider that needs to be used for stock data ( as of now have added WebApi as the provider in configuration cache) but this can be extended to let the user choose which Stock Provider he/she wishes to use.
-10. Created a interface for data parser like DataParser<T>
-11. Created two implementation of the DataParser, one for TransactionalPortfolio and another for SimulatedPortfolio to have each implementation take care of its own parsing from string to Portfolio while loading from file or saving to the file.
-
-Minor Implementation Changes :
-1. Previously the program used to display a messaging saying Invalid date if the user has entered an invalid date and halt the program execution --> Now I have made changes to ask the user to re-enter the date if the one previously entered is invalid.
-2. Moved all the data input to AbstractExecutor for reading dates/stock symbol or any trade related information. Previously it is scattered in the Controller code. Now all the reading is done as AbstractExecutor and all the command Classes which extends this abstract class uses its protected method to read the input using View as argument. This makes it easier since I am planning to localize the hardcoded strings in next iteration.
+1. Created a new interface for Strategy.
+2. Implemented the Strategy Interface called InvestmentStrategy which support Fixed One time Investment
+as well as Recurring Investments.
+3. Created a StrategyBuilder interface which can be used to build strategy objects.
+4. Implemented StrategyBuilder interface which supports setting name, start date, end date, commission fee,
+frequency of the strategy. Also support method to add stock and its weight to the strategy. Builder pattern
+used to simplify building a strategy.
+5. Created a new Implementation for StrategyOperation which implements TradeOperation<T> interface where T stands for Strategy.
+6. StrategyOperation supports creating strategy, getting a specific strategy, getting all the strategies
+from the application.
+7. Added a new method in Portfolio interface to apply Strategy on the portfolio.
+8. Implemented the above method in both Simulated and Transactional Portfolio.
 
 View Changes :
-1. Added a new method in View called "draw"
-2. This method accepts map as argument and is responsible for plotting bar chart.
-3. Implemented the method in TextualView class.
+1. Added a new method in View called "setFeatures" which supports all the API by the view.
+2. Created a new implementation for GUI for the view.
+3. Created a Screen interface which is used by GUIView to render different screens based on the selected option.
+4. Created Multiple implementation of the Screen interface to support Create Portfolio, Get ALL Portfolio etc in
+the GUI.
