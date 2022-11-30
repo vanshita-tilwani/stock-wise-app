@@ -4,26 +4,28 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.Formatter;
 import java.util.Properties;
-
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 
+/**
+ * A class to represent the features.
+ */
 public class SwingFeaturesFrame extends JFrame implements ActionListener {
 
   private JPanel mainPanel;
   private JRadioButton[] radioButtons;
 
   private JDatePicker date;
+
+  /**
+   * Constructor to initialise the class variables.
+   */
   public SwingFeaturesFrame() {
+
     super();
     setTitle("Testtt");
     setSize(800, 800);
@@ -58,14 +60,14 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener {
     }
     radioButtons[4].doClick();
     UtilDateModel model = new UtilDateModel();
-//model.setDate(20,04,2014);
-// Need this...
+    //model.setDate(20,04,2014);
+    // Need this...
     Properties p = new Properties();
     p.put("text.today", "Today");
     p.put("text.month", "Month");
     p.put("text.year", "Year");
     JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-// Don't know about the formatter, but there it is...
+    // Don't know about the formatter, but there it is...
     this.date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
     mainPanel.add(radioPanel);
     mainPanel.add(datePanel);
@@ -76,8 +78,8 @@ public class SwingFeaturesFrame extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    for(int i = 0; i < radioButtons.length; i++) {
-      if(radioButtons[i].isSelected()) {
+    for (int i = 0; i < radioButtons.length; i++) {
+      if (radioButtons[i].isSelected()) {
         System.out.println(radioButtons[i].getText());
       }
     }

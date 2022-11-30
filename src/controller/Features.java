@@ -81,7 +81,7 @@ public interface Features {
   String composition(String portfolio, LocalDate date);
 
   /**
-   * To load a portfolio from the fole
+   * To load a portfolio from the data source.
    * @param dataSource the datasource name
    */
   void load(String dataSource);

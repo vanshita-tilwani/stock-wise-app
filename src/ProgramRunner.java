@@ -29,7 +29,7 @@ public class ProgramRunner {
     System.out.println("1. Console Based View");
     System.out.println("2. GUI Based View");
     int menuOption = new Scanner(System.in).nextInt();
-    while(!menuOptions.containsKey(menuOption)) {
+    while (!menuOptions.containsKey(menuOption)) {
       System.out.println("Invalid Option");
       System.out.println("Choose the type of view you wish to proceed with?");
       System.out.println("1. Console Based View");
@@ -39,6 +39,10 @@ public class ProgramRunner {
     menuOptions.get(menuOption).run();
   }
 
+  /**
+   * Gets a map of commands.
+   * @return returns map of commands
+   */
   public static Map<Integer, Runnable> getCommands() {
     DataRepository fileRepo = null;
     try {

@@ -7,8 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import model.configuration.Configuration;
-import model.configuration.InMemoryConfiguration;
 
 /**
  * Implementation responsible for reading/writing the data to data source. File Repository

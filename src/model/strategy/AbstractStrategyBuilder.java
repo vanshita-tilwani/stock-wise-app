@@ -4,7 +4,11 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class to abstract all the strategies.
+ */
 public abstract class AbstractStrategyBuilder implements StrategyBuilder {
+
   protected Double principal;
   protected Map<String, Double> weights;
   protected LocalDate start;
@@ -13,6 +17,7 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
   protected int frequency;
 
   protected double totalWeight;
+
   protected AbstractStrategyBuilder() {
     this.principal = 0.0;
     this.start = null;
@@ -22,6 +27,7 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
     this.totalWeight = 0.0;
     this.frequency = 1;
   }
+
   @Override
   public StrategyBuilder addStock(String stock, Double weight) throws IllegalArgumentException{
     if(totalWeight + weight > 100) {
@@ -29,7 +35,7 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
               " stock percentages\n");
     }
     this.totalWeight += weight;
-    this.weights.put(stock, this.weights.getOrDefault(stock, 0.0)+weight);
+    this.weights.put(stock, this.weights.getOrDefault(stock, 0.0) + weight);
     return this;
   }
 

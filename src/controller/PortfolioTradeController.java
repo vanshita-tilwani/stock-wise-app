@@ -24,6 +24,11 @@ public class PortfolioTradeController implements Features {
   private final View view;
   private final TradeOperation<Portfolio> model;
 
+  /**
+   *
+   * @param view
+   * @param model
+   */
   public PortfolioTradeController(View view, TradeOperation<Portfolio> model) {
     this.view = view;
     this.model = model;
