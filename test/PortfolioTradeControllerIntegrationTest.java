@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import controller.PortfolioTradeController;
 import model.datarepo.FileRepository;
 import model.stocktradings.PortfolioTradeOperation;
+import model.stocktradings.StrategyOperation;
+import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
 
@@ -19,12 +21,14 @@ public class PortfolioTradeControllerIntegrationTest {
 
   private OutputStream out;
 
+
   private void setup(String input) throws Exception {
 
     this.out = new ByteArrayOutputStream();
     View view = this.getView(new ByteArrayInputStream(input.getBytes()), out);
     PortfolioTradeOperation model = this.getModel();
-    new PortfolioTradeController(view, model);
+    TradeOperation strategy = new StrategyOperation();
+    new PortfolioTradeController(view, model, strategy);
   }
 
   @Test

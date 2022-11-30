@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class InvestmentStrategy implements Strategy {
 
+  protected final String name;
   protected final Double principal;
   protected final Map<String, Double> weights;
   protected final LocalDate startDate;
@@ -15,14 +16,32 @@ public class InvestmentStrategy implements Strategy {
   protected final int frequency;
   protected final Double commission;
 
-  protected InvestmentStrategy(Double principal, Map<String, Double> weights, Double commission,
-                               LocalDate start, LocalDate end, int days) {
+  /**
+   * Initializes a Strategy with name, principal amount, weights for each stock, start date and
+   * end date for the strategy, recurring frequency and commission for the strategy.
+   *
+   * @param name name of the strategy.
+   * @param principal principal amount of the strategy.
+   * @param weights stock weights of the strategy.
+   * @param commission commission for the strategy.
+   * @param start start date of the strategy.
+   * @param end end date of the strategy.
+   * @param days frequency of the strategy.
+   */
+  protected InvestmentStrategy(String name,Double principal, Map<String, Double> weights,
+                               Double commission, LocalDate start, LocalDate end, int days) {
+    this.name = name;
     this.principal = principal;
     this.weights = weights;
     this.commission = commission;
     this.startDate = start;
     this.endDate = end;
     this.frequency = days;
+  }
+
+  @Override
+  public String name() {
+    return this.name;
   }
 
   @Override
@@ -85,7 +104,7 @@ public class InvestmentStrategy implements Strategy {
         throw new IllegalArgumentException("The strategy could not be created due to invalid"
                 + " stock percentages\n");
       }
-      return new InvestmentStrategy(this.principal, this.weights, this.commission, this.start,
+      return new InvestmentStrategy(this.name,this.principal, this.weights, this.commission, this.start,
               this.end, this.frequency);
     }
   }

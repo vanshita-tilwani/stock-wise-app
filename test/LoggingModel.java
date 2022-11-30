@@ -45,20 +45,4 @@ public class LoggingModel implements TradeOperation<Portfolio> {
     log.append("Load all the portfolio in the data source\n");
   }
 
-  @Override
-  public Strategy getStrategy(String name) {
-    log.append("getStrategy : " + name + "\n");
-    return null;
-  }
-
-  @Override
-  public void createStrategy(String name, Strategy strategy) {
-    log.append("createStrategy : " + name + "\n");
-  }
-
-  @Override
-  public Set<String> getAllStrategy() {
-    log.append("getAllStrategy\n");
-    return null;
-  }
 }

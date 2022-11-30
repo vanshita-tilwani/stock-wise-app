@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public abstract class AbstractStrategyBuilder implements StrategyBuilder {
 
+  protected String name;
   protected Double principal;
   protected Map<String, Double> weights;
   protected LocalDate start;
@@ -19,6 +20,7 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
   protected double totalWeight;
 
   protected AbstractStrategyBuilder() {
+    this.name = null;
     this.principal = 0.0;
     this.start = null;
     this.end = null;
@@ -26,6 +28,12 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
     this.weights = new HashMap<>();
     this.totalWeight = 0.0;
     this.frequency = 1;
+  }
+
+  @Override
+  public StrategyBuilder setName(String name) {
+    this.name = name;
+    return this;
   }
 
   @Override

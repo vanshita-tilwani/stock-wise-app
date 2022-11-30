@@ -10,6 +10,7 @@ import java.util.Map;
 
 import controller.Features;
 import controller.PortfolioTradeController;
+import model.stocktradings.StrategyOperation;
 import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
@@ -26,7 +27,8 @@ public class PortfolioControllerUnitTest {
     View view = new TextualView(new ByteArrayInputStream(input.getBytes()),
             new PrintStream(new ByteArrayOutputStream()));
     TradeOperation model = new LoggingModel(modelBuilder);
-    Features controller = new PortfolioTradeController(view, model);
+    TradeOperation strategy = new StrategyLoggingModel(modelBuilder);
+    Features controller = new PortfolioTradeController(view, model, strategy);
   }
 
   @Test

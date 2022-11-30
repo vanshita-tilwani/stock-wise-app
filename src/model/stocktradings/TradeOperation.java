@@ -47,11 +47,7 @@ public interface TradeOperation<T> {
    */
   void load() throws Exception;
 
-  Strategy getStrategy(String name);
 
-  void createStrategy(String name, Strategy strategy) throws IllegalArgumentException;
-
-  Set<String> getAllStrategy();
 
 
 }

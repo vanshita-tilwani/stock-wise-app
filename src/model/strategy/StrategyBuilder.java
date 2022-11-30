@@ -7,10 +7,18 @@ import java.time.LocalDate;
  */
 public interface StrategyBuilder {
 
+  /**
+   * Sets the name.
+   *
+   * @param name name to be set
+   * @return returns the strategy builder
+   */
+  StrategyBuilder setName(String name);
+
   StrategyBuilder addStock(String stock, Double weight) throws IllegalArgumentException;
 
   /**
-   * sets the commission.
+   * Sets the commission.
    * @param commission commission to be set
    * @return returns the strategy builder
    */
@@ -44,6 +52,12 @@ public interface StrategyBuilder {
    */
   StrategyBuilder setFrequency(int frequency);
 
+  /**
+   * Builds the strategy object and returns.
+   *
+   * @return Strategy object
+   * @throws IllegalArgumentException if the weights don't add up to 100.
+   */
   Strategy build() throws IllegalArgumentException;
 
 }

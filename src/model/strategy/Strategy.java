@@ -10,6 +10,12 @@ import java.util.Map;
 public interface Strategy {
 
   /**
+   * Returns the name of the strategy.
+   *
+   * @return strategy name.
+   */
+  String name();
+  /**
    * To return the investment.
    * @return
    */

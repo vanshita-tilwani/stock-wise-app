@@ -25,6 +25,7 @@ public class PortfolioTradeController implements Features {
 
   private final View view;
   private final TradeOperation<Portfolio> model;
+  private final TradeOperation<Strategy> strategyModel;
 
 
   /**
@@ -32,9 +33,11 @@ public class PortfolioTradeController implements Features {
    * @param view view object
    * @param model model object
    */
-  public PortfolioTradeController(View view, TradeOperation<Portfolio> model) {
+  public PortfolioTradeController(View view, TradeOperation<Portfolio> model,
+                                  TradeOperation<Strategy> strategyModel) {
     this.view = view;
     this.model = model;
+    this.strategyModel = strategyModel;
     view.addFeatures(this);
   }
 
@@ -195,6 +198,7 @@ public class PortfolioTradeController implements Features {
                      LocalDate start, LocalDate end, int days, Double commission) {
     try {
       StrategyBuilder strategyBuilder = new InvestmentStrategy.InvestmentStrategyBuilder()
+              .setName(name)
               .setPrincipal(principal)
               .setStartDate(start)
               .setEndDate(end)
@@ -203,7 +207,7 @@ public class PortfolioTradeController implements Features {
       for (Map.Entry<String, Double> entry : weights.entrySet()) {
         strategyBuilder.addStock(entry.getKey(), entry.getValue());
       }
-      this.model.createStrategy(name, strategyBuilder.build());
+      this.strategyModel.create(strategyBuilder.build());
       view.display("Strategy created successfully\n");
     }
     catch (IllegalArgumentException e ) {
@@ -214,13 +218,13 @@ public class PortfolioTradeController implements Features {
 
   @Override
   public Set<String> getAllStrategy() {
-    return this.model.getAllStrategy();
+    return this.strategyModel.all();
   }
 
   @Override
   public void applyStrategy(String portfolioName, String strategyName) {
     try {
-      Strategy strategy = this.model.getStrategy(strategyName);
+      Strategy strategy = this.strategyModel.get(strategyName);
       this.model.get(portfolioName).applyStrategy(strategy);
       view.display("Strategy applied successfully to the portfolio\n");
     }

@@ -7,6 +7,8 @@ import controller.PortfolioTradeController;
 import model.datarepo.DataRepository;
 import model.datarepo.FileRepository;
 import model.stocktradings.PortfolioTradeOperation;
+import model.stocktradings.StrategyOperation;
+import model.stocktradings.TradeOperation;
 import view.GraphicsView;
 import view.TextualView;
 import view.View;
@@ -53,16 +55,15 @@ public class ProgramRunner {
     }
     Map<Integer, Runnable> menuOptions = new HashMap<>();
     DataRepository finalFileRepo = fileRepo;
-
+    TradeOperation model = new PortfolioTradeOperation(finalFileRepo);
+    TradeOperation strategy = new StrategyOperation();
     menuOptions.put(1, () -> {
       View view = new TextualView(System.in, System.out);
-      PortfolioTradeOperation model = new PortfolioTradeOperation(finalFileRepo);
-      Features controller = new PortfolioTradeController(view, model);
+      Features controller = new PortfolioTradeController(view, model, strategy);
     });
     menuOptions.put(2, () -> {
       View view = new GraphicsView();
-      PortfolioTradeOperation model = new PortfolioTradeOperation(finalFileRepo);
-      Features controller = new PortfolioTradeController(view, model);
+      Features controller = new PortfolioTradeController(view, model,strategy);
     });
     return menuOptions;
   }
