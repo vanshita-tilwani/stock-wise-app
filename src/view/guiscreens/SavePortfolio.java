@@ -3,6 +3,7 @@ package view.guiscreens;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -44,10 +45,12 @@ public class SavePortfolio extends AbstractScreen {
                 new PropertyChangeListener() {
                   @Override
                   public void propertyChange(PropertyChangeEvent evt) {
-                    String path = file.getSelectedFile().getAbsolutePath() + ".txt";
-                    features.save(path,
-                            frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
-                    System.out.println();
+                    File selectedFile= file.getSelectedFile();
+                    if(selectedFile != null) {
+                      String path = selectedFile.getAbsolutePath() + ".txt";
+                      features.save(path,
+                              frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
+                    }
                   }
                 });
 
