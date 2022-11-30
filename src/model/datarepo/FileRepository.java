@@ -21,16 +21,6 @@ public class FileRepository implements DataRepository<String> {
 
   private static final DataRepository instance = new FileRepository();
 
-  /**
-   * Creates an instance of File Repository with path as the path to the data source. The
-   * path argument specified the data source location in the file system.
-   *
-   * @param path The path to the data source.
-   * @throws IOException if the path is invalid or any other errors while clearing the file.
-   */
-  private FileRepository(String path) throws Exception {
-    this.setDataSource(path);
-  }
 
   public static DataRepository getInstance() {
     return instance;

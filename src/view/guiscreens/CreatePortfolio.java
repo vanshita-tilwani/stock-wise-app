@@ -31,8 +31,21 @@ public class CreatePortfolio extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e ->
-            features.createFlexiblePortfolio(this.portfolioName.getText()));
+    this.submit.addActionListener(e ->{
+      if(isInputsValid()) {
+          features.createFlexiblePortfolio(this.portfolioName.getText());
+      }
+      else {
+        this.error("The portfolio name is invalid. Please input again and press submit.");
+      }
+    });
   }
+
+  private boolean isInputsValid() {
+    return this.portfolioName != null && !this.portfolioName.getText().trim().isBlank() &&
+            !this.portfolioName.getText().trim().isEmpty();
+  }
+
+
 
 }

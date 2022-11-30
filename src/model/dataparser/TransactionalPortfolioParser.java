@@ -12,7 +12,7 @@ import model.trade.Trade;
  * Implementation of Parser interface for type of Transactional Portfolio which is responsible
  * for parsing the string data to Portfolio of type TransactionalPortfolio.
  */
-class TransactionalPortfolioParser extends AbstractPortfolioParser {
+public class TransactionalPortfolioParser extends AbstractPortfolioParser {
 
   @Override
   public Portfolio parse(String data) {

@@ -25,7 +25,7 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     outputPanel.add(this.output);
 
     this.submit = new javax.swing.JButton("Submit");
-    this.back = new javax.swing.JButton("Go Back");
+    this.back = new javax.swing.JButton("Home");
     this.submit.setActionCommand(caption);
     var actionsPanel = new JPanel();
     actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.X_AXIS));

@@ -114,7 +114,9 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void disposeScreen() {
-    this.frame.disposeScreen();
+    if(frame != null) {
+      this.frame.disposeScreen();
+    }
     super.disposeScreen();
   }
 

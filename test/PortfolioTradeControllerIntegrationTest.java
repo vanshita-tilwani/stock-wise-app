@@ -769,6 +769,66 @@ public class PortfolioTradeControllerIntegrationTest {
     }
   }
 
+  @Test
+  public void buy_NegativeShares() {
+    try {
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n-10\n10\n2022-10-24\n100");
+      String actual = this.out.toString();
+      String expected = "Invalid number of shares\n"
+              + "Please enter the number of shares again.";
+      Assert.assertTrue(actual.contains(expected));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void buy_ZeroShares() {
+    try {
+      this.setup("2\ntransaction10\n" +
+              "3\ntransaction10\ngoog\n0\n10\n2022-10-24\n100");
+      String actual = this.out.toString();
+      String expected = "Invalid number of shares\n"
+              + "Please enter the number of shares again.";
+      Assert.assertTrue(actual.contains(expected));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void sell_NegativeShares() {
+    try {
+      this.setup("2\ntransaction10\n" +
+              "4\ntransaction10\ngoog\n-10\n10\n2022-10-24\n100");
+      String actual = this.out.toString();
+      String expected = "Invalid number of shares\n"
+              + "Please enter the number of shares again.";
+      Assert.assertTrue(actual.contains(expected));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void sell_ZeroShares() {
+    try {
+      this.setup("2\ntransaction10\n" +
+              "4\ntransaction10\ngoog\n0\n10\n2022-10-24\n100");
+      String actual = this.out.toString();
+      String expected = "Invalid number of shares\n"
+              + "Please enter the number of shares again.";
+      Assert.assertTrue(actual.contains(expected));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
 
   @Test
   public void saveTransactionalPortfolioToFile2() {
@@ -1050,6 +1110,37 @@ public class PortfolioTradeControllerIntegrationTest {
       String expected = "The Stock Market is closed on the specified date.Invalid trade Date.\n";
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createStrategy_InvalidName() {
+
+    try {
+      String input = "13\n \ns1\n2000\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "You have entered an invalid name. Please enter the name again\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createStrategy_InvalidPrincipal() {
+
+    try {
+      String input = "13\ns1\nabc\n2000\n1\ngoog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Invalid amount entered\n"
+              + "Enter the amount you wish to invest\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
       Assert.fail();
     }
   }
@@ -1390,6 +1481,88 @@ public class PortfolioTradeControllerIntegrationTest {
               "6\nsample1";
       this.setup(input);
       String expected = "The portfolio with name provided does not exist.\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createRecurringStrategy_WithEndDate() {
+    try {
+      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\ny\n" +
+              "2022-10-28\n1\n0\n15";
+      this.setup(input);
+      String expected = "Strategy created successfully";
+      String expectedStrategy = "Strategy Names : \n"+
+              "s1\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+      Assert.assertTrue(actual.contains(expectedStrategy));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createRecurringStrategy_InvalidCase() {
+    try {
+      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\nd\nn\n" +
+              "1\n0\n15";
+      this.setup(input);
+      String expected = "Invalid Input\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+  @Test
+  public void createRecurringStrategy_WithoutEndDate() {
+    try {
+      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\nn\n" +
+              "1\n0\n15";
+      this.setup(input);
+      String expected = "Strategy created successfully";
+      String expectedStrategy = "Strategy Names : \n"+
+              "s1\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+      Assert.assertTrue(actual.contains(expectedStrategy));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createRecurringStrategy_InvalidFrequency() {
+    try {
+      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\nn\n" +
+              "-1\n1\n0";
+      this.setup(input);
+      String expected = "Invalid Frequency Amount\n" +
+              "Enter the Frequency in days";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createRecurringStrategy_FractionalFrequency() {
+    try {
+      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\nn\n" +
+              "1.2\n1\n0";
+      this.setup(input);
+      String expected = "Invalid Frequency Amount\n" +
+              "Enter the Frequency in days";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     }

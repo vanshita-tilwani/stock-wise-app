@@ -56,6 +56,11 @@ public class GraphicsView implements View, ActionListener {
   }
 
   @Override
+  public void error(String message) {
+    this.currentScreen.error(message);
+  }
+
+  @Override
   public void actionPerformed(ActionEvent e) {
     var actionCommand = e.getActionCommand();
     this.actionMap.get(actionCommand).run();
@@ -69,7 +74,7 @@ public class GraphicsView implements View, ActionListener {
     commands.put("Show All Portfolios", () -> {
       createScreenAndSetDefault(new AllPortfolio(), features);
     });
-    commands.put("Go Back", () -> {
+    commands.put("Home", () -> {
       this.mainScreen.setVisibility(true);
       this.currentScreen.disposeScreen();
     });

@@ -59,7 +59,9 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
     this.submit.addActionListener(e -> {
       String name = this.getTrade();
       LocalDate date = this.getDate();
-      this.evaluateTrade(features, name, date);
+      if(isInputsValid()) {
+        this.evaluateTrade(features, name, date);
+      }
 
     });
   }
@@ -75,5 +77,19 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
   private String  getTrade() {
     int index = this.portfolioName.getSelectedIndex();
     return this.portfolioName.getItemAt(index);
+  }
+
+  private boolean isInputsValid() {
+    boolean valid = true;
+    if(this.getTrade() == null) {
+      valid = false;
+      this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
+    }
+    if(this.getDate().isAfter(LocalDate.now())) {
+      valid = false;
+      this.error("The selected evaluation date is in future.\nPlease select " +
+              "a new date and try again");
+    }
+    return valid;
   }
 }

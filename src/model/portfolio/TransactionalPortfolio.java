@@ -50,16 +50,6 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     this.strategies = new HashSet<>();
   }
 
-  public TransactionalPortfolio(String name, Set<Trade<Stock>> purchased, Set<Trade<Stock>> sold,
-                                Set<Strategy> strategies) {
-    // Assuming that an empty portfolio will be created and then the stock
-    // purchases will be made against that portfolio.
-    super(name);
-    this.purchased = purchased;
-    this.sold = sold;
-    this.strategies = strategies;
-  }
-
   @Override
   public void buy(String stock, Double shares, LocalDate date, Double commission)
           throws IllegalArgumentException {
@@ -260,8 +250,9 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   }
 
   private LocalDate nextAvailableDate(LocalDate tradeDate) {
-    if(tradeDate.isAfter(LocalDate.now()))
+    if(tradeDate.isAfter(LocalDate.now())) {
       return tradeDate;
+    }
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
     while (!stockDataProvider.isAvailable(tradeDate)) {
       tradeDate = tradeDate.plusDays(1);

@@ -85,8 +85,10 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
     this.submit.addActionListener(e -> {
       LocalDate date = this.getDate();
       String name = this.getTrade();
-      this.performTrade(features, name, this.stock.getText(), toDouble(this.shares), date,
-              toDouble(this.commission));
+      if(this.isInputsValid()) {
+        this.performTrade(features, name, this.stock.getText(), toDouble(this.shares), date,
+                toDouble(this.commission));
+      }
     });
 
   }
@@ -104,6 +106,28 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
   private String  getTrade() {
     int index = this.portfolioName.getSelectedIndex();
     return this.portfolioName.getItemAt(index);
+  }
+
+  private boolean isInputsValid() {
+    boolean valid = true;
+    if(this.getTrade() == null) {
+      valid = false;
+      this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
+    }
+    if(this.getDate().isAfter(LocalDate.now())) {
+      valid = false;
+      this.error("The selected evaluation date is in future.\nPlease select " +
+              "a new date and try again");
+    }
+    if(this.stock == null || this.stock.getText().trim().isBlank() ||
+            this.stock.getText().trim().isEmpty()) {
+      valid = false;
+      this.error("The stock ticker entered is invalid. Please enter and try again");
+    }
+    if(!this.shares.isValid()) {
+      System.out.println("HI");
+    }
+    return valid;
   }
 
 

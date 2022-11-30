@@ -94,7 +94,10 @@ public class PortfolioTradeOperation implements TradeOperation<Portfolio> {
   }
 
   @Override
-  public void createStrategy(String name,Strategy strategy) {
+  public void createStrategy(String name,Strategy strategy) throws IllegalArgumentException {
+    if(this.strategies.containsKey(name)) {
+      throw new IllegalArgumentException("The strategy already exists in the application.\n");
+    }
     this.strategies.put(name, strategy);
   }
 

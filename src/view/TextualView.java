@@ -62,16 +62,10 @@ public class TextualView implements View {
   }
 
   private void initializeFeatures(Features features) {
-    commands.put(1, () -> {
-      try {
+    commands.put(1, () ->
         features.createInflexiblePortfolio(this.readTradeName(),
-                this.readTradeData(false));
-      }
-      catch(NumberFormatException e) {
-        this.display("Please make sure you input valid " +
-                "number of stocks/quantity of stocks.\n");
-      }
-    });
+                this.readTradeData(false))
+    );
     commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName());});
     commands.put(3, () -> { features.buyStock(this.readTradeName(),
             this.readStockSymbol(),
@@ -136,7 +130,7 @@ public class TextualView implements View {
               this.readPrincipal(),
               this.readTradeData(true),
               this.readStartDate(),
-              this.isOngoingStrategy() ? null : this.readEndDate(),
+              this.isOngoingStrategy() ? this.readEndDate() : null,
               this.readFrequency(),
               this.readCommissionFee()
     ));
@@ -161,6 +155,11 @@ public class TextualView implements View {
   @Override
   public void display(String message) {
     this.out.print(message);
+  }
+
+  @Override
+  public void error(String message) {
+    this.display(message);
   }
 
 
@@ -291,7 +290,6 @@ public class TextualView implements View {
           this.display("Invalid number of shares\n");
           this.display("Please enter the number of shares again.\n");
         }
-        parsed = true;
       } catch (NumberFormatException e) {
         this.display("Invalid number of shares\n");
         this.display("Please enter the number of shares again.\n");
@@ -419,7 +417,6 @@ public class TextualView implements View {
         else {
           this.display("Invalid Frequency Amount\n");
         }
-        parsed = true;
       } catch (NumberFormatException e) {
         this.display("Invalid Frequency Amount\n");
       }

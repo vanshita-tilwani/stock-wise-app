@@ -53,7 +53,7 @@ public class PortfolioTradeController implements Features {
                 + "portfolio are Invalid.\n");
       }
     } catch (IllegalArgumentException exception) {
-      view.display(exception.getMessage());
+      view.error(exception.getMessage());
     }
   }
 
@@ -65,7 +65,7 @@ public class PortfolioTradeController implements Features {
       this.view.display("The portfolio is created successfully!\n");
     }
     catch(IllegalArgumentException e) {
-      this.view.display(e.getMessage());
+      view.error(e.getMessage());
     }
   }
 
@@ -82,10 +82,8 @@ public class PortfolioTradeController implements Features {
       model.get(portfolio).buy(stock, shares, date, commission);
       view.display("The purchase was completed successfully!\n");
     }
-    catch (UnsupportedOperationException e) {
-      view.display(e.getMessage());
-    } catch (IllegalArgumentException exception) {
-      view.display(exception.getMessage());
+    catch (UnsupportedOperationException | IllegalArgumentException e) {
+      view.error(e.getMessage());
     }
   }
 
@@ -96,11 +94,8 @@ public class PortfolioTradeController implements Features {
       model.get(portfolio).sell(stock, shares, date, commission);
       view.display("The sale was completed successfully!\n");
     }
-    catch (UnsupportedOperationException e) {
-      view.display(e.getMessage());
-    }
-    catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
+    catch (UnsupportedOperationException | IllegalArgumentException e) {
+      view.error(e.getMessage());
     }
   }
 
@@ -111,7 +106,7 @@ public class PortfolioTradeController implements Features {
       view.display("The value of portfolio is $"+value+"\n");
     }
     catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
+      view.error(e.getMessage());
     }
   }
 
@@ -121,10 +116,8 @@ public class PortfolioTradeController implements Features {
       Double costBasis = model.get(portfolio).costBasis(date);
       view.display("The cost basis for the portfolio is $"+costBasis+"\n");
     }
-    catch (UnsupportedOperationException e) {
-      view.display(e.getMessage());
-    } catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
+    catch (UnsupportedOperationException | IllegalArgumentException e) {
+      view.error(e.getMessage());
     }
   }
 
@@ -135,7 +128,8 @@ public class PortfolioTradeController implements Features {
       return composition;
     }
     catch (IllegalArgumentException e) {
-      return e.getMessage();
+      view.error(e.getMessage());
+      return "";
     }
   }
 
@@ -146,7 +140,8 @@ public class PortfolioTradeController implements Features {
       return composition;
     }
     catch (IllegalArgumentException e) {
-      return e.getMessage();
+      view.error(e.getMessage());
+      return "";
     }
   }
 
@@ -158,7 +153,7 @@ public class PortfolioTradeController implements Features {
       view.display("The load of portfolio is successfully completed\n");
     }
     catch (Exception e) {
-      view.display("There were issues with portfolio load. Please make sure the file is in"
+      view.error("There were issues with portfolio load. Please make sure the file is in"
               + "expected format.\n");
     }
   }
@@ -171,7 +166,7 @@ public class PortfolioTradeController implements Features {
       view.display("The portfolio saved to file successfully\n");
     }
     catch (Exception e) {
-      view.display("The save could not be completed. Please make sure the portfolio name"
+      view.error("The save could not be completed. Please make sure the portfolio name"
               + " is entered correctly and the data source(file) exist.\n");
     }
   }
@@ -181,7 +176,7 @@ public class PortfolioTradeController implements Features {
     try {
       return model.get(portfolioName).values(from, end);
     } catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
+      view.error(e.getMessage());
     }
     return null;
   }
@@ -204,7 +199,7 @@ public class PortfolioTradeController implements Features {
       view.display("Strategy created successfully\n");
     }
     catch(IllegalArgumentException e ){
-      view.display(e.getMessage());
+      view.error(e.getMessage());
     }
 
   }
@@ -221,11 +216,8 @@ public class PortfolioTradeController implements Features {
       this.model.get(portfolioName).applyStrategy(strategy);
       view.display("Strategy applied successfully to the portfolio\n");
     }
-    catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
-    }
-    catch(UnsupportedOperationException e) {
-      view.display(e.getMessage());
+    catch (IllegalArgumentException | UnsupportedOperationException e) {
+      view.error(e.getMessage());
     }
   }
 }

@@ -22,4 +22,6 @@ public interface View {
    */
   void display(String message);
 
+  void error(String message);
+
 }

@@ -126,7 +126,9 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void disposeScreen() {
-    this.frame.disposeScreen();
+    if(frame != null) {
+      this.frame.disposeScreen();
+    }
     super.disposeScreen();
   }
 

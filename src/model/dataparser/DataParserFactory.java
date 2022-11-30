@@ -21,13 +21,18 @@ public class DataParserFactory {
    * @return the parser object.
    */
   public static DataParser<Portfolio> getParser(PortfolioType type) {
+    DataParser<Portfolio> parser = null;
+    if(type == null) {
+      return null;
+    }
     switch (type) {
       case SIMULATED:
-        return new SimulatedPortfolioParser();
+        parser = new SimulatedPortfolioParser();
+        break;
       case TRANSACTIONAL:
-        return new TransactionalPortfolioParser();
-      default:
-        throw new IllegalArgumentException("Unknown type " + type);
+        parser = new TransactionalPortfolioParser();
+        break;
     }
+    return parser;
   }
 }
