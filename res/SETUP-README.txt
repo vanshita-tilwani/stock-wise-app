@@ -13,19 +13,19 @@ CHOOSE 2: To use the GUI to trade the stocks
 GUI INTERFACE
 
 STEPS TO CREATE A PORTFOLIO
-1. Click on ÒCreate PortfolioÓ
+1. Click on Create Portfolio menu option
 2. Enter the name of non-existing portfolio
 3. Click submit to create the portfolio
 4. Click home to return to the main menu
 
-STEPS TO VIEW ALL PORTFOLIOÕS
-1. Click on Òshow all portfolioÓ
+STEPS TO VIEW ALL PORTFOLIOS
+1. Click on show all portfolio menu option
 2. Click submit to view all the portfolios
 3. Click home to return to the main menu
 
 
 STEPS TO BUY STOCKS
-1. Click on ÒBuy StocksÓ
+1. Click on Buy Stocks menu option
 2. Choose an existing portfolio
 3. Enter valid name of the stock
 4. Enter number of stocks greater than 0
@@ -36,7 +36,7 @@ STEPS TO BUY STOCKS
 9. Click home to return to the main menu
 
 STEPS TO SELL STOCKS
-1. Click on ÒSell StocksÓ
+1. Click on Sell Stocks
 2. Choose an existing portfolio
 3. Enter valid name of the stock
 4. Enter number of stocks greater than 0
@@ -47,7 +47,7 @@ STEPS TO SELL STOCKS
 
 
 STEPS TO GET COMPOSITION OF THE PORTFOLIO
-1. Click on ÒPortfolio CompositionÓ
+1. Click on Portfolio Composition
 2. Click on submit
 3. Choose an existing portfolio
 4. Enter a date
