@@ -30,9 +30,9 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
 
   @Override
   public StrategyBuilder addStock(String stock, Double weight) throws IllegalArgumentException{
-    if(totalWeight + weight > 100) {
-      throw new IllegalArgumentException("The strategy could not be created due to invalid"+
-              " stock percentages\n");
+    if (totalWeight + weight > 100) {
+      throw new IllegalArgumentException("The strategy could not be created due to invalid"
+              + " stock percentages\n");
     }
     this.totalWeight += weight;
     this.weights.put(stock, this.weights.getOrDefault(stock, 0.0) + weight);

@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +18,9 @@ import model.trade.SimulatedStockTrade;
 import model.trade.Trade;
 import view.View;
 
+/**
+ * Controller to implement the features.
+ */
 public class PortfolioTradeController implements Features {
 
   private final View view;
@@ -28,6 +30,12 @@ public class PortfolioTradeController implements Features {
    *
    * @param view
    * @param model
+   */
+
+  /**
+   * Constructor to initialise the class variables.
+   * @param view view object
+   * @param model model object
    */
   public PortfolioTradeController(View view, TradeOperation<Portfolio> model) {
     this.view = view;
@@ -69,8 +77,13 @@ public class PortfolioTradeController implements Features {
       this.model.create(portfolio);
       this.view.display("The portfolio is created successfully!\n");
     }
+<<<<<<< Updated upstream
     catch(IllegalArgumentException e) {
       view.error(e.getMessage());
+=======
+    catch (IllegalArgumentException e) {
+      this.view.display(e.getMessage());
+>>>>>>> Stashed changes
     }
   }
 
@@ -83,7 +96,7 @@ public class PortfolioTradeController implements Features {
   @Override
   public void buyStock(String portfolio, String stock, Double shares, LocalDate date,
                        Double commission) {
-    try{
+    try {
       model.get(portfolio).buy(stock, shares, date, commission);
       view.display("The purchase was completed successfully!\n");
     }
@@ -95,7 +108,7 @@ public class PortfolioTradeController implements Features {
   @Override
   public void sellStock(String portfolio, String stock, Double shares, LocalDate date,
                         Double commission) {
-    try{
+    try {
       model.get(portfolio).sell(stock, shares, date, commission);
       view.display("The sale was completed successfully!\n");
     }
@@ -106,9 +119,8 @@ public class PortfolioTradeController implements Features {
 
   @Override
   public void value(String portfolio, LocalDate date) {
-    try{
+    try {
       Double value = model.get(portfolio).value(date);
-      view.display("The value of portfolio is $"+value+"\n");
     }
     catch (IllegalArgumentException e) {
       view.error(e.getMessage());
@@ -117,7 +129,7 @@ public class PortfolioTradeController implements Features {
 
   @Override
   public void costBasis(String portfolio, LocalDate date) {
-    try{
+    try {
       Double costBasis = model.get(portfolio).costBasis(date);
       view.display("The cost basis for the portfolio is $"+costBasis+"\n");
     }
@@ -128,7 +140,7 @@ public class PortfolioTradeController implements Features {
 
   @Override
   public String composition(String portfolio) {
-    try{
+    try {
       String composition = model.get(portfolio).composition();
       return composition;
     }
@@ -140,7 +152,7 @@ public class PortfolioTradeController implements Features {
 
   @Override
   public String composition(String portfolio, LocalDate date) {
-    try{
+    try {
       String composition = model.get(portfolio).composition(date);
       return composition;
     }
@@ -203,8 +215,13 @@ public class PortfolioTradeController implements Features {
       this.model.createStrategy(name, strategyBuilder.build());
       view.display("Strategy created successfully\n");
     }
+<<<<<<< Updated upstream
     catch(IllegalArgumentException e ){
       view.error(e.getMessage());
+=======
+    catch (IllegalArgumentException e ){
+      view.display(e.getMessage());
+>>>>>>> Stashed changes
     }
 
   }
@@ -221,8 +238,16 @@ public class PortfolioTradeController implements Features {
       this.model.get(portfolioName).applyStrategy(strategy);
       view.display("Strategy applied successfully to the portfolio\n");
     }
+<<<<<<< Updated upstream
     catch (IllegalArgumentException | UnsupportedOperationException e) {
       view.error(e.getMessage());
+=======
+    catch (IllegalArgumentException e) {
+      view.display(e.getMessage());
+    }
+    catch (UnsupportedOperationException e) {
+      view.display(e.getMessage());
+>>>>>>> Stashed changes
     }
   }
 }

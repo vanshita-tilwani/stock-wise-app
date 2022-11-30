@@ -57,7 +57,7 @@ public class TransactionalStockTrade extends AbstractStockTrade {
       throw new IllegalArgumentException("The Stock Market is closed on the specified date."
               + "Invalid trade Date.\n");
     }
-    var amount = principal * weight/100;
+    var amount = principal * weight / 100;
     var currentVal = this.stock.price(tradeDate);
     this.quantity = amount / currentVal;
     this.tradeDate = tradeDate;

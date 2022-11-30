@@ -3,6 +3,9 @@ package model.strategy;
 import java.time.LocalDate;
 import java.util.Map;
 
+/**
+ * Class Implementing the Investment strategy.
+ */
 public class InvestmentStrategy implements Strategy {
 
   protected final Double principal;
@@ -78,9 +81,9 @@ public class InvestmentStrategy implements Strategy {
 
     @Override
     public Strategy build() {
-      if(this.totalWeight != 100.0) {
-        throw new IllegalArgumentException("The strategy could not be created due to invalid" +
-                " stock percentages\n");
+      if (this.totalWeight != 100.0) {
+        throw new IllegalArgumentException("The strategy could not be created due to invalid"
+                + " stock percentages\n");
       }
       return new InvestmentStrategy(this.principal, this.weights, this.commission, this.start,
               this.end, this.frequency);

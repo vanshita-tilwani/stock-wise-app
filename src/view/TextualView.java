@@ -15,12 +15,26 @@ import java.util.Scanner;
 import controller.Features;
 import model.utility.Utility;
 
+<<<<<<< Updated upstream
+=======
+/**
+ * A class to implement the textual view.
+ */
+>>>>>>> Stashed changes
 public class TextualView implements View {
 
   Map<Integer, Runnable> commands;
   private final Scanner scanner;
   private final PrintStream out;
 
+<<<<<<< Updated upstream
+=======
+  /**
+   * Constructor to initialise the variables.
+   * @param input input stream
+   * @param out output stream
+   */
+>>>>>>> Stashed changes
   public TextualView(InputStream input, OutputStream out) {
     this.scanner = new Scanner(input);
     this.out = new PrintStream(out);
@@ -30,26 +44,26 @@ public class TextualView implements View {
   @Override
   public void addFeatures(Features features) {
     this.initializeFeatures(features);
-    while(true) {
-      String menuOptions = "Main Menu :\n" +
-              "1.  Create a new Simulated Portfolio\n" +
-              "2.  Create a new Transactional Portfolio\n" +
-              "3.  Purchase a Stock and Add it to Transactional Portfolio\n" +
-              "4.  Sell a Stock from the Transactional Portfolio\n" +
-              "5.  Get all the available Portfolios in the Application\n" +
-              "6.  Get final composition for an Existing Portfolio \n" +
-              "7.  Get composition for an Existing Portfolio at a specific date\n" +
-              "8.  Get the total value on an Existing Portfolio\n" +
-              "9.  Get the cost basis of an Existing Transactional Portfolio\n" +
-              "10. Get the performance of an Existing Portfolio over a period of time\n" +
-              "11. Save an Existing Portfolio to file\n" +
-              "12. Load portfolios to the Application\n" +
-              "13. Create a one time investment strategy\n" +
-              "14. Create a recurring investment strategy\n" +
-              "15. Get all the existing strategies\n" +
-              "16. Apply a strategy to a portfolio\n" +
-              "Enter the menu option you wish to choose.\n" +
-              "Press and enter any other key to exit the application.\n";
+    while (true) {
+      String menuOptions = "Main Menu :\n"
+              + "1.  Create a new Simulated Portfolio\n"
+              + "2.  Create a new Transactional Portfolio\n"
+              + "3.  Purchase a Stock and Add it to Transactional Portfolio\n"
+              + "4.  Sell a Stock from the Transactional Portfolio\n"
+              + "5.  Get all the available Portfolios in the Application\n"
+              + "6.  Get final composition for an Existing Portfolio \n"
+              + "7.  Get composition for an Existing Portfolio at a specific date\n"
+              + "8.  Get the total value on an Existing Portfolio\n"
+              + "9.  Get the cost basis of an Existing Transactional Portfolio\n"
+              + "10. Get the performance of an Existing Portfolio over a period of time\n"
+              + "11. Save an Existing Portfolio to file\n"
+              + "12. Load portfolios to the Application\n"
+              + "13. Create a one time investment strategy\n"
+              + "14. Create a recurring investment strategy\n"
+              + "15. Get all the existing strategies\n"
+              + "16. Apply a strategy to a portfolio\n"
+              + "Enter the menu option you wish to choose.\n"
+              + "Press and enter any other key to exit the application.\n";
       this.display(menuOptions);
       int menu = this.readMenu();
       if (!commands.containsKey(menu)) {
@@ -64,35 +78,46 @@ public class TextualView implements View {
   private void initializeFeatures(Features features) {
     commands.put(1, () ->
         features.createInflexiblePortfolio(this.readTradeName(),
+<<<<<<< Updated upstream
                 this.readTradeData(false))
     );
     commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName());});
+=======
+                this.readTradeData(false));
+      }
+      catch (NumberFormatException e) {
+        this.display("Please make sure you input valid "
+                + "number of stocks/quantity of stocks.\n");
+      }
+    });
+    commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName()); } );
+>>>>>>> Stashed changes
     commands.put(3, () -> { features.buyStock(this.readTradeName(),
             this.readStockSymbol(),
             this.readShares(),
             this.readDateOfTransaction(),
-            this.readCommissionFee());});
+            this.readCommissionFee()); } );
     commands.put(4, () -> {features.sellStock(this.readTradeName(),
             this.readStockSymbol(),
             this.readShares(),
             this.readDateOfTransaction(),
-            this.readCommissionFee());});
+            this.readCommissionFee()); } );
     commands.put(5, () -> {
       var portfolios = features.getPortfolios();
       String result = portfolios.size() > 0 ?
               "Portfolio Names : \n" + String.join("\n", portfolios)+"\n"
               : "The application does not contain any portfolio.\n";
       this.display(result);
-    });
+    } );
     commands.put(6, () -> {
       var composition = features.composition(this.readTradeName());
       this.display(composition);
-    });
+    } );
     commands.put(7, () -> {
       var composition = features.composition(this.readTradeName(),
             this.readDateOfEvaluation());
       this.display(composition);
-    });
+    } );
     commands.put(8, () -> {features.value(this.readTradeName(),
             this.readDateOfEvaluation());});
     commands.put(9, () -> {features.costBasis(this.readTradeName(),
@@ -104,14 +129,14 @@ public class TextualView implements View {
       var values = features.values(portfolio,
             from,
             to);
-      if(values != null) {
+      if (values != null) {
         this.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
         this.drawGraph(values);
       }
-    });
+    } );
     commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
-    commands.put(13, () ->{
+    commands.put(13, () -> {
       String name = this.readStrategyName();
       Double principal = this.readPrincipal();
       var trade = this.readTradeData(true);
@@ -124,7 +149,7 @@ public class TextualView implements View {
               date,
               1,
               commission
-    );});
+    ); } );
     commands.put(14, () ->
       features.createStrategy(this.readStrategyName(),
               this.readPrincipal(),
@@ -136,11 +161,11 @@ public class TextualView implements View {
     ));
     commands.put(15, () -> {
       var strategies = features.getAllStrategy();
-      String result = strategies.size() > 0 ?
-              "Strategy Names : \n" + String.join("\n", strategies)+"\n"
+      String result = strategies.size() > 0
+              ? "Strategy Names : \n" + String.join("\n", strategies) + "\n"
               : "The application does not contain any strategy.\n";
       this.display(result);
-    });
+    } );
     commands.put(16, () -> features.applyStrategy(this.readTradeName(),
             this.readStrategyName()));
   }
@@ -178,14 +203,14 @@ public class TextualView implements View {
     boolean parsed = false;
     boolean isOngoing = false;
     String input = "";
-    while(!parsed) {
+    while (!parsed) {
       this.display("Do you wish to enter a end trade for the strategy?(y/n)\n");
       input = this.input();
-      if(input.equals("y") ||  input.equals("Y") ) {
+      if (input.equals("y") ||  input.equals("Y") ) {
         isOngoing = true;
         parsed = true;
       }
-      else if(input.equals("n") || input.equals("N")) {
+      else if (input.equals("n") || input.equals("N")) {
         isOngoing = false;
         parsed = true;
       }
@@ -261,7 +286,7 @@ public class TextualView implements View {
       try {
         String input = this.input();
         shares = Double.parseDouble(input);
-        if(shares <=100 && shares >0) {
+        if (shares <= 100 && shares > 0) {
           parsed = true;
         }
         else {
@@ -388,14 +413,14 @@ public class TextualView implements View {
       try {
         this.display("Enter the number of stocks you wish to purchase\n");
         stocks = Integer.parseInt(this.input());
-        if(stocks > 0) {
+        if (stocks > 0) {
           parsed = true;
         }
         else {
           this.display("Invalid number of stocks\n");
         }
       }
-      catch(NumberFormatException e) {
+      catch (NumberFormatException e) {
         this.display("Invalid number of stocks\n");
       }
     }

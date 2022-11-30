@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
+
 import javax.swing.UIManager;
 
 import controller.Features;
