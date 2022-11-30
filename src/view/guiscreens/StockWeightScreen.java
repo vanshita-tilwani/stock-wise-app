@@ -60,7 +60,8 @@ public class StockWeightScreen extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(f ->
+    this.submit.addActionListener(f ->{
+            if(this.isInputsValid()) {
             features.createStrategy(this.name,
             this.principal,
             this.toStockData(),
@@ -68,8 +69,10 @@ public class StockWeightScreen extends AbstractScreen {
             this.endDate,
             this.frequency,
             this.commission
-            ));
+            );
+            }});
   }
+
 
   private Map<String, Double> toStockData() {
     var map = new HashMap<String, Double>();
@@ -78,5 +81,37 @@ public class StockWeightScreen extends AbstractScreen {
               Double.parseDouble(percentage.get(i).getText()));
     }
     return map;
+  }
+
+  private boolean isInputsValid() {
+    Double totalPercentage = 0.0;
+    for(int i = 0; i < stockTickers.size(); i ++) {
+      var ticker = stockTickers.get(i);
+      if(ticker == null || ticker.getText().isEmpty() || ticker.getText().isBlank()) {
+        this.error("Invalid Ticker Symbol. Please enter again and try.");
+        return false;
+      }
+      try {
+        var percentage = this.percentage.get(i).getText();
+        Double percent = toDouble(percentage);
+        if(percent <= 0){
+          this.error("Invalid Ticker Symbol. Please enter again and try.");
+          return false;
+        }
+      }
+      catch(NumberFormatException e) {
+        this.error("Invalid Percentage Value. Please enter again and try.");
+      }
+      if(totalPercentage + toDouble(this.percentage.get(i).getText()) > 100) {
+        this.error("Invalid percentages. Please enter again and try");
+        return false;
+      }
+      totalPercentage += toDouble(this.percentage.get(i).getText());
+    }
+    if(totalPercentage != 100) {
+      this.error("Invalid percentages. Please enter again and try");
+      return false;
+    }
+    return true;
   }
 }

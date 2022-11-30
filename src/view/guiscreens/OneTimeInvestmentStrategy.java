@@ -36,8 +36,8 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
 
     JPanel principalDetails = new JPanel();
     this.principal = new JTextField(10);
-    var principalLabel = new JLabel("Enter the principal amount : ");
-    this.principal.setToolTipText("Enter the principal amount");
+    var principalLabel = new JLabel("Enter the principal amount(in dollars) : ");
+    this.principal.setToolTipText("Enter the principal amount(in dollars)");
     principalDetails.add(principalLabel);
     principalDetails.add(this.principal);
 
@@ -86,29 +86,40 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void display(String text) {
-    this.frame.display(text);
+    if(this.frame != null) {
+      this.frame.display(text);
+    }
+    else {
+      super.display(text);
+    }
   }
 
   @Override
   public void error(String text) {
-    this.frame.error(text);
+    if(this.frame != null) {
+      this.frame.error(text);
+    }
+    else {
+      super.error(text);
+    }
   }
 
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
-      this.setVisibility(false);
-      this.frame = new StockWeightScreen(this.name.getText(),
-            toDouble(this.principal.getText()),
-            toInt(this.stocks),
-            this.getDate(),
-            this.getDate(),
-            1,
-            toDouble(this.commission));
-      var listeners = this.back.getActionListeners();
-      this.frame.bindListener(listeners[0]);
-      this.frame.addFeatures(features);
-
+      if(this.isInputsValid()) {
+        this.setVisibility(false);
+        this.frame = new StockWeightScreen(this.name.getText(),
+                toDouble(this.principal.getText()),
+                toInt(this.stocks),
+                this.getDate(),
+                this.getDate(),
+                1,
+                toDouble(this.commission));
+        var listeners = this.back.getActionListeners();
+        this.frame.bindListener(listeners[0]);
+        this.frame.addFeatures(features);
+      }
     });
   }
 
@@ -124,5 +135,42 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     Date dateFromPicker = (Date) this.date.getModel().getValue();
     LocalDate date = dateFromPicker.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     return date;
+  }
+
+  private boolean isInputsValid() {
+
+    if(this.name == null  || this.name.getText().trim().isBlank() ||
+            this.name.getText().trim().isEmpty()){
+      this.error("Invalid Strategy Name. Please enter again and try");
+      return false;
+    }
+    if(!this.isPrincipalAmountValid()) {
+      this.error("Invalid Principal Amount. Please enter again and try");
+      return false;
+    }
+    if(toInt(this.stocks) <= 0) {
+      this.error("Invalid number of shares. Please enter and try again");
+      return false;
+    }
+    if(this.getDate().isAfter(LocalDate.now())) {
+      this.error("The selected date is in future.\nPlease select " +
+              "a new date and try again");
+      return false;
+    }
+    if(toInt(this.commission) < 0) {
+      this.error("Invalid Commission Fee. Please enter and try again");
+      return false;
+    }
+    return true;
+  }
+
+  private boolean isPrincipalAmountValid() {
+    try {
+      var principal = Double.parseDouble(this.principal.getText());
+      return principal > 0;
+    }
+    catch (NumberFormatException e) {
+      return false;
+    }
   }
 }

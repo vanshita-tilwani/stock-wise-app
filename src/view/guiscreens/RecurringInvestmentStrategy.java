@@ -41,8 +41,8 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
     JPanel principalDetails = new JPanel();
     this.principal = new JTextField(10);
-    var principalLabel = new JLabel("Enter the principal amount : ");
-    this.principal.setToolTipText("Enter the principal amount");
+    var principalLabel = new JLabel("Enter the principal amount(in dollars) : ");
+    this.principal.setToolTipText("Enter the principal amount(in dollars)");
     principalDetails.add(principalLabel);
     principalDetails.add(this.principal);
 
@@ -116,12 +116,22 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void display(String text) {
-    this.frame.display(text);
+    if(this.frame != null) {
+      this.frame.display(text);
+    }
+    else {
+      super.display(text);
+    }
   }
 
   @Override
   public void error(String text) {
-    this.frame.error(text);
+    if(this.frame != null) {
+      this.frame.error(text);
+    }
+    else {
+      super.error(text);
+    }
   }
 
   @Override
@@ -135,17 +145,19 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
-      this.setVisibility(false);
-      this.frame = new StockWeightScreen(this.name.getText(),
-              toDouble(this.principal.getText()),
-              toInt(this.stocks),
-              this.getDate(this.startDate),
-              this.isOngoing.isSelected() ? null : this.getDate(this.endDate),
-              toInt(this.frequency),
-              toDouble(this.commission));
-      var listeners = this.back.getActionListeners();
-      this.frame.bindListener(listeners[0]);
-      this.frame.addFeatures(features);
+      if(isInputsValid()) {
+        this.setVisibility(false);
+        this.frame = new StockWeightScreen(this.name.getText(),
+                toDouble(this.principal.getText()),
+                toInt(this.stocks),
+                this.getDate(this.startDate),
+                this.isOngoing.isSelected() ? null : this.getDate(this.endDate),
+                toInt(this.frequency),
+                toDouble(this.commission));
+        var listeners = this.back.getActionListeners();
+        this.frame.bindListener(listeners[0]);
+        this.frame.addFeatures(features);
+      }
 
     });
   }
@@ -154,5 +166,52 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
     Date dateFromPicker = (Date) date.getModel().getValue();
     return dateFromPicker.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+  }
+
+  private boolean isInputsValid() {
+
+    if(this.name == null  || this.name.getText().trim().isBlank() ||
+            this.name.getText().trim().isEmpty()){
+      this.error("Invalid Strategy Name. Please enter again and try");
+      return false;
+    }
+    if(!this.isPrincipalAmountValid()) {
+      this.error("Invalid Principal Amount. Please enter again and try");
+      return false;
+    }
+    if(toInt(this.stocks) <= 0) {
+      this.error("Invalid number of shares. Please enter and try again");
+      return false;
+    }
+    if(this.getDate(this.startDate).isAfter(LocalDate.now())) {
+      this.error("The selected date is in future.\nPlease select " +
+              "a new date and try again");
+      return false;
+    }
+    if(!this.isOngoing.isSelected() &&
+            this.getDate(this.endDate).isBefore(this.getDate(this.startDate))) {
+      this.error("The selected end date is before start date.\nPlease select " +
+              "a new date and try again");
+      return false;
+    }
+    if(toInt(this.frequency) <= 0) {
+      this.error("Invalid Frequency. Please enter and try again");
+      return false;
+    }
+    if(toInt(this.commission) < 0) {
+      this.error("Invalid Commission Fee. Please enter and try again");
+      return false;
+    }
+    return true;
+  }
+
+  private boolean isPrincipalAmountValid() {
+    try {
+      var principal = Double.parseDouble(this.principal.getText());
+      return principal > 0;
+    }
+    catch (NumberFormatException e) {
+      return false;
+    }
   }
 }
