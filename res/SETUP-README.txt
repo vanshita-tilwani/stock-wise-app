@@ -152,20 +152,12 @@ COMMAND LINE INTERFACE
 6. A message saying portfolio has successfully created will be displayed on your screen.
 
 
-Steps to create a transactional portfolio with 3 different stock trades
+Steps to create a transactional portfolio
 
 1. Enter 2. 
 2. Enter name of the portfolio-> sample1
-3. You will be prompted to input the number of stocks for the portfolio, Enter->3.
-4. Enter the stock symbol you wish to buy-> AAPL
-5. Enter the number of shares you wish to buy->1
-6. Enter the date of the transaction -> 2022-10-24
-7. Enter the commission fee associated with the transaction -> 10
-6. Repeat steps 4 to 7.
-   6.1 GOOG->1->2022-10-28->10
-   6.2 NOW->2->2022-11-04->10
-7. A message saying portfolio has successfully created will be displayed on your screen.
-[2->sample1->3->AAPL->1->2022-10-24->10->GOOG->1->2022-10-28->10->NOW->2->2022-11-04->10]
+3. A message will be displayed saying Portfolio is created sucessfully.
+[2->sample1]
 
 Steps to add more stocks in the portfolio
 1. Enter->3. 
@@ -212,7 +204,6 @@ Steps to sell stocks in transactional portfolio
 4. Enter the number of shares
 5. Enter the date
 6. Enter the commission
-
 
 Steps to get all available portfolios
 1. Choose option 5
