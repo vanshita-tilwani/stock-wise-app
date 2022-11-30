@@ -117,4 +117,16 @@ public class UtilityTest {
     Assert.assertEquals(1.0E8, scale, 0.1);
   }
 
+  @Test
+  public void scale8() {
+    double scale = Utility.scale(2000, 0);
+    Assert.assertEquals(50, scale, 0.1);
+  }
+
+  @Test
+  public void scale9() {
+    double scale = Utility.scale(71000, 0);
+    Assert.assertEquals(2000, scale, 0.1);
+  }
+
 }

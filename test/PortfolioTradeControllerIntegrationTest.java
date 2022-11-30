@@ -1490,17 +1490,61 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   @Test
-  public void createRecurringStrategy_WithEndDate() {
+  public void createAndApplyRecurringStrategy_WithEndDate() {
     try {
-      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\ny\n" +
-              "2022-10-28\n1\n0\n15";
+      String input = "2\nsample1\n14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-24\ny\n" +
+              "2022-10-28\n1\n0\n15\n16\nsample1\ns1\n7\nsample1\n2022-10-26";
       this.setup(input);
+      String composition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : sample1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 14.894013845386866\n" +
+              "Stock Symbol : AAPL,Quantity : 9.975573251076106\n" +
+              "Stock Symbol : IBM,Quantity : 11.23298902018278\n" +
+              "Stock Symbol : NOW,Quantity : 4.056081874162479\n" +
+              "------ END ------\n";
       String expected = "Strategy created successfully";
       String expectedStrategy = "Strategy Names : \n"+
               "s1\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
       Assert.assertTrue(actual.contains(expectedStrategy));
+      Assert.assertTrue(actual.contains(composition));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createAndApplyMultipleRecurringStrategy_WithEndDate() {
+    try {
+      String input = "2\nsample1\n" +
+              "14\ns1\n2000\n1\ngoog\n100\n2022-10-24\ny\n2022-10-28\n1\n0\n" +
+              "14\ns2\n1000\n1\naapl\n100\n2022-10-24\nn\n1\n0\n" +
+              "13\ns3\n2000\n1\nnow\n100\n2022-10-24\n0\n"+
+              "15\n" +
+              "16\nsample1\ns1\n" +
+              "16\nsample1\ns2\n" +
+              "16\nsample1\ns3\n" +
+              "7\nsample1\n2022-10-24\n";
+      this.setup(input);
+      String composition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : sample1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 19.423132951345053\n" +
+              "Stock Symbol : AAPL,Quantity : 6.691201070592172\n" +
+              "Stock Symbol : NOW,Quantity : 5.456132693147097\n" +
+              "------ END ------\n";
+      String expected = "Strategy created successfully";
+      String expectedStrategy = "Strategy Names : \n" +
+              "s3\n" +
+              "s1\n" +
+              "s2\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+      Assert.assertTrue(actual.contains(expectedStrategy));
+      Assert.assertTrue(actual.contains(composition));
     }
     catch (Exception e) {
       Assert.fail();
@@ -1533,6 +1577,33 @@ public class PortfolioTradeControllerIntegrationTest {
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
       Assert.assertTrue(actual.contains(expectedStrategy));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void applyRecurringStrategy_Frequency1() {
+    try {
+      String input = "14\ns1\n2000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-23\nn\n" +
+              "10\n0\n" +
+              "2\ns1\n" +
+              "16\ns1\ns1\n" +
+              "6\ns1";
+      this.setup(input);
+      String expectedComposition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 21.174181461749246\n" +
+              "Stock Symbol : AAPL,Quantity : 13.693699157344208\n" +
+              "Stock Symbol : IBM,Quantity : 14.323842830173367\n" +
+              "Stock Symbol : NOW,Quantity : 5.137467129321508\n" +
+              "------ END ------\n";
+      String expected = "Strategy applied successfully to the portfolio\n";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+      Assert.assertTrue(actual.contains(expectedComposition));
     }
     catch (Exception e) {
       Assert.fail();
