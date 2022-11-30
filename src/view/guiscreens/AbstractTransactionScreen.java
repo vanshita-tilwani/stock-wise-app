@@ -109,25 +109,29 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
   }
 
   private boolean isInputsValid() {
-    boolean valid = true;
     if(this.getTrade() == null) {
-      valid = false;
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
-    }
-    if(this.getDate().isAfter(LocalDate.now())) {
-      valid = false;
-      this.error("The selected evaluation date is in future.\nPlease select " +
-              "a new date and try again");
+      return false;
     }
     if(this.stock == null || this.stock.getText().trim().isBlank() ||
             this.stock.getText().trim().isEmpty()) {
-      valid = false;
       this.error("The stock ticker entered is invalid. Please enter and try again");
+      return false;
     }
-    if(!this.shares.isValid()) {
-      System.out.println("HI");
+    if(toInt(this.shares) <= 0) {
+      this.error("Invalid number of shares. Please enter and try again");
+      return false;
     }
-    return valid;
+    if(this.getDate().isAfter(LocalDate.now())) {
+      this.error("The selected evaluation date is in future.\nPlease select " +
+              "a new date and try again");
+      return false;
+    }
+    if(toInt(this.commission) < 0) {
+      this.error("Invalid commission fee. Please enter and try again");
+      return false;
+    }
+    return true;
   }
 
 

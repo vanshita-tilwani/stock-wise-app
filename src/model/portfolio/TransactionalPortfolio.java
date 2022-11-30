@@ -70,6 +70,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   @Override
   public void sell(String stock, Double shares, LocalDate date, Double commission)
           throws IllegalArgumentException, UnsupportedOperationException {
+    Stock stockImpl = new StockImpl(stock);
     // predicate to get all available shares with trade date before the specified date
     Predicate<Trade<Stock>> predicate = x -> x.get().equals(new StockImpl(stock))
             && !x.tradeDate().isAfter(date);
