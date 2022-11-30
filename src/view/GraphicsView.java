@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import javax.swing.UIManager;
 
 import controller.Features;
@@ -15,15 +14,15 @@ import view.guiscreens.ApplyStrategyToPortfolio;
 import view.guiscreens.BarChart;
 import view.guiscreens.BuyStock;
 import view.guiscreens.CreatePortfolio;
-import view.guiscreens.OneTimeInvestmentStrategy;
-import view.guiscreens.RecurringInvestmentStrategy;
-import view.guiscreens.SavePortfolio;
-import view.guiscreens.Screen;
 import view.guiscreens.LoadPortfolio;
 import view.guiscreens.MainScreen;
+import view.guiscreens.OneTimeInvestmentStrategy;
 import view.guiscreens.PortfolioComposition;
 import view.guiscreens.PortfolioCostBasis;
 import view.guiscreens.PortfolioValue;
+import view.guiscreens.RecurringInvestmentStrategy;
+import view.guiscreens.SavePortfolio;
+import view.guiscreens.Screen;
 import view.guiscreens.SellStock;
 
 /**

@@ -4,8 +4,6 @@ package view.guiscreens;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.JFrame;
-
 import controller.Features;
 
 /**
@@ -27,8 +25,12 @@ public class AllPortfolio extends AbstractScreen {
   @Override
   public void addFeatures(Features features) {
     var frame = this;
-    this.addComponentListener(new ComponentAdapter() {
+    this.addComponentListener(onComponentLoad(features));
+  }
 
+  private ComponentAdapter onComponentLoad(Features features) {
+    var frame = this;
+    return new ComponentAdapter() {
       @Override
       public void componentShown(ComponentEvent e) {
         var portfolios = features.getPortfolios();
@@ -38,7 +40,7 @@ public class AllPortfolio extends AbstractScreen {
         }
         frame.display(result);
         frame.pack();
-      }}
-    );
+      }
+    };
   }
 }

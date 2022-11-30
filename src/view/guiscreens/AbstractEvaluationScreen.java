@@ -1,20 +1,29 @@
 package view.guiscreens;
 
 import org.jdatepicker.impl.JDatePickerImpl;
-import java.awt.*;
+
+import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 import controller.Features;
 
-public abstract class AbstractEvaluationScreen extends AbstractScreen {
+/**
+ * Creates a screen for portfolio evaluations.
+ */
+abstract class AbstractEvaluationScreen extends AbstractScreen {
   private final JComboBox<String> portfolioName;
   private final JDatePickerImpl date;
+
+  /**
+   * Initializes a screen for portfolio evaluations.
+   */
   public AbstractEvaluationScreen(String caption) {
     super(caption, "");
 
@@ -37,7 +46,7 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
   public void addFeatures(Features features) {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
     this.submit.addActionListener(e -> {
-      if(isInputsValid()) {
+      if (isInputsValid()) {
         String name = this.getComboBoxValue(this.portfolioName);
         LocalDate date = this.getLocalDate(this.date);
         this.evaluateTrade(features, name, date);
@@ -49,11 +58,10 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
 
   private boolean isInputsValid() {
     boolean valid = true;
-    if(this.getComboBoxValue(this.portfolioName) == null) {
+    if (this.getComboBoxValue(this.portfolioName) == null) {
       valid = false;
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
-    }
-    else if(this.getLocalDate(this.date).isAfter(LocalDate.now())) {
+    } else if (this.getLocalDate(this.date).isAfter(LocalDate.now())) {
       valid = false;
       this.error("The selected evaluation date is in future.\nPlease select " +
               "a new date and try again");

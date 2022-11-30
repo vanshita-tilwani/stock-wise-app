@@ -1,6 +1,6 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -8,10 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JTextField;
+import javax.swing.JComponent;
 
 import controller.Features;
 
+/**
+ * Screen get the weights of the stocks in the strategy.
+ */
 public class StockWeightScreen extends AbstractScreen {
 
   private final String name;
@@ -25,6 +29,16 @@ public class StockWeightScreen extends AbstractScreen {
   private final List<JTextField> stockTickers;
   private final List<JTextField> percentage;
 
+  /**
+   * Initializes the screen to input stock weights for each stock in the strategy.
+   * @param name name of the strategy.
+   * @param principal the principal amount to be invested.
+   * @param stocks the number of stocks containing in the strategy.
+   * @param startDate the start date of the strategy.
+   * @param endDate the end date of the strategy.
+   * @param frequency the frequency of recurring strategy.
+   * @param commission the commission fee for the strategy.
+   */
   public StockWeightScreen(String name, Double principal, int stocks, LocalDate startDate,
                            LocalDate endDate, int frequency, double commission) {
     super("Trading Application - Enter Stock Weightage", "");
@@ -43,7 +57,7 @@ public class StockWeightScreen extends AbstractScreen {
 
   private void initComponents() {
     List<Map.Entry<String, JComponent>> components = new ArrayList<>();
-    for(int i = 0; i < this.stocks; i++) {
+    for (int i = 0; i < this.stocks; i++) {
       var stockField = this.createTextField("");
       this.stockTickers.add(stockField);
 
@@ -62,56 +76,56 @@ public class StockWeightScreen extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(f ->{
-            if(this.isInputsValid()) {
-            features.createStrategy(this.name,
-            this.principal,
-            this.toStockData(),
-            this.startDate,
-            this.endDate,
-            this.frequency,
-            this.commission
-            );
-            }});
+    this.submit.addActionListener(f -> {
+      if (this.isInputsValid()) {
+        features.createStrategy(this.name,
+                this.principal,
+                this.toStockData(),
+                this.startDate,
+                this.endDate,
+                this.frequency,
+                this.commission
+        );
+      }
+    });
   }
 
 
   private Map<String, Double> toStockData() {
     var map = new HashMap<String, Double>();
-    for(int i = 0; i < stocks; i ++){
+    for (int i = 0; i < stocks; i++) {
       map.put(stockTickers.get(i).getText(),
-              map.getOrDefault(stockTickers.get(i).getText(),0.0)+
-              Double.parseDouble(percentage.get(i).getText()));
+              map.getOrDefault(stockTickers.get(i).getText(), 0.0) +
+                      Double.parseDouble(percentage.get(i).getText()));
     }
     return map;
   }
 
   private boolean isInputsValid() {
     Double totalPercentage = 0.0;
-    for(int i = 0; i < stockTickers.size(); i ++) {
+    for (int i = 0; i < stockTickers.size(); i++) {
       var ticker = stockTickers.get(i);
-      if(ticker == null || ticker.getText().isEmpty() || ticker.getText().isBlank()) {
+      if (ticker == null || ticker.getText().isEmpty() || ticker.getText().isBlank()) {
         this.error("Invalid Ticker Symbol. Please enter again and try.");
         return false;
       }
       try {
         var percentage = this.percentage.get(i).getText();
         Double percent = toDouble(percentage);
-        if(percent <= 0){
+        if (percent <= 0) {
           this.error("Invalid Ticker Symbol. Please enter again and try.");
           return false;
         }
-      }
-      catch(NumberFormatException e) {
+      } catch (NumberFormatException e) {
         this.error("Invalid Percentage Value. Please enter again and try.");
       }
-      if(totalPercentage + toDouble(this.percentage.get(i).getText()) > 100) {
+      if (totalPercentage + toDouble(this.percentage.get(i).getText()) > 100) {
         this.error("Invalid percentages. Please enter again and try");
         return false;
       }
       totalPercentage += toDouble(this.percentage.get(i).getText());
     }
-    if(totalPercentage != 100) {
+    if (totalPercentage != 100) {
       this.error("Invalid percentages. Please enter again and try");
       return false;
     }

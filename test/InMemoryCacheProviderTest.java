@@ -13,7 +13,7 @@ public class InMemoryCacheProviderTest {
 
   public InMemoryCacheProviderTest() {
     this.cache = new InMemoryCacheProvider<>();
-    this.cache.put("AAPL","120");
+    this.cache.put("AAPL", "120");
   }
 
 
@@ -33,7 +33,7 @@ public class InMemoryCacheProviderTest {
 
   @Test
   public void putDefaultDataProvider() {
-    this.cache.put("MSFT","150");
+    this.cache.put("MSFT", "150");
     var value = this.cache.get("MSFT");
     Assert.assertEquals("150", value);
   }

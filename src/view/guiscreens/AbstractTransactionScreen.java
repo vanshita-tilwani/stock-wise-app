@@ -1,25 +1,25 @@
 package view.guiscreens;
 
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 import controller.Features;
 
-public abstract class AbstractTransactionScreen extends AbstractScreen {
+/**
+ * Creates a screen for portfolio transactions.
+ */
+abstract class AbstractTransactionScreen extends AbstractScreen {
 
   private final JComboBox<String> portfolioName;
   private final JDatePickerImpl date;
@@ -27,6 +27,9 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
   private final JSpinner shares;
   private final JSpinner commission;
 
+  /**
+   * Initializes a screen for portfolio transactions.
+   */
   public AbstractTransactionScreen(String caption) {
     super(caption, "");
 
@@ -61,7 +64,7 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
 
     this.submit.addActionListener(e -> {
-      if(this.isInputsValid()) {
+      if (this.isInputsValid()) {
         LocalDate date = this.getLocalDate(this.date);
         String name = this.getComboBoxValue(this.portfolioName);
         this.performTrade(features, name, this.stock.getText(), toDouble(this.shares), date,
@@ -77,25 +80,25 @@ public abstract class AbstractTransactionScreen extends AbstractScreen {
 
 
   private boolean isInputsValid() {
-    if(this.getComboBoxValue(this.portfolioName) == null) {
+    if (this.getComboBoxValue(this.portfolioName) == null) {
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
       return false;
     }
-    if(this.stock == null || this.stock.getText().trim().isBlank() ||
+    if (this.stock == null || this.stock.getText().trim().isBlank() ||
             this.stock.getText().trim().isEmpty()) {
       this.error("The stock ticker entered is invalid. Please enter and try again");
       return false;
     }
-    if(toInt(this.shares) <= 0) {
+    if (toInt(this.shares) <= 0) {
       this.error("Invalid number of shares. Please enter and try again");
       return false;
     }
-    if(this.getLocalDate(this.date).isAfter(LocalDate.now())) {
+    if (this.getLocalDate(this.date).isAfter(LocalDate.now())) {
       this.error("The selected evaluation date is in future.\nPlease select " +
               "a new date and try again");
       return false;
     }
-    if(toInt(this.commission) < 0) {
+    if (toInt(this.commission) < 0) {
       this.error("Invalid commission fee. Please enter and try again");
       return false;
     }

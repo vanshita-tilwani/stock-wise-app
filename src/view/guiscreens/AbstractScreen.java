@@ -5,7 +5,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -14,9 +15,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
-public abstract class AbstractScreen extends JFrame implements Screen {
+abstract class AbstractScreen extends JFrame implements Screen {
   protected final JLabel message;
   protected final JButton submit;
   protected final JButton back;
@@ -87,12 +96,12 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     return Double.parseDouble(value.getValue() + "");
   }
 
-  protected Integer toInt(JSpinner value) {
-    return Integer.parseInt(value.getValue() + "");
-  }
-
   protected Double toDouble(String value) {
     return Double.parseDouble(value);
+  }
+
+  protected Integer toInt(JSpinner value) {
+    return Integer.parseInt(value.getValue() + "");
   }
 
   protected JDatePickerImpl createDateField(String tooltip) {
@@ -147,13 +156,12 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     var mainPanel = new JPanel();
 
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    for(var each : panels) {
+    for (var each : panels) {
       JPanel panel = new JPanel();
       panel.add(new JLabel(each.getKey()));
       panel.add(each.getValue());
       mainPanel.add(panel);
     }
-    mainPanel.add(new JScrollPane());
     return mainPanel;
   }
 

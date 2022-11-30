@@ -2,6 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+
 import model.dataparser.DataParserFactory;
 import model.dataparser.SimulatedPortfolioParser;
 import model.dataparser.TransactionalPortfolioParser;

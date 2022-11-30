@@ -1,18 +1,26 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 import controller.Features;
 
+/**
+ * Screen to apply an investment strategy to the portfolio.
+ */
 public class ApplyStrategyToPortfolio extends AbstractScreen {
   private final JComboBox<String> portfolioName;
   private final JComboBox<String> strategyName;
+
+  /**
+   * Initializes a screen to apply an investment strategy to the portfolio.
+   */
   public ApplyStrategyToPortfolio() {
     super("Trading Window - Apply Strategy to Portfolio", "");
 
@@ -34,22 +42,22 @@ public class ApplyStrategyToPortfolio extends AbstractScreen {
   public void addFeatures(Features features) {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
     features.getAllStrategy().forEach(e -> this.strategyName.addItem(e));
-    this.submit.addActionListener(f ->{
-            if(isInputsValid()) {
-            features.applyStrategy(
-            this.getComboBoxValue(this.portfolioName),
-            this.getComboBoxValue(this.strategyName));
-    }
+    this.submit.addActionListener(f -> {
+      if (isInputsValid()) {
+        features.applyStrategy(
+                this.getComboBoxValue(this.portfolioName),
+                this.getComboBoxValue(this.strategyName));
+      }
     });
   }
 
 
   private boolean isInputsValid() {
-    if(this.getComboBoxValue(this.portfolioName) == null) {
-        this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
-        return false;
+    if (this.getComboBoxValue(this.portfolioName) == null) {
+      this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
+      return false;
     }
-    if(this.getComboBoxValue(this.strategyName) == null) {
+    if (this.getComboBoxValue(this.strategyName) == null) {
       this.error("Invalid Strategy Selected. Please select a strategy and try again");
       return false;
     }

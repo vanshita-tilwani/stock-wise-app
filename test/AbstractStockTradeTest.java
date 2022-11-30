@@ -1,6 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.time.LocalDate;
+
 import model.stock.Stock;
 import model.trade.Trade;
 

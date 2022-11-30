@@ -1,25 +1,25 @@
 package view.guiscreens;
 
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 import controller.Features;
 
+/**
+ * Screen to create a fixed one time investment strategy.
+ */
 public class OneTimeInvestmentStrategy extends AbstractScreen {
 
   protected final JTextField name;
@@ -31,11 +31,19 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
   protected JPanel mainPanel;
   protected Screen frame;
 
+  /**
+   * Initializes a screen to create fixed one time investment strategy.
+   */
   public OneTimeInvestmentStrategy() {
     this("Trading Application - Create One Time Strategy");
     renderFrame();
   }
 
+  /**
+   * Initializes a screen to create fixed one time investment strategy with caption.
+   *
+   * @param caption The caption for the screen.
+   */
   public OneTimeInvestmentStrategy(String caption) {
     super(caption, "");
     this.name = this.createTextField("Enter the strategy name");
@@ -79,20 +87,18 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void display(String text) {
-    if(this.frame != null) {
+    if (this.frame != null) {
       this.frame.display(text);
-    }
-    else {
+    } else {
       super.display(text);
     }
   }
 
   @Override
   public void error(String text) {
-    if(this.frame != null) {
+    if (this.frame != null) {
       this.frame.error(text);
-    }
-    else {
+    } else {
       super.error(text);
     }
   }
@@ -100,7 +106,7 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
-      if(this.isInputsValid()) {
+      if (this.isInputsValid()) {
         this.setVisibility(false);
         this.frame = new StockWeightScreen(this.name.getText(),
                 toDouble(this.principal.getText()),
@@ -118,7 +124,7 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void disposeScreen() {
-    if(frame != null) {
+    if (frame != null) {
       this.frame.disposeScreen();
     }
     super.disposeScreen();
@@ -126,10 +132,10 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
 
 
   protected boolean isInputsValid() {
-    if(!validateItems()) {
+    if (!validateItems()) {
       return false;
     }
-    if(this.getLocalDate(this.date).isAfter(LocalDate.now())) {
+    if (this.getLocalDate(this.date).isAfter(LocalDate.now())) {
       this.error("The selected date is in future.\nPlease select " +
               "a new date and try again");
       return false;
@@ -138,20 +144,20 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
   }
 
   protected boolean validateItems() {
-    if(this.name == null  || this.name.getText().trim().isBlank() ||
-            this.name.getText().trim().isEmpty()){
+    if (this.name == null || this.name.getText().trim().isBlank() ||
+            this.name.getText().trim().isEmpty()) {
       this.error("Invalid Strategy Name. Please enter again and try");
       return false;
     }
-    if(!this.isPrincipalAmountValid()) {
+    if (!this.isPrincipalAmountValid()) {
       this.error("Invalid Principal Amount. Please enter again and try");
       return false;
     }
-    if(toInt(this.stocks) <= 0) {
+    if (toInt(this.stocks) <= 0) {
       this.error("Invalid number of shares. Please enter and try again");
       return false;
     }
-    if(toInt(this.commission) < 0) {
+    if (toInt(this.commission) < 0) {
       this.error("Invalid Commission Fee. Please enter and try again");
       return false;
     }
@@ -162,8 +168,7 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     try {
       var principal = Double.parseDouble(this.principal.getText());
       return principal > 0;
-    }
-    catch (NumberFormatException e) {
+    } catch (NumberFormatException e) {
       return false;
     }
   }

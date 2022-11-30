@@ -1,5 +1,7 @@
 package view.guiscreens;
 
+import org.jdatepicker.impl.JDatePickerImpl;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,24 +11,16 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 import controller.Features;
 
@@ -75,26 +69,26 @@ public class BarChart extends AbstractScreen {
   }
 
   private void validateAndRenderChart(ActionEvent e, Features features) {
-    if(isInputsValid()) {
+    if (isInputsValid()) {
       String portfolioName = this.getComboBoxValue(this.portfolios);
-      LocalDate f = this.getLocalDate(this.from), t = this.getLocalDate(this.to);
+      LocalDate f = this.getLocalDate(this.from);
+      LocalDate t = this.getLocalDate(this.to);
       var data = features.values(portfolioName, f, t);
       draw(data);
     }
   }
 
   private boolean isInputsValid() {
-    LocalDate f = this.getLocalDate(this.from), t = this.getLocalDate(this.to);
-    if(this.getComboBoxValue(this.portfolios) == null) {
+    LocalDate f = this.getLocalDate(this.from);
+    LocalDate t = this.getLocalDate(this.to);
+    if (this.getComboBoxValue(this.portfolios) == null) {
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
       return false;
-    }
-    else if(f.isAfter(LocalDate.now()) || t.isAfter(LocalDate.now())) {
+    } else if (f.isAfter(LocalDate.now()) || t.isAfter(LocalDate.now())) {
       this.error("The selected evaluation date is in future.\nPlease select " +
               "a new date and try again");
       return false;
-    }
-    else if(f.isAfter(t)) {
+    } else if (f.isAfter(t)) {
       this.error("The selected from date should be less than to date.");
       return false;
     }
@@ -152,7 +146,7 @@ public class BarChart extends AbstractScreen {
 
       int count = 0;
       for (var element : data.entrySet()) {
-        int eachbarHeight = (int)(element.getValue() * this.height / max);
+        int eachbarHeight = (int) (element.getValue() * this.height / max);
         int eachBarWidth = barWidth - gap;
         int xCoord = margin + barWidth * count;
         int yCoord = this.y - eachbarHeight;

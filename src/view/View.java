@@ -12,12 +12,14 @@ public interface View {
 
   /**
    * Reads input from the user.
+   *
    * @return Input string
    */
   String input();
 
   /**
    * Used to display information to user.
+   *
    * @param message display message.
    */
   void display(String message);

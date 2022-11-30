@@ -7,7 +7,6 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Features;
@@ -38,16 +37,7 @@ public class LoadPortfolio extends AbstractScreen {
   public void addFeatures(Features features) {
     var frame = this;
     this.file.addPropertyChangeListener("JFileChooserDialogIsClosingProperty",
-            new PropertyChangeListener() {
-              @Override
-              public void propertyChange(PropertyChangeEvent evt) {
-                File selectedFile = file.getSelectedFile();
-                if (selectedFile != null) {
-                  frame.setVisibility(true);
-                  features.load(selectedFile.getAbsolutePath());
-                }
-              }
-            });
+            dialogListener(features, file));
     file.setDialogTitle("Specify a file to open");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
     file.setAcceptAllFileFilterUsed(false);
@@ -55,5 +45,19 @@ public class LoadPortfolio extends AbstractScreen {
     file.showOpenDialog(this);
 
 
+  }
+
+  private PropertyChangeListener dialogListener(Features features, JFileChooser file) {
+    var frame = this;
+    return new PropertyChangeListener() {
+      @Override
+      public void propertyChange(PropertyChangeEvent evt) {
+        File selectedFile = file.getSelectedFile();
+        if (selectedFile != null) {
+          frame.setVisibility(true);
+          features.load(selectedFile.getAbsolutePath());
+        }
+      }
+    };
   }
 }

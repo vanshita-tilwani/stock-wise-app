@@ -26,8 +26,9 @@ public class TextualView implements View {
 
   /**
    * Constructor to initialise the variables.
+   *
    * @param input input stream
-   * @param out output stream
+   * @param out   output stream
    */
   public TextualView(InputStream input, OutputStream out) {
     this.scanner = new Scanner(input);
@@ -70,55 +71,51 @@ public class TextualView implements View {
   }
 
   private void initializeFeatures(Features features) {
-    commands.put(1, () ->
-        features.createInflexiblePortfolio(this.readTradeName(),
-                this.readTradeData(false))
-   );
-    commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName()); } );
-    commands.put(3, () -> { features.buyStock(this.readTradeName(),
+    commands.put(1, () -> features.createInflexiblePortfolio(this.readTradeName(),
+            this.readTradeData(false)));
+    commands.put(2, () -> features.createFlexiblePortfolio(this.readTradeName()));
+    commands.put(3, () -> features.buyStock(this.readTradeName(),
             this.readStockSymbol(),
             this.readShares(),
             this.readDateOfTransaction(),
-            this.readCommissionFee()); } );
-    commands.put(4, () -> { features.sellStock(this.readTradeName(),
+            this.readCommissionFee()));
+    commands.put(4, () -> features.sellStock(this.readTradeName(),
             this.readStockSymbol(),
             this.readShares(),
             this.readDateOfTransaction(),
-            this.readCommissionFee()); } );
+            this.readCommissionFee()));
     commands.put(5, () -> {
       var portfolios = features.getPortfolios();
       String result = portfolios.size() > 0
               ? "Portfolio Names : \n" + String.join("\n", portfolios) + "\n"
               : "The application does not contain any portfolio.\n";
       this.display(result);
-    } );
+    });
     commands.put(6, () -> {
       var composition = features.composition(this.readTradeName());
       this.display(composition);
-    } );
+    });
     commands.put(7, () -> {
       var composition = features.composition(this.readTradeName(),
-            this.readDateOfEvaluation());
+              this.readDateOfEvaluation());
       this.display(composition);
-    } );
-    commands.put(8, () -> { features.value(this.readTradeName(),
-            this.readDateOfEvaluation()); } );
-    commands.put(9, () -> { features.costBasis(this.readTradeName(),
-            this.readDateOfEvaluation()); } );
+    });
+    commands.put(8, () -> features.value(this.readTradeName(), this.readDateOfEvaluation()));
+    commands.put(9, () -> features.costBasis(this.readTradeName(), this.readDateOfEvaluation()));
     commands.put(10, () -> {
       var portfolio = this.readTradeName();
       LocalDate from = this.readStartDate();
       LocalDate to = this.readEndDate();
       var values = features.values(portfolio,
-            from,
-            to);
+              from,
+              to);
       if (values != null) {
         this.display("Performance of portfolio " + portfolio + " from " + from + " to " + to
                 + "\n");
         this.drawGraph(values);
       }
     });
-    commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
+    commands.put(11, () -> features.save("res/portfolio.txt", this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
     commands.put(13, () -> {
       String name = this.readStrategyName();
@@ -132,28 +129,27 @@ public class TextualView implements View {
               date,
               date,
               1,
-              commission
-    ); } );
+              commission);
+    });
     commands.put(14, () ->
             features.createStrategy(this.readStrategyName(),
-              this.readPrincipal(),
-              this.readTradeData(true),
-              this.readStartDate(),
-              this.isOngoingStrategy() ? this.readEndDate() : null,
-              this.readFrequency(),
-              this.readCommissionFee()
-    ));
+                    this.readPrincipal(),
+                    this.readTradeData(true),
+                    this.readStartDate(),
+                    this.isOngoingStrategy() ? this.readEndDate() : null,
+                    this.readFrequency(),
+                    this.readCommissionFee()
+            ));
     commands.put(15, () -> {
       var strategies = features.getAllStrategy();
       String result = strategies.size() > 0
               ? "Strategy Names : \n" + String.join("\n", strategies) + "\n"
               : "The application does not contain any strategy.\n";
       this.display(result);
-    } );
+    });
     commands.put(16, () -> features.applyStrategy(this.readTradeName(),
             this.readStrategyName()));
   }
-
 
 
   @Override
@@ -190,15 +186,13 @@ public class TextualView implements View {
     while (!parsed) {
       this.display("Do you wish to enter a end trade for the strategy?(y/n)\n");
       input = this.input();
-      if (input.equals("y") ||  input.equals("Y") ) {
+      if (input.equals("y") || input.equals("Y")) {
         isOngoing = true;
         parsed = true;
-      }
-      else if (input.equals("n") || input.equals("N")) {
+      } else if (input.equals("n") || input.equals("N")) {
         isOngoing = false;
         parsed = true;
-      }
-      else {
+      } else {
         this.display("Invalid Input\n");
       }
     }
@@ -214,8 +208,7 @@ public class TextualView implements View {
         amount = Double.parseDouble(this.input());
         if (amount > 0) {
           isParsed = true;
-        }
-        else {
+        } else {
           this.display("Invalid amount entered\n");
         }
       } catch (NumberFormatException ex) {
@@ -273,8 +266,7 @@ public class TextualView implements View {
         shares = Double.parseDouble(input);
         if (shares <= 100 && shares > 0) {
           parsed = true;
-        }
-        else {
+        } else {
           this.display("Invalid weight\n");
           this.display("Please Enter the weight of stock again\n");
         }
@@ -296,8 +288,7 @@ public class TextualView implements View {
         shares = Double.parseDouble(input);
         if (shares > 0) {
           parsed = true;
-        }
-        else {
+        } else {
           this.display("Invalid number of shares\n");
           this.display("Please enter the number of shares again.\n");
         }
@@ -387,7 +378,7 @@ public class TextualView implements View {
         }
         totalShares += shares;
       }
-      stockData.put(stock, stockData.getOrDefault(stock,0.0) + shares);
+      stockData.put(stock, stockData.getOrDefault(stock, 0.0) + shares);
     }
     // parse the map to set of trades and return the resultant
     return stockData;
@@ -402,12 +393,10 @@ public class TextualView implements View {
         stocks = Integer.parseInt(this.input());
         if (stocks > 0) {
           parsed = true;
-        }
-        else {
+        } else {
           this.display("Invalid number of stocks\n");
         }
-      }
-      catch (NumberFormatException e) {
+      } catch (NumberFormatException e) {
         this.display("Invalid number of stocks\n");
       }
     }
@@ -425,8 +414,7 @@ public class TextualView implements View {
         frequency = Integer.parseInt(input);
         if (frequency > 0) {
           parsed = true;
-        }
-        else {
+        } else {
           this.display("Invalid Frequency Amount\n");
         }
       } catch (NumberFormatException e) {

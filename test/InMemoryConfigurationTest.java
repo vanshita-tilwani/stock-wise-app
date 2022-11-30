@@ -26,7 +26,7 @@ public class InMemoryConfigurationTest {
 
   @Test
   public void putDefaultDataProvider() {
-    this.configuration.put("data-provider","MOCKAPI");
+    this.configuration.put("data-provider", "MOCKAPI");
     var value = this.configuration.get("data-provider");
     Assert.assertEquals("MOCKAPI", value);
   }
@@ -47,7 +47,7 @@ public class InMemoryConfigurationTest {
 
   @Test
   public void zSet() {
-    this.configuration.put("data-provider","WEBAPI");
+    this.configuration.put("data-provider", "WEBAPI");
     var value = this.configuration.get("data-provider");
     Assert.assertEquals("WEBAPI", value);
   }

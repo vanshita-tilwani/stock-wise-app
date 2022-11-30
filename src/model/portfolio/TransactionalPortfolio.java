@@ -28,8 +28,6 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   private final Set<Trade<Stock>> purchased;
   private final Set<Trade<Stock>> sold;
 
-  private final Set<Strategy> strategies;
-
   /**
    * Creates a Transactional Portfolio used to make stock trades by the user.
    * This portfolio support trading (i.e. purchase/sale) of the stock trades within the
@@ -46,7 +44,6 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     super(name);
     this.purchased = purchased;
     this.sold = sold;
-    this.strategies = new HashSet<>();
   }
 
   @Override

@@ -7,7 +7,6 @@ import controller.PortfolioTradeController;
 import model.datarepo.DataRepository;
 import model.datarepo.FileRepository;
 import model.stocktradings.PortfolioTradeOperation;
-
 import view.GraphicsView;
 import view.TextualView;
 import view.View;
@@ -23,7 +22,7 @@ public class ProgramRunner {
    * @param args arguments to run the method.
    */
 
-  public static void main(String[] args)  {
+  public static void main(String[] args) {
     Map<Integer, Runnable> menuOptions = getCommands();
     System.out.println("Choose the type of view you wish to proceed with?");
     System.out.println("1. Console Based View");
@@ -41,6 +40,7 @@ public class ProgramRunner {
 
   /**
    * Gets a map of commands.
+   *
    * @return returns map of commands
    */
   public static Map<Integer, Runnable> getCommands() {

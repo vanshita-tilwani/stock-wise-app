@@ -25,13 +25,10 @@ public class DataParserFactory {
     if (type == null) {
       return null;
     }
-    switch (type) {
-      case SIMULATED:
-        parser = new SimulatedPortfolioParser();
-        break;
-      case TRANSACTIONAL:
-        parser = new TransactionalPortfolioParser();
-        break;
+    if (type == PortfolioType.SIMULATED) {
+      parser = new SimulatedPortfolioParser();
+    } else if (type == PortfolioType.TRANSACTIONAL) {
+      parser = new TransactionalPortfolioParser();
     }
     return parser;
   }
