@@ -34,31 +34,37 @@ public class SavePortfolio extends AbstractScreen {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
 
     this.submit.addActionListener(e -> {
+      if(this.getTradeName() != null) {
+        JFileChooser file = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt");
+        file.setFileFilter(filter);
+        file.setDialogTitle("Specify a file to save");
+        var frame = this;
+        file.addPropertyChangeListener("JFileChooserDialogIsClosingProperty",
+                new PropertyChangeListener() {
+                  @Override
+                  public void propertyChange(PropertyChangeEvent evt) {
+                    String path = file.getSelectedFile().getAbsolutePath() + ".txt";
+                    features.save(path,
+                            frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
+                    System.out.println();
+                  }
+                });
 
-      JFileChooser file = new JFileChooser();
-      FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt");
-      file.setFileFilter(filter);
-      file.setDialogTitle("Specify a file to save");
-      var frame = this;
-      file.addPropertyChangeListener("JFileChooserDialogIsClosingProperty",
-              new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                  String path = file.getSelectedFile().getAbsolutePath() + ".txt";
-                  features.save(path,
-                          frame.portfolioName.getItemAt(frame.portfolioName.getSelectedIndex()));
-                  System.out.println();
-                }
-              });
-
-      file.setAcceptAllFileFilterUsed(false);
-      file.showSaveDialog(this);
+        file.setAcceptAllFileFilterUsed(false);
+        file.showSaveDialog(this);
+      }
+      else {
+        this.error("Invalid Portfolio Selected. Please select a portfolio and try again\n");
+      }
 
     });
-    /*this.
-    file.setDialogTitle("Specify a file to open");
-    file.showOpenDialog(this);*/
 
 
+  }
+
+  private String getTradeName() {
+    int index = this.portfolioName.getSelectedIndex();
+    return this.portfolioName.getItemAt(index);
   }
 }

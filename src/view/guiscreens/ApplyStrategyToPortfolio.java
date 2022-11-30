@@ -41,14 +41,28 @@ public class ApplyStrategyToPortfolio extends AbstractScreen {
   public void addFeatures(Features features) {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
     features.getAllStrategy().forEach(e -> this.strategyName.addItem(e));
-    this.submit.addActionListener(f -> features.applyStrategy(
+    this.submit.addActionListener(f -> {
+      if(this.isInputsValid()){
+      features.applyStrategy(
             this.get(this.portfolioName),
             this.get(this.strategyName)
-    ));
+    );}});
   }
 
   private String get(JComboBox<String> comboBoxList) {
     int index = comboBoxList.getSelectedIndex();
     return comboBoxList.getItemAt(index);
+  }
+
+  private boolean isInputsValid() {
+    if(this.get(this.portfolioName) == null) {
+        this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
+        return false;
+    }
+    if(this.get(this.strategyName) == null) {
+      this.error("Invalid Strategy Selected. Please select a strategy and try again");
+      return false;
+    }
+    return true;
   }
 }
