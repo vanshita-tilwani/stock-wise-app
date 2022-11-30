@@ -1,14 +1,28 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Color;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 import controller.Features;
 
+
+/**
+ * A class for the main screen in teh GUI.
+ */
 public class MainScreen extends JFrame implements Screen {
 
   private final JButton submit;
@@ -16,6 +30,10 @@ public class MainScreen extends JFrame implements Screen {
   private final List<JRadioButton> menuOptions;
 
   private JLabel output;
+
+  /**
+   * Constructor to initialise the variables.
+   */
   public MainScreen() {
     super();
     setTitle("Welcome to Trading Application");
@@ -66,6 +84,7 @@ public class MainScreen extends JFrame implements Screen {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
   }
+
   @Override
   public void display(String text) {
     this.output.setText(text);

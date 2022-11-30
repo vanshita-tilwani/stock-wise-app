@@ -1,19 +1,30 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JFileChooser;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Features;
 
+/**
+ * GUI for save portfolio.
+ */
 public class SavePortfolio extends AbstractScreen {
 
   private final JComboBox<String> portfolioName;
 
+  /**
+   * Constructor to initialise the variables.
+   */
   public SavePortfolio() {
     super("Trading Application - Portfolio Save Window","");
     JPanel portfolioDetails = new JPanel();
@@ -35,7 +46,7 @@ public class SavePortfolio extends AbstractScreen {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
 
     this.submit.addActionListener(e -> {
-      if(this.getTradeName() != null) {
+      if (this.getTradeName() != null) {
         JFileChooser file = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt");
         file.setFileFilter(filter);
@@ -45,7 +56,7 @@ public class SavePortfolio extends AbstractScreen {
                 new PropertyChangeListener() {
                   @Override
                   public void propertyChange(PropertyChangeEvent evt) {
-                    File selectedFile= file.getSelectedFile();
+                    File selectedFile = file.getSelectedFile();
                     if(selectedFile != null) {
                       String path = selectedFile.getAbsolutePath() + ".txt";
                       features.save(path,

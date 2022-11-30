@@ -1,16 +1,22 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
 
 import controller.Features;
 
+/**
+ * GUI for the stock weight screen.
+ */
 public class StockWeightScreen extends AbstractScreen {
 
   private final String name;
@@ -24,6 +30,16 @@ public class StockWeightScreen extends AbstractScreen {
   private final List<JTextField> stockTickers;
   private final List<JTextField> percentage;
 
+  /**
+   * Constructor to initialise.
+   * @param name name of the screen.
+   * @param principal the investment
+   * @param stocks the number of stocks
+   * @param startDate the start date
+   * @param endDate the end date
+   * @param frequency the frequency
+   * @param commission the commission
+   */
   public StockWeightScreen(String name, Double principal, int stocks, LocalDate startDate,
                            LocalDate endDate, int frequency, double commission) {
     super("Trading Application - Enter Stock Weightage", "");
@@ -37,7 +53,7 @@ public class StockWeightScreen extends AbstractScreen {
     this.stockTickers = new ArrayList<>();
     this.percentage = new ArrayList<>();
     JPanel mainPanel = new JPanel();
-    for(int i = 0; i < this.stocks; i ++) {
+    for (int i = 0; i < this.stocks; i ++) {
       JPanel stockPanel = new JPanel();
       var stockLabel = new JLabel("Enter the stock symbol : ");
       this.stockTickers.add(new JTextField(10));
@@ -60,8 +76,8 @@ public class StockWeightScreen extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(f ->{
-            if(this.isInputsValid()) {
+    this.submit.addActionListener(f -> {
+            if (this.isInputsValid()) {
             features.createStrategy(this.name,
             this.principal,
             this.toStockData(),
@@ -70,45 +86,45 @@ public class StockWeightScreen extends AbstractScreen {
             this.frequency,
             this.commission
             );
-            }});
+            } } );
   }
 
 
   private Map<String, Double> toStockData() {
     var map = new HashMap<String, Double>();
-    for(int i = 0; i < stocks; i ++){
-      map.put(stockTickers.get(i).getText(), map.getOrDefault(stockTickers.get(i).getText(),0.0)+
-              Double.parseDouble(percentage.get(i).getText()));
+    for(int i = 0; i < stocks; i ++) {
+      map.put(stockTickers.get(i).getText(), map.getOrDefault(stockTickers.get(i).getText(),0.0) 
+              + Double.parseDouble(percentage.get(i).getText()));
     }
     return map;
   }
 
   private boolean isInputsValid() {
     Double totalPercentage = 0.0;
-    for(int i = 0; i < stockTickers.size(); i ++) {
+    for (int i = 0; i < stockTickers.size(); i ++) {
       var ticker = stockTickers.get(i);
-      if(ticker == null || ticker.getText().isEmpty() || ticker.getText().isBlank()) {
+      if (ticker == null || ticker.getText().isEmpty() || ticker.getText().isBlank()) {
         this.error("Invalid Ticker Symbol. Please enter again and try.");
         return false;
       }
       try {
         var percentage = this.percentage.get(i).getText();
         Double percent = toDouble(percentage);
-        if(percent <= 0){
+        if (percent <= 0) {
           this.error("Invalid Ticker Symbol. Please enter again and try.");
           return false;
         }
       }
-      catch(NumberFormatException e) {
+      catch (NumberFormatException e) {
         this.error("Invalid Percentage Value. Please enter again and try.");
       }
-      if(totalPercentage + toDouble(this.percentage.get(i).getText()) > 100) {
+      if (totalPercentage + toDouble(this.percentage.get(i).getText()) > 100) {
         this.error("Invalid percentages. Please enter again and try");
         return false;
       }
       totalPercentage += toDouble(this.percentage.get(i).getText());
     }
-    if(totalPercentage != 100) {
+    if (totalPercentage != 100) {
       this.error("Invalid percentages. Please enter again and try");
       return false;
     }

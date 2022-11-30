@@ -5,16 +5,25 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.BoxLayout;
 
 import controller.Features;
 
+/**
+ * GUI for Dollar cost averaging.
+ */
 public class RecurringInvestmentStrategy extends AbstractScreen {
 
   private final JTextField name;
@@ -29,6 +38,9 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   private Screen frame;
 
+  /**
+   * A constructor to initialise the caption.
+   */
   public RecurringInvestmentStrategy() {
     super("Trading Application - Create One Time Strategy" ,"");
 
@@ -116,7 +128,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void display(String text) {
-    if(this.frame != null) {
+    if (this.frame != null) {
       this.frame.display(text);
     }
     else {
@@ -126,7 +138,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void error(String text) {
-    if(this.frame != null) {
+    if (this.frame != null) {
       this.frame.error(text);
     }
     else {
@@ -136,7 +148,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   @Override
   public void disposeScreen() {
-    if(frame != null) {
+    if (frame != null) {
       this.frame.disposeScreen();
     }
     super.disposeScreen();
@@ -145,7 +157,7 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
-      if(isInputsValid()) {
+      if (isInputsValid()) {
         this.setVisibility(false);
         this.frame = new StockWeightScreen(this.name.getText(),
                 toDouble(this.principal.getText()),
@@ -170,35 +182,35 @@ public class RecurringInvestmentStrategy extends AbstractScreen {
 
   private boolean isInputsValid() {
 
-    if(this.name == null  || this.name.getText().trim().isBlank() ||
-            this.name.getText().trim().isEmpty()){
+    if (this.name == null  || this.name.getText().trim().isBlank()
+            || this.name.getText().trim().isEmpty()) {
       this.error("Invalid Strategy Name. Please enter again and try");
       return false;
     }
-    if(!this.isPrincipalAmountValid()) {
+    if (!this.isPrincipalAmountValid()) {
       this.error("Invalid Principal Amount. Please enter again and try");
       return false;
     }
-    if(toInt(this.stocks) <= 0) {
+    if (toInt(this.stocks) <= 0) {
       this.error("Invalid number of shares. Please enter and try again");
       return false;
     }
-    if(this.getDate(this.startDate).isAfter(LocalDate.now())) {
-      this.error("The selected date is in future.\nPlease select " +
-              "a new date and try again");
+    if (this.getDate(this.startDate).isAfter(LocalDate.now())) {
+      this.error("The selected date is in future.\nPlease select "
+              + "a new date and try again");
       return false;
     }
-    if(!this.isOngoing.isSelected() &&
-            this.getDate(this.endDate).isBefore(this.getDate(this.startDate))) {
-      this.error("The selected end date is before start date.\nPlease select " +
-              "a new date and try again");
+    if (!this.isOngoing.isSelected()
+            && this.getDate(this.endDate).isBefore(this.getDate(this.startDate))) {
+      this.error("The selected end date is before start date.\nPlease select "
+              + "a new date and try again");
       return false;
     }
-    if(toInt(this.frequency) <= 0) {
+    if (toInt(this.frequency) <= 0) {
       this.error("Invalid Frequency. Please enter and try again");
       return false;
     }
-    if(toInt(this.commission) < 0) {
+    if (toInt(this.commission) < 0) {
       this.error("Invalid Commission Fee. Please enter and try again");
       return false;
     }
