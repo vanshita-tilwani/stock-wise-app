@@ -1527,7 +1527,8 @@ public class PortfolioTradeControllerIntegrationTest {
               "16\nsample1\ns1\n" +
               "16\nsample1\ns2\n" +
               "16\nsample1\ns3\n" +
-              "7\nsample1\n2022-10-24\n";
+              "7\nsample1\n2022-10-24\n"+
+              "8\nsample1\n2022-10-24\n";
       this.setup(input);
       String composition = "TYPE : TRANSACTIONAL\n" +
               "Portfolio Name : sample1\n" +
@@ -1545,6 +1546,26 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.assertTrue(actual.contains(expected));
       Assert.assertTrue(actual.contains(expectedStrategy));
       Assert.assertTrue(actual.contains(composition));
+      Assert.assertTrue(actual.contains("The value of portfolio is $5000.0\n"));
+    }
+    catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void applyOneTimeStrategy() {
+    try {
+      String input = "13\ns1\n2000\n4\nNFLX\n25\naapl\n25\nnow\n25\nibm\n25\n2022-10-28\n0\n" +
+              "2\nsample1\n" +
+              "16\nsample1\ns1\n" +
+              "8\nsample1\n2022-10-28\n";
+      this.setup(input);
+      String expectedValue = "The value of portfolio is $2000.0";
+      String expected = "Strategy created successfully";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+      Assert.assertTrue(actual.contains(expectedValue));
     }
     catch (Exception e) {
       Assert.fail();
