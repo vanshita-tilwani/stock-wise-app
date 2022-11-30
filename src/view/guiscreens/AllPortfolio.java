@@ -40,7 +40,12 @@ public class AllPortfolio extends AbstractScreen {
         }
         frame.display(result);
         frame.pack();
+<<<<<<< Updated upstream
       }
     };
+=======
+      } }
+    );
+>>>>>>> Stashed changes
   }
 }
