@@ -77,13 +77,8 @@ public class PortfolioTradeController implements Features {
       this.model.create(portfolio);
       this.view.display("The portfolio is created successfully!\n");
     }
-<<<<<<< Updated upstream
     catch(IllegalArgumentException e) {
       view.error(e.getMessage());
-=======
-    catch (IllegalArgumentException e) {
-      this.view.display(e.getMessage());
->>>>>>> Stashed changes
     }
   }
 
@@ -121,6 +116,7 @@ public class PortfolioTradeController implements Features {
   public void value(String portfolio, LocalDate date) {
     try {
       Double value = model.get(portfolio).value(date);
+      view.display("The value of portfolio is $"+value+"\n");
     }
     catch (IllegalArgumentException e) {
       view.error(e.getMessage());
@@ -215,13 +211,8 @@ public class PortfolioTradeController implements Features {
       this.model.createStrategy(name, strategyBuilder.build());
       view.display("Strategy created successfully\n");
     }
-<<<<<<< Updated upstream
     catch(IllegalArgumentException e ){
       view.error(e.getMessage());
-=======
-    catch (IllegalArgumentException e ){
-      view.display(e.getMessage());
->>>>>>> Stashed changes
     }
 
   }
@@ -238,16 +229,8 @@ public class PortfolioTradeController implements Features {
       this.model.get(portfolioName).applyStrategy(strategy);
       view.display("Strategy applied successfully to the portfolio\n");
     }
-<<<<<<< Updated upstream
     catch (IllegalArgumentException | UnsupportedOperationException e) {
       view.error(e.getMessage());
-=======
-    catch (IllegalArgumentException e) {
-      view.display(e.getMessage());
-    }
-    catch (UnsupportedOperationException e) {
-      view.display(e.getMessage());
->>>>>>> Stashed changes
     }
   }
 }

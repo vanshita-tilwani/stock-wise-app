@@ -15,26 +15,20 @@ import java.util.Scanner;
 import controller.Features;
 import model.utility.Utility;
 
-<<<<<<< Updated upstream
-=======
 /**
  * A class to implement the textual view.
  */
->>>>>>> Stashed changes
 public class TextualView implements View {
 
   Map<Integer, Runnable> commands;
   private final Scanner scanner;
   private final PrintStream out;
 
-<<<<<<< Updated upstream
-=======
   /**
    * Constructor to initialise the variables.
    * @param input input stream
    * @param out output stream
    */
->>>>>>> Stashed changes
   public TextualView(InputStream input, OutputStream out) {
     this.scanner = new Scanner(input);
     this.out = new PrintStream(out);
@@ -78,20 +72,9 @@ public class TextualView implements View {
   private void initializeFeatures(Features features) {
     commands.put(1, () ->
         features.createInflexiblePortfolio(this.readTradeName(),
-<<<<<<< Updated upstream
                 this.readTradeData(false))
-    );
-    commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName());});
-=======
-                this.readTradeData(false));
-      }
-      catch (NumberFormatException e) {
-        this.display("Please make sure you input valid "
-                + "number of stocks/quantity of stocks.\n");
-      }
-    });
+   );
     commands.put(2, () -> { features.createFlexiblePortfolio(this.readTradeName()); } );
->>>>>>> Stashed changes
     commands.put(3, () -> { features.buyStock(this.readTradeName(),
             this.readStockSymbol(),
             this.readShares(),

@@ -251,15 +251,8 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   }
 
   private LocalDate nextAvailableDate(LocalDate tradeDate) {
-<<<<<<< Updated upstream
-    if(tradeDate.isAfter(LocalDate.now())) {
-=======
-    if (tradeDate.isAfter(LocalDate.now())) {
->>>>>>> Stashed changes
-      return tradeDate;
-    }
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
-    while (!stockDataProvider.isAvailable(tradeDate)) {
+    while (!stockDataProvider.isAvailable(tradeDate) && !tradeDate.isAfter(LocalDate.now())) {
       tradeDate = tradeDate.plusDays(1);
     }
     return tradeDate;
