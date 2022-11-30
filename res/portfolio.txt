@@ -1,6 +1,0 @@
-TYPE : TRANSACTIONAL
-Portfolio Name : test1
-PURCHASES : 
-Stock Symbol : GOOG,Quantity : 1.0,Date of Purchase : 2022-10-24,Commission Fee : 10.0
-SALE : 
------- END ------

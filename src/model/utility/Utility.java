@@ -23,7 +23,7 @@ public class Utility {
     int delta = 0;
     if (isRangeBetween(ChronoUnit.YEARS, from, to, 1)) {
       delta = 365;
-    } else if (isRangeBetween(ChronoUnit.YEARS, from, to, 4)) {
+    } else if (isRangeBetween(ChronoUnit.MONTHS, from, to, 4)) {
       delta = 120;
     } else if (isRangeBetween(ChronoUnit.MONTHS, from, to, 1)) {
       delta = 30;

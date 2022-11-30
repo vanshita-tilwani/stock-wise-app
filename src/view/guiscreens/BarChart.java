@@ -154,7 +154,7 @@ public class BarChart extends AbstractScreen {
         g.setColor(this.barColors.get(count % this.barColors.size()));
         g.fillRect(xCoord, yCoord, eachBarWidth, eachbarHeight);
 
-        g.setFont(getFont(this.data.size() < 15 ? 0 : -28));
+        g.setFont(getFont(0));
         g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4),
                 yCoord - (margin / 8));
 
@@ -166,7 +166,7 @@ public class BarChart extends AbstractScreen {
     }
 
     private Font getFont(double angle) {
-      Font font = new Font(null, Font.PLAIN, 10);
+      Font font = new Font(null, Font.BOLD, 10);
       AffineTransform affineTransform = new AffineTransform();
       affineTransform.rotate(Math.toRadians(angle), 0, 0);
       return font.deriveFont(affineTransform);
