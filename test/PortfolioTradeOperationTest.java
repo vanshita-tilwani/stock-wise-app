@@ -2,8 +2,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.security.spec.ECField;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,19 +92,19 @@ public class PortfolioTradeOperationTest {
     try {
       Object portfolio1 = this.trade.get("test1");
       Object portfolio2 = this.trade.get("test2");
-      String expectedP1 = "TYPE : SIMULATED\n" +
-              "Portfolio Name : test1\n" +
-              "STOCKS : \n" +
-              "Stock Symbol : GOOG,Quantity : 2.0\n" +
-              "------ END ------\n";
+      String expectedP1 = "TYPE : SIMULATED\n"
+              + "Portfolio Name : test1\n"
+              + "STOCKS : \n"
+              + "Stock Symbol : GOOG,Quantity : 2.0\n"
+              + "------ END ------\n";
 
-      String expectedP2 = "TYPE : TRANSACTIONAL\n" +
-              "Portfolio Name : test2\n" +
-              "PURCHASES : \n" +
-              "Stock Symbol : GOOG,Quantity : 2.0,Date of Purchase : 2016-10-24," +
-              "Commission Fee : 10.0\n" +
-              "SALE : \n" +
-              "------ END ------\n";
+      String expectedP2 = "TYPE : TRANSACTIONAL\n"
+              + "Portfolio Name : test2\n"
+              + "PURCHASES : \n"
+              + "Stock Symbol : GOOG,Quantity : 2.0,Date of Purchase : 2016-10-24,"
+              + "Commission Fee : 10.0\n"
+              + "SALE : \n"
+              + "------ END ------\n";
       Assert.assertNotNull(portfolio1);
       Assert.assertNotNull(portfolio2);
       Assert.assertEquals(expectedP1, portfolio1.toString());
@@ -159,7 +158,7 @@ public class PortfolioTradeOperationTest {
               ArrayList<>(Arrays.asList("test1", "test2"))));
     } catch (IllegalArgumentException e) {
       Assert.fail();
-    }catch (Exception e) {
+    } catch (Exception e) {
       Assert.fail();
     }
   }

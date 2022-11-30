@@ -80,15 +80,15 @@ public class TextualView implements View {
             this.readShares(),
             this.readDateOfTransaction(),
             this.readCommissionFee()); } );
-    commands.put(4, () -> {features.sellStock(this.readTradeName(),
+    commands.put(4, () -> { features.sellStock(this.readTradeName(),
             this.readStockSymbol(),
             this.readShares(),
             this.readDateOfTransaction(),
             this.readCommissionFee()); } );
     commands.put(5, () -> {
       var portfolios = features.getPortfolios();
-      String result = portfolios.size() > 0 ?
-              "Portfolio Names : \n" + String.join("\n", portfolios)+"\n"
+      String result = portfolios.size() > 0
+              ? "Portfolio Names : \n" + String.join("\n", portfolios) + "\n"
               : "The application does not contain any portfolio.\n";
       this.display(result);
     } );
@@ -101,10 +101,10 @@ public class TextualView implements View {
             this.readDateOfEvaluation());
       this.display(composition);
     } );
-    commands.put(8, () -> {features.value(this.readTradeName(),
-            this.readDateOfEvaluation());});
-    commands.put(9, () -> {features.costBasis(this.readTradeName(),
-            this.readDateOfEvaluation());});
+    commands.put(8, () -> { features.value(this.readTradeName(),
+            this.readDateOfEvaluation()); } );
+    commands.put(9, () -> { features.costBasis(this.readTradeName(),
+            this.readDateOfEvaluation()); } );
     commands.put(10, () -> {
       var portfolio = this.readTradeName();
       LocalDate from = this.readStartDate();
@@ -113,10 +113,11 @@ public class TextualView implements View {
             from,
             to);
       if (values != null) {
-        this.display("Performance of portfolio " + portfolio + " from " + from + " to " + to + "\n");
+        this.display("Performance of portfolio " + portfolio + " from " + from + " to " + to
+                + "\n");
         this.drawGraph(values);
       }
-    } );
+    });
     commands.put(11, () -> features.save("res/portfolio.txt",this.readTradeName()));
     commands.put(12, () -> features.load("res/portfolio.txt"));
     commands.put(13, () -> {
@@ -134,7 +135,7 @@ public class TextualView implements View {
               commission
     ); } );
     commands.put(14, () ->
-      features.createStrategy(this.readStrategyName(),
+            features.createStrategy(this.readStrategyName(),
               this.readPrincipal(),
               this.readTradeData(true),
               this.readStartDate(),
@@ -207,11 +208,11 @@ public class TextualView implements View {
   private Double readPrincipal() {
     boolean isParsed = false;
     Double amount = 0.0;
-    while(!isParsed) {
+    while (!isParsed) {
       try {
         this.display("Enter the amount you wish to invest\n");
         amount = Double.parseDouble(this.input());
-        if(amount > 0) {
+        if (amount > 0) {
           isParsed = true;
         }
         else {
@@ -241,6 +242,7 @@ public class TextualView implements View {
     Double scale = Utility.scale(max.intValue(), min.intValue());
     return scale;
   }
+
   private String readTradeName() {
     this.display("Enter the name of the portfolio\n");
     String portfolio = this.input();
@@ -283,6 +285,7 @@ public class TextualView implements View {
     }
     return shares;
   }
+
   private Double readShares() {
     this.display("Enter the number of shares\n");
     boolean parsed = false;
@@ -291,7 +294,7 @@ public class TextualView implements View {
       try {
         String input = this.input();
         shares = Double.parseDouble(input);
-        if(shares > 0) {
+        if (shares > 0) {
           parsed = true;
         }
         else {
@@ -331,6 +334,7 @@ public class TextualView implements View {
       }
     }
   }
+
   private LocalDate readDateOfTransaction() {
     this.display("Enter the date of the transaction (in YYYY-MM-DD format)\n");
     return this.readDateFromUser();
@@ -376,14 +380,14 @@ public class TextualView implements View {
       String stock = this.readStockSymbol();
       // reads the number of shares.
       Double shares = isPercentage ? this.readSharePercentage() : this.readShares();
-      if(isPercentage) {
-        while(totalShares + shares > 100) {
+      if (isPercentage) {
+        while (totalShares + shares > 100) {
           this.display("Invalid Weight for the stock\n");
           shares = this.readSharePercentage();
         }
         totalShares += shares;
       }
-      stockData.put(stock, stockData.getOrDefault(stock,0.0)+shares);
+      stockData.put(stock, stockData.getOrDefault(stock,0.0) + shares);
     }
     // parse the map to set of trades and return the resultant
     return stockData;
@@ -392,7 +396,7 @@ public class TextualView implements View {
   private int readNumberOfStocks() {
     boolean parsed = false;
     int stocks = 0;
-    while(!parsed) {
+    while (!parsed) {
       try {
         this.display("Enter the number of stocks you wish to purchase\n");
         stocks = Integer.parseInt(this.input());
@@ -419,7 +423,7 @@ public class TextualView implements View {
         this.display("Enter the Frequency in days\n");
         String input = this.input();
         frequency = Integer.parseInt(input);
-        if(frequency > 0) {
+        if (frequency > 0) {
           parsed = true;
         }
         else {

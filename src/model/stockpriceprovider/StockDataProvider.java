@@ -29,7 +29,6 @@ public interface StockDataProvider {
    * Checks if the stock data is available for the stock on the specified date. The stock
    * data is not available on Weekends and national holiday for any specified stock.
    *
-   * @param stock the stock that needs to be checked for availability.
    * @param date the date at which the stock data availability needs to be determined.
    * @return if the data is available for the stock on the specified date.
    */

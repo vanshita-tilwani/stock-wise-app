@@ -3,7 +3,6 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -233,6 +232,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
               date, commission));
     }
   }
+
   private void buyPeriodic(Double principal, Map<String, Double> weight, LocalDate beginDate,
                            LocalDate endDate, int frequency, Double commission) {
     LocalDate currDate = beginDate;
