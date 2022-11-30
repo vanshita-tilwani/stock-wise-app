@@ -47,13 +47,13 @@ public class LoggingModel implements TradeOperation<Portfolio> {
 
   @Override
   public Strategy getStrategy(String name) {
-    log.append("getStrategy : "+name+ "\n");
+    log.append("getStrategy : " + name + "\n");
     return null;
   }
 
   @Override
   public void createStrategy(String name, Strategy strategy) {
-    log.append("createStrategy : "+name+ "\n");
+    log.append("createStrategy : " + name + "\n");
   }
 
   @Override

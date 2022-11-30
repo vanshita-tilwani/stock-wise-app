@@ -6,6 +6,9 @@ import org.junit.runners.MethodSorters;
 import model.configuration.Configuration;
 import model.configuration.InMemoryConfiguration;
 
+/**
+ * Test for In Memory Configuration.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InMemoryConfigurationTest {
 
@@ -37,7 +40,7 @@ public class InMemoryConfigurationTest {
   public void allDefaultConfigs() {
     var keys = this.configuration.keys();
     Assert.assertEquals(1, keys.size());
-    for(String key : keys) {
+    for (String key : keys) {
       Assert.assertEquals("data-provider", key);
     }
   }

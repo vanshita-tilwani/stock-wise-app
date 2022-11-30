@@ -4,6 +4,9 @@ import org.junit.Test;
 import model.cache.CacheProvider;
 import model.cache.InMemoryCacheProvider;
 
+/**
+ * Test class for in memory cache Provider.
+ */
 public class InMemoryCacheProviderTest {
 
   private final CacheProvider<String, String> cache;
