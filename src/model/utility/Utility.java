@@ -67,8 +67,8 @@ public class Utility {
   public static double scale(int max, int min) {
     var range = evaluate(max - min, false);
     var tickSpacing = evaluate(range / 50, true);
-    while(max / tickSpacing > 50) {
-      tickSpacing = tickSpacing*2;
+    while (max / tickSpacing > 50) {
+      tickSpacing = tickSpacing * 2;
     }
     return tickSpacing;
   }

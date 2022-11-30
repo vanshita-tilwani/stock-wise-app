@@ -22,7 +22,7 @@ public class DataParserFactory {
    */
   public static DataParser<Portfolio> getParser(PortfolioType type) {
     DataParser<Portfolio> parser = null;
-    if(type == null) {
+    if (type == null) {
       return null;
     }
     switch (type) {

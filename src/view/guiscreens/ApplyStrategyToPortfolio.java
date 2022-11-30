@@ -1,14 +1,25 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 
 import controller.Features;
 
+/**
+ * A class to apply strategies to the portfolio.
+ */
 public class ApplyStrategyToPortfolio extends AbstractScreen {
   private final JComboBox<String> portfolioName;
   private final JComboBox<String> strategyName;
+
+  /**
+   * Constructor to initialise the variables.
+   */
   public ApplyStrategyToPortfolio() {
     super("Trading Window - Apply Strategy to Portfolio", "");
 
@@ -42,11 +53,11 @@ public class ApplyStrategyToPortfolio extends AbstractScreen {
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
     features.getAllStrategy().forEach(e -> this.strategyName.addItem(e));
     this.submit.addActionListener(f -> {
-      if(this.isInputsValid()){
+      if (this.isInputsValid()) {
       features.applyStrategy(
             this.get(this.portfolioName),
             this.get(this.strategyName)
-    );}});
+    ); } } );
   }
 
   private String get(JComboBox<String> comboBoxList) {
@@ -55,11 +66,11 @@ public class ApplyStrategyToPortfolio extends AbstractScreen {
   }
 
   private boolean isInputsValid() {
-    if(this.get(this.portfolioName) == null) {
+    if (this.get(this.portfolioName) == null) {
         this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
         return false;
     }
-    if(this.get(this.strategyName) == null) {
+    if (this.get(this.strategyName) == null) {
       this.error("Invalid Strategy Selected. Please select a strategy and try again");
       return false;
     }

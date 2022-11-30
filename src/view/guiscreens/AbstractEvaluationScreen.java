@@ -5,19 +5,30 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
 
 import controller.Features;
 
+/**
+ * Abstract class to have all the common code.
+ */
 public abstract class AbstractEvaluationScreen extends AbstractScreen {
   private final JComboBox<String> portfolioName;
   private final JDatePickerImpl date;
+
+  /**
+   * Constructor to initialise the variables.
+   * @param caption The caption
+   */
   public AbstractEvaluationScreen(String caption) {
     super(caption, "");
     JPanel portfolioDetails = new JPanel();
@@ -59,7 +70,7 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
     this.submit.addActionListener(e -> {
       String name = this.getTrade();
       LocalDate date = this.getDate();
-      if(isInputsValid()) {
+      if (isInputsValid()) {
         this.evaluateTrade(features, name, date);
       }
 
@@ -80,13 +91,13 @@ public abstract class AbstractEvaluationScreen extends AbstractScreen {
   }
 
   private boolean isInputsValid() {
-    if(this.getTrade() == null) {
+    if (this.getTrade() == null) {
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
       return false;
     }
-    if(this.getDate().isAfter(LocalDate.now())) {
-      this.error("The selected evaluation date is in future.\nPlease select " +
-              "a new date and try again");
+    if (this.getDate().isAfter(LocalDate.now())) {
+      this.error("The selected evaluation date is in future.\nPlease select "
+              + "a new date and try again");
       return false;
     }
     return true;

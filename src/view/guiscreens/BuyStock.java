@@ -1,7 +1,11 @@
 package view.guiscreens;
+
 import java.time.LocalDate;
 import controller.Features;
 
+/**
+ * A class to buy the stock.
+ */
 public class BuyStock extends AbstractTransactionScreen {
 
   public BuyStock() {

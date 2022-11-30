@@ -1,19 +1,28 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Features;
 
+
+/**
+ * A class for loading portfolio in the GUI.
+ */
 public class LoadPortfolio extends AbstractScreen {
 
   private final JFileChooser file;
 
+  /**
+   * Constructor to initialise the variables.
+   */
   public LoadPortfolio() {
     super("Load Portfolio", "");
     file = new JFileChooser();
@@ -34,7 +43,7 @@ public class LoadPortfolio extends AbstractScreen {
               @Override
               public void propertyChange(PropertyChangeEvent evt) {
                 File selectedFile = file.getSelectedFile();
-                if(selectedFile != null) {
+                if (selectedFile != null) {
                   frame.setVisibility(true);
                   features.load(selectedFile.getAbsolutePath());
                 }

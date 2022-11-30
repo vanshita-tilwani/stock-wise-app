@@ -1,10 +1,20 @@
 package view.guiscreens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
+/**
+ * An abstract class containing the common code.
+ */
 public abstract class AbstractScreen extends JFrame implements Screen {
   protected final JLabel message;
   protected final JButton submit;
@@ -76,13 +86,15 @@ public abstract class AbstractScreen extends JFrame implements Screen {
     return Double.parseDouble(value.getValue() + "");
   }
 
+  protected Double toDouble(String value) {
+    return Double.parseDouble(value);
+  }
+
   protected Integer toInt(JSpinner value) {
     return Integer.parseInt(value.getValue() + "");
   }
 
-  protected Double toDouble(String value) {
-    return Double.parseDouble(value);
-  }
+
 
 
 

@@ -22,7 +22,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -31,6 +30,9 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import controller.Features;
 
+/**
+ * Class to implement the Barchart.
+ */
 public class BarChart extends AbstractScreen {
 
 
@@ -43,6 +45,9 @@ public class BarChart extends AbstractScreen {
 
   Box box = new Box(BoxLayout.Y_AXIS);
 
+  /**
+   * Constructor to initialise all the variables.
+   */
   public BarChart() {
 
     super("Show Bar Chart", "Portfolio Performance");
@@ -117,10 +122,12 @@ public class BarChart extends AbstractScreen {
     private static final long serialVersionUID = 8242113760993687819L;
     private final int margin = 20;
     private final Color background = Color.WHITE;
-    private final List<Color> barColors = Arrays.asList(Color.RED, Color.BLUE, Color.GREEN, Color.GRAY,
-            Color.MAGENTA, Color.ORANGE);
+    private final List<Color> barColors = Arrays.asList(Color.RED, Color.BLUE,
+            Color.GREEN, Color.GRAY, Color.MAGENTA, Color.ORANGE);
 
-    private int width, height, y;
+    private int width;
+    private int height;
+    private int y;
     private Map<LocalDate, Double> data;
 
     public BarChartPanel(Map<LocalDate, Double> data) {
@@ -145,7 +152,7 @@ public class BarChart extends AbstractScreen {
       g.setColor(background);
       g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-      if(this.data == null || this.data.size() == 0) {
+      if (this.data == null || this.data.size() == 0) {
         return;
       }
 
@@ -155,7 +162,7 @@ public class BarChart extends AbstractScreen {
 
       int count = 0;
       for (var element : data.entrySet()) {
-        int eachbarHeight = (int)(element.getValue() * this.height/max);
+        int eachbarHeight = (int)(element.getValue() * this.height / max);
         int eachBarWidth = barWidth - gap;
         int xCoord = margin + barWidth * count;
         int yCoord = this.y - eachbarHeight;
@@ -164,10 +171,11 @@ public class BarChart extends AbstractScreen {
         g.fillRect(xCoord, yCoord, eachBarWidth, eachbarHeight);
 
         g.setFont(getFont(this.data.size() < 15 ? 0 : -28));
-        g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4), yCoord - (margin / 8));
+        g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4),
+                yCoord - (margin / 8));
 
         g.setFont(getFont(25));
-        g.drawString(element.getKey().toString(), xCoord, this.y + (margin/2));
+        g.drawString(element.getKey().toString(), xCoord, this.y + (margin / 2));
 
         count += 1;
       }

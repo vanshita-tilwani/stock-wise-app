@@ -26,11 +26,6 @@ public class PortfolioTradeController implements Features {
   private final View view;
   private final TradeOperation<Portfolio> model;
 
-  /**
-   *
-   * @param view
-   * @param model
-   */
 
   /**
    * Constructor to initialise the class variables.
@@ -77,7 +72,7 @@ public class PortfolioTradeController implements Features {
       this.model.create(portfolio);
       this.view.display("The portfolio is created successfully!\n");
     }
-    catch(IllegalArgumentException e) {
+    catch (IllegalArgumentException e) {
       view.error(e.getMessage());
     }
   }
@@ -116,7 +111,7 @@ public class PortfolioTradeController implements Features {
   public void value(String portfolio, LocalDate date) {
     try {
       Double value = model.get(portfolio).value(date);
-      view.display("The value of portfolio is $"+value+"\n");
+      view.display("The value of portfolio is $" + value + "\n");
     }
     catch (IllegalArgumentException e) {
       view.error(e.getMessage());
@@ -127,7 +122,7 @@ public class PortfolioTradeController implements Features {
   public void costBasis(String portfolio, LocalDate date) {
     try {
       Double costBasis = model.get(portfolio).costBasis(date);
-      view.display("The cost basis for the portfolio is $"+costBasis+"\n");
+      view.display("The cost basis for the portfolio is $" + costBasis + "\n");
     }
     catch (UnsupportedOperationException | IllegalArgumentException e) {
       view.error(e.getMessage());
@@ -211,7 +206,7 @@ public class PortfolioTradeController implements Features {
       this.model.createStrategy(name, strategyBuilder.build());
       view.display("Strategy created successfully\n");
     }
-    catch(IllegalArgumentException e ){
+    catch (IllegalArgumentException e ) {
       view.error(e.getMessage());
     }
 

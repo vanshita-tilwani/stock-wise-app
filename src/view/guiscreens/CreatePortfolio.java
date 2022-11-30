@@ -1,13 +1,24 @@
 package view.guiscreens;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JTextField;
+import javax.swing.JFrame;
 
 import controller.Features;
 
+/**
+ * A class to create portfolio in the gui.
+ */
 public class CreatePortfolio extends AbstractScreen {
 
   private final JTextField portfolioName;
+
+  /**
+   * Constructor to initialise the variables.
+   */
   public CreatePortfolio() {
     super("Create Portfolio",
             "Please enter the name of the portfolio you wish to create?");
@@ -31,8 +42,8 @@ public class CreatePortfolio extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    this.submit.addActionListener(e ->{
-      if(isInputsValid()) {
+    this.submit.addActionListener(e -> {
+      if (isInputsValid()) {
           features.createFlexiblePortfolio(this.portfolioName.getText());
       }
       else {
@@ -42,8 +53,8 @@ public class CreatePortfolio extends AbstractScreen {
   }
 
   private boolean isInputsValid() {
-    return this.portfolioName != null && !this.portfolioName.getText().trim().isBlank() &&
-            !this.portfolioName.getText().trim().isEmpty();
+    return this.portfolioName != null && !this.portfolioName.getText().trim().isBlank()
+            && !this.portfolioName.getText().trim().isEmpty();
   }
 
 
