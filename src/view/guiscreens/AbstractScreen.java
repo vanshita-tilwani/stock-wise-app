@@ -8,9 +8,6 @@ import org.jdatepicker.impl.UtilDateModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
@@ -136,7 +133,6 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected JComboBox<String> createComboBoxField(String tooltip) {
     var jComboBox = new JComboBox<String>();
     jComboBox.setToolTipText("Enter Portfolio Name");
-    jComboBox.addFocusListener(onFocus());
     onChange(jComboBox);
     return jComboBox;
   }
@@ -149,7 +145,6 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected JSpinner createSpinnerField(String tooltip) {
     var jSpinner = new JSpinner();
     jSpinner.setToolTipText(tooltip);
-    ((JSpinner.DefaultEditor) jSpinner.getEditor()).getTextField().addFocusListener(onFocus());
     onChange(((JSpinner.DefaultEditor) jSpinner.getEditor()).getTextField());
     return jSpinner;
   }
@@ -157,7 +152,6 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected JTextField createTextField(String tooltip) {
     var jTextField = new JTextField(10);
     jTextField.setToolTipText(tooltip);
-    jTextField.addFocusListener(onFocus());
     onChange(jTextField);
     return jTextField;
   }
@@ -187,61 +181,48 @@ abstract class AbstractScreen extends JFrame implements Screen {
 
   }
 
-  protected FocusListener onFocus() {
-    var self = this;
-    return new FocusAdapter() {
-      @Override
-      public void focusGained(FocusEvent e) {
-        super.focusGained(e);
-      }
-
-    };
-  }
-
   protected void onChange(JTextField component) {
     var self = this;
     component.getDocument().addDocumentListener(new DocumentListener() {
 
       @Override
       public void changedUpdate(DocumentEvent e) {
-        if(self.isInputsValid()) {
+        if (self.isInputsValid()) {
           self.submit.setEnabled(true);
-        }
-        else {
+        } else {
           self.submit.setEnabled(false);
         }
       }
 
       @Override
       public void insertUpdate(DocumentEvent e) {
-        if(self.isInputsValid()) {
+        if (self.isInputsValid()) {
           self.submit.setEnabled(true);
-        }
-        else {
+        } else {
           self.submit.setEnabled(false);
         }
       }
 
       @Override
       public void removeUpdate(DocumentEvent e) {
-        if(self.isInputsValid()) {
+        if (self.isInputsValid()) {
           self.submit.setEnabled(true);
-        }
-        else {
+        } else {
           self.submit.setEnabled(false);
         }
-      }});
+      }
+    });
   }
 
   protected void onChange(JComboBox comboBox) {
     var self = this;
     comboBox.addItemListener((e) -> {
-    if(self.isInputsValid()) {
-      self.submit.setEnabled(true);
-    }
-    else {
-      self.submit.setEnabled(false);
-    }});
+      if (self.isInputsValid()) {
+        self.submit.setEnabled(true);
+      } else {
+        self.submit.setEnabled(false);
+      }
+    });
   }
 
   protected PropertyChangeListener onDateChange() {
@@ -250,10 +231,9 @@ abstract class AbstractScreen extends JFrame implements Screen {
       public void propertyChange(PropertyChangeEvent e) {
         if ("value".equals(e.getPropertyName())) {
           self.display("");
-          if(!isInputsValid()) {
+          if (!isInputsValid()) {
             self.submit.setEnabled(false);
-          }
-          else {
+          } else {
             self.submit.setEnabled(true);
           }
         }

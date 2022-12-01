@@ -1,6 +1,5 @@
 package view.guiscreens;
 
-import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -8,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JComponent;
 import javax.swing.ScrollPaneConstants;
 
 import controller.Features;

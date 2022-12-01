@@ -4,14 +4,13 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import java.awt.BorderLayout;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JPanel;
 import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -54,10 +53,9 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     this.isOngoing.addChangeListener(new ChangeListener() {
       @Override
       public void stateChanged(ChangeEvent e) {
-        if(isInputsValid()) {
+        if (isInputsValid()) {
           frame.submit.setEnabled(true);
-        }
-        else {
+        } else {
           frame.submit.setEnabled(false);
         }
       }
@@ -74,7 +72,6 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     JPanel ongoingInfo = new JPanel();
     var frame = this;
     ongoingInfo.add(new JLabel("Check the box if the strategy is ongoing : "));
-    ongoingInfo.addFocusListener(onFocus());
     ongoingInfo.add(this.isOngoing);
 
     if (this.endDataPanel.getComponents().length == 0) {
