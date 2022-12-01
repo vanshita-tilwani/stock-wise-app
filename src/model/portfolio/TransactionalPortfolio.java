@@ -225,8 +225,17 @@ public class TransactionalPortfolio extends AbstractPortfolio {
   private void buyOnce(Double principal, Map<String, Double> stockData, LocalDate date,
                        Double commission) {
     for (Map.Entry<String, Double> entry : stockData.entrySet()) {
-      this.purchased.add(new TransactionalStockTrade(entry.getKey(),principal,entry.getValue(),
-              date, commission));
+      var share = new TransactionalStockTrade(entry.getKey(), principal, entry.getValue(),
+              date, commission);
+      if (!this.purchased.contains(share)) {
+        this.purchased.add(share);
+      } else {
+        for (var purchase : purchased) {
+          if (purchase.equals(share)) {
+            purchase.buy(share.quantity());
+          }
+        }
+      }
     }
   }
 
@@ -254,8 +263,6 @@ public class TransactionalPortfolio extends AbstractPortfolio {
     }
     return tradeDate;
   }
-
-
 
 
 }

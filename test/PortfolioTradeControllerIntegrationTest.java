@@ -1427,15 +1427,16 @@ public class PortfolioTradeControllerIntegrationTest {
               + "6\nsample1";
       this.setup(input);
       String expected = "Strategy applied successfully to the portfolio\n";
-      String composition = "TYPE : TRANSACTIONAL\n"
-              + "Portfolio Name : sample1\n"
-              + "STOCKS : \n"
-              + "Stock Symbol : GOOG,Quantity : 4.855783237836263\n"
-              + "Stock Symbol : AAPL,Quantity : 3.345600535296086\n"
-              + "Stock Symbol : IBM,Quantity : 3.768181475619866\n"
-              + "Stock Symbol : NOW,Quantity : 1.3640331732867743\n"
-              + "------ END ------\n";
+      String composition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : sample1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 24.278916189181317\n" +
+              "Stock Symbol : AAPL,Quantity : 3.345600535296086\n" +
+              "Stock Symbol : IBM,Quantity : 3.768181475619866\n" +
+              "Stock Symbol : NOW,Quantity : 1.3640331732867743\n" +
+              "------ END ------\n";
       String actual = this.out.toString();
+      System.out.println(actual);
       Assert.assertTrue(actual.contains(expected));
       Assert.assertTrue(actual.contains(composition));
     } catch (Exception e) {
@@ -2044,6 +2045,103 @@ public class PortfolioTradeControllerIntegrationTest {
       Assert.assertTrue(actual.contains(expectedCostBasis2));
       Assert.assertTrue(actual.contains(composition1));
       Assert.assertTrue(actual.contains(composition2));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyMultipleStrategy1() {
+    try {
+      String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
+              +"13\ns2\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "16\ns1\ns2\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $10400.0\n";
+      String expectedValue = "The value of portfolio is $10190.461260157004";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 58.26939885403516\n" +
+              "Stock Symbol : AAPL,Quantity : 6.691201070592172\n" +
+              "Stock Symbol : IBM,Quantity : 7.536362951239732\n" +
+              "Stock Symbol : NOW,Quantity : 5.456132693147097\n" +
+              "------ END ------";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyMultipleStrategy2() {
+    try {
+      String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
+              +"13\ns2\n5000\n4\ngoog\n40\nAAPL\n10\nIBM\n10\nNOW\n40\n2022-10-24\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "16\ns1\ns2\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $10400.0\n";
+      String expectedValue = "The value of portfolio is $10198.98005996508";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 48.55783237836263\n" +
+              "Stock Symbol : AAPL,Quantity : 6.691201070592172\n" +
+              "Stock Symbol : IBM,Quantity : 7.536362951239732\n" +
+              "Stock Symbol : NOW,Quantity : 8.184199039720646\n" +
+              "------ END ------";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyMultipleStrategy3() {
+    try {
+      String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
+              +"14\ns2\n5000\n4\ngoog\n60\nNOW\n20\nIBM\n10\nAAPL\n10\n"+
+              "2022-10-24\nn\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "16\ns1\ns2\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $15800.0\n";
+      String expectedValue = "The value of portfolio is $15190.461260157004";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 86.8598877513953\n" +
+              "Stock Symbol : AAPL,Quantity : 9.973333143586789\n" +
+              "Stock Symbol : IBM,Quantity : 11.29774112020084\n" +
+              "Stock Symbol : NOW,Quantity : 8.111046939416942\n" +
+              "------ END ------";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
     } catch (Exception e) {
       Assert.fail();
     }
