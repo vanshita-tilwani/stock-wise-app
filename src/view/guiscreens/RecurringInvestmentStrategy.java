@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.JLabel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import controller.Features;
 
@@ -37,6 +39,16 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     this.frequency = this.createSpinnerField("Enter the frequency of recurring " +
             "investment(in days)");
     this.isOngoing = new JCheckBox();
+    var frame = this;
+    this.isOngoing.addActionListener(f -> {
+      frame.endDataPanel.setVisible(!frame.isOngoing.isSelected());
+    });
+    this.isOngoing.addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        frame.display("");
+      }
+    });
     this.endDataPanel = new JPanel();
     this.isInit = true;
 
@@ -59,9 +71,8 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     JPanel ongoingInfo = new JPanel();
     var frame = this;
     ongoingInfo.add(new JLabel("Check the box if the strategy is ongoing : "));
+    ongoingInfo.addFocusListener(onFocus());
     ongoingInfo.add(this.isOngoing);
-    this.isOngoing.addActionListener(f ->
-            frame.endDataPanel.setVisible(!frame.isOngoing.isSelected()));
 
     endDataPanel.add(new JLabel("Enter the end date for the investment : "));
     endDataPanel.add(this.endDate);

@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.strategy.Strategy;
-import model.utility.PortfolioDataParser;
 import model.datarepo.DataRepository;
 import model.portfolio.Portfolio;
+import model.utility.PortfolioDataParser;
 
 /**
  * Represents a class used to trade on Portfolio. Supports methods to create new

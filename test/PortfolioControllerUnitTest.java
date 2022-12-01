@@ -10,7 +10,6 @@ import java.util.Map;
 
 import controller.Features;
 import controller.PortfolioTradeController;
-import model.stocktradings.StrategyOperation;
 import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;

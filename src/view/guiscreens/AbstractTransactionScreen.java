@@ -61,6 +61,10 @@ abstract class AbstractTransactionScreen extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
+    /*this.stock.getDocument().addDocumentListener(this.onTextFieldChange());
+    this.commission.addChangeListener(this.onSpinnerChange());
+    this.shares.addChangeListener(this.onSpinnerChange());
+    this.portfolioName.addItemListener(this.onDropDownChange());*/
     features.getPortfolios().forEach(e -> this.portfolioName.addItem(e));
 
     this.submit.addActionListener(e -> {

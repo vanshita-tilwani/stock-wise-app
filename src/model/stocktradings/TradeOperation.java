@@ -2,8 +2,6 @@ package model.stocktradings;
 
 import java.util.Set;
 
-import model.strategy.Strategy;
-
 /**
  * Interface to perform trade operations such as creating a new trade, getting the trade
  * performed by the user, all the available trades in the application and saving and loading
@@ -46,8 +44,6 @@ public interface TradeOperation<T> {
    * Loads all the trades available in the data-source to the application.
    */
   void load() throws Exception;
-
-
 
 
 }

@@ -64,12 +64,12 @@ public class WebAPIStockDataProvider implements StockDataProvider {
   public boolean isValid(String stock) {
     try {
       // if the cache contains the data then return true.
-      if (this.stockData.contains(stock)) {
+      if (this.stockData.contains(stock.toUpperCase())) {
         return true;
       }
       // else call the WEB API and add the data to the cache.
       Map<LocalDate, Double> response = this.getAPIResponse(stock);
-      this.stockData.put(stock, response);
+      this.stockData.put(stock.toUpperCase(), response);
     } catch (IOException e) {
       return false;
     } catch (JSONException e) {
@@ -89,7 +89,7 @@ public class WebAPIStockDataProvider implements StockDataProvider {
       }
       if (!this.stockData.contains(stock)) {
         Map<LocalDate, Double> response = this.getAPIResponse(stock);
-        this.stockData.put(stock, response);
+        this.stockData.put(stock.toUpperCase(), response);
       }
       return this.stockData.get(stock.toUpperCase()).containsKey(date);
     }

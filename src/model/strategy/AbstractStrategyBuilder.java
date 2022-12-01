@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.stockpriceprovider.StockDataProviderFactory;
+
 /**
  * Class to abstract all the strategies.
  */
@@ -41,6 +43,9 @@ public abstract class AbstractStrategyBuilder implements StrategyBuilder {
     if (totalWeight + weight > 100) {
       throw new IllegalArgumentException("The strategy could not be created due to invalid"
               + " stock percentages\n");
+    }
+    if (!StockDataProviderFactory.getDataProvider().isValid(stock)) {
+      throw new IllegalArgumentException("Strategy could not be created due to invalid stock(s)\n");
     }
     this.totalWeight += weight;
     this.weights.put(stock, this.weights.getOrDefault(stock, 0.0) + weight);

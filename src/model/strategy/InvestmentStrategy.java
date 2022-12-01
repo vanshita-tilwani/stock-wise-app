@@ -20,15 +20,15 @@ public class InvestmentStrategy implements Strategy {
    * Initializes a Strategy with name, principal amount, weights for each stock, start date and
    * end date for the strategy, recurring frequency and commission for the strategy.
    *
-   * @param name name of the strategy.
-   * @param principal principal amount of the strategy.
-   * @param weights stock weights of the strategy.
+   * @param name       name of the strategy.
+   * @param principal  principal amount of the strategy.
+   * @param weights    stock weights of the strategy.
    * @param commission commission for the strategy.
-   * @param start start date of the strategy.
-   * @param end end date of the strategy.
-   * @param days frequency of the strategy.
+   * @param start      start date of the strategy.
+   * @param end        end date of the strategy.
+   * @param days       frequency of the strategy.
    */
-  protected InvestmentStrategy(String name,Double principal, Map<String, Double> weights,
+  protected InvestmentStrategy(String name, Double principal, Map<String, Double> weights,
                                Double commission, LocalDate start, LocalDate end, int days) {
     this.name = name;
     this.principal = principal;
@@ -104,8 +104,8 @@ public class InvestmentStrategy implements Strategy {
         throw new IllegalArgumentException("The strategy could not be created due to invalid"
                 + " stock percentages\n");
       }
-      return new InvestmentStrategy(this.name,this.principal, this.weights, this.commission, this.start,
-              this.end, this.frequency);
+      return new InvestmentStrategy(this.name, this.principal, this.weights, this.commission,
+              this.start, this.end, this.frequency);
     }
   }
 }

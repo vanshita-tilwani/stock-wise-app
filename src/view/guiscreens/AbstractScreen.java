@@ -8,6 +8,11 @@ import org.jdatepicker.impl.UtilDateModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -113,6 +118,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
     dateModel.setSelected(true);
     JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
     var datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+    datePicker.getJFormattedTextField().addPropertyChangeListener(onDateChange());
     datePicker.setToolTipText(tooltip);
     return datePicker;
   }
@@ -126,6 +132,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected JComboBox<String> createComboBoxField(String tooltip) {
     var jComboBox = new JComboBox<String>();
     jComboBox.setToolTipText("Enter Portfolio Name");
+    jComboBox.addFocusListener(onFocus());
     return jComboBox;
   }
 
@@ -137,12 +144,14 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected JSpinner createSpinnerField(String tooltip) {
     var jSpinner = new JSpinner();
     jSpinner.setToolTipText(tooltip);
+    ((JSpinner.DefaultEditor) jSpinner.getEditor()).getTextField().addFocusListener(onFocus());
     return jSpinner;
   }
 
   protected JTextField createTextField(String tooltip) {
     var jTextField = new JTextField(10);
     jTextField.setToolTipText(tooltip);
+    jTextField.addFocusListener(onFocus());
     return jTextField;
   }
 
@@ -171,5 +180,28 @@ abstract class AbstractScreen extends JFrame implements Screen {
     setVisible(true);
 
   }
+
+  protected FocusListener onFocus() {
+    var self = this;
+    return new FocusAdapter() {
+      @Override
+      public void focusGained(FocusEvent e) {
+        super.focusGained(e);
+        self.display("");
+      }
+    };
+  }
+
+  protected PropertyChangeListener onDateChange() {
+    var self = this;
+    return new PropertyChangeListener() {
+      public void propertyChange(PropertyChangeEvent e) {
+        if ("value".equals(e.getPropertyName())) {
+          self.display("");
+        }
+      }
+    };
+  }
+
 
 }

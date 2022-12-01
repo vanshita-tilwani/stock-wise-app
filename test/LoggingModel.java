@@ -4,7 +4,6 @@ import java.util.Set;
 import model.portfolio.Portfolio;
 import model.portfolio.SimulatedPortfolio;
 import model.stocktradings.TradeOperation;
-import model.strategy.Strategy;
 
 /**
  * Mock model which will be used to test the controller delegation.

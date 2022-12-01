@@ -6,9 +6,19 @@ import java.util.Set;
 
 import model.strategy.Strategy;
 
+/**
+ * Represents a class used to track Strategies. Supports methods to create new
+ * Strategy, get an existing Strategy from the application, listing of all the
+ * Strategy trades created by the user.
+ */
 public class StrategyOperation implements TradeOperation<Strategy> {
 
   private Map<String, Strategy> strategies;
+
+  /**
+   * Initializes a Strategy Operator responsible for tracking the strategies in the
+   * application.
+   */
   public StrategyOperation() {
     this.strategies = new HashMap<>();
   }

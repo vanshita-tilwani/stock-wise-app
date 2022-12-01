@@ -277,6 +277,6 @@ Setting up in IntelliJ
 5. Click on the + sign and select "From Maven" option
 6. You will see a dialog box with search
 7. Enter "org.json:json:20220924" in search and select it.
-8. Click on Save, the library will get added to the project.
-9. Click Apply and close the settings.
-10. Repeat the same for the above 2 libraries
+8. Repeat the above steps for jdatepicker JAR.
+9. Click on Save, the library will get added to the project.
+10. Click Apply and close the settings.

@@ -3,9 +3,13 @@ import java.util.Set;
 import model.stocktradings.TradeOperation;
 import model.strategy.Strategy;
 
+/**
+ * Mock Strategy model to test Controller.
+ */
 public class StrategyLoggingModel implements TradeOperation<Strategy> {
 
   private StringBuilder log;
+
 
   public StrategyLoggingModel(StringBuilder log) {
     this.log = log;

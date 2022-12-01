@@ -109,7 +109,10 @@ public class BarChart extends AbstractScreen {
     private final List<Color> barColors = Arrays.asList(Color.RED, Color.BLUE, Color.GREEN,
             Color.GRAY, Color.MAGENTA, Color.ORANGE);
 
-    private int width, height, x, y;
+    private int width;
+    private int height;
+    private int x;
+    private int y;
     private Map<LocalDate, Double> data;
 
     public BarChartPanel(Map<LocalDate, Double> data) {
@@ -135,7 +138,7 @@ public class BarChart extends AbstractScreen {
       g.setColor(background);
       g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-      if(this.data == null || this.data.size() == 0) {
+      if (this.data == null || this.data.size() == 0) {
         return;
       }
       double max = Collections.max(this.data.values());
@@ -144,12 +147,12 @@ public class BarChart extends AbstractScreen {
 
       int count = 0;
       for (var element : data.entrySet()) {
-        int eachbarHeight = (int)(element.getValue() * this.height / max);
+        int eachbarHeight = (int) (element.getValue() * this.height / max);
         int eachBarWidth = barWidth - gap;
         int xCoord = this.x + barWidth * count;
         int yCoord = this.y - eachbarHeight;
 
-        if(count == 0) {
+        if (count == 0) {
           drawXAxis(g);
         }
 
@@ -157,10 +160,11 @@ public class BarChart extends AbstractScreen {
         g.fillRect(xCoord, yCoord, eachBarWidth, eachbarHeight);
 
         g.setFont(getFont(0));
-        g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4), yCoord - (margin / 8));
+        g.drawString(String.format("%.2f", element.getValue()), xCoord + (eachBarWidth / 4),
+                yCoord - (margin / 8));
 
         g.setFont(getFont(20));
-        g.drawString(element.getKey().toString(), xCoord, this.y + (margin/2));
+        g.drawString(element.getKey().toString(), xCoord, this.y + (margin / 2));
 
         count += 1;
       }
@@ -173,9 +177,9 @@ public class BarChart extends AbstractScreen {
       double max = Collections.max(this.data.values());
       double eachValue = max / 10;
       double each = this.height / 10;
-      for(double i = 0, j = 0; i < this.height; i += each, j += eachValue) {
+      for (double i = 0, j = 0; i < this.height; i += each, j += eachValue) {
         g.setFont(getFont(0));
-        g.drawString(this.xAxisLabelWithSuffix(j), 10, (int)(this.y - i));
+        g.drawString(this.xAxisLabelWithSuffix(j), 10, (int) (this.y - i));
       }
     }
 
@@ -187,8 +191,8 @@ public class BarChart extends AbstractScreen {
     }
 
     private String xAxisLabelWithSuffix(double value) {
-      if(value < 1000) {
-        return String.format("%.1f",value);
+      if (value < 1000) {
+        return String.format("%.1f", value);
       }
 
       int exponent = (int) (Math.log(value) / Math.log(1000));

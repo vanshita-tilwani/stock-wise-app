@@ -15,6 +15,7 @@ public interface Strategy {
    * @return strategy name.
    */
   String name();
+
   /**
    * To return the investment.
    * @return

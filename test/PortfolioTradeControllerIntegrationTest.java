@@ -1113,6 +1113,20 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   @Test
+  public void createStrategy_InvalidStock() {
+
+    try {
+      String input = "13\n \ns1\n2000\n1\ngog\n100\n2022-10-24\n0";
+      this.setup(input);
+      String expected = "Strategy could not be created due to invalid stock(s)";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expected));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
   public void createStrategy_InvalidName() {
 
     try {
@@ -1627,6 +1641,409 @@ public class PortfolioTradeControllerIntegrationTest {
               + "Enter the Frequency in days";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void Apply1FixedStrategy_1Stock() {
+    try {
+      String input = "13\ns1\n2000\n1\ngoog\n100\n2022-10-24\n0\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $2000.0\n";
+      String expectedValue = "The value of portfolio is $2038.0693405846366";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n"
+              + "Portfolio Name : s1\n"
+              + "STOCKS : \n"
+              + "Stock Symbol : GOOG,Quantity : 19.423132951345053\n"
+              + "------ END ------";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void Apply1FixedStrategy_2Stock_Equal() {
+    try {
+      String input = "13\ns1\n2000\n2\ngoog\n50\nAAPL\n50\n2022-10-24\n0\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $2000.0\n";
+      String expectedValue = "The value of portfolio is $2038.3722413863297";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n"
+              + "Portfolio Name : s1\n"
+              + "STOCKS : \n"
+              + "Stock Symbol : GOOG,Quantity : 9.711566475672527\n"
+              + "Stock Symbol : AAPL,Quantity : 6.691201070592172\n"
+              + "------ END ------";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void Apply1FixedStrategy_2Stock_Diff() {
+    try {
+      String input = "13\ns1\n2000\n2\ngoog\n40\nAAPL\n60\n2022-10-24\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $2200.0\n";
+      String expectedValue = "The value of portfolio is $2038.4328215466683";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n"
+              + "Portfolio Name : s1\n"
+              + "STOCKS : \n"
+              + "Stock Symbol : GOOG,Quantity : 7.769253180538021\n"
+              + "Stock Symbol : AAPL,Quantity : 8.029441284710606\n"
+              + "------ END ------";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void Apply1FixedStrategy_MultipleStock_Equal() {
+    try {
+      String input = "13\ns1\n5000\n4\ngoog\n25\nAAPL\n25\nIBM\n25\nNOW\n25\n2022-10-24\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $5400.0\n";
+      String expectedValue = "The value of portfolio is $5084.668048243775";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n"
+              + "Portfolio Name : s1\n"
+              + "STOCKS : \n"
+              + "Stock Symbol : GOOG,Quantity : 12.139458094590658\n"
+              + "Stock Symbol : AAPL,Quantity : 8.364001338240215\n"
+              + "Stock Symbol : IBM,Quantity : 9.420453689049666\n"
+              + "Stock Symbol : NOW,Quantity : 3.410082933216936\n"
+              + "------ END ------";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void Apply1FixedStrategy_MultipleStock_Diff() {
+    try {
+      String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-25\n"
+              + "8\ns1\n2022-10-25\n"
+              + "9\ns1\n2022-10-25\n";
+      this.setup(input);
+      String expectedCostBasis = "The cost basis for the portfolio is $5400.0\n";
+      String expectedValue = "The value of portfolio is $5095.230630078502";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 29.13469942701758\n" +
+              "Stock Symbol : AAPL,Quantity : 3.345600535296086\n" +
+              "Stock Symbol : IBM,Quantity : 3.768181475619866\n" +
+              "Stock Symbol : NOW,Quantity : 2.7280663465735486\n" +
+              "------ END ------";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedCostBasis));
+      Assert.assertTrue(actual.contains(expectedValue));
+      Assert.assertTrue(actual.contains(expectedComposition));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyRecurringStrategy_1Stock_Equal_WithEndDate() {
+    try {
+      String input = "14\ns1\n5000\n1\ngoog\n100\n2022-10-24\ny\n2022-10-28\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-28\n"
+              + "8\ns1\n2022-10-28\n"
+              + "9\ns1\n2022-10-28\n"
+              + "7\ns1\n2022-10-26\n"
+              + "8\ns1\n2022-10-26\n"
+              + "9\ns1\n2022-10-26\n";
+      this.setup(input);
+      String composition1 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 148.94013845386866\n" +
+              "------ END ------";
+      String composition2 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 254.7063717089461\n" +
+              "------ END ------";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $15300.0\n";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $25500.0\n";
+      String expectedValue1 = "The value of portfolio is $14122.503928195825";
+      String expectedValue2 = "The value of portfolio is $24599.541379650014";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(composition1));
+      Assert.assertTrue(actual.contains(composition2));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyRecurringStrategy_4Stock_Equal_WithEndDate() {
+    try {
+      String input = "14\ns1\n5000\n4\ngoog\n25\nNOW\n25\nIBM\n25\nAAPL\n25" +
+              "\n2022-10-24\ny\n2022-10-28\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-28\n"
+              + "8\ns1\n2022-10-28\n"
+              + "9\ns1\n2022-10-28\n"
+              + "7\ns1\n2022-10-26\n"
+              + "8\ns1\n2022-10-26\n"
+              + "9\ns1\n2022-10-26\n";
+      this.setup(input);
+      String composition1 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 63.67659292723653\n" +
+              "Stock Symbol : AAPL,Quantity : 41.597727321441425\n" +
+              "Stock Symbol : IBM,Quantity : 46.38215292693238\n" +
+              "Stock Symbol : NOW,Quantity : 16.120756597549597\n" +
+              "------ END ------";
+      String composition2 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 37.235034613467164\n" +
+              "Stock Symbol : AAPL,Quantity : 24.938933127690262\n" +
+              "Stock Symbol : IBM,Quantity : 28.082472550456952\n" +
+              "Stock Symbol : NOW,Quantity : 10.140204685406196\n" +
+              "------ END ------";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $27000.0\n";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $16200.0\n";
+      String expectedValue1 = "The value of portfolio is $25829.873473473046";
+      String expectedValue2 = "The value of portfolio is $14762.142662486373";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(composition1));
+      Assert.assertTrue(actual.contains(composition2));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyRecurringStrategy_4Stock_Diff_WithEndDate() {
+    try {
+      String input = "14\ns1\n5000\n4\ngoog\n60\nNOW\n20\nIBM\n10\nAAPL\n10" +
+              "\n2022-10-24\ny\n2022-10-28\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-28\n"
+              + "8\ns1\n2022-10-28\n"
+              + "9\ns1\n2022-10-28\n"
+              + "7\ns1\n2022-10-26\n"
+              + "8\ns1\n2022-10-26\n"
+              + "9\ns1\n2022-10-26\n";
+      this.setup(input);
+      String composition1 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 89.3640830723212\n" +
+              "Stock Symbol : AAPL,Quantity : 9.975573251076106\n" +
+              "Stock Symbol : IBM,Quantity : 11.23298902018278\n" +
+              "Stock Symbol : NOW,Quantity : 8.112163748324958\n" +
+              "------ END ------";
+      String composition2 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 152.82382302536766\n" +
+              "Stock Symbol : AAPL,Quantity : 16.63909092857657\n" +
+              "Stock Symbol : IBM,Quantity : 18.55286117077295\n" +
+              "Stock Symbol : NOW,Quantity : 12.896605278039678\n" +
+              "------ END ------";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $16200.0\n";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $27000.0\n";
+      String expectedValue1 = "The value of portfolio is $14452.297988604336";
+      String expectedValue2 = "The value of portfolio is $25342.586508658165";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(composition1));
+      Assert.assertTrue(actual.contains(composition2));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyRecurringStrategy_1Stock_Equal_WithoutEndDate() {
+    try {
+      String input = "14\ns1\n5000\n1\ngoog\n100\n2022-10-24\nn\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-28\n"
+              + "8\ns1\n2022-10-28\n"
+              + "9\ns1\n2022-10-28\n"
+              + "7\ns1\n2022-10-26\n"
+              + "8\ns1\n2022-10-26\n"
+              + "9\ns1\n2022-10-26\n";
+      this.setup(input);
+      String composition1 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 148.94013845386866\n" +
+              "------ END ------";
+      String composition2 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 254.7063717089461\n" +
+              "------ END ------";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $15300.0\n";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $25500.0\n";
+      String expectedValue1 = "The value of portfolio is $14122.503928195825";
+      String expectedValue2 = "The value of portfolio is $24599.541379650014";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(composition1));
+      Assert.assertTrue(actual.contains(composition2));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyRecurringStrategy_4Stock_Equal_WithoutEndDate() {
+    try {
+      String input = "14\ns1\n5000\n4\ngoog\n25\nNOW\n25\nIBM\n25\nAAPL\n25" +
+              "\n2022-10-24\nn\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-28\n"
+              + "8\ns1\n2022-10-28\n"
+              + "9\ns1\n2022-10-28\n"
+              + "7\ns1\n2022-10-26\n"
+              + "8\ns1\n2022-10-26\n"
+              + "9\ns1\n2022-10-26\n";
+      this.setup(input);
+      String composition1 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 63.67659292723653\n" +
+              "Stock Symbol : AAPL,Quantity : 41.597727321441425\n" +
+              "Stock Symbol : IBM,Quantity : 46.38215292693238\n" +
+              "Stock Symbol : NOW,Quantity : 16.120756597549597\n" +
+              "------ END ------";
+      String composition2 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 37.235034613467164\n" +
+              "Stock Symbol : AAPL,Quantity : 24.938933127690262\n" +
+              "Stock Symbol : IBM,Quantity : 28.082472550456952\n" +
+              "Stock Symbol : NOW,Quantity : 10.140204685406196\n" +
+              "------ END ------";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $27000.0\n";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $16200.0\n";
+      String expectedValue1 = "The value of portfolio is $25829.873473473046";
+      String expectedValue2 = "The value of portfolio is $14762.142662486373";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(composition1));
+      Assert.assertTrue(actual.contains(composition2));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void ApplyRecurringStrategy_4Stock_Diff_WithoutEndDate() {
+    try {
+      String input = "14\ns1\n5000\n4\ngoog\n60\nNOW\n20\nIBM\n10\nAAPL\n10" +
+              "\n2022-10-24\nn\n1\n100\n"
+              + "2\ns1\n"
+              + "16\ns1\ns1\n"
+              + "7\ns1\n2022-10-28\n"
+              + "8\ns1\n2022-10-28\n"
+              + "9\ns1\n2022-10-28\n"
+              + "7\ns1\n2022-10-26\n"
+              + "8\ns1\n2022-10-26\n"
+              + "9\ns1\n2022-10-26\n";
+      this.setup(input);
+      String composition1 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 89.3640830723212\n" +
+              "Stock Symbol : AAPL,Quantity : 9.975573251076106\n" +
+              "Stock Symbol : IBM,Quantity : 11.23298902018278\n" +
+              "Stock Symbol : NOW,Quantity : 8.112163748324958\n" +
+              "------ END ------";
+      String composition2 = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 152.82382302536766\n" +
+              "Stock Symbol : AAPL,Quantity : 16.63909092857657\n" +
+              "Stock Symbol : IBM,Quantity : 18.55286117077295\n" +
+              "Stock Symbol : NOW,Quantity : 12.896605278039678\n" +
+              "------ END ------";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $16200.0\n";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $27000.0\n";
+      String expectedValue1 = "The value of portfolio is $14452.297988604336";
+      String expectedValue2 = "The value of portfolio is $25342.586508658165";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(composition1));
+      Assert.assertTrue(actual.contains(composition2));
     } catch (Exception e) {
       Assert.fail();
     }
