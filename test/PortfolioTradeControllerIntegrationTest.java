@@ -1651,13 +1651,13 @@ public class PortfolioTradeControllerIntegrationTest {
   public void createDollarCostAvg_Multiple_Ongoing_EvaluateValueAndCostBasis_MultipleDates() {
     try {
       String input = "17\nportfolio1\nstrategy1\n5000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n"
-              +"2022-10-24\nn\n1\n1\n"
-              +"8\nportfolio1\n2022-10-24\n"
-              +"8\nportfolio1\n2022-10-25\n"
-              +"8\nportfolio1\n2022-10-26\n"
-              +"9\nportfolio1\n2022-10-24\n"
-              +"9\nportfolio1\n2022-10-25\n"
-              +"9\nportfolio1\n2022-10-26\n";
+              + "2022-10-24\nn\n1\n1\n"
+              + "8\nportfolio1\n2022-10-24\n"
+              + "8\nportfolio1\n2022-10-25\n"
+              + "8\nportfolio1\n2022-10-26\n"
+              + "9\nportfolio1\n2022-10-24\n"
+              + "9\nportfolio1\n2022-10-25\n"
+              + "9\nportfolio1\n2022-10-26\n";
 
       this.setup(input);
       String expectedValue1 = "The value of portfolio is $5000.0";
@@ -1682,13 +1682,13 @@ public class PortfolioTradeControllerIntegrationTest {
   public void createDollarCostAvg_Multiple_WithEndDate_EvaluateValueAndCostBasis_MultipleDates() {
     try {
       String input = "17\nportfolio1\nstrategy1\n5000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n"
-              +"2022-10-24\ny\n2022-10-28\n1\n1\n"
-              +"8\nportfolio1\n2022-10-24\n"
-              +"8\nportfolio1\n2022-10-25\n"
-              +"8\nportfolio1\n2022-10-29\n"
-              +"9\nportfolio1\n2022-10-24\n"
-              +"9\nportfolio1\n2022-10-25\n"
-              +"9\nportfolio1\n2022-10-29\n";
+              + "2022-10-24\ny\n2022-10-28\n1\n1\n"
+              + "8\nportfolio1\n2022-10-24\n"
+              + "8\nportfolio1\n2022-10-25\n"
+              + "8\nportfolio1\n2022-10-29\n"
+              + "9\nportfolio1\n2022-10-24\n"
+              + "9\nportfolio1\n2022-10-25\n"
+              + "9\nportfolio1\n2022-10-29\n";
 
       this.setup(input);
       String expectedValue1 = "The value of portfolio is $5000.0";
@@ -1715,12 +1715,12 @@ public class PortfolioTradeControllerIntegrationTest {
   public void createDollarCostAvg_Single_Ongoing_EvaluateValueAndCostBasis_MultipleDates() {
     try {
       String input = "17\nportfolio1\nstrategy1\n5000\n1\ngoog\n100\n2022-10-24\nn\n1\n1\n"
-              +"8\nportfolio1\n2022-10-24\n"
-              +"8\nportfolio1\n2022-10-25\n"
-              +"8\nportfolio1\n2022-10-26\n"
-              +"9\nportfolio1\n2022-10-24\n"
-              +"9\nportfolio1\n2022-10-25\n"
-              +"9\nportfolio1\n2022-10-26\n";
+              + "8\nportfolio1\n2022-10-24\n"
+              + "8\nportfolio1\n2022-10-25\n"
+              + "8\nportfolio1\n2022-10-26\n"
+              + "9\nportfolio1\n2022-10-24\n"
+              + "9\nportfolio1\n2022-10-25\n"
+              + "9\nportfolio1\n2022-10-26\n";
 
       this.setup(input);
       String expectedValue1 = "The value of portfolio is $5000.0";
@@ -1745,13 +1745,13 @@ public class PortfolioTradeControllerIntegrationTest {
   public void createDollarCostAvg_Single_WithEndDate_EvaluateValueAndCostBasis_MultipleDates() {
     try {
       String input = "17\nportfolio1\nstrategy1\n5000\n1\ngoog\n100\n"
-              +"2022-10-24\ny\n2022-10-28\n1\n1\n"
-              +"8\nportfolio1\n2022-10-24\n"
-              +"8\nportfolio1\n2022-10-25\n"
-              +"8\nportfolio1\n2022-10-29\n"
-              +"9\nportfolio1\n2022-10-24\n"
-              +"9\nportfolio1\n2022-10-25\n"
-              +"9\nportfolio1\n2022-10-29\n";
+              + "2022-10-24\ny\n2022-10-28\n1\n1\n"
+              + "8\nportfolio1\n2022-10-24\n"
+              + "8\nportfolio1\n2022-10-25\n"
+              + "8\nportfolio1\n2022-10-29\n"
+              + "9\nportfolio1\n2022-10-24\n"
+              + "9\nportfolio1\n2022-10-25\n"
+              + "9\nportfolio1\n2022-10-29\n";
 
       this.setup(input);
       String expectedValue1 = "The value of portfolio is $5000.0";

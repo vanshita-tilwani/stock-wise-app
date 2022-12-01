@@ -116,8 +116,8 @@ public interface Features {
    *
    * @return if the operation was successful
    */
-  boolean createStrategy(String name, Double principal, Map<String, Double> weights, LocalDate start,
-              LocalDate end, int days, Double commission);
+  boolean createStrategy(String name, Double principal, Map<String, Double> weights,
+                         LocalDate start, LocalDate end, int days, Double commission);
 
   /**
    * To get all the strategies.

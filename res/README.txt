@@ -10,6 +10,21 @@ CHOOSE 2: To use the GUI to trade the stocks
 
 GUI Interface supports following features :
 
+1. Create a Flexible Portfolio
+2. View all the portfolio
+3. Buy a stock and add to portfolio
+4. Sell a stock from the portfolio
+5. Evaluate Portfolio Composition at a date
+6. Evaluate Portfolio Value at a date
+7. Evaluate Portfolio Cost Basis at a date
+8. Saving the portfolio to File
+9. Loading the portfolios from file
+10. Creating a Recurring Investment Strategy
+11. Creating a Fixed One Time Investment Strategy
+12. Applying a Strategy to a Portfolio
+13. Creating a Dollar-Cost Averaging Portfolio
+
+
 STEPS TO CREATE A PORTFOLIO
 1. Click on Create Portfolio menu option
 2. Enter the name of non-existing portfolio
@@ -134,6 +149,22 @@ STEPS TO APPLY THE GIVEN STRATEGY
 5. Click Submit
 6. Click on home to return to the main menu
 
+STEPS TO CREATE A DOLLAR COST AVERAGING PORTFOLIO
+1. The application display the option to create this type of portfolio
+2. Click on Create Recurring Fixed Strategy
+3. Click on Submit
+4. Enter a name for this strategy (you can use this strategy again, by using this name in the apply strategy)
+5. Enter the Amount you want to invest
+6. Enter the number of Stocks
+7. Enter the commission for this strategy
+8. Enter the from date on which you want to make this investment
+9. Enter the to date on till you want to make this investment or click check box for never ending
+10. Enter the frequency in days
+11. Enter the name of the portfolio
+12. Now for the number of stocks entered, enter the corresponding Ticker symbol and the percentage (summing up to 100%)
+13. Click on submit
+14. Click on home to return to the main menu
+
 This following features are supported by the Text based View :
 
 1.  Ability to create simulated (inflexible) portfolios with multiple stocks(i.e stock and the number of stock).
@@ -148,7 +179,11 @@ This following features are supported by the Text based View :
 10. Ability to fetch the portfolio performance over a period of time.
 11. Ability to save the Portfolio on disk.
 12. Ability to load all the portfolios in the application from the disk.
-
+13. Create a one time investment strategy
+14. Create a recurring investment strategy
+15. Get all the existing strategies
+16. Apply a strategy to a portfolio
+17. Create a Dollar Cost Averaging Portfolio
 
 Description of the functionalities :
 
@@ -275,3 +310,18 @@ to support trading.
 -- Enter the name of the portfolio to wish the strategy must be applied
 -- Enter the name of the strategy to be applied
 -- The application will apply the specified strategy on the portfolio.
+
+17. Create Dollar Cost Averaging Portfolio
+-- The program starts by displaying a menu option.
+-- To create this type of portfolio, user must input 17
+-- Enter the name of the portfolio.
+-- Enter the name of the strategy that you wish to create.
+-- Enter the principal amount for the strategy.
+-- The program prompts to Enter the number of stocks you wish to purchase
+-- Input Stock symbol and weight for each stock
+-- Enter the start date of the transaction (in YYYY-MM-DD format)
+-- The program displays a option to select if user wishes to enter end date(select y/n)
+-- If y : then the application prompt for end date else if it does not.
+-- Enter the recurring frequency of the strategy (in days)
+-- Enter the commission fee for the strategy
+-- The strategy will be successfully created.

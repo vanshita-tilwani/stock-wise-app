@@ -28,7 +28,8 @@ public class DollarCostAveragingPortfolio extends RecurringInvestmentStrategy {
   protected java.util.List<Map.Entry<String, JComponent>> getDefaultComponents() {
     var self = this;
     var list = super.getDefaultComponents();
-    list.add(0, new AbstractMap.SimpleEntry<>("Enter the name of the portfolio : ", this.portfolioName));
+    list.add(0, new AbstractMap.SimpleEntry<>("Enter the name of the portfolio : ",
+            this.portfolioName));
     return list;
   }
 
