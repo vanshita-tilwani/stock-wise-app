@@ -32,16 +32,18 @@ public class StockWeightScreen extends AbstractScreen {
 
   /**
    * Initializes the screen to input stock weights for each stock in the strategy.
-   * @param name name of the strategy.
-   * @param principal the principal amount to be invested.
-   * @param stocks the number of stocks containing in the strategy.
-   * @param startDate the start date of the strategy.
-   * @param endDate the end date of the strategy.
-   * @param frequency the frequency of recurring strategy.
+   *
+   * @param name       name of the strategy.
+   * @param principal  the principal amount to be invested.
+   * @param stocks     the number of stocks containing in the strategy.
+   * @param startDate  the start date of the strategy.
+   * @param endDate    the end date of the strategy.
+   * @param frequency  the frequency of recurring strategy.
    * @param commission the commission fee for the strategy.
    */
-  public StockWeightScreen(String portfolioName, String name, Double principal, int stocks, LocalDate startDate,
-                           LocalDate endDate, int frequency, double commission) {
+  public StockWeightScreen(String portfolioName, String name, Double principal, int stocks,
+                           LocalDate startDate, LocalDate endDate, int frequency,
+                           double commission) {
     super("Trading Application - Enter Stock Weightage", "");
     this.portfolioName = portfolioName;
     this.name = name;
@@ -88,7 +90,7 @@ public class StockWeightScreen extends AbstractScreen {
                 this.frequency,
                 this.commission
         );
-        if(this.portfolioName != null) {
+        if (this.portfolioName != null) {
           features.createFlexiblePortfolio(this.portfolioName);
           features.applyStrategy(this.portfolioName, this.name);
         }

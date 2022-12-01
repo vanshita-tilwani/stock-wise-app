@@ -11,7 +11,7 @@ import model.strategy.Strategy;
  * Strategy, get an existing Strategy from the application, listing of all the
  * Strategy trades created by the user.
  */
-public class StrategyOperation implements TradeOperation<Strategy> {
+public class InvestmentStrategyOperation implements TradeOperation<Strategy> {
 
   private Map<String, Strategy> strategies;
 
@@ -19,7 +19,7 @@ public class StrategyOperation implements TradeOperation<Strategy> {
    * Initializes a Strategy Operator responsible for tracking the strategies in the
    * application.
    */
-  public StrategyOperation() {
+  public InvestmentStrategyOperation() {
     this.strategies = new HashMap<>();
   }
 

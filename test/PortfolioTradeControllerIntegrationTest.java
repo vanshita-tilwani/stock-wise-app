@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import controller.PortfolioTradeController;
 import model.datarepo.FileRepository;
 import model.stocktradings.PortfolioTradeOperation;
-import model.stocktradings.StrategyOperation;
+import model.stocktradings.InvestmentStrategyOperation;
 import model.stocktradings.TradeOperation;
 import view.TextualView;
 import view.View;
@@ -27,7 +27,7 @@ public class PortfolioTradeControllerIntegrationTest {
     this.out = new ByteArrayOutputStream();
     View view = this.getView(new ByteArrayInputStream(input.getBytes()), out);
     PortfolioTradeOperation model = this.getModel();
-    TradeOperation strategy = new StrategyOperation();
+    TradeOperation strategy = new InvestmentStrategyOperation();
     new PortfolioTradeController(view, model, strategy);
   }
 
@@ -1648,6 +1648,132 @@ public class PortfolioTradeControllerIntegrationTest {
   }
 
   @Test
+  public void createDollarCostAvg_Multiple_Ongoing_EvaluateValueAndCostBasis_MultipleDates() {
+    try {
+      String input = "17\nportfolio1\nstrategy1\n5000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n"
+              +"2022-10-24\nn\n1\n1\n"
+              +"8\nportfolio1\n2022-10-24\n"
+              +"8\nportfolio1\n2022-10-25\n"
+              +"8\nportfolio1\n2022-10-26\n"
+              +"9\nportfolio1\n2022-10-24\n"
+              +"9\nportfolio1\n2022-10-25\n"
+              +"9\nportfolio1\n2022-10-26\n";
+
+      this.setup(input);
+      String expectedValue1 = "The value of portfolio is $5000.0";
+      String expectedValue2 = "The value of portfolio is $10084.668048243775";
+      String expectedValue3 = "The value of portfolio is $14762.142662486374";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $5004.0";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $10008.0";
+      String expectedCostBasis3 = "The cost basis for the portfolio is $15012.0";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedValue3));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(expectedCostBasis3));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createDollarCostAvg_Multiple_WithEndDate_EvaluateValueAndCostBasis_MultipleDates() {
+    try {
+      String input = "17\nportfolio1\nstrategy1\n5000\n4\ngoog\n25\naapl\n25\nnow\n25\nibm\n25\n"
+              +"2022-10-24\ny\n2022-10-28\n1\n1\n"
+              +"8\nportfolio1\n2022-10-24\n"
+              +"8\nportfolio1\n2022-10-25\n"
+              +"8\nportfolio1\n2022-10-29\n"
+              +"9\nportfolio1\n2022-10-24\n"
+              +"9\nportfolio1\n2022-10-25\n"
+              +"9\nportfolio1\n2022-10-29\n";
+
+      this.setup(input);
+      String expectedValue1 = "The value of portfolio is $5000.0";
+      String expectedValue2 = "The value of portfolio is $10084.668048243775";
+      String expectedValue3 = "The value of portfolio is $25829.873473473046";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $5004.0";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $10008.0";
+      String expectedCostBasis3 = "The cost basis for the portfolio is $25020.0";
+      String actual = this.out.toString();
+      System.out.println(actual);
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedValue3));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(expectedCostBasis3));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createDollarCostAvg_Single_Ongoing_EvaluateValueAndCostBasis_MultipleDates() {
+    try {
+      String input = "17\nportfolio1\nstrategy1\n5000\n1\ngoog\n100\n2022-10-24\nn\n1\n1\n"
+              +"8\nportfolio1\n2022-10-24\n"
+              +"8\nportfolio1\n2022-10-25\n"
+              +"8\nportfolio1\n2022-10-26\n"
+              +"9\nportfolio1\n2022-10-24\n"
+              +"9\nportfolio1\n2022-10-25\n"
+              +"9\nportfolio1\n2022-10-26\n";
+
+      this.setup(input);
+      String expectedValue1 = "The value of portfolio is $5000.0";
+      String expectedValue2 = "The value of portfolio is $10095.17335146159";
+      String expectedValue3 = "The value of portfolio is $14122.503928195825";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $5001.0";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $10002.0";
+      String expectedCostBasis3 = "The cost basis for the portfolio is $15003.0";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedValue3));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(expectedCostBasis3));
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
+  public void createDollarCostAvg_Single_WithEndDate_EvaluateValueAndCostBasis_MultipleDates() {
+    try {
+      String input = "17\nportfolio1\nstrategy1\n5000\n1\ngoog\n100\n"
+              +"2022-10-24\ny\n2022-10-28\n1\n1\n"
+              +"8\nportfolio1\n2022-10-24\n"
+              +"8\nportfolio1\n2022-10-25\n"
+              +"8\nportfolio1\n2022-10-29\n"
+              +"9\nportfolio1\n2022-10-24\n"
+              +"9\nportfolio1\n2022-10-25\n"
+              +"9\nportfolio1\n2022-10-29\n";
+
+      this.setup(input);
+      String expectedValue1 = "The value of portfolio is $5000.0";
+      String expectedValue2 = "The value of portfolio is $10095.17335146159";
+      String expectedValue3 = "The value of portfolio is $24599.541379650014";
+      String expectedCostBasis1 = "The cost basis for the portfolio is $5001.0";
+      String expectedCostBasis2 = "The cost basis for the portfolio is $10002.0";
+      String expectedCostBasis3 = "The cost basis for the portfolio is $25005.0";
+      String actual = this.out.toString();
+      Assert.assertTrue(actual.contains(expectedValue1));
+      Assert.assertTrue(actual.contains(expectedValue2));
+      Assert.assertTrue(actual.contains(expectedValue3));
+      Assert.assertTrue(actual.contains(expectedCostBasis1));
+      Assert.assertTrue(actual.contains(expectedCostBasis2));
+      Assert.assertTrue(actual.contains(expectedCostBasis3));
+
+    } catch (Exception e) {
+      Assert.fail();
+    }
+  }
+
+  @Test
   public void Apply1FixedStrategy_1Stock() {
     try {
       String input = "13\ns1\n2000\n1\ngoog\n100\n2022-10-24\n0\n"
@@ -2177,6 +2303,7 @@ public class PortfolioTradeControllerIntegrationTest {
     menu.append("14. Create a recurring investment strategy\n");
     menu.append("15. Get all the existing strategies\n");
     menu.append("16. Apply a strategy to a portfolio\n");
+    menu.append("17. Create a Dollar Cost Averaging Portfolio\n");
     menu.append("Enter the menu option you wish to choose.\n");
     menu.append("Press and enter any other key to exit the application.\n");
     if (!isValid) {

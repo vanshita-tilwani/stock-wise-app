@@ -78,7 +78,7 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     ongoingInfo.addFocusListener(onFocus());
     ongoingInfo.add(this.isOngoing);
 
-    if(this.endDataPanel.getComponents().length == 0) {
+    if (this.endDataPanel.getComponents().length == 0) {
       endDataPanel.add(new JLabel("Enter the end date for the investment : "));
       endDataPanel.add(this.endDate);
     }
@@ -89,6 +89,7 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
 
     return Arrays.asList(purchaseData, ongoingInfo, endDataPanel, frequencyData);
   }
+
   @Override
   public void display(String text) {
     if (this.frame != null) {

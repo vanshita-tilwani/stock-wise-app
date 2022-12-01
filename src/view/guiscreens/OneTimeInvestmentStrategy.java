@@ -149,8 +149,8 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
   }
 
   protected boolean validateItems() {
-    if(this.tradeName() != null) {
-      if(this.tradeName().trim().isEmpty() || this.tradeName().trim().isBlank()) {
+    if (this.tradeName() != null) {
+      if (this.tradeName().trim().isEmpty() || this.tradeName().trim().isBlank()) {
         this.error("Invalid Portfolio Name");
         return false;
 

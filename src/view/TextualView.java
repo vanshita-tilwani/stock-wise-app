@@ -162,7 +162,8 @@ public class TextualView implements View {
               this.readCommissionFee());
       features.createFlexiblePortfolio(portfolioName);
       features.applyStrategy(portfolioName,
-              strategyName);});
+              strategyName);
+    });
   }
 
 
