@@ -79,4 +79,10 @@ public class SavePortfolio extends AbstractScreen {
     };
   }
 
+  @Override
+  protected boolean isInputsValid() {
+
+    this.error("");
+    return true;
+  }
 }

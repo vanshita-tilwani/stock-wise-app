@@ -21,8 +21,6 @@ import controller.Features;
  * Screen to create recurring strategy.
  */
 public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
-
-  private boolean isInit = false;
   private final JCheckBox isOngoing;
   private final JPanel endDataPanel;
   private final JDatePickerImpl startDate;
@@ -33,7 +31,17 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
    * Initializes a screen to create recurring strategy.
    */
   public RecurringInvestmentStrategy() {
-    super("Trading Application - Create One Time Strategy");
+    this("Trading Application - Create One Time Strategy");
+    this.mainPanel = initMainPanel();
+    this.add(mainPanel, BorderLayout.CENTER);
+    renderFrame();
+  }
+
+  /**
+   * Initializes a screen to create recurring strategy with caption.
+   */
+  public RecurringInvestmentStrategy(String caption) {
+    super(caption);
     this.startDate = this.createDateField("Enter the start date for the investment");
     this.endDate = this.createDateField("Enter the end date for the investment");
     this.frequency = this.createSpinnerField("Enter the frequency of recurring " +
@@ -46,28 +54,19 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     this.isOngoing.addChangeListener(new ChangeListener() {
       @Override
       public void stateChanged(ChangeEvent e) {
-        frame.display("");
+        if(isInputsValid()) {
+          frame.submit.setEnabled(true);
+        }
+        else {
+          frame.submit.setEnabled(false);
+        }
       }
     });
     this.endDataPanel = new JPanel();
-    this.isInit = true;
-
-    this.remove(this.mainPanel);
-    this.mainPanel = initMainPanel();
-    this.add(mainPanel, BorderLayout.CENTER);
-
-    renderFrame();
   }
 
   @Override
   protected List<JPanel> getAdditionalComponents() {
-    if (!this.isInit) {
-      return new ArrayList<>();
-    }
-    return this.additionalRecurringItems();
-  }
-
-  protected List<JPanel> additionalRecurringItems() {
     JPanel purchaseData = new JPanel();
     purchaseData.add(this.createLabelField("Enter the start date for the investment : "));
     purchaseData.add(this.startDate);
@@ -88,32 +87,6 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     frequencyData.add(this.frequency);
 
     return Arrays.asList(purchaseData, ongoingInfo, endDataPanel, frequencyData);
-  }
-
-  @Override
-  public void display(String text) {
-    if (this.frame != null) {
-      this.frame.display(text);
-    } else {
-      super.display(text);
-    }
-  }
-
-  @Override
-  public void error(String text) {
-    if (this.frame != null) {
-      this.frame.error(text);
-    } else {
-      super.error(text);
-    }
-  }
-
-  @Override
-  public void disposeScreen() {
-    if (frame != null) {
-      this.frame.disposeScreen();
-    }
-    super.disposeScreen();
   }
 
   @Override
@@ -142,21 +115,20 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
 
     if (!super.validateItems()) {
       return false;
-    }
-    if (this.getLocalDate(this.startDate).isAfter(LocalDate.now())) {
+    } else if (this.getLocalDate(this.startDate).isAfter(LocalDate.now())) {
       this.error("The selected date is in future.\nPlease select " +
               "a new date and try again");
       return false;
-    }
-    if (!this.isOngoing.isSelected() &&
+    } else if (!this.isOngoing.isSelected() &&
             this.getLocalDate(this.endDate).isBefore(this.getLocalDate(this.startDate))) {
       this.error("The selected end date is before start date.\nPlease select " +
               "a new date and try again");
       return false;
-    }
-    if (toInt(this.frequency) <= 0) {
+    } else if (toInt(this.frequency) <= 0) {
       this.error("Invalid Frequency. Please enter and try again");
       return false;
+    } else {
+      this.error("");
     }
     return true;
   }

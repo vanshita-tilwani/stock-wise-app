@@ -43,4 +43,10 @@ public class AllPortfolio extends AbstractScreen {
       }
     };
   }
+
+  @Override
+  protected boolean isInputsValid() {
+    this.error("");
+    return true;
+  }
 }

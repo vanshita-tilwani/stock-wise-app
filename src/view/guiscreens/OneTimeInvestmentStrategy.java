@@ -36,6 +36,8 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
    */
   public OneTimeInvestmentStrategy() {
     this("Trading Application - Create One Time Strategy");
+    this.mainPanel = initMainPanel();
+    this.add(mainPanel, BorderLayout.CENTER);
     renderFrame();
   }
 
@@ -52,9 +54,6 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     this.commission = this.createSpinnerField("Enter the commission fee for the strategy");
     this.date = this.createDateField("Enter the date for one time investment");
     this.frame = null;
-
-    this.mainPanel = initMainPanel();
-    this.add(mainPanel, BorderLayout.CENTER);
   }
 
   protected JPanel initMainPanel() {
@@ -66,7 +65,7 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     return mainPanel;
   }
 
-  protected final java.util.List<Map.Entry<String, JComponent>> getDefaultComponents() {
+  protected java.util.List<Map.Entry<String, JComponent>> getDefaultComponents() {
     var self = this;
     java.util.List<Map.Entry<String, JComponent>> components = new ArrayList<>();
     components.add(new AbstractMap.SimpleEntry<>("Enter the strategy name : ", self.name));
@@ -144,6 +143,8 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
       this.error("The selected date is in future.\nPlease select " +
               "a new date and try again");
       return false;
+    } else {
+      this.error("");
     }
     return true;
   }

@@ -60,4 +60,10 @@ public class LoadPortfolio extends AbstractScreen {
       }
     };
   }
+
+  @Override
+  protected boolean isInputsValid() {
+    this.error("");
+    return true;
+  }
 }

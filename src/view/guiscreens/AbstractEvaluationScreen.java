@@ -56,7 +56,8 @@ abstract class AbstractEvaluationScreen extends AbstractScreen {
 
   public abstract void evaluateTrade(Features features, String portfolioName, LocalDate date);
 
-  private boolean isInputsValid() {
+  @Override
+  protected boolean isInputsValid() {
     boolean valid = true;
     if (this.getComboBoxValue(this.portfolioName) == null) {
       valid = false;
@@ -65,6 +66,8 @@ abstract class AbstractEvaluationScreen extends AbstractScreen {
       valid = false;
       this.error("The selected evaluation date is in future.\nPlease select " +
               "a new date and try again");
+    } else {
+      this.error("");
     }
     return valid;
   }

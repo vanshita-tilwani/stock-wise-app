@@ -52,14 +52,16 @@ public class ApplyStrategyToPortfolio extends AbstractScreen {
   }
 
 
-  private boolean isInputsValid() {
+  @Override
+  protected boolean isInputsValid() {
     if (this.getComboBoxValue(this.portfolioName) == null) {
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
       return false;
-    }
-    if (this.getComboBoxValue(this.strategyName) == null) {
+    } else if (this.getComboBoxValue(this.strategyName) == null) {
       this.error("Invalid Strategy Selected. Please select a strategy and try again");
       return false;
+    } else {
+      this.error("");
     }
     return true;
   }

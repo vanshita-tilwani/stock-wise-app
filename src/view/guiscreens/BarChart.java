@@ -78,7 +78,8 @@ public class BarChart extends AbstractScreen {
     }
   }
 
-  private boolean isInputsValid() {
+  @Override
+  protected boolean isInputsValid() {
     LocalDate f = this.getLocalDate(this.from);
     LocalDate t = this.getLocalDate(this.to);
     if (this.getComboBoxValue(this.portfolios) == null) {
@@ -91,6 +92,8 @@ public class BarChart extends AbstractScreen {
     } else if (f.isAfter(t)) {
       this.error("The selected from date should be less than to date.");
       return false;
+    } else {
+      this.error("");
     }
     return true;
   }

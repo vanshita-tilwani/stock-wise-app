@@ -29,6 +29,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 abstract class AbstractScreen extends JFrame implements Screen {
   protected final JLabel message;
@@ -39,6 +41,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected AbstractScreen(String caption, String message) {
     super(caption);
     setSize(600, 600);
+
     this.message = new javax.swing.JLabel(message);
     this.message.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     var header = new JPanel();
@@ -63,6 +66,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
     footer.add(actionsPanel);
     this.add(header, BorderLayout.PAGE_START);
     this.add(footer, BorderLayout.PAGE_END);
+
   }
 
 
@@ -133,6 +137,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
     var jComboBox = new JComboBox<String>();
     jComboBox.setToolTipText("Enter Portfolio Name");
     jComboBox.addFocusListener(onFocus());
+    onChange(jComboBox);
     return jComboBox;
   }
 
@@ -145,6 +150,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
     var jSpinner = new JSpinner();
     jSpinner.setToolTipText(tooltip);
     ((JSpinner.DefaultEditor) jSpinner.getEditor()).getTextField().addFocusListener(onFocus());
+    onChange(((JSpinner.DefaultEditor) jSpinner.getEditor()).getTextField());
     return jSpinner;
   }
 
@@ -152,6 +158,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
     var jTextField = new JTextField(10);
     jTextField.setToolTipText(tooltip);
     jTextField.addFocusListener(onFocus());
+    onChange(jTextField);
     return jTextField;
   }
 
@@ -163,7 +170,6 @@ abstract class AbstractScreen extends JFrame implements Screen {
 
   protected JPanel createMainPanel(List<Map.Entry<String, JComponent>> panels) {
     var mainPanel = new JPanel();
-
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     for (var each : panels) {
       JPanel panel = new JPanel();
@@ -177,7 +183,7 @@ abstract class AbstractScreen extends JFrame implements Screen {
   protected void renderFrame() {
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
+    this.setVisible(true);
 
   }
 
@@ -187,9 +193,55 @@ abstract class AbstractScreen extends JFrame implements Screen {
       @Override
       public void focusGained(FocusEvent e) {
         super.focusGained(e);
-        self.display("");
       }
+
     };
+  }
+
+  protected void onChange(JTextField component) {
+    var self = this;
+    component.getDocument().addDocumentListener(new DocumentListener() {
+
+      @Override
+      public void changedUpdate(DocumentEvent e) {
+        if(self.isInputsValid()) {
+          self.submit.setEnabled(true);
+        }
+        else {
+          self.submit.setEnabled(false);
+        }
+      }
+
+      @Override
+      public void insertUpdate(DocumentEvent e) {
+        if(self.isInputsValid()) {
+          self.submit.setEnabled(true);
+        }
+        else {
+          self.submit.setEnabled(false);
+        }
+      }
+
+      @Override
+      public void removeUpdate(DocumentEvent e) {
+        if(self.isInputsValid()) {
+          self.submit.setEnabled(true);
+        }
+        else {
+          self.submit.setEnabled(false);
+        }
+      }});
+  }
+
+  protected void onChange(JComboBox comboBox) {
+    var self = this;
+    comboBox.addItemListener((e) -> {
+    if(self.isInputsValid()) {
+      self.submit.setEnabled(true);
+    }
+    else {
+      self.submit.setEnabled(false);
+    }});
   }
 
   protected PropertyChangeListener onDateChange() {
@@ -198,10 +250,18 @@ abstract class AbstractScreen extends JFrame implements Screen {
       public void propertyChange(PropertyChangeEvent e) {
         if ("value".equals(e.getPropertyName())) {
           self.display("");
+          if(!isInputsValid()) {
+            self.submit.setEnabled(false);
+          }
+          else {
+            self.submit.setEnabled(true);
+          }
         }
       }
     };
   }
+
+  protected abstract boolean isInputsValid();
 
 
 }

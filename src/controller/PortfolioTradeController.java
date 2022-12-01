@@ -69,14 +69,16 @@ public class PortfolioTradeController implements Features {
   }
 
   @Override
-  public void createFlexiblePortfolio(String name) {
+  public boolean createFlexiblePortfolio(String name) {
     try {
       var portfolio = new TransactionalPortfolio(name, new HashSet<>(), new HashSet<>());
       this.model.create(portfolio);
       this.view.display("The portfolio is created successfully!\n");
+      return true;
     }
     catch (IllegalArgumentException e) {
       view.error(e.getMessage());
+      return false;
     }
   }
 
@@ -194,7 +196,7 @@ public class PortfolioTradeController implements Features {
 
 
   @Override
-  public void createStrategy(String name, Double principal, Map<String, Double> weights,
+  public boolean createStrategy(String name, Double principal, Map<String, Double> weights,
                      LocalDate start, LocalDate end, int days, Double commission) {
     try {
       StrategyBuilder strategyBuilder = new InvestmentStrategy.InvestmentStrategyBuilder()
@@ -209,9 +211,11 @@ public class PortfolioTradeController implements Features {
       }
       this.strategyModel.create(strategyBuilder.build());
       view.display("Strategy created successfully\n");
+      return true;
     }
     catch (IllegalArgumentException e ) {
       view.error(e.getMessage());
+      return false;
     }
 
   }

@@ -25,7 +25,7 @@ public class InvestmentStrategyOperation implements TradeOperation<Strategy> {
 
   @Override
   public void create(Strategy trade) throws IllegalArgumentException {
-    if (this.strategies.containsKey(trade)) {
+    if (this.strategies.containsKey(trade.name())) {
       throw new IllegalArgumentException("The strategy already exists in the application.\n");
     }
     this.strategies.put(trade.name(), trade);

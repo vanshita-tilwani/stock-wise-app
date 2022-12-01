@@ -50,9 +50,16 @@ public class CreatePortfolio extends AbstractScreen {
     });
   }
 
-  private boolean isInputsValid() {
-    return this.portfolioName != null && !this.portfolioName.getText().trim().isBlank() &&
-            !this.portfolioName.getText().trim().isEmpty();
+  @Override
+  protected boolean isInputsValid() {
+    if (this.portfolioName == null || this.portfolioName.getText().trim().isBlank() ||
+            this.portfolioName.getText().trim().isEmpty()) {
+      this.error("Invalid Portfolio Name");
+      return false;
+    } else {
+      this.error("");
+    }
+    return true;
   }
 
 

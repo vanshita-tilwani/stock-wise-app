@@ -83,28 +83,27 @@ abstract class AbstractTransactionScreen extends AbstractScreen {
                                     Double shares, LocalDate date, Double commission);
 
 
-  private boolean isInputsValid() {
+  @Override
+  protected boolean isInputsValid() {
     if (this.getComboBoxValue(this.portfolioName) == null) {
       this.error("Invalid Portfolio Selected. Please select a portfolio and try again");
       return false;
-    }
-    if (this.stock == null || this.stock.getText().trim().isBlank() ||
+    } else if (this.stock == null || this.stock.getText().trim().isBlank() ||
             this.stock.getText().trim().isEmpty()) {
       this.error("The stock ticker entered is invalid. Please enter and try again");
       return false;
-    }
-    if (toInt(this.shares) <= 0) {
+    } else if (toInt(this.shares) <= 0) {
       this.error("Invalid number of shares. Please enter and try again");
       return false;
-    }
-    if (this.getLocalDate(this.date).isAfter(LocalDate.now())) {
+    } else if (this.getLocalDate(this.date).isAfter(LocalDate.now())) {
       this.error("The selected evaluation date is in future.\nPlease select " +
               "a new date and try again");
       return false;
-    }
-    if (toInt(this.commission) < 0) {
+    } else if (toInt(this.commission) < 0) {
       this.error("Invalid commission fee. Please enter and try again");
       return false;
+    } else {
+      this.error("");
     }
     return true;
   }

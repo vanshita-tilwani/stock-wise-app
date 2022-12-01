@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JComponent;
+import javax.swing.ScrollPaneConstants;
 
 import controller.Features;
 
@@ -74,15 +76,19 @@ public class StockWeightScreen extends AbstractScreen {
               , percentageField));
     }
     var mainPanel = this.createMainPanel(components);
-    this.add(mainPanel, BorderLayout.CENTER);
+    var mainScrollPane = new JScrollPane(mainPanel);
+    mainScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    mainScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    add(mainScrollPane);
     renderFrame();
   }
 
   @Override
   public void addFeatures(Features features) {
     this.submit.addActionListener(f -> {
+      var isStrategyCreated = false;
       if (this.isInputsValid()) {
-        features.createStrategy(this.name,
+        isStrategyCreated = features.createStrategy(this.name,
                 this.principal,
                 this.toStockData(),
                 this.startDate,
@@ -90,9 +96,10 @@ public class StockWeightScreen extends AbstractScreen {
                 this.frequency,
                 this.commission
         );
-        if (this.portfolioName != null) {
-          features.createFlexiblePortfolio(this.portfolioName);
-          features.applyStrategy(this.portfolioName, this.name);
+        if (this.portfolioName != null && isStrategyCreated) {
+          if (features.createFlexiblePortfolio(this.portfolioName)) {
+            features.applyStrategy(this.portfolioName, this.name);
+          }
         }
       }
     });
@@ -109,7 +116,8 @@ public class StockWeightScreen extends AbstractScreen {
     return map;
   }
 
-  private boolean isInputsValid() {
+  @Override
+  protected boolean isInputsValid() {
     Double totalPercentage = 0.0;
     for (int i = 0; i < stockTickers.size(); i++) {
       var ticker = stockTickers.get(i);
@@ -124,19 +132,21 @@ public class StockWeightScreen extends AbstractScreen {
           this.error("Invalid Ticker Symbol. Please enter again and try.");
           return false;
         }
+        if (totalPercentage + percent > 100) {
+          this.error("Invalid percentages. Please enter again and try");
+          return false;
+        }
+        totalPercentage += toDouble(this.percentage.get(i).getText());
       } catch (NumberFormatException e) {
         this.error("Invalid Percentage Value. Please enter again and try.");
       }
-      if (totalPercentage + toDouble(this.percentage.get(i).getText()) > 100) {
-        this.error("Invalid percentages. Please enter again and try");
-        return false;
-      }
-      totalPercentage += toDouble(this.percentage.get(i).getText());
+
     }
     if (totalPercentage != 100) {
       this.error("Invalid percentages. Please enter again and try");
       return false;
     }
+    this.error("");
     return true;
   }
 }

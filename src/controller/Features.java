@@ -20,7 +20,7 @@ public interface Features {
    * To create inflexible portfolio.
    * @param name Name of the portfolio
    */
-  void createFlexiblePortfolio(String name);
+  boolean createFlexiblePortfolio(String name);
 
   /**
    * To get all the portfolios.
@@ -112,7 +112,7 @@ public interface Features {
    * @param days the frequency of the investment
    * @param commission the commission amount involved
    */
-  void createStrategy(String name, Double principal, Map<String, Double> weights, LocalDate start,
+  boolean createStrategy(String name, Double principal, Map<String, Double> weights, LocalDate start,
               LocalDate end, int days, Double commission);
 
   /**
