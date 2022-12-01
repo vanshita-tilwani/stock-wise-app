@@ -45,7 +45,7 @@ public class InvestmentStrategy implements Strategy {
   }
 
   @Override
-  public Double principle() {
+  public Double principal() {
     return this.principal;
   }
 

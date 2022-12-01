@@ -18,9 +18,9 @@ public interface Strategy {
 
   /**
    * To return the investment.
-   * @return
+   * @return the principal amount
    */
-  Double principle();
+  Double principal();
 
   /**
    * To return proportion of the stocks.

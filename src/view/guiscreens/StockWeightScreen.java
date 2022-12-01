@@ -34,6 +34,7 @@ public class StockWeightScreen extends AbstractScreen {
   /**
    * Initializes the screen to input stock weights for each stock in the strategy.
    *
+   * @param portfolioName name of the portfolio to be created.
    * @param name       name of the strategy.
    * @param principal  the principal amount to be invested.
    * @param stocks     the number of stocks containing in the strategy.

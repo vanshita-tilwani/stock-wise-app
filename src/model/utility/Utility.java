@@ -63,6 +63,10 @@ public class Utility {
   /**
    * Calculate and update values for tick spacing and nice
    * minimum and maximum data points on the axis.
+   *
+   * @param max Max value
+   * @param min Min Value
+   * @return scale of the data.
    */
   public static double scale(int max, int min) {
     var range = evaluate(max - min, false);

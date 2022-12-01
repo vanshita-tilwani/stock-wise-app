@@ -37,11 +37,13 @@ public interface TradeOperation<T> {
    * Saves the specified trade in a data-source.
    *
    * @param trade the trade object.
+   * @throws Exception if the operation fails.
    */
   void save(String trade) throws Exception;
 
   /**
    * Loads all the trades available in the data-source to the application.
+   * @throws Exception if the operation fails
    */
   void load() throws Exception;
 

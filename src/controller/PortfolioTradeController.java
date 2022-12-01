@@ -32,6 +32,7 @@ public class PortfolioTradeController implements Features {
    * Constructor to initialise the class variables.
    * @param view view object
    * @param model model object
+   * @param strategyModel model for keeping track of strategy.
    */
   public PortfolioTradeController(View view, TradeOperation<Portfolio> model,
                                   TradeOperation<Strategy> strategyModel) {

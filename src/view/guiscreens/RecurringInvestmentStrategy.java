@@ -38,6 +38,7 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
 
   /**
    * Initializes a screen to create recurring strategy with caption.
+   * @param caption the caption of the screen
    */
   public RecurringInvestmentStrategy(String caption) {
     super(caption);

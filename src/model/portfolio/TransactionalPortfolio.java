@@ -127,7 +127,7 @@ public class TransactionalPortfolio extends AbstractPortfolio {
 
   @Override
   public void applyStrategy(Strategy strategy) throws UnsupportedOperationException {
-    buyPeriodic(strategy.principle(), strategy.stockProportion(), strategy.startDate(),
+    buyPeriodic(strategy.principal(), strategy.stockProportion(), strategy.startDate(),
             strategy.endDate(), strategy.frequency(), strategy.commission());
   }
 

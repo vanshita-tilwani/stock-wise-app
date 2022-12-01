@@ -71,6 +71,7 @@ abstract class AbstractPortfolio implements Portfolio {
   /**
    * Returns the aggregated composition of shares in a portfolio.
    *
+   * @param type type of portfolio
    * @param shares the set of aggregated shares comprising portfolio.
    * @return the portfolio composition.
    */

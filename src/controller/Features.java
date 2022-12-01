@@ -17,8 +17,10 @@ public interface Features {
   void createInflexiblePortfolio(String name , Map<String, Double> purchases);
 
   /**
-   * To create inflexible portfolio.
-   * @param name Name of the portfolio
+   * To create a Flexible Portfolio.
+   *
+   * @param name name of the portfolio
+   * @return if the operation passed/failed.
    */
   boolean createFlexiblePortfolio(String name);
 
@@ -98,7 +100,7 @@ public interface Features {
    * @param portfolioName Name of the portfolio
    * @param from start date from which the value has to be fetched
    * @param end the end date till which the date has to be fetched
-   * @return
+   * @return the values of portfolio over the period.
    */
   Map<LocalDate, Double> values(String portfolioName, LocalDate from, LocalDate end);
 
@@ -111,6 +113,8 @@ public interface Features {
    * @param end the end date till which the investement has to be made
    * @param days the frequency of the investment
    * @param commission the commission amount involved
+   *
+   * @return if the operation was successful
    */
   boolean createStrategy(String name, Double principal, Map<String, Double> weights, LocalDate start,
               LocalDate end, int days, Double commission);
@@ -125,6 +129,7 @@ public interface Features {
    * To apply the given strategies.
    * @param portfolioName Name of the portfolio
    * @param strategy the startegy which has to be applied
+   *
    */
   void applyStrategy(String portfolioName, String strategy);
 }
