@@ -64,6 +64,10 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     if (!this.isInit) {
       return new ArrayList<>();
     }
+    return this.additionalRecurringItems();
+  }
+
+  protected List<JPanel> additionalRecurringItems() {
     JPanel purchaseData = new JPanel();
     purchaseData.add(this.createLabelField("Enter the start date for the investment : "));
     purchaseData.add(this.startDate);
@@ -74,8 +78,10 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     ongoingInfo.addFocusListener(onFocus());
     ongoingInfo.add(this.isOngoing);
 
-    endDataPanel.add(new JLabel("Enter the end date for the investment : "));
-    endDataPanel.add(this.endDate);
+    if(this.endDataPanel.getComponents().length == 0) {
+      endDataPanel.add(new JLabel("Enter the end date for the investment : "));
+      endDataPanel.add(this.endDate);
+    }
 
     JPanel frequencyData = new JPanel();
     frequencyData.add(new JLabel("Enter the frequency of recurring investment(in days) : "));
@@ -83,7 +89,6 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
 
     return Arrays.asList(purchaseData, ongoingInfo, endDataPanel, frequencyData);
   }
-
   @Override
   public void display(String text) {
     if (this.frame != null) {
@@ -115,7 +120,8 @@ public class RecurringInvestmentStrategy extends OneTimeInvestmentStrategy {
     this.submit.addActionListener(f -> {
       if (isInputsValid()) {
         this.setVisibility(false);
-        this.frame = new StockWeightScreen(this.name.getText(),
+        this.frame = new StockWeightScreen(this.tradeName(),
+                this.name.getText(),
                 toDouble(this.principal.getText()),
                 toInt(this.stocks),
                 this.getLocalDate(this.startDate),

@@ -14,6 +14,7 @@ import view.guiscreens.ApplyStrategyToPortfolio;
 import view.guiscreens.BarChart;
 import view.guiscreens.BuyStock;
 import view.guiscreens.CreatePortfolio;
+import view.guiscreens.DollarCostAveragingPortfolio;
 import view.guiscreens.LoadPortfolio;
 import view.guiscreens.MainScreen;
 import view.guiscreens.OneTimeInvestmentStrategy;
@@ -118,6 +119,9 @@ public class GraphicsView implements View, ActionListener {
     });
     commands.put("Apply a Strategy to a Portfolio", () -> {
       createScreenAndSetDefault(new ApplyStrategyToPortfolio(), features);
+    });
+    commands.put("Create a Dollar-cost Averaging Portfolio", () -> {
+      createScreenAndSetDefault(new DollarCostAveragingPortfolio(), features);
     });
     //
     return commands;

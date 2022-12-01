@@ -18,6 +18,7 @@ import controller.Features;
  */
 public class StockWeightScreen extends AbstractScreen {
 
+  private final String portfolioName;
   private final String name;
   private final double principal;
   private final int stocks;
@@ -39,9 +40,10 @@ public class StockWeightScreen extends AbstractScreen {
    * @param frequency the frequency of recurring strategy.
    * @param commission the commission fee for the strategy.
    */
-  public StockWeightScreen(String name, Double principal, int stocks, LocalDate startDate,
+  public StockWeightScreen(String portfolioName, String name, Double principal, int stocks, LocalDate startDate,
                            LocalDate endDate, int frequency, double commission) {
     super("Trading Application - Enter Stock Weightage", "");
+    this.portfolioName = portfolioName;
     this.name = name;
     this.principal = principal;
     this.stocks = stocks;
@@ -86,6 +88,10 @@ public class StockWeightScreen extends AbstractScreen {
                 this.frequency,
                 this.commission
         );
+        if(this.portfolioName != null) {
+          features.createFlexiblePortfolio(this.portfolioName);
+          features.applyStrategy(this.portfolioName, this.name);
+        }
       }
     });
   }

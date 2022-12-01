@@ -57,6 +57,7 @@ public class TextualView implements View {
               + "14. Create a recurring investment strategy\n"
               + "15. Get all the existing strategies\n"
               + "16. Apply a strategy to a portfolio\n"
+              + "17. Create a Dollar Cost Averaging Portfolio\n"
               + "Enter the menu option you wish to choose.\n"
               + "Press and enter any other key to exit the application.\n";
       this.display(menuOptions);
@@ -149,6 +150,19 @@ public class TextualView implements View {
     });
     commands.put(16, () -> features.applyStrategy(this.readTradeName(),
             this.readStrategyName()));
+    commands.put(17, () -> {
+      var portfolioName = this.readTradeName();
+      var strategyName = this.readStrategyName();
+      features.createStrategy(strategyName,
+              this.readPrincipal(),
+              this.readTradeData(true),
+              this.readStartDate(),
+              this.isOngoingStrategy() ? this.readEndDate() : null,
+              this.readFrequency(),
+              this.readCommissionFee());
+      features.createFlexiblePortfolio(portfolioName);
+      features.applyStrategy(portfolioName,
+              strategyName);});
   }
 
 

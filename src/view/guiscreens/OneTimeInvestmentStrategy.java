@@ -85,6 +85,10 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     return Arrays.asList(purchaseData);
   }
 
+  protected String tradeName() {
+    return null;
+  }
+
   @Override
   public void display(String text) {
     if (this.frame != null) {
@@ -108,7 +112,8 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
     this.submit.addActionListener(f -> {
       if (this.isInputsValid()) {
         this.setVisibility(false);
-        this.frame = new StockWeightScreen(this.name.getText(),
+        this.frame = new StockWeightScreen(this.tradeName(),
+                this.name.getText(),
                 toDouble(this.principal.getText()),
                 toInt(this.stocks),
                 this.getLocalDate(this.date),
@@ -144,6 +149,13 @@ public class OneTimeInvestmentStrategy extends AbstractScreen {
   }
 
   protected boolean validateItems() {
+    if(this.tradeName() != null) {
+      if(this.tradeName().trim().isEmpty() || this.tradeName().trim().isBlank()) {
+        this.error("Invalid Portfolio Name");
+        return false;
+
+      }
+    }
     if (this.name == null || this.name.getText().trim().isBlank() ||
             this.name.getText().trim().isEmpty()) {
       this.error("Invalid Strategy Name. Please enter again and try");

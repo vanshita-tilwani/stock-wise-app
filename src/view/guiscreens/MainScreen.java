@@ -56,7 +56,7 @@ public class MainScreen extends JFrame implements Screen {
     menuOptions.add(new JRadioButton("Create a One Time Fixed Investment Strategy"));
     menuOptions.add(new JRadioButton("Create a Recurring Investment Strategy"));
     menuOptions.add(new JRadioButton("Apply a Strategy to a Portfolio"));
-
+    menuOptions.add(new JRadioButton("Create a Dollar-cost Averaging Portfolio"));
     this.submit = new JButton("Submit");
     this.menuOptions.forEach(e -> {
       this.menuGroup.add(e);

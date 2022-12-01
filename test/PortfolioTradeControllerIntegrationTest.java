@@ -2054,7 +2054,7 @@ public class PortfolioTradeControllerIntegrationTest {
   public void ApplyMultipleStrategy1() {
     try {
       String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
-              +"13\ns2\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
+              + "13\ns2\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
               + "2\ns1\n"
               + "16\ns1\ns1\n"
               + "16\ns1\ns2\n"
@@ -2086,7 +2086,7 @@ public class PortfolioTradeControllerIntegrationTest {
   public void ApplyMultipleStrategy2() {
     try {
       String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
-              +"13\ns2\n5000\n4\ngoog\n40\nAAPL\n10\nIBM\n10\nNOW\n40\n2022-10-24\n100\n"
+              + "13\ns2\n5000\n4\ngoog\n40\nAAPL\n10\nIBM\n10\nNOW\n40\n2022-10-24\n100\n"
               + "2\ns1\n"
               + "16\ns1\ns1\n"
               + "16\ns1\ns2\n"
@@ -2118,7 +2118,7 @@ public class PortfolioTradeControllerIntegrationTest {
   public void ApplyMultipleStrategy3() {
     try {
       String input = "13\ns1\n5000\n4\ngoog\n60\nAAPL\n10\nIBM\n10\nNOW\n20\n2022-10-24\n100\n"
-              +"14\ns2\n5000\n4\ngoog\n60\nNOW\n20\nIBM\n10\nAAPL\n10\n"+
+              + "14\ns2\n5000\n4\ngoog\n60\nNOW\n20\nIBM\n10\nAAPL\n10\n" +
               "2022-10-24\nn\n1\n100\n"
               + "2\ns1\n"
               + "16\ns1\ns1\n"
