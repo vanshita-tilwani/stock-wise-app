@@ -15,6 +15,15 @@ public interface StrategyBuilder {
    */
   StrategyBuilder setName(String name);
 
+
+  /**
+   * Adds a stock along with its weight.
+   *
+   * @param stock the stock to be added.
+   * @param weight the weight of the stock.
+   * @return returns the strategy builder.
+   * @throws IllegalArgumentException if the stock or weights are invalid.
+   */
   StrategyBuilder addStock(String stock, Double weight) throws IllegalArgumentException;
 
   /**
