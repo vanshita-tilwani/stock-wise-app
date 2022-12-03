@@ -15,7 +15,6 @@ public interface StrategyBuilder {
    */
   StrategyBuilder setName(String name);
 
-
   /**
    * Adds a stock along with its weight.
    *
