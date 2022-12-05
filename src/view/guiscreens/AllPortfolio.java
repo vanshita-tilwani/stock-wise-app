@@ -1,9 +1,6 @@
 package view.guiscreens;
 
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 import controller.Features;
 
 /**
@@ -24,25 +21,14 @@ public class AllPortfolio extends AbstractScreen {
 
   @Override
   public void addFeatures(Features features) {
-    var frame = this;
-    this.addComponentListener(onComponentLoad(features));
+    var portfolios = features.getPortfolios();
+    String result = "The application does not contain any portfolio!";
+    if (portfolios.size() > 0) {
+      result = "<html>" + String.join("<br>", portfolios);
+    }
+    this.display(result);
   }
 
-  private ComponentAdapter onComponentLoad(Features features) {
-    var frame = this;
-    return new ComponentAdapter() {
-      @Override
-      public void componentShown(ComponentEvent e) {
-        var portfolios = features.getPortfolios();
-        String result = "The application does not contain any portfolio!";
-        if (portfolios.size() > 0) {
-          result = "<html>" + String.join("<br>", portfolios);
-        }
-        frame.display(result);
-        frame.pack();
-      }
-    };
-  }
 
   @Override
   protected boolean isInputsValid() {
