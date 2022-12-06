@@ -46,39 +46,10 @@ public class InvestmentStrategy implements Strategy {
     this.frequency = days;
   }
 
+
   @Override
   public String name() {
     return this.name;
-  }
-
-  @Override
-  public Double principal() {
-    return this.principal;
-  }
-
-  @Override
-  public Map<String, Double> stockProportion() {
-    return this.weights;
-  }
-
-  @Override
-  public LocalDate startDate() {
-    return this.startDate;
-  }
-
-  @Override
-  public LocalDate endDate() {
-    return this.endDate;
-  }
-
-  @Override
-  public int frequency() {
-    return this.frequency;
-  }
-
-  @Override
-  public double commission() {
-    return this.commission;
   }
 
   @Override
@@ -86,6 +57,14 @@ public class InvestmentStrategy implements Strategy {
     buyPeriodic(portfolio);
   }
 
+  /** To make a purchase in the portfolio at the specified date.
+   *
+   * @param portfolio portfolio for which stock purchase needs to be made.
+   * @param principal the principal value for the purchase.
+   * @param stockData the stocks that need to be bought.
+   * @param date the date of purchase.
+   * @param commission the commission fee for the purchase.
+   */
   private void buyOnce(Portfolio portfolio, Double principal, Map<String, Double> stockData, LocalDate date,
                        Double commission) {
     for (Map.Entry<String, Double> entry : stockData.entrySet()) {
@@ -95,6 +74,10 @@ public class InvestmentStrategy implements Strategy {
     }
   }
 
+  /** To make periodic purchase in the portfolio for the specified range.
+   *
+   * @param portfolio portfolio for which stock purchase needs to be made.
+   */
   private void buyPeriodic(Portfolio portfolio) {
     LocalDate currDate = this.startDate;
     var endDate = this.endDate;
@@ -112,6 +95,12 @@ public class InvestmentStrategy implements Strategy {
     }
   }
 
+  /**
+   * Get the next available date
+   *
+   * @param tradeDate the trade date.
+   * @return next available date.
+   */
   private LocalDate nextAvailableDate(LocalDate tradeDate) {
     StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
     while (!stockDataProvider.isAvailable(tradeDate) && !tradeDate.isAfter(LocalDate.now())) {
