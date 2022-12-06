@@ -2,9 +2,6 @@ package model.strategy;
 
 import java.time.LocalDate;
 import java.util.Map;
-
-import javax.sound.sampled.Port;
-
 import model.portfolio.Portfolio;
 import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.StockDataProviderFactory;

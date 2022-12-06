@@ -1,8 +1,5 @@
 package model.strategy;
 
-import java.time.LocalDate;
-import java.util.Map;
-
 import model.portfolio.Portfolio;
 
 

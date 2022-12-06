@@ -11,7 +11,6 @@ import model.stock.Stock;
 import model.stock.StockImpl;
 import model.stockpriceprovider.StockDataProvider;
 import model.stockpriceprovider.StockDataProviderFactory;
-import model.strategy.Strategy;
 import model.trade.SimulatedStockTrade;
 import model.trade.TransactionalStockTrade;
 import model.trade.Trade;

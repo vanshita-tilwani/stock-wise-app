@@ -3,8 +3,6 @@ package model.portfolio;
 import java.time.LocalDate;
 import java.util.Map;
 
-import model.strategy.Strategy;
-
 /**
  * Representation of Portfolio which contains a set of trades comprising stocks.
  * Supports operations such as getting the name of the portfolio, total value of the portfolio
