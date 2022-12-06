@@ -3,6 +3,13 @@ package model.strategy;
 import java.time.LocalDate;
 import java.util.Map;
 
+import javax.sound.sampled.Port;
+
+import model.portfolio.Portfolio;
+import model.stockpriceprovider.StockDataProvider;
+import model.stockpriceprovider.StockDataProviderFactory;
+import model.trade.TransactionalStockTrade;
+
 /**
  * Class Implementing the Investment strategy.
  */
@@ -72,6 +79,45 @@ public class InvestmentStrategy implements Strategy {
   @Override
   public double commission() {
     return this.commission;
+  }
+
+  @Override
+  public void apply(Portfolio portfolio) {
+    buyPeriodic(portfolio);
+  }
+
+  private void buyOnce(Portfolio portfolio, Double principal, Map<String, Double> stockData, LocalDate date,
+                       Double commission) {
+    for (Map.Entry<String, Double> entry : stockData.entrySet()) {
+      var share = new TransactionalStockTrade(entry.getKey(), principal, entry.getValue(),
+              date, commission);
+      portfolio.buy(entry.getKey(),share.quantity(),date, commission);
+    }
+  }
+
+  private void buyPeriodic(Portfolio portfolio) {
+    LocalDate currDate = this.startDate;
+    var endDate = this.endDate;
+    if (endDate == null) {
+      endDate = LocalDate.now();
+    }
+    while (true) {
+      // TODO : handle purchases on holiday
+      currDate = nextAvailableDate(currDate);
+      if (currDate.isAfter(endDate) || currDate.isAfter(LocalDate.now())) {
+        break;
+      }
+      buyOnce(portfolio,principal, this.weights, currDate, commission);
+      currDate = currDate.plusDays(frequency);
+    }
+  }
+
+  private LocalDate nextAvailableDate(LocalDate tradeDate) {
+    StockDataProvider stockDataProvider = StockDataProviderFactory.getDataProvider();
+    while (!stockDataProvider.isAvailable(tradeDate) && !tradeDate.isAfter(LocalDate.now())) {
+      tradeDate = tradeDate.plusDays(1);
+    }
+    return tradeDate;
   }
 
   /**

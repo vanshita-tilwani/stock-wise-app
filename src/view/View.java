@@ -8,6 +8,12 @@ import controller.Features;
  */
 public interface View {
 
+  /**
+   * Adds the features to the view
+   *
+   * @param features the set of api application supports.
+   */
+
   void addFeatures(Features features);
 
   /**
@@ -24,6 +30,11 @@ public interface View {
    */
   void display(String message);
 
+  /**
+   * Used to display error message to user.
+   *
+   * @param message display message.
+   */
   void error(String message);
 
 }

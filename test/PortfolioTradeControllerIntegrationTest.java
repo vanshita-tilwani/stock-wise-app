@@ -1454,7 +1454,7 @@ public class PortfolioTradeControllerIntegrationTest {
               + "16\nsample1\ns2\n"
               + "6\nsample1";
       this.setup(input);
-      String expected = "This portfolio does not support applying investment strategies\n";
+      String expected = "Purchasing a new Stock is not allowed in this portfolio\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));
     } catch (Exception e) {
@@ -1600,14 +1600,14 @@ public class PortfolioTradeControllerIntegrationTest {
               + "16\ns1\ns1\n"
               + "6\ns1";
       this.setup(input);
-      String expectedComposition = "TYPE : TRANSACTIONAL\n"
-              + "Portfolio Name : s1\n"
-              + "STOCKS : \n"
-              + "Stock Symbol : GOOG,Quantity : 21.174181461749246\n"
-              + "Stock Symbol : AAPL,Quantity : 13.693699157344208\n"
-              + "Stock Symbol : IBM,Quantity : 14.323842830173367\n"
-              + "Stock Symbol : NOW,Quantity : 5.137467129321508\n"
-              + "------ END ------\n";
+      String expectedComposition = "TYPE : TRANSACTIONAL\n" +
+              "Portfolio Name : s1\n" +
+              "STOCKS : \n" +
+              "Stock Symbol : GOOG,Quantity : 26.180689922748545\n" +
+              "Stock Symbol : AAPL,Quantity : 17.10364255228385\n" +
+              "Stock Symbol : IBM,Quantity : 17.715742972633173\n" +
+              "Stock Symbol : NOW,Quantity : 6.412131892488795\n" +
+              "------ END ------\n";
       String expected = "Strategy applied successfully to the portfolio\n";
       String actual = this.out.toString();
       Assert.assertTrue(actual.contains(expected));

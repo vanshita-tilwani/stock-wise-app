@@ -33,7 +33,7 @@ public class GraphicsView implements View, ActionListener {
 
   private final Map<String, Runnable> actionMap;
   private Screen currentScreen;
-  private Screen mainScreen;
+  private final Screen mainScreen;
 
   private Features features;
 

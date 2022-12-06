@@ -73,13 +73,6 @@ public class SimulatedPortfolio extends AbstractPortfolio {
   }
 
   @Override
-  public void applyStrategy(Strategy strategy) {
-    throw new UnsupportedOperationException("This portfolio does not support applying investment"
-            + " strategies\n");
-  }
-
-
-  @Override
   public String toString() {
     return this.getComposition(PortfolioType.SIMULATED, this.shares);
   }

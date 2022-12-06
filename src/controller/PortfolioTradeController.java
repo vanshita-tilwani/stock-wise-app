@@ -229,8 +229,8 @@ public class PortfolioTradeController implements Features {
   @Override
   public void applyStrategy(String portfolioName, String strategyName) {
     try {
-      Strategy strategy = this.strategyModel.get(strategyName);
-      this.model.get(portfolioName).applyStrategy(strategy);
+      Portfolio portfolio = this.model.get(portfolioName);
+      this.strategyModel.get(strategyName).apply(portfolio);
       view.display("Strategy applied successfully to the portfolio\n");
     }
     catch (IllegalArgumentException | UnsupportedOperationException e) {

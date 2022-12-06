@@ -3,6 +3,8 @@ package model.strategy;
 import java.time.LocalDate;
 import java.util.Map;
 
+import model.portfolio.Portfolio;
+
 
 /**
  * An interface to Implement the strategies.
@@ -51,4 +53,11 @@ public interface Strategy {
    * @return returns the commission.
    */
   double commission();
+
+  /**
+   * To apply the strategy on the Portfolio
+   *
+   * @param portfolio portfolio to be applied strategy on
+   */
+  void apply(Portfolio portfolio);
 }
